@@ -1,0 +1,19 @@
+
+  <div id="colecciones p-0 m-0 mh500 "   >
+      <div class="horizontal-container animated fadeIn slow" *ngIf="proveedorescargadas"  >
+        <swiper [config]="config3">
+          <div *ngFor="let slide3 of imagenesproveedores"  class="text-center " >
+
+            <picture>
+              <source media="(min-width: 968px)" srcset="{{slide3.rutapc}}"
+                data-srcset="{{slide3.rutapc}}" class="mh300" >
+              <source media="(min-width: 0px)" srcset="{{slide3.rutamovil}}"
+                data-srcset="{{slide3.rutamovil}}" class="mh300">
+              <img src="{{slide3.rutapc}}" data-src="{{slide3.rutapc}}"
+                alt="{{slide3.titulo}}" class="imageproveedores lazyload logos" onerror="this.src='assets/images/sinimagen.jpg' "  >
+            </picture>
+           
+          </div>
+        </swiper>
+      </div>
+  </div>

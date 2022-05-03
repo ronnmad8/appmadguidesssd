@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="pcmin bordefoto mh1000">
+        <div class="horizontal-container animated fadeIn slow posrel ">
+            <picture>
+                <source media="(min-width: 968px)" srcset="{{imagenpc}}" data-srcset="{{imagenpc}}">
+                <source media="(min-width: 0px)" srcset="{{imagenmovil}}" data-srcset="{{imagenmovil}}">
+                <img src="{{imagenpc}}" data-src="{{imagenpc}}" alt="proyectos xanadu"
+                    class="mh600 lazyload ">
+            </picture>
+            <div class="animated fadeInUp justify-content-center align-items-center text-center text-white posabsoltt2 px-1"
+                style="animation-delay: 1.8s">
+                <h1 class="titgal text-white"> {{imagennom}} </h1>
+                <div class="lineAmafull"></div>
+            </div>
+        </div>
+        <div class="horizontal-container bgGO" *ngIf="cargados">
+            <swiper [config]="config">
+                <div class="" *ngFor="let image of imagenesgallery">
+                    <div class="cupo posrel" (click)="opencinema(image)"
+                        (mouseenter)=" x.style.display = 'block';"
+                        (mouseleave)=" x.style.display = 'none'; ">
+                        <picture>
+                            <source media="(min-width: 968px)" srcset="{{image.rutapc}}"
+                                data-srcset="{{image.rutapc}}">
+                            <source media="(min-width: 0px)" srcset="{{image.rutamovil}}"
+                                data-srcset="{{image.rutamovil}}">
+                            <img src="{{image.rutapc}}" data-src="{{image.rutapc}}" alt="{{image.nombre}}"
+                                class="mh200 lazyload ">
+                        </picture>
+                        <div #x class="fondogallery m-0 p-0 posabsol "
+                            style="display: none; min-height: 100%; width: 100%; top: 0; left:0">
+                            <div class="text-left  text-white posabsoltt3 px-1">
+                                <div>
+                                    <div class="tit "> {{image.nombre}} </div>
+                                </div>
+                                <div class="lineAmafull"></div>
+                            </div>
+                            <div>
+                                <i class="fas fa-search fs-18 text-white p-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </swiper>
+        </div>
+        <div
+            class="row justify-content-between align-items-center text.center bgG mx-auto my-0 py-2 mhtgal panscrollp ">
+            <div class="col-xl-10 col-12 mx-auto">
+                <p class="fs-parrafo my-2 py-4">
+                    {{imagenobs}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mvlmin" >
+
+        <div id="colecciones" class="p-0 m-0 bordefoto "     >
+            <div class="horizontal-container animated fadeIn slow p-0" *ngIf="cargados"  >
+              <swiper [config]="config2">
+                <div *ngFor="let slide2 of imagenesgallery">
+                  <picture>
+                    <source media="(min-width: 968px)" srcset="{{slide2.rutapc}}"
+                      data-srcset="{{slide2.rutapc}}" class="mh400" >
+                    <source media="(min-width: 0px)" srcset="{{slide2.rutamovil}}"
+                      data-srcset="{{slide2.rutamovil}}" >
+                    <img src="{{slide2.rutapc}}" data-src="{{slide2.rutapc}}"
+                      alt="{{slide2.titulo}}" class="imagecolecciones lazyload mh400" onerror="this.src='assets/images/sinimagen.jpg' "  >
+                  </picture>
+                  <div class="animated fadeInUp slow fondogallery  text-center text-white  posabsolmenu" >
+                    <h3  routerLink="{{slide2.destino}}"  class="fs-20 mx-auto cupo" style="max-width: 360px; height: auto;"> 
+                       {{slide2.nombre}}  
+                    </h3>
+                    <div class="lineAmafull"></div>
+                  </div>
+                  <div class="row justify-content-between align-items-center text-center bgG mx-auto my-0 p-0 panscrollpm ">
+                   <div class="col-12 mx-auto">
+                     <p class="fs-14 my-2 py-2">
+                     {{slide2.descripcion}}
+                     </p>
+                   </div>
+                  </div>
+                </div>
+              </swiper>
+            </div>
+        </div>
+
+    </div>
+</div>

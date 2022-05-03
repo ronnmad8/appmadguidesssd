@@ -1,0 +1,80 @@
+<div class="px-0">
+    <div class="w-100 p-0 m-0">
+
+        <app-banner [enlace]="idenlace"></app-banner>
+
+        <div class="posrel w-100 bgG">
+            <div class="posabsol text-center w-100" style="bottom: 2px; left: 0; right: 0; z-index:10">
+                <i (click)="scrollToElement(pres)" class="fas fa-chevron-circle-down colAma2 cupo fs-30"></i>
+            </div>
+        </div>
+
+        <!--1-pres---->
+        <section #pres class="wow animated fadeInUp slow py-5 px-xl-5 px-1" data-wow-delay="0.4s">
+            <app-textosecciones [texto]="texto1" [enlace]="idenlace" [link]="link1" [posicion]="posiciont1" [tipo]="tipotextoseccion"
+                [titulo]="titulo1" [conenlace]="false"></app-textosecciones>
+
+        </section>
+
+        <!--2-bioclimaticas---->
+        <section #bioclimaticas id="corradi" class="wow animated fadeInUp slow  py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+
+            <app-montadasilong [link]="link2" [titulo]="titulo2" [lema]="lema2"  [enlace]="idenlace"  
+            [enlaceimagen1]="imagenlacea2" [enlaceimagen2]="imagenlaceb2" [enlaceimagenmovil]="imagenlacebmovil2"    >
+            </app-montadasilong>
+
+            <app-textosecciones [texto]="texto2" [enlace]="idenlace" [link]="link2" [posicion]="posiciont2" [tipo]="tipotextoseccion"
+                [titulo]="" [conenlace]="true"></app-textosecciones>
+               
+            <div class="h80"></div>
+        </section>
+
+        <!--3-pergotenda---->
+        <section #pergotenda class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+
+            <app-montadasdlong [link]="link3" [titulo]="titulo3" [lema]="lema3" [enlace]="idenlace"  
+            [enlaceimagen1]="imagenlacea3" [enlaceimagen2]="imagenlaceb3" [enlaceimagenmovil]="imagenlaceamovil3"  >
+            </app-montadasdlong>
+
+            <app-textosecciones [texto]="texto3" [enlace]="idenlace" [link]="link3" [posicion]="posiciont3" [tipo]="tipotextoseccion"
+                [titulo]="" [conenlace]="true"></app-textosecciones>
+
+            <div class="h80"></div>
+        </section>
+
+        <!--4-sunsails---->
+        <section #sunsails class="wow animated fadeInUp slow  py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+
+            <app-montadasilong [link]="link4" [titulo]="titulo4" [lema]="lema4" [enlace]="idenlace"  
+            [enlaceimagen1]="imagenlacea4" [enlaceimagen2]="imagenlaceb4" [enlaceimagenmovil]="imagenlacebmovil4"  >
+            </app-montadasilong>
+
+            <app-textosecciones [texto]="texto4" [enlace]="idenlace" [link]="link4" [posicion]="posiciont4" [tipo]="tipotextoseccion"
+                [titulo]="" [conenlace]="true"></app-textosecciones>
+
+            <div class="h80"></div>
+        </section>
+
+
+        <!--5-accesorios---->
+        <section #accesorios class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+
+            <app-montadasdlong [link]="link5" [titulo]="titulo5" [lema]="lema5" [enlace]="idenlace"  
+            [enlaceimagen1]="imagenlacea5" [enlaceimagen2]="imagenlaceb5" [enlaceimagenmovil]="imagenlaceamovil5"  >
+            </app-montadasdlong>
+
+            <app-textosecciones [texto]="texto5" [enlace]="idenlace" [link]="link5" [posicion]="posiciont5" [tipo]="tipotextoseccion"
+                [titulo]="" [conenlace]="true"></app-textosecciones>
+
+            <div class="h80"></div>
+        </section>
+
+
+        
+        <section #contacto id="contacto" class="wow animated fadeInUp slow  py-0 px-xl-5 px-1 " data-wow-delay="0.4s">
+            <app-contactar></app-contactar>
+        </section>
+
+
+    </div>
+</div>

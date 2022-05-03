@@ -1,0 +1,21 @@
+
+  <div id="hero" class="p-0 m-0 hero " >
+      <div class="horizontal-container animated fadeIn " style="animation-delay: 0.1s"  >
+        <swiper [config]="config">
+          <div  *ngFor="let slide of imageneslightbox" >
+            <picture>
+              <source media="(min-width: 968px)" srcset="{{slide.rutapc}}"
+                data-srcset="{{slide.rutapc}}" >
+              <source media="(min-width: 0px)" srcset="{{slide.rutamovil}}"
+                data-srcset="{{slide.rutamovil}}"  >
+              <img src="{{slide.rutapc}}" data-src="{{slide.rutapc}}"
+                alt="{{slide.nombre}} " class="imagebanner lazyload " onerror="this.src='assets/images/sinimagen.jpg' " >
+            </picture>
+            <div class="animated fadeInUp text-left  text-white posabsoltt2 px-1" style="animation-delay: 0.8s"  >
+                <div><h1 class="titbanner " > {{slide.nombre}} </h1></div>
+                <div class="lineAmafull"></div>
+            </div>
+          </div>
+        </swiper>
+      </div>
+  </div>

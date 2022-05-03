@@ -1,0 +1,19 @@
+<div class="colecciones p-0 m-0 ">
+  <div class="animated fadeIn slow ">
+
+    <div class="row justify-content-center text-center  ">
+      <div *ngFor="let col of imagenesproveedores" class="col-xl-2 col-md-4 mx-auto">
+        <div class="panelprov mx-auto my-2">
+
+          <picture>
+            <source media="(min-width: 968px)" srcset="{{col.rutapc}}" data-srcset="{{col.rutapc}}" class="mh200">
+            <source media="(min-width: 0px)" srcset="{{col.rutamovil}}" data-srcset="{{col.rutamovil}}" class="mh200">
+            <img src="{{col.rutapc}}" data-src="{{col.rutapc}}" alt="{{col.titulo}}" class="lazyload mhprov"
+              onerror="this.src='assets/images/sinimagen.jpg' ">
+          </picture>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

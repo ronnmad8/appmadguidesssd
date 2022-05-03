@@ -1,0 +1,74 @@
+<div class="container">
+    
+    <div class="row">
+
+        <div class="col-12">
+            <h2 class="fs-titulo text-center ">
+                {{titulo}}
+            </h2>
+            <div class="linetextAma"></div>
+        </div>
+        <div class="h40"></div>
+
+        <div class="col-xl-2 "></div>
+
+        <div class="col-xl-4 text-left px-4 my-3">
+            <span class="text-dark posabsol" style="left: 55px; top:-25px;">CATEGORÍA</span>
+            <div class="mx-4">
+                <select #filcategoria class="custom-select custom-select-sm" name="idcategoria" (change)="filtrarcategoria(filcategoria)"
+                    [(ngModel)]='idcategoria' >
+                    <option value="0">Todos</option>
+                    <option value="{{cat.id}}" *ngFor="let cat of categorias">
+                        {{cat.nombre}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xl-4 text-left px-4 my-3">
+            <span class="text-dark posabsol" style="left: 55px; top:-25px;">FECHA</span>
+            <div class="mx-4">
+                <select #filfecha class="custom-select custom-select-sm" name="idcategoria" (change)="filtrarfecha(filfecha)"
+                    [(ngModel)]='fecha' >
+                    <option value="0">-</option>
+                    <option value="{{fe}}" *ngFor="let fe of fechas">
+                        {{fe}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-xl-2 "></div>
+
+    </div>
+    
+    <div class="mh300 ">
+        
+        <div class="horizontal-container bgAma2" >
+            <swiper [config]="config">
+                <div class="" *ngFor="let art of articulos">
+                    <div class="cupo posrel" >
+                        <picture>
+                            <source media="(min-width: 968px)" srcset="{{art.rutaimagen}}"
+                                data-srcset="{{art.rutaimagen}}">
+                            <source media="(min-width: 0px)" srcset="{{art.rutaimagenmovil}}"
+                                data-srcset="{{art.rutaimagenmovil}}">
+                            <img src="{{art.rutaimagen}}" data-src="{{art.rutaimagen}}" alt="{{art.altimagen}}"
+                                class="mh200 lazyload ">
+                        </picture>
+                        <div #x class="fondogallery  m-0 p-0 posabsol cupo" routerLink="/blogdetalle/{{art.id}}" fragment="article"
+                            style="min-height: 100%; width: 100%; top: 0; left:0">
+                            <div class="text-left  text-white posabsoltt3 px-1">
+                                <div>
+                                    <div class="tit "> {{art.titulo}} </div>
+                                </div>
+                                <div class="lineAmafull"></div>
+                            </div>
+                        </div>
+       
+                    </div>
+                </div>
+            </swiper>
+        </div>
+
+    </div>
+</div>

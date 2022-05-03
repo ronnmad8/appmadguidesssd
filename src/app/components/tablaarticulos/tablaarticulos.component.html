@@ -1,0 +1,284 @@
+<div>
+    <div class="pt-4">
+        <form class="" [formGroup]="formaA" (ngSubmit)=" filtrarAr()">
+            <div class="row ">
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Nombre
+                    </span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="text" name="articulonombrefiltro"
+                            [value]='articulonombrefiltrosel' formControlName="articulonombrefiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha inicio
+                    </span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="articulofechainifiltro"
+                            [value]='articulofechainifiltrosel | date:"yyyy-MM-dd" '
+                            formControlName="articulofechainifiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">Fecha fín</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="articulofechafinfiltro"
+                            [value]='articulofechafinfiltrosel | date:"yyyy-MM-dd"'
+                            formControlName="articulofechafinfiltro">
+                    </div>
+                </div>
+                <div class="col-xl-4 col-6 text-left my-0 d-flex" style="min-width: 140px;">
+                    <div class="mt-1">
+                        <button type="submit" class="btn btn-sm btn-dark cupo " title="filtrar" *ngIf="btactivadoI">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light cupo " *ngIf="!btactivadoI" disabled="true">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                    </div>
+                    <div class="ml-3 mt-1">
+                        <button type="submit" class="btn btn-sm btn-outline-dark cupo " title="crear un articulo" (click)="creararticulo()"  >
+                            <i class="fas fa-plus mr-1"></i>
+                            <small> NUEVO ARTíCULO </small>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-6 text-left my-0 " style="min-width: 140px;">
+                    <div class="mt-1 d-flex">
+                        <pagination-controls (pageChange)="pagi=$event" class="custom-pagination py-0" autoHide="true"
+                            previousLabel=" " nextLabel=" ">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-hover table-responsive ">
+        <thead>
+            <tr class="bg-info text-light" style="height: 35px">
+
+                <th class="text-center" scope="col"><i class="fa fa-edit"></i></th>
+                <th class="text-center" scope="col"><i class="fa fa-trash"></i></th>
+                <th scope="col">ID</th>
+                <th scope="col" style="min-width: 80px;">IMAGEN</th>
+                <th scope="col" style="min-width: 220px;">NOMBRE</th>
+                <th scope="col" style="min-width: 80px;">COLECCION</th>
+                <th scope="col" style="min-width: 80px;">POSICION</th>
+                <th scope="col" style="min-width: 220px;">PRECIO</th>
+                <th scope="col" style="min-width: 220px;">DIMENSIONES</th>
+                <th scope="col" style="min-width: 280px;">ACABADOS ESTRUCTURA</th>
+                <th scope="col" style="min-width: 280px;">ACABADOS TAPIZADOS</th>
+                <th scope="col" style="min-width: 280px;">ACABADOS OTROS</th>
+                <th scope="col" style="min-width: 220px;">FECHA MODIFICACION</th>
+
+            </tr>
+        </thead>
+        <tbody style="min-height: 800px;">
+            <tr *ngFor="let ar of articulosadmin | paginate: {itemsPerPage: 10, currentPage: pagi }"
+                style="height: 65px">
+
+                <td> <span class="badge badge-warning text-light cupo cuad20" title="editar"
+                        (click)="openA(mymodaladminAr, (ar))"> <i class="fas fa-dot-circle"></i> </span>
+                </td>
+                <td> <span class="badge badge-danger text-light cupo cuad20" title="eliminar"
+                    (click)="deletearticulo(ar)"> <i class="fas fa-times"></i> </span>
+                </td>
+                <td>{{ar.id}}</td>
+                <td style="min-width: 80px;">
+                    <a target="_blank" href="{{ar.rutaimagen}}" *ngIf="ar.rutapc != '' ">
+                        <img src="{{ ar.rutaimagen }}"
+                            style="width: auto; height: 40px;"
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                    </a>
+                </td>
+                <td style="min-width: 220px;"> {{ar.nombre.length > 30 ? ar.nombre.substring(0,27)+ "..." : ar.nombre }}
+                </td>
+                <td style="min-width: 80px;">  {{ar.coleccion}} </td>
+                <td style="min-width: 80px;">  {{ar.posicion}} </td>
+                <td style="min-width: 220px;">  {{ar.precio}} </td>
+                <td style="min-width: 220px;"> {{ar.dimensiones}} </td>
+                <td style="min-width: 280px;" class="py-0 my-0"> 
+                    <div class=" py-0 my-1 panscrolltabla " >
+                        <div *ngFor="let ac1 of ar.articulosacabados1"  >
+                            <a target="_blank" href="{{ac1.rutaimagen}}" *ngIf="ac1.rutaimagen != '' ">
+                                <img src="{{ ac1.rutaimagen }}"
+                                style="width: auto; height: 20px;"
+                                onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                               · {{ac1.nombre}}
+                            </a>
+                        </div> 
+                    </div>
+                </td>
+                <td style="min-width: 280px;" class="py-0 my-0" >
+                    <div class=" py-0 my-0 panscrolltabla " >
+                        <div *ngFor="let ac2 of ar.articulosacabados2"  >
+                            <a target="_blank" href="{{ac2.rutaimagen}}" *ngIf="ac2.rutaimagen != '' ">
+                                <img src="{{ ac2.rutaimagen }}"
+                                style="width: auto; height: 20px;"
+                                onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                                · {{ac2.nombre}}
+                            </a>
+                        </div> 
+                    </div>
+                </td>
+                <td style="min-width: 280px;" class="py-0 my-0"> 
+                    <div class=" py-0 my-0 panscrolltabla " >
+                        <div *ngFor="let ac3 of ar.articulosacabados3"  >
+                            <a target="_blank" href="{{ac3.rutaimagen}}" *ngIf="ac3.rutaimagen != '' ">
+                                <img src="{{ ac3.rutaimagen }}"
+                                style="width: auto; height: 20px;"
+                                onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                               · {{ac3.nombre}}
+                            </a>
+                        </div> 
+                    </div>
+                </td>
+                <td style="min-width: 220px;"> {{ar.updated_at | date:'dd/MM/yyyy'}}</td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<ng-template #mymodaladminAr let-modal>
+
+    <div class="modal-header">
+        <div class="w-100 mx-auto text-center">
+            <h4 class="modal-title" id="modal-basic-title ">ARTICULO</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="cerrarmodalAr()">
+            <span aria-hidden="true"><i class="fa fa-times fs-16"></i></span>
+        </button>
+    </div>
+
+    <form [formGroup]="formaarticulos" (ngSubmit)="gestionararticulo()">
+        <div class="modal-body mx-auto my-2 w-100">
+            <div class="row p-3">
+
+                <input class="" type="text" name="articuloid" formControlName="articuloid" [value]="articuloidsel"
+                    hidden="hidden">
+                <div class="col-12 p-1 d-flex">
+                    <div class="mr-3"><b>Colección: </b>{{articulocoleccionsel}} <br> </div>
+                    <div ><b>Posición: </b>{{articuloposicionsel}} </div>
+                </div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Nombre</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="articulonombre" formControlName="articulonombre"
+                            [value]="articulonombresel"   >
+                    </div>
+                </div>
+                
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Precio</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="articuloprecio" formControlName="articuloprecio"
+                            [value]="articulopreciosel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Dimensiones</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="articulodimensiones" formControlName="articulodimensiones"
+                            [value]="articulodimensionessel">
+                    </div>
+                </div>
+                <div class="linecell my-2"></div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Acabado Estructura</b>
+                    </div>
+                    <div class="w-100 my-0 py-0 fs-16" *ngFor="let ac of acabados1"   >
+                        <i class="far fa-square text-secondary mr-1 cupo" (click)="addacabado(ac.id, 1)" *ngIf="!ac.active"  ></i>  
+                        <i class="far fa-check-square text-danger  mr-1 cupo" (click)="removeacabado(ac.id, 1)" *ngIf="ac.active" ></i>  
+                        · {{ac.nombre}}
+                     </div>
+                </div>
+                <div class="linecell my-2"></div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Acabado Tapicería</b>
+                    </div>
+                    <div class="w-100 my-0 py-0 fs-16" *ngFor="let ac of acabados2"   >
+                        <i class="far fa-square text-secondary mr-1 cupo" (click)="addacabado(ac.id, 2)" *ngIf="!ac.active"  ></i>  
+                        <i class="far fa-check-square text-danger mr-1 cupo" (click)="removeacabado(ac.id, 2)" *ngIf="ac.active" ></i>  
+                        · {{ac.nombre}}
+                    </div>
+                </div>
+                <div class="linecell my-2"></div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Acabado Otros</b>
+                    </div>
+                    <div class="w-100 my-0 py-0 fs-16" *ngFor="let ac of acabados3">
+                        <i class="far fa-square text-secondary mr-1 cupo" (click)="addacabado(ac.id, 3)" *ngIf="!ac.active"  ></i>  
+                        <i class="far fa-check-square text-danger mr-1 cupo" (click)="removeacabado(ac.id, 3)" *ngIf="ac.active" ></i>  
+                        · {{ac.nombre}}
+                     </div>
+                </div>
+
+                <div class="col-12 mt-4 p-0">
+                    <div class="mb-0">
+                        <b>Imagen</b>
+                    </div>
+                    <div class="my-0 custom-file  w-100 h-auto">
+                        <input class="custom-file-input  cupo" type="file" name="articuloA"
+                            (change)="cambiarimagen1($event)" aria-describedby="ip1" url="" accept="image/*">
+                        <label class=" custom-file-label" for="ip1">
+                            <i class="fa fa-image mr-2"></i>
+                            REGISTRAR NUEVA IMAGEN
+                        </label>
+
+                        <div class="px-2 py-1 mt-2 bgAma2 ">
+                            <input type="text" name="articulorutaimagen" formControlName="articulorutaimagen" [value]="imagenIsel"
+                                disabled="disabled" style="font-weight: 600; min-width: 100%;">
+                        </div>
+                        <div class="h-auto text-center bgAma2 pb-3" style="min-width: 120px;">
+                            <img src="{{imagenAIsel}}" style="width: auto; height: 250px; max-width: 100%;" />
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer container-login100-form-btn m-t-17">
+
+            <button class="btn btn-info " type="submit" *ngIf="bactivadoArticulo"> GUARDAR </button>
+            <button class="btn btn-light apagado" type="button" *ngIf="!bactivadoArticulo" title="Desactivado"> <i
+                    class="fas fa-slash"></i> </button>
+        </div>
+    </form>
+
+</ng-template>
+
+<app-spinner [load]="loading"></app-spinner>
+
+
+<!-- <div  style="opacity: 0; width: 200px; height: auto; font-size: 12px; font-weight: 600 ; position: fixed; z-index: 9999; left: 5px; right: auto; top: 5px; background-color: rgba(255,255,0,0.9); padding: 5px;">
+    <pre>
+       Valid:  {{formaacabados.valid}}  
+    <br>
+       Status: {{formaacabados.status}}
+    <br>
+       Valores:  {{formaacabados.value | json}}  
+    </pre>
+</div>  -->
+
+

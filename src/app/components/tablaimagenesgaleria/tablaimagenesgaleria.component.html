@@ -1,0 +1,249 @@
+<div>
+    <div class="pt-4">
+        <form class="" [formGroup]="formagaleriaI" (ngSubmit)="filtrarG()">
+            <div class="row ">
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">Nombre</span>
+                    <div class="m-b-16">
+                        <input type="text" class="form-control form-control-sm" name="imagennombrefiltro"
+                            [value]="imagennombrefiltrosel" formControlName="imagennombrefiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                       Fecha inicio</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="imagenfechainifiltro"
+                            [value]='imagenfechainifiltrosel | date:"yyyy-MM-dd" '
+                            formControlName="imagenfechainifiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha fín</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="imagenfechafinfiltro"
+                            [value]='imagenfechafinfiltrosel | date:"yyyy-MM-dd"'
+                            formControlName="imagenfechafinfiltro">
+                    </div>
+                </div>
+                <div class="col-xl-4 col-6 text-left my-0 d-flex" style="min-width: 140px;">
+                    <div class="mt-1">
+                        <button type="submit" class="btn btn-sm btn-dark cupo " title="filtrar" *ngIf="btactivadoI">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light cupo " *ngIf="!btactivadoI" disabled="true">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                    </div>
+                    <div class="ml-3 mt-1">
+                        <button type="submit" class="btn btn-sm btn-outline-dark cupo " title="crear un articulo" (click)="nuevaimagengaleria()"  >
+                            <i class="fas fa-plus mr-1"></i>
+                            <small> NUEVO </small>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-6 text-left my-0 " style="min-width: 140px;">
+                    <div class="mt-1 ">
+                        <pagination-controls (pageChange)="pagi=$event" class="custom-pagination py-0" autoHide="true" previousLabel=" " nextLabel=" ">
+                        </pagination-controls>
+                    </div>  
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-hover table-responsive ">
+        <thead>
+            <tr class="bg-danger text-light" style="height: 35px">
+
+                <th class="text-center" scope="col"><i class="fa fa-edit"></i></th>
+                <th class="text-center" scope="col"><i class="fa fa-trash"></i></th>
+                <th scope="col">ID</th>
+                <th scope="col" style="min-width: 80px;">PC</th>
+                <th scope="col" style="min-width: 60px;">MOVIL</th>
+                <th scope="col" style="min-width: 80px;">POSICION</th>
+                <th scope="col" style="min-width: 220px;">TIPO</th>
+                <th scope="col" style="min-width: 360px;">ALT</th>
+                <th scope="col" style="min-width: 460px;">DESCRIPCIÓN</th>
+                <th scope="col" style="min-width: 460px;">OBSERVACIONES</th>
+                <th scope="col" style="min-width: 220px;">ENLACE</th>
+                <th scope="col" style="min-width: 220px;">FECHA MODIFICACION</th>
+
+            </tr>
+        </thead>
+        <tbody style="min-height: 800px;">
+            <tr *ngFor="let im of imagenesadmin | paginate: {itemsPerPage: 10, currentPage: pagi }"
+                style="height: 65px">
+
+                <td> <span class="badge badge-warning text-light cupo cuad20" title="editar"
+                        (click)="openM(mymodaladminG, (im))"> <i class="fas fa-dot-circle"></i> </span>
+                </td>
+                <td> <span class="badge badge-danger text-light cupo cuad20" title="eliminar"
+                        (click)="deleteimagen(im)"> <i class="fas fa-times"></i> </span>
+                </td>
+                <td>{{im.id}}</td>
+                <td style="min-width: 80px;">
+                    <a target="_blank" href="{{im.rutapc}}" >
+                            <img src="{{ im.rutapc }}" data-src="{{ im.rutapc }}"
+                            style="width: auto; height: 40px;" 
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';"  />
+                             
+                    </a>
+                </td>
+                <td style="min-width: 60px;">
+                    <a target="_blank" href="{{im.rutamovil}}" *ngIf="im.rutamovil != ''">
+                        <img src="{{im.rutamovil}}"
+                            style="width: auto; height: 40px;" 
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';"  />
+                    </a>
+                </td>
+                <td style="min-width: 80px;"> {{im.posicion}} </td>
+                <td style="min-width: 220px;"> {{im.tipo}} </td>
+                <td style="min-width: 360px;"> {{im.nombre.length > 40 ? im.nombre.substring(0,37)+ "..." : im.nombre }}
+                </td>
+                <td style="min-width: 460px;"> {{im.descripcion.length > 40 ? im.descripcion.substring(0, 37)+ "..."
+                    : im.descripcion }} </td>
+                <td style="min-width: 460px;"> {{im.observaciones.length > 40 ? im.observaciones.substring(0, 37)+ "..."
+                    : im.observaciones }} </td>
+                <td style="min-width: 220px;"> {{im.enlace}} </td>
+                <td style="min-width: 220px;">{{im.updated_at | date:'dd/MM/yyyy'}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<ng-template #mymodaladminG let-modal>
+
+    <div class="modal-header">
+        <div class="w-100 mx-auto text-center">
+            <h4 class="modal-title" id="modal-basic-title ">GESTIONAR IMAGEN</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="cerrarmodalI()">
+            <span aria-hidden="true"><i class="fa fa-times fs-16"></i></span>
+        </button>
+    </div>
+
+    <form [formGroup]="formaimagenesgaleria" (ngSubmit)="gestionarimagengaleria()">
+        <div class="modal-body mx-auto my-2 w-100">
+            <div class="row p-3">
+
+                <input class="" type="text" name="imagenid" formControlName="imagenid" [value]="imagenidsel"
+                    hidden="hidden">
+
+                <div class="col-12 p-1 d-flex">
+                    <div class="mr-3"><b>Posición: </b>{{imagenposicionsel}} </div>
+                    <div><b>Tipo: </b>{{imagentiposel}} <br> </div>
+                </div>
+                <div class="col-12 p-1">
+
+                    <div class="mb-0">
+                        <b>Nombre</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="imagennombre" formControlName="imagennombre"
+                            [value]="imagennombresel">
+                    </div>
+                </div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Descripción</b>
+                    </div>
+                    <div class="w-100">
+                        <textarea class="form-control" name="imagendescripcion" formControlName="imagendescripcion"
+                            [value]="imagendescripcionsel">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Observaciones</b>
+                    </div>
+                    <div class="w-100">
+                        <textarea class="form-control" name="imagenobservaciones" formControlName="imagenobservaciones"
+                            [value]="imagenobservacionessel">
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4 p-0">
+
+                    <div class="mb-0">
+                        <b>Imagen pc</b>
+                    </div>
+                    <div class="my-0 custom-file  w-100 h-auto">
+                        <input class="custom-file-input  cupo" type="file" name="imagenA" 
+                            (change)="cambiarimagen1($event)" aria-describedby="ip1"  accept="image/*">
+                        <label class=" custom-file-label" for="ip1">
+                            <i class="fa fa-image mr-2"></i>
+                            REGISTRAR NUEVA IMAGEN PARA PC
+                        </label>
+
+                        <div class="px-2 py-1 mt-2 bgAma2 ">
+                            <input type="text" name="imagenI" formControlName="imagenI" [value]="imagenIsel"
+                                disabled="disabled" style="font-weight: 600; min-width: 100%;">
+                        </div>
+
+                        <div class="h-auto text-center bgAma2 pb-3" style="min-width: 120px;">
+                            <img src="{{imagenAIsel}}" style="width: auto; height: 250px; max-width: 100%;" 
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4 p-0">
+
+                    <div class="mb-0">
+                        <b>Imagen movil</b>
+                    </div>
+                    <div class="my-0 custom-file  w-100 h-auto">
+                        <input class="custom-file-input  cupo" type="file" name="imagenAM" 
+                            (change)="cambiarimagen2($event)" aria-describedby="ip2"  accept="image/*">
+                        <label class=" custom-file-label" for="ip2">
+                            <i class="fa fa-image mr-2"></i>
+                            REGISTRAR NUEVA IMAGEN PARA MOVIL
+                        </label>
+
+                        <div class="px-2 py-1 mt-2 bgAma2 ">
+                            <input type="text" name="imagenIM" formControlName="imagenIM" [value]="imagenIMsel"
+                                disabled="disabled" style="font-weight: 600; min-width: 100%;">
+                        </div>
+
+                        <div class="h-auto text-center bgAma2 pb-3" style="min-width: 120px;">
+                            <img src="{{imagenAIMsel}}" style="width: auto; height: 250px; max-width: 100%;" 
+                            onerror="this.onerror=null;this.src='https://proyectosxanadu.es/assets/images/sinimagen.png';"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer container-login100-form-btn m-t-17">
+
+            <button class="btn btn-success " type="submit" *ngIf="btactivadoImagenes"> GUARDAR </button>
+            <button class="btn btn-light apagado" type="button" *ngIf="!btactivadoImagenes" title="Desactivado"> <i
+                    class="fas fa-slash"></i> </button>
+        </div>
+    </form>
+
+</ng-template>
+
+<app-spinner [load]="loading"></app-spinner>
+
+<!-- <div  style="opacity: 0; width: 200px; height: auto; font-size: 12px; font-weight: 600 ; position: fixed; z-index: 9999; left: 5px; right: auto; top: 5px; background-color: rgba(255,255,0,0.9); padding: 5px;">
+    <pre>
+       Valid:  {{formaimagenesgaleria.valid}}  
+    <br>
+       Status: {{formaimagenesgaleria.status}}
+    <br>
+       Valores:  {{formaimagenesgaleria.value | json}}  
+    </pre>
+</div>  -->

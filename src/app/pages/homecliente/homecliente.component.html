@@ -1,0 +1,171 @@
+<div class="px-0">
+    <div class="w-100 p-0 m-0">
+
+        <app-slider [enlace]="idenlace"   ></app-slider>
+
+        <div class="posrel w-100">
+            <div class="posabsol text-center w-100" style="bottom: 2px; left: 0; right: 0; z-index:10">
+                <i (click)="scrollToElement(nosotros)" class="fas fa-chevron-circle-down colAma2 cupo fs-30"></i>
+            </div>
+        </div>
+
+        <!--1-nosotros---->
+        <section #nosotros class="wow animated fadeInUp py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+
+            <app-textosecciones [texto]="texto1" [enlace]="idenlace" [link]="link1" [posicion]="posiciont1" [tipo]="tipotextoseccion"
+                [titulo]="titulo1" [conenlace]="true"></app-textosecciones>
+
+        </section>
+
+        <!--3-corradi---->
+        <section #corradi id="corradi" class="wow animated fadeInUp py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+
+            <app-montadasi [link1]="linka3" [link2]="linkb3" [enlaceimagen1]="imagenlacea3" [enlaceimagen2]="imagenlaceb3"  [enlaceimagenmovil]="imagenlaceamovil3"  >
+            </app-montadasi>
+
+            <app-textosecciones [texto]="texto3" [enlace]="idenlace" [link]="link3" [posicion]="posiciont3" [tipo]="tipotextoseccion"
+                [titulo]="titulo3" [conenlace]="true"></app-textosecciones>
+               
+            <div class="h80"></div>
+        </section>
+
+        <!--4-markilux---->
+        <section #markilux class="wow animated fadeInUp bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+
+            <app-montadasd [link1]="linka4" [link2]="linkb4"  [enlaceimagen1]="imagenlacea4" [enlaceimagen2]="imagenlaceb4" [enlaceimagenmovil]="imagenlacebmovil4" >
+            </app-montadasd>
+
+            <app-textosecciones [texto]="texto4" [enlace]="idenlace" [link]="link4" [posicion]="posiciont4" [tipo]="tipotextoseccion"
+                [titulo]="titulo4" [conenlace]="true"></app-textosecciones>
+
+            <div class="h80"></div>
+        </section>
+
+        <!--5-teknikor---->
+        <section #tecknikor class="wow animated fadeInUp py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+
+            <app-montadasi [link1]="linka5" [link2]="linkb5"  [enlaceimagen1]="imagenlacea5" [enlaceimagen2]="imagenlaceb5" [enlaceimagenmovil]="imagenlaceamovil5"  >
+            </app-montadasi>
+
+            <app-textosecciones [texto]="texto5" [enlace]="idenlace" [link]="link5" [posicion]="posiciont5" [tipo]="tipotextoseccion"
+                [titulo]="titulo5" [conenlace]="false"></app-textosecciones>
+
+            <div class="h80"></div>
+        </section>
+
+        <!--6-proyectos---->
+        <section #proyectos class="wow animated fadeInUp bgG pt-0 pb-5 px-xl-5 px-1 " data-wow-delay="0.2s">
+
+            <app-entera [link]="linka6"  [enlace]="idenlace" [posicion1]="posiciona6" [tipo]="tiposeccion">
+            </app-entera>
+
+            <app-textosecciones [texto]="texto6" [enlace]="idenlace" [link]="link6" [posicion]="posiciont6" [tipo]="tipotextoseccion"
+                [titulo]="titulo6" [conenlace]="true"></app-textosecciones>
+
+            <div class="h80"></div>
+
+        </section>
+
+        <!--2-colecciones---->
+        <section #colecciones class="wow animated fadeInUp  pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s">
+            
+            <app-slidercolecciones [enlace]="idenlace"></app-slidercolecciones>
+
+            <div class="h80"></div>
+            
+            <app-textosecciones [texto]="texto2" [enlace]="idenlace" [link]="link2" [posicion]="posiciont2" [tipo]="tipotextoseccion"
+                [titulo]="titulo2" [conenlace]="false"></app-textosecciones>
+                
+            <div class="h80"></div>
+        </section>
+
+        <!--7-producto destacado---->
+        <section #proyectos class="wow animated fadeInUp bgG  pt-0 pb-5 px-xl-5 px-1 " data-wow-delay="0.2s">
+
+            
+            <app-entera [link]="linka7" [enlace]="idenlace" [posicion1]="posiciona7" [tipo]="tiposeccion">
+            </app-entera>
+            
+            <app-textosecciones [texto]="texto7" [enlace]="idenlace" [link]="linka7" [posicion]="posiciona7" [tipo]="tipotextoseccion"
+            [titulo]="titulo7" [conenlace]="true"></app-textosecciones>
+            
+            <div class="h80"></div>
+        </section>
+
+
+        <!--8-proveedores---->
+        <section #proveedores class="wow animated fadeInUp    pt-1 pb-5 mx-xl-5 mx-1" data-wow-delay="0.2s">
+            <div class="h80"></div>
+
+            <app-collageproveedores [enlace]="idenlace"></app-collageproveedores>
+            
+            <div class="h80"></div>
+            
+            <app-textosecciones [texto]="texto8" [enlace]="idenlace" [link]="link8" [posicion]="posiciont8" [tipo]="tipotextoseccion"
+                [titulo]="titulo8" [conenlace]="false"></app-textosecciones>
+                
+            <div class="h80"></div>
+
+        </section>
+
+
+        <!--9-articulos blog---->
+        <section class="wow animated fadeInUp   bgAma2 py-5 px-xl-5 px-1 mb-0" data-wow-delay="0.2s">
+
+            <div class="row ">
+                <div class="col-xl-4" *ngFor="let ab of blogarticulos">
+                    <div>
+                        <div class="bordefoto cupo" routerLink="/blogdetalle/{{ab.id}}"  >
+                            <picture>
+                                <source media="(min-width: 0px)" srcset="{{ab.rutaimagen}}"
+                                    data-srcset="{{ab.rutaimagen}}">
+                                <img src="{{ab.rutaimagen}}" data-src="{{ab.rutaimagen}}" alt="corradi"
+                                    class="lazyload mh300">
+                            </picture>
+                        </div>
+                        <div class="m-2">
+                            <div class="d-flex w-100">
+                                <div class="fs-16 p-1 text-left">
+                                    <span class="bgG px-2">
+                                        {{ab.categoria.length > 20 ? ab.categoria.substring(0, 17)+ '...' : ab.categoria
+                                        }}
+                                    </span>
+                                </div>
+                                <div class="fs-16 p-1 text-right ml-auto mr-0">{{ab.mes}} {{ab.year}}</div>
+                            </div>
+                            <div class="fs-22 p-1 text-center">
+                                {{ab.titulo.length > 40 ? ab.titulo.substring(0, 37)+'...' : ab.titulo }}
+                            </div>
+                            <div class="linecell"></div>
+                            <div class="p-1">
+                                <p class="fs-20 my-3 pb-5">{{ab.texto.length > 225 ? ab.texto.substring(0, 222)+ '...' :
+                                    ab.texto }}
+                                    <br>
+                                    <a routerLink="/blogdetalle/{{ab.id}}"  class="fs-bt cupo btxanaduB destac">
+                                        ...leer más
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <app-textosecciones [texto]="texto9"  [enlace]="idenlace" [link]="link9" [posicion]="posiciont9" [tipo]="tipotextoseccion"
+                [titulo]="titulo9" [conenlace]="true"></app-textosecciones>
+        
+        </section>
+
+        <!--contactar---->
+        <section #contacto id="contacto" class="wow animated fadeInUp    py-0 px-xl-5 px-1 "
+            data-wow-delay="0.4s">
+
+            <app-contactar ></app-contactar>
+           
+        </section>
+
+    </div>
+    <div>
+    </div>
+    
+</div>

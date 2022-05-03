@@ -1,0 +1,19 @@
+
+  <div id="hero" class="p-0 m-0 hero " >
+      <div class="horizontal-container animated fadeIn " style="animation-delay: 0.1s"  >
+        <swiper [config]="config">
+          <div  *ngFor="let slide of imagenesarticulos" >
+            <picture>
+              <source media="(min-width: 0px)" srcset="{{slide.rutaimagen}}"
+                data-srcset="{{slide.rutaimagen}}"  >
+              <img src="{{slide.rutaimagen}}" data-src="{{slide.rutaimagen}}"
+                alt="{{slide.nombre}}" class="imagebanner lazyload " onerror="this.src='assets/images/sinimagen.jpg' "  >
+            </picture>
+            <div class="animated fadeInUp text-left  text-white posabsoltt2 px-1" style="animation-delay: 0.8s"  >
+                <div><h1 class="subtitbanner " > {{slide.nombre}} </h1></div>
+                <div class="lineAmafull"></div>
+            </div>
+          </div>
+        </swiper>
+      </div>
+  </div>

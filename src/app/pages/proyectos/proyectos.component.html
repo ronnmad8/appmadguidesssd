@@ -1,0 +1,208 @@
+<div class="px-0">
+    <div class="w-100 p-0 m-0">
+
+        <app-banner [enlace]="idenlace"></app-banner>
+
+        <div class="posrel w-100 bgG">
+            <div class="posabsol text-center w-100" style="bottom: 2px; left: 0; right: 0; z-index:10">
+                <i (click)="scrollToElement(pres)" class="fas fa-chevron-circle-down colAma2 cupo fs-30"></i>
+            </div>
+        </div>
+
+        <!--1-pres---->
+        <section #pres class="wow animated fadeInUp slow py-5 px-xl-5 px-1" data-wow-delay="0.4s">
+            <app-textosecciones [texto]="texto1" [enlace]="idenlace" [link]="link1" [posicion]="posiciont1" [tipo]="tipotextoseccion"
+                [titulo]="titulo1" [conenlace]="false"  ></app-textosecciones>
+
+        </section>
+
+        <!--2-bioclimaticas---->
+        <section #bioclimaticas id="corradi" class="wow animated fadeInUp slow  py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+            <div class="h80"></div>
+
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo2" [texto]="texto2" [link]="link2" [posicion]="posiciont2" 
+                [imagenapc]="imagenlacea2"
+                [imagenamovil]="imagenlaceamovil2"
+                [imagenbpc]="imagenlaceb2"
+                [imagenbmovil]="imagenlacebmovil2"               >
+            </app-proyecs>
+               
+            
+        </section>
+
+        <!--3-porches---->
+        <section #porches class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo3" [texto]="texto3" [link]="link3" [posicion]="posiciont3" 
+                [imagenapc]="imagenlacea3"
+                [imagenamovil]="imagenlaceamovil3"
+                [imagenbpc]="imagenlaceb3"
+                [imagenbmovil]="imagenlacebmovil3"               >
+            </app-proyecsd>
+
+        </section>
+
+        <!--4-pergolas---->
+        <section #pergolas class="wow animated fadeInUp slow  py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+            <div class="h80"></div>
+
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo4" [texto]="texto4" [link]="link4" [posicion]="posiciont4" 
+                [imagenapc]="imagenlacea4"
+                [imagenamovil]="imagenlaceamovil4"
+                [imagenbpc]="imagenlaceb4"
+                [imagenbmovil]="imagenlacebmovil4"    >
+            </app-proyecs>
+
+            
+        </section>
+
+        <!--5-cenadores---->
+        <section #pergolas class="wow animated fadeInUp slow  py-5 px-xl-5 px-1" data-wow-delay="0.2s">
+            <div class="h80"></div>
+
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo5" [texto]="texto5" [link]="link5" [posicion]="posiciont5" 
+                [imagenapc]="imagenlacea5"
+                [imagenamovil]="imagenlaceamovil5"
+                [imagenbpc]="imagenlaceb5"
+                [imagenbmovil]="imagenlacebmovil5"    >
+            </app-proyecsd>
+
+            
+        </section>
+
+        <!--6-techomovil---->
+        <section #techomovil class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo6" [texto]="texto6" [link]="link6" [posicion]="posiciont6" 
+                [imagenapc]="imagenlacea6"
+                [imagenamovil]="imagenlaceamovil6"
+                [imagenbpc]="imagenlaceb6"
+                [imagenbmovil]="imagenlacebmovil6"    >
+            </app-proyecs>
+
+            
+        </section>
+
+        <!--7-techofijo---->
+        <section #techofijo class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo7" [texto]="texto7" [link]="link7" [posicion]="posiciont7" 
+                [imagenapc]="imagenlacea7"
+                [imagenamovil]="imagenlaceamovil7"
+                [imagenbpc]="imagenlaceb7"
+                [imagenbmovil]="imagenlacebmovil7"    >
+            </app-proyecsd>
+
+            
+        </section>
+
+        <!--8-cortinascristal---->
+        <section #cortinasceristal class="wow animated fadeInUp slow pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s"  >
+            <div class="h80"></div>
+
+           <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo8" [texto]="texto8" [link]="link8"  [posicion]="posiciont8"
+                [imagenapc]="imagenlacea8"
+                [imagenamovil]="imagenlaceamovil8"
+                [imagenbpc]="imagenlaceb8"
+                [imagenbmovil]="imagenlacebmovil8"    >
+           </app-proyecs>
+
+           
+        </section>
+
+        <!--9-tarimas---->
+        <section #tarimas class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo9" [texto]="texto9" [link]="link9" [posicion]="posiciont9" 
+                [imagenapc]="imagenlacea9"
+                [imagenamovil]="imagenlaceamovil9"
+                [imagenbpc]="imagenlaceb9"
+                [imagenbmovil]="imagenlacebmovil9"    >
+            </app-proyecsd>
+
+            
+        </section>
+
+        <!--10-vallados---->
+        <section #vallados class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo10" [texto]="texto10" [link]="link10" [posicion]="posiciont10" 
+                [imagenapc]="imagenlacea10"
+                [imagenamovil]="imagenlaceamovil10"
+                [imagenbpc]="imagenlaceb10"
+                [imagenbmovil]="imagenlacebmovil10"    >
+            </app-proyecs>
+
+            
+        </section>
+
+        <!--11-barandillas---->
+        <section #barandillas class="wow animated fadeInUp slow pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+            
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo11" [texto]="texto11" [link]="link11" [posicion]="posiciont11" 
+                [imagenapc]="imagenlacea11"
+                [imagenamovil]="imagenlaceamovil11"
+                [imagenbpc]="imagenlaceb11"
+                [imagenbmovil]="imagenlacebmovil11"    >
+            </app-proyecsd>
+
+            
+        </section>
+
+        <!---12-garajes---->
+        <section #garajes class="wow animated fadeInUp slow pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo12" [texto]="texto12" [link]="link12" [posicion]="posiciont12" 
+                [imagenapc]="imagenlacea12"
+                [imagenamovil]="imagenlaceamovil12"
+                [imagenbpc]="imagenlaceb12"
+                [imagenbmovil]="imagenlacebmovil12"    >
+            </app-proyecs>
+
+            
+        </section>
+
+
+        <!--13-hosteleria---->
+        <section #hosteleria class="wow animated fadeInUp slow bgG pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+
+            <app-proyecsd   [enlace]="idenlace" [tipo]="7" [titulo]="titulo13" [texto]="texto13" [link]="link13" [posicion]="posiciont13" 
+                [imagenapc]="imagenlacea13"
+                [imagenamovil]="imagenlaceamovil13"
+                [imagenbpc]="imagenlaceb13"
+                [imagenbmovil]="imagenlacebmovil13"    >
+            </app-proyecsd>
+
+        </section>
+
+        <!--14-proyectoscompletos---->
+        <section #proyectoscompletos class="wow animated fadeInUp slow pt-0 pb-5 px-xl-5 px-1" data-wow-delay="0.2s" >
+            <div class="h80"></div>
+            
+            <app-proyecs   [enlace]="idenlace" [tipo]="7" [titulo]="titulo14" [texto]="texto14" [link]="link14" [posicion]="posiciont14" 
+                [imagenapc]="imagenlacea14"
+                [imagenamovil]="imagenlaceamovil14"
+                [imagenbpc]="imagenlaceb14"
+                [imagenbmovil]="imagenlacebmovil14"    >
+            </app-proyecs>
+
+            
+        </section>
+
+
+        
+        <section #contacto id="contacto" class="wow animated fadeInUp slow  py-0 px-xl-5 px-1 " data-wow-delay="0.4s">
+            <app-contactar></app-contactar>
+        </section>
+
+
+    </div>
+</div>

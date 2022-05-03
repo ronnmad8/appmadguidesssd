@@ -1,0 +1,53 @@
+<div class="mh100"></div>
+
+<div class="container-flex  py-4 m-auto">
+    <div class="mx1600 mx-auto pb-2">
+        <div class="row text-center justify-content-center ">
+            <div class="col-12 my-2">
+                <div class="panelG">
+                    <div>
+                        <p class="text-center fs-22">EMAILS RECIBIDOS POR MESES {{esteyear}}</p>
+                    </div>
+                    <div class="h-100">
+                        <canvas class="w-100 canv " id="datos">{{ chart1 }}</canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-2">
+                <div class="panelGi">
+                    <div>
+                        <p class="text-center fs-22"> RESUMEN {{esteyear}} </p>
+                    </div>
+                    <div class="row p-1">
+                        <div class="col-12 p-0" >
+                            <div class="border border-dark rounded p-0 my-2 my-1 w-25 mx-auto text-center" [style.backgroundColor]="'black'"  >
+
+                                <p class="fs-50 text-center p-1 text-white m-0" > 
+                                    {{total}}
+                                </p>
+                                <p class="fs-22 text-center p-1 text-white m-0" > 
+                                    TOTAL
+                                </p>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <div class="col-xl-3 text-left " *ngFor="let l of listaconteo; let i = index">
+                            <div class="border border-dark rounded p-0 my-1" [style.backgroundColor]="listacolor[i]"  >
+
+                                <p class="fs-50 text-center p-1 text-dark m-0" > 
+                                    {{l}}
+                                </p>
+                                <p class="fs-22 text-center p-1 text-dark m-0" > 
+                                    {{meses[i]}}
+                                </p>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-spinner></app-spinner>

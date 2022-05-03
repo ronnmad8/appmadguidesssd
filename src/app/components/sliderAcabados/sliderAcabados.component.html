@@ -1,0 +1,20 @@
+
+  <div class="p-0 m-0  " >
+      <div class="horizontal-container animated fadeIn " style="animation-delay: 0.2s"  >
+        <swiper [config]="config">
+          <div  *ngFor="let slide of imagenesgaleria" class="text-center" >
+
+          <picture>
+              <source media="(min-width: 0px)" srcset="{{slide.rutaimagen}}"
+                data-srcset="{{slide.rutaimagen}}"  >
+              <img src="{{slide.rutaimagen}}" data-src="{{slide.rutaimagen}}"
+                alt="{{slide.nombre}}" class="imageacabado  lazyload mx-auto" onerror="this.src='assets/images/sinimagen.jpg' "  >
+            </picture> 
+            <div class="animated fadeInUp posabsoltt2M px-1" style="animation-delay: 0.2s"  >
+                <div><h1 class="titacab " > {{slide.nombre}} </h1></div>
+                <div class="lineAmafull"></div>
+            </div> 
+          </div>
+        </swiper>
+      </div>
+  </div>

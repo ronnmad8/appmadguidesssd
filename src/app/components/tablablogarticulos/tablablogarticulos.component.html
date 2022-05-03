@@ -1,0 +1,302 @@
+<div>
+    <div class="pt-4">
+        <form class="" [formGroup]="formagaleriaI" (ngSubmit)="filtrarG()">
+            <div class="row ">
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">Nombre</span>
+                    <div class="m-b-16">
+                        <input type="text" class="form-control form-control-sm" name="blogarticulonombrefiltro"
+                            [value]="blogarticulonombrefiltrosel" formControlName="blogarticulonombrefiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">Categoría</span>
+                    <div class="m-b-16 ">
+
+                        <select class="custom-select custom-select-sm" name="categoriaid" formControlName="blogarticulocategoriaidfiltro"
+                            [value]="categoriaidsel">
+                            <option value="" selected>-</option>
+                            <option value="{{cat.id}}" *ngFor="let cat of categoriablogarticulos">
+                                {{cat.nombre}}
+                            </option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha inicio</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="blogarticulofechainifiltro"
+                            [value]='blogarticulofechainifiltrosel | date:"yyyy-MM-dd" '
+                            formControlName="blogarticulofechainifiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha fín</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="blogarticulofechafinfiltro"
+                            [value]='blogarticulofechafinfiltrosel | date:"yyyy-MM-dd"'
+                            formControlName="blogarticulofechafinfiltro">
+                    </div>
+                </div>
+                <div class="col-xl-4 col-6 text-left my-0 d-flex" style="min-width: 140px;">
+                    <div class="mt-1">
+                        <button type="submit" class="btn btn-sm btn-dark cupo " title="filtrar" *ngIf="btactivadoI">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light cupo " *ngIf="!btactivadoI" disabled="true">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                    </div>
+                    <div class="ml-3 mt-1">
+                        <button type="submit" class="btn btn-sm btn-outline-dark cupo " title="crear un articulo"
+                            (click)="nuevoblogarticulo()">
+                            <i class="fas fa-plus mr-1"></i>
+                            <small> NUEVO </small>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-6 text-left my-0 " style="min-width: 140px;">
+                    <div class="mt-1 ">
+                        <pagination-controls (pageChange)="pagi=$event" class="custom-pagination py-0" autoHide="true"
+                            previousLabel=" " nextLabel=" ">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-hover table-responsive ">
+        <thead>
+            <tr class="bg-dark text-light" style="height: 35px">
+
+                <th class="text-center" scope="col"><i class="fa fa-edit"></i></th>
+                <th class="text-center" scope="col"><i class="fa fa-trash"></i></th>
+                <th scope="col">ID</th>
+                <th scope="col" style="min-width: 80px;">IMAGEN PC</th>
+                <th scope="col" style="min-width: 80px;">IMAGEN MOVIL</th>
+                <th scope="col" style="min-width: 220px;">TITULO</th>
+                <th scope="col" style="min-width: 220px;">TEXTO</th>
+                <th scope="col" style="min-width: 220px;">SUBTITULO</th>
+                <th scope="col" style="min-width: 220px;">SUBTEXTO</th>
+                <th scope="col" style="min-width: 220px;">CATEGORÍA</th>
+                <th scope="col" style="min-width: 220px;">ALT </th>
+                <th scope="col" style="min-width: 220px;">META </th>
+                <th scope="col" style="min-width: 220px;">FECHA </th>
+
+            </tr>
+        </thead>
+        <tbody style="min-height: 800px;">
+            <tr *ngFor="let im of blogarticulosadmin | paginate: {itemsPerPage: 10, currentPage: pagi }"
+                style="height: 65px">
+
+                <td> <span class="badge badge-warning text-light cupo cuad20" title="editar"
+                        (click)="openM(mymodaladminS, (im))"> <i class="fas fa-dot-circle"></i> </span>
+                </td>
+                <td> <span class="badge badge-danger text-light cupo cuad20" title="eliminar"
+                        (click)="deleteblogarticulo(im)"> <i class="fas fa-times"></i> </span>
+                </td>
+                <td>{{im.id}}</td>
+                <td style="min-width: 80px;">
+                    <a target="_blank" href="{{ im.rutaimagen }}" *ngIf="im.rutaimagen !='' ">
+                        <img src="{{ im.rutaimagen }}" data-src="{{ im.rutaimagen }}" style="width: auto; height: 40px;"
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                    </a>
+                </td>
+                <td style="min-width: 80px;">
+                    <a target="_blank" href="{{ im.rutaimagenmovil }}" *ngIf="im.rutaimagenmovil !='' ">
+                        <img src="{{ im.rutaimagenmovil }}" data-src="{{ im.rutaimagenmovil }}" style="width: auto; height: 40px;"
+                            onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                    </a>
+                </td>
+                <td style="min-width: 360px;"> {{ im.titulo.length > 40 ? im.titulo.substring(0,40)+"..." : im.titulo }}
+                </td>
+                <td style="min-width: 360px;"> {{ im.texto.length > 40 ? im.texto.substring(0,40)+"..." : im.texto }}
+                </td>
+                <td style="min-width: 360px;"> {{ im.subtitulo }}
+                </td>
+                <td style="min-width: 360px;"> {{ im.subtexto }}
+                </td>
+                <td style="min-width: 220px;"> {{ im.categorias_id }} </td>
+                <td style="min-width: 220px;"> {{ im.meta.length > 40 ? im.meta.substring(0,40)+"..." : im.meta }} </td>
+                <td style="min-width: 220px;"> {{ im.altimagen.length > 40 ? im.altimagen.substring(0,40)+"..." :
+                    im.altimagen }} </td>
+                <td style="min-width: 220px;">{{ im.fecha | date:'dd/MM/yyyy' }}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<ng-template #mymodaladminS let-modal>
+
+    <div class="modal-header">
+        <div class="w-100 mx-auto text-center">
+            <h4 class="modal-title" id="modal-basic-title ">GESTIONAR </h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="cerrarmodalI()">
+            <span aria-hidden="true"><i class="fa fa-times fs-16"></i></span>
+        </button>
+    </div>
+
+    <form [formGroup]="formablogarticulos" (ngSubmit)="gestionarblogarticulo()">
+        <div class="modal-body mx-auto my-2 w-100">
+            <div class="row p-3">
+
+                <input class="" type="text" name="id" formControlName="id" [value]="idsel" hidden="hidden">
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Título</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="titulo" formControlName="titulo"
+                            [value]="titulosel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Subítulo</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="subtitulo" formControlName="subtitulo"
+                            [value]="subtitulosel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>texto</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="texto" formControlName="texto" [value]="textosel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Subtexto</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="subtexto" formControlName="subtexto"
+                            [value]="subtextosel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Meta</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="meta" formControlName="meta" [value]="metasel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Altimagen</b>
+                    </div>
+                    <div class="w-100">
+                        <input class="form-control" type="text" name="altimagen" formControlName="altimagen"
+                            [value]="altimagensel">
+                    </div>
+                </div>
+
+                <div class="col-12 p-1">
+
+                    <div class="mb-0">
+                        <b>Categoria</b>
+                    </div>
+                    <div class="w-100">
+                        <select class="custom-select" name="categoriaid" formControlName="categoriaid"
+                            [value]="categoriaidsel">
+                            <option value="" selected>-</option>
+                            <option value="{{cat.id}}" *ngFor="let cat of categoriablogarticulos">
+                                {{cat.nombre}}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-12 mt-4 p-0">
+
+                    <div class="mb-0">
+                        <b>Imagen</b>
+                    </div>
+                    <div class="my-0 custom-file  w-100 h-auto">
+                        <input class="custom-file-input  cupo" type="file" name="imagenA"
+                            (change)="cambiarimagen1($event)" aria-describedby="ip1" accept="image/*">
+                        <label class=" custom-file-label" for="ip1">
+                            <i class="fa fa-image mr-2"></i>
+                            REGISTRAR NUEVA IMAGEN PC
+                        </label>
+
+                        <div class="px-2 py-1 mt-2 bgAma2 ">
+                            <input type="text" name="imagenI" formControlName="imagenI" [value]="imagenIsel"
+                                disabled="disabled" style="font-weight: 600; min-width: 100%;">
+                        </div>
+
+                        <div class="h-auto text-center bgAma2 pb-3" style="min-width: 120px;">
+                            <img src="{{imagenAIsel}}" style="width: auto; height: 250px; max-width: 100%;"
+                                onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-4 p-0">
+
+                    <div class="mb-0">
+                        <b>Imagen</b>
+                    </div>
+                    <div class="my-0 custom-file  w-100 h-auto">
+                        <input class="custom-file-input  cupo" type="file" name="imagenAM"
+                            (change)="cambiarimagen2($event)" aria-describedby="ip1" accept="image/*">
+                        <label class=" custom-file-label" for="ip1">
+                            <i class="fa fa-image mr-2"></i>
+                            REGISTRAR NUEVA IMAGEN MOVIL
+                        </label>
+
+                        <div class="px-2 py-1 mt-2 bgAma2 ">
+                            <input type="text" name="imagenIM" formControlName="imagenIM" [value]="imagenIMsel"
+                                disabled="disabled" style="font-weight: 600; min-width: 100%;">
+                        </div>
+
+                        <div class="h-auto text-center bgAma2 pb-3" style="min-width: 120px;">
+                            <img src="{{imagenAIMsel}}" style="width: auto; height: 250px; max-width: 100%;"
+                                onerror="this.onerror=null;this.src='assets/images/sinimagen.png';" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer container-login100-form-btn m-t-17">
+
+            <button class="btn btn-success " type="submit" *ngIf="btactivado"> GUARDAR </button>
+            <button class="btn btn-light apagado" type="button" *ngIf="!btactivado" title="Desactivado"> <i
+                    class="fas fa-slash"></i> </button>
+        </div>
+    </form>
+
+</ng-template>
+
+<app-spinner [load]="loading"></app-spinner>
+
+<!-- <div  style="opacity: 0; width: 200px; height: auto; font-size: 12px; font-weight: 600 ; position: fixed; z-index: 9999; left: 5px; right: auto; top: 5px; background-color: rgba(255,255,0,0.9); padding: 5px;">
+    <pre>
+       Valid:  {{formablogarticulos.valid}}  
+    <br>
+       Status: {{formablogarticulos.status}}
+    <br>
+       Valores:  {{formablogarticulos.value | json}}  
+    </pre>
+</div>  -->

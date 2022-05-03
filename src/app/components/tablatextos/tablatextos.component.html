@@ -1,0 +1,157 @@
+<div>
+    <div class="pt-4">
+        <form class="" [formGroup]="formaT" (ngSubmit)="filtrarT()">
+            <div class="row ">
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">Tipo texto</span>
+                    <div class="m-b-16">
+                        <select class="custom-select custom-select-sm" name="textotipotextofiltro"
+                            [value]='textotipotextofiltrosel' formControlName="textotipotextofiltro">
+                            <option value="0">Todos</option>
+                            <option value="{{tit.id}}" *ngFor="let tit of tipotextos">
+                                {{tit.nombre}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha inicio
+                    </span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="textofechainifiltro"
+                            [value]='textofechainifiltrosel | date:"yyyy-MM-dd" ' formControlName="textofechainifiltro">
+                    </div>
+                </div>
+                <div class="col-xl-2 text-left my-1">
+                    <span class="text-dark posabsol" style="left: 17px; top:-23px;">
+                        Fecha fín</span>
+                    <div class="m-b-16">
+                        <input class="form-control form-control-sm" type="date" name="textofechafinfiltro"
+                            [value]='textofechafinfiltrosel | date:"yyyy-MM-dd"' formControlName="textofechafinfiltro">
+                    </div>
+                </div>
+                <div class="col-xl-3 col-6 text-left my-0" style="min-width: 140px;">
+                    <div class="mt-1">
+                        <button type="submit" class="btn btn-sm btn-dark cupo " title="filtrar" *ngIf="btactivadoT">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-light cupo " *ngIf="!btactivadoT" disabled="true">
+                            <i class="fas fa-filter"></i>
+                            <small> FILTRAR </small>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-6 text-left my-0 " style="min-width: 140px;">
+                    <div class="mt-1 ">
+                        <pagination-controls (pageChange)="pagi=$event" class="custom-pagination py-0" autoHide="true" previousLabel=" " nextLabel=" ">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-hover table-responsive ">
+        <thead>
+            <tr class="bg-primary text-light" style="height: 35px">
+
+                <th class="text-center" scope="col"><i class="fa fa-edit"></i></th>
+                <th scope="col">ID</th>
+                <th scope="col" style="min-width: 860px;">TEXTO</th>
+                <th scope="col" style="min-width: 80px;">POSICION</th>
+                <th scope="col" style="min-width: 220px;">TIPO TEXTO</th>
+                <th scope="col" style="min-width: 460px;">OBSERVACIONES</th>
+                <th scope="col" style="min-width: 220px;">ENLACE</th>
+                <th scope="col" style="min-width: 220px;">ENLACE DESTINO</th>
+                <th scope="col" style="min-width: 220px;">FECHA MODIFICACION</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let te of textosadmin | paginate: {itemsPerPage: 10, currentPage: pagi }" style="height: 65px;">
+
+                <td> <span class="badge badge-warning text-light cupo" title="editar"
+                        (click)="openT(mymodaladminT, (te))"> <i class="fas fa-dot-circle"></i> </span>
+                </td>
+                <td>{{te.id}}</td>
+                <td style="min-width: 860px;" title="{{te.texto}}"> {{te.texto.length >200 ?
+                    te.texto.substring(0, 197)+ "..." : te.texto }} </td>
+                <td style="min-width: 80px;"> {{te.posicion}} </td>
+                <td style="min-width: 220px;"> {{te.tipotexto}} </td>
+                <td style="min-width: 460px;"> {{te.observaciones.length > 40 ? te.observaciones.substring(0,37)+ "..."
+                    : te.observaciones }} </td>
+                <td style="min-width: 220px;"> {{te.enlace}} </td>
+                <td style="min-width: 220px;"> {{te.destinoenlace}} </td>
+                <td style="min-width: 220px;">{{te.updated_at | date:'dd/MM/yyyy'}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<ng-template #mymodaladminT let-modal>
+
+    <div class="modal-header">
+        <div class="w-100 mx-auto text-center">
+            <h4 class="modal-title">MODIFICAR TEXTO</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="cerrarmodalT()">
+            <span aria-hidden="true"><i class="fa fa-times fs-16"></i></span>
+        </button>
+    </div>
+
+    <form class="" [formGroup]="formatextos" (ngSubmit)="modificartexto()">
+        <div class="modal-body mx-auto my-2 w-100">
+            <div class="row p-3">
+
+                <input class="" type="text" name="textoid" formControlName="textoid" [value]="textoidsel"
+                    hidden="hidden">
+
+                <div class="col-12 p-1 d-flex">
+                    <div class="mr-3"><b>Posición: </b>{{textoposicionsel}} </div>
+                    <div><b>Tipo texto: </b>{{textotipotextosel}} <br> </div>
+                </div>
+                <div class="col-12 p-1">
+
+                    <div class="mb-0">
+                        <b>Texto</b>
+                    </div>
+                    <div class="w-100">
+                        <div class="w-100" *ngIf="!esdescripcion" >
+                            <input class="form-control" type="text" name="textotexto" formControlName="textotexto"
+                            [value]="textotextosel">
+                        </div>
+                        <div class="w-100" *ngIf="esdescripcion" >
+                            <ckeditor formControlName="textotexto" [config]="{ toolbar: [ 'heading4', '|', 'bold' ] }"
+                            [data]="textotextosel" [editor]="Editor"  rows="12"     ></ckeditor> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 p-1">
+                    <div class="mb-0">
+                        <b>Observaciones</b>
+                    </div>
+                    <div class="w-100">
+                        <textarea class="form-control" name="textoobservaciones" formControlName="textoobservaciones"
+                            [value]="textoobservacionessel">
+                        </textarea>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer container-login100-form-btn m-t-17">
+
+            <button class="btn btn-success " type="submit" *ngIf="btactivadoTextos"> GUARDAR </button>
+            <button class="btn btn-light apagado" type="button" *ngIf="!btactivadoTextos" title="Desactivado"> <i
+                    class="fas fa-slash"></i> </button>
+        </div>
+    </form>
+
+</ng-template>
+
+<app-spinner [load]="loading"></app-spinner>
