@@ -1,0 +1,16 @@
+{
+    "app": 
+    [
+        {
+            "name": "universalService",
+            "script": "./server.js",
+            "env": {
+                "NODE_ENV": "",
+                "watch": false
+            },
+            "env_production ": {
+                "NODE_ENV": "production"
+            } 
+        }
+    ]
+}
