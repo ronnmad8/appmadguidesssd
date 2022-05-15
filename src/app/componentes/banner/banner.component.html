@@ -1,0 +1,16 @@
+
+  <div id=" p-0 m-0" class="mh140" style="min-height: 50vh;" >
+      <div class="horizontal-container animated fadeIn slow posrel" *ngIf="cargados"  >
+       
+            <picture>
+              <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}"
+                data-srcset="{{imagenbanner.rutapc}}" >
+              <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}"
+                data-srcset="{{imagenbanner.rutamovil}}"  >
+              <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}"
+                alt="banner xanaduproyectos" class="imagebannerseccion lazyload " onerror="this.src='assets/images/sinimagen.jpg' "   >
+            </picture>
+
+
+      </div>
+  </div>

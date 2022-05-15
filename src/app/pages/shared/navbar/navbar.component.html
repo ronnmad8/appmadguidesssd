@@ -1,0 +1,121 @@
+<div id="wrapper" class="pagewrapper">
+  <div  class="container bg-dark" >
+
+    <!--pc-->
+    <div class="container menupc pc " *ngIf="!isAdminweb"
+      [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }" (mouseenter)="logoB=true"
+      (mouseleave)="logoB=false">
+      <nav id="navpc" class="navhead ">
+        <div class="row ttmenu ">
+
+          <div class="col-2" style="z-index: 10">
+            <div class="cupo p-2 ml-2 posabsol" style="left: 0; top: -30px"  routerLink="home" (click)="mostrar()"  >
+              <img src="../../assets/images/logo-vertical.svg" style="width:120px; height: auto;" draggable="false">
+            </div>
+          </div>
+
+          <div class="col-10">
+            <div class="d-flex px-3 ">
+
+              <div class="posrel limenupc text-center" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
+                <div class="posabsollink">
+                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov2"></div>
+                </div>
+                <div class="cupo  mx-auto px-2 " routerLink="/quienessomos" routerLinkActive="active">
+                  <span>Quienes Somos</span>
+                </div>
+              </div>
+
+              <div class="posrel limenupc text-center" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
+                <div class="posabsollink">
+                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov3"></div>
+                </div>
+                <div class="cupo mx-auto px-2" routerLink="/blog" routerLinkActive="active">
+                  <span>Blog</span>
+                </div>
+              </div>
+
+              <div class="posrel limenupc text-center mr-2" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
+                <div class="posabsollink">
+                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov4"></div>
+                </div>
+                <div class="cupo mx-auto px-2" routerLink="/ayuda" routerLinkActive="active">
+                  <span>Ayuda</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </nav>
+    </div>
+
+    <!--movil-->
+
+    <div class="menumvl mvl" *ngIf="!isAdminweb">
+      <nav id="sidebar" class="sbar" [ngClass]="ocultar">
+        <div class="mr-3 ttmenu ">
+          <div class="px-2 posrel" style="height: 90px">
+            <div class="hambInt" title="cerrar menu" (click)="menu()" style="width: 80px">
+              <i class="fas fa-bars mr-1 fs-32"></i>
+              <i class="fas fa-angle-right"></i>
+            </div>
+            <div class="posabsol cupo" style="right: 20px; top: 20px" routerLink="home" (click)="mostrar()"  >
+              <img src="../../assets/images/imagotipo.svg" style="width:190px; height: auto;" draggable="false">
+            </div>
+          </div>
+
+          <div class="panscrollM">
+
+            <div class="posrel limenu pl-4 m-0  ">
+              <div class="cupo w-50  " routerLink="/home" routerLinkActive="active" (click)="mostrar()">
+                <span>HOME</span>
+              </div>
+            </div>
+
+            <div class="posrel limenu pl-4 m-0  ">
+              <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
+                <span>QUIENES SOMOS</span>
+              </div>
+            </div>
+
+            <div class="posrel limenu pl-4 m-0  ">
+              <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
+                <span>BLOG</span>
+              </div>
+            </div>
+
+            <div class="posrel limenu pl-4 m-0  ">
+              <div class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
+                <span>AYUDA</span>
+              </div>
+            </div>
+
+            <div class="mh100"></div>
+
+          </div>
+        </div>
+      </nav>
+    </div>
+
+
+
+    <!--content-->
+
+    <div>
+      <div id="page-content p-0">
+
+        <div class="px-0">
+          <router-outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
