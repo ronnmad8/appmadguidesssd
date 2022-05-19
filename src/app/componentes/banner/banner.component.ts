@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
-import { SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
@@ -42,16 +41,14 @@ export class BannerComponent implements OnInit {
   }
 
   getImagenBanner(idenlace: string){
-    let posicion = 1;//posicion 1º
-    let tipo = 1;//tipo banner
+
     let tipotexto = 1;//tipo titulo ppal
-    this.imagenesService.getImagenesFiltpos( parseInt(idenlace) , tipo, posicion)
-    .subscribe( (resp) => {
+    let resp = this.imagenesService.getImagenBanner(idenlace);
        if(resp != null){
          this.imagenbanner = resp as ImagenesModel ;
        }
        this.cargados = true;
-    });
+  
   }
 
 

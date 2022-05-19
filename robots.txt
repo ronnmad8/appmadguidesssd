@@ -1,6 +1,6 @@
 # Based on wphardening https://github.com/elcodigok/wphardening, Copyright 2013 Daniel Maldonado
 
-Sitemap: http://proyectosxanadu.es/sitemap.xml 
+Sitemap: http://madguides.es/sitemap.xml 
 
 User-Agent: *
 

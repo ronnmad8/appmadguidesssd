@@ -1,35 +1,79 @@
 import { isPlatformBrowser } from '@angular/common';
-import { APP_ID, Inject, NgModule, PLATFORM_ID } from '@angular/core';
+import { APP_ID, Inject, NgModule, PLATFORM_ID, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { RouterModule,Routes, ExtraOptions  } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './componentes/base/base.component';
-import { HomeComponent } from './pages/homecliente/home.component';
+import { BuscadorComponent } from './pages/buscador/buscador.component';
+import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './pages/shared/footer/footer.component';
 import { NavbarComponent } from './pages/shared/navbar/navbar.component';
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BannerComponent } from './componentes/banner/banner.component';
+import { BannerhomeComponent } from './componentes/bannerhome/bannerhome.component';
+import { SlidervisitasComponent } from './componentes/slidervisitas/slidervisitas.component';
+import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 
 
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
+
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  onSameUrlNavigation: 'reload',
+  scrollOffset: [0, 6],
+};
+
+const routes: Routes = [
+  {
+    path: 'content',
+    component: AppComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'content', // Empty path will redirect to content route.
+    pathMatch: 'full'
+  }
+ ];
 
 @NgModule({
   declarations: [
     AppComponent,
     BaseComponent,
     HomeComponent,
+    BuscadorComponent,
     NavbarComponent,
     FooterComponent,
-    
+    BannerComponent,
+    BannerhomeComponent,
+    SlidervisitasComponent
 
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'madguides' }),
+    HttpClientModule,
+    NgbModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes, routerOptions),
+    SwiperModule
+
     
   ],
-  providers: [],
+  providers: [
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

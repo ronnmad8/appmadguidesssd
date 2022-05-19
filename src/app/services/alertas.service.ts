@@ -29,7 +29,7 @@ export class AlertasService {
         "</p><p class='fs-20'>" +
         submensaje +
         '</p>',
-      title: 'WEB XANADU',
+      title: 'WEB MADGUIDES',
       showCancelButton: true,
       confirmButtonColor: '#393935',
       cancelButtonColor: '#6c757d',
@@ -65,7 +65,7 @@ export class AlertasService {
         "</p><p class='fs-20'>" +
         submensaje +
         '</p>',
-      title: 'WEB XANADU',
+      title: 'WEB MADGUIDES',
       timer: 1500,
       showCancelButton: false,
       showConfirmButton: false,
@@ -97,7 +97,7 @@ export class AlertasService {
         '</p><p fs-20>' +
         submensaje +
         '</p>',
-      title: 'WEB XANADU',
+      title: 'WEB MADGUIDES',
       showCancelButton: true,
       confirmButtonColor: '#393935',
       cancelButtonColor: '#6c757d',
@@ -115,7 +115,7 @@ export class AlertasService {
         "</p><p class='fs-20'>" +
         submensaje +
         '</p>',
-      title: 'WEB XANADU',
+      title: 'WEB MADGUIDES',
       timer: 1500,
       showCancelButton: false,
       showConfirmButton: false,

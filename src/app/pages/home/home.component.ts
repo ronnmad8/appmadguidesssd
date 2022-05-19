@@ -10,13 +10,13 @@ import { ClientesModel } from 'src/app/models/Clientes.model';
 import { ImagenesService } from '../../services/imagenes.service';
 import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
-
 import { AuthService } from '../../services/auth.service';
-
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
+import { BannerhomeComponent } from 'src/app/componentes/bannerhome/bannerhome.component';
+
 
 
 
@@ -74,10 +74,6 @@ export class HomeComponent implements OnInit{
     this.wowService.init();
     //ids para home
     this.idenlace = 1;
-
-    this.getImageneBanner();
-
-
   }
   
 
@@ -86,10 +82,6 @@ export class HomeComponent implements OnInit{
     this.menuPublic.emit(0);
 
   }
-
-
-
-
 
 
   getImageneBanner(){
@@ -108,11 +100,6 @@ export class HomeComponent implements OnInit{
   
 
   
-  
-
-
- 
-   
   
 
 

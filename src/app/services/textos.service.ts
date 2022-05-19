@@ -174,7 +174,7 @@ export class TextosService {
     let textofechainifiltrosel = yei + "-" + moi + "-" + dai;
     let textofechafinfiltrosel = yef + "-" + mof + "-" + daf;
     let arrayfechas = [ textofechafinfiltrosel, textofechainifiltrosel ]
-    debugger
+    
     return arrayfechas;
   }
 

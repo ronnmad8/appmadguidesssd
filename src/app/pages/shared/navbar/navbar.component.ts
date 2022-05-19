@@ -73,7 +73,8 @@ export class NavbarComponent implements OnInit {
   @HostListener("window:scroll") 
   onWindowScroll() {
   
-     let scrollPosition = window.pageYOffset ;
+    let scrollPosition = window.pageYOffset ;
+
      this.menusticky = false;
      if(this.possc > scrollPosition){
        this.menusticky = true;

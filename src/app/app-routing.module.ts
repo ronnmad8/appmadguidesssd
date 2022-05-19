@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/homecliente/home.component';
+import { BuscadorComponent } from './pages/buscador/buscador.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
 
@@ -9,9 +10,8 @@ const routes: Routes = [
   { path: 'ayuda' , component: HomeComponent},
   { path: 'blog' , component: HomeComponent},
   { path: 'contacto' , component: HomeComponent},
-  { path: 'buscador' , component: HomeComponent},
+  { path: 'buscador' , component: BuscadorComponent},
 
-  
 
   //////////////////////////////////////////////default
   { path: '' , component: HomeComponent},

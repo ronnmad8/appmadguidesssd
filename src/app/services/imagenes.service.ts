@@ -196,6 +196,41 @@ export class ImagenesService {
   }
 
 
+  getImagenBanner(idenlace :string)  {
+    
+    let endpoint = '/imagenes/filtpos' ;
+    this.url = this.apiurl + endpoint;
+    const filtData = {
+      enlaces_id: idenlace,
+      tipos_id: 1,
+      posicion: 1 
+      
+    };
+  
+    let im = new ImagenesModel();
+    im.rutapc = "assets/images/sinimagen.png";
+    if(idenlace == "1"){
+      im.rutapc = "assets/images/imagenbannerhome.jpg";
+      im.rutamovil = "assets/images/imagenbannerhome.jpg";
+      im.tipo_id = 1;
+      im.nombre = "imagenbanner";
+    
+    }
+
+    return im;
+
+    // return this.http.post( `${this.url}`, filtData )
+    // .pipe(
+    //   map( res => res as ImagenesModel[]) ,
+    //   catchError((err) => {
+    //     console.error("Error  " , err.error);
+    //             return err.error;
+    //   })
+    // );
+
+  }
+
+
   
 
   uploadFile( id: string, filetoupload: File ) {

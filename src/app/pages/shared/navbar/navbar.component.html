@@ -1,15 +1,14 @@
-<div id="wrapper" class="pagewrapper">
-  <div  class="container bg-dark" >
+<div id="wrapper" class="pagewrapper posrel">
+  
 
     <!--pc-->
-    <div class="container menupc pc " *ngIf="!isAdminweb"
-      [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }" (mouseenter)="logoB=true"
-      (mouseleave)="logoB=false">
-      <nav id="navpc" class="navhead ">
-        <div class="row ttmenu ">
+    <div class="menupc pc" *ngIf="!isAdminweb"
+      [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }" >
+      <nav id="navpc" class="container mx-auto">
+        <div class="row mx-auto">
 
           <div class="col-2" style="z-index: 10">
-            <div class="cupo p-2 ml-2 posabsol" style="left: 0; top: -30px"  routerLink="home" (click)="mostrar()"  >
+            <div class="cupo p-2 ml-2 posabsol" style="left: 5px; top: -40px"  routerLink="home" (click)="mostrar()"  >
               <img src="../../assets/images/logo-vertical.svg" style="width:120px; height: auto;" draggable="false">
             </div>
           </div>
@@ -19,27 +18,27 @@
 
               <div class="posrel limenupc text-center" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
                 <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov2"></div>
+                  <div class="lineAma animated fadeInDown slow " *ngIf="hov2"></div>
                 </div>
-                <div class="cupo  mx-auto px-2 " routerLink="/quienessomos" routerLinkActive="active">
+                <div class="cupo mx-auto px-1 fs-16" routerLink="/quienessomos" routerLinkActive="active">
                   <span>Quienes Somos</span>
                 </div>
               </div>
 
               <div class="posrel limenupc text-center" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
                 <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov3"></div>
+                  <div class="lineAma animated fadeInDown slow" *ngIf="hov3"></div>
                 </div>
-                <div class="cupo mx-auto px-2" routerLink="/blog" routerLinkActive="active">
+                <div class="cupo mx-auto px-1 fs-16" routerLink="/blog" routerLinkActive="active">
                   <span>Blog</span>
                 </div>
               </div>
 
               <div class="posrel limenupc text-center mr-2" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
                 <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow fs-16" *ngIf="hov4"></div>
+                  <div class="lineAma animated fadeInDown slow" *ngIf="hov4"></div>
                 </div>
-                <div class="cupo mx-auto px-2" routerLink="/ayuda" routerLinkActive="active">
+                <div class="cupo mx-auto px-1 fs-16" routerLink="/buscador" routerLinkActive="active">
                   <span>Ayuda</span>
                 </div>
               </div>
@@ -103,17 +102,13 @@
 
     <!--content-->
 
-    <div>
-      <div id="page-content p-0">
+    <div class="bgBLANCO page-content p-0 m-0" >
+      
+        <router-outlet></router-outlet>
 
-        <div class="px-0">
-          <router-outlet (activate)="onActivate($event)"></router-outlet>
-        </div>
-
-      </div>
     </div>
 
-  </div>
+ 
 </div>
 
 
