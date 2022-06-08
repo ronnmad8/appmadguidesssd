@@ -31,10 +31,10 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('idrol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('saludo');
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('idrol');
+    // localStorage.removeItem('nombre');
+    // localStorage.removeItem('saludo');
     this.userToken = "";
     this.router.navigateByUrl('/homecliente');
   }
@@ -81,55 +81,55 @@ export class AuthService {
 
 
   private guardarToken(idToken: string, idrol: string, id: string, nombre: string) {
-    localStorage.setItem('token', idToken);
-    localStorage.setItem('idrol', idrol);
-    localStorage.setItem('nombre', nombre);
-    localStorage.setItem('saludo', '');
+    // localStorage.setItem('token', idToken);
+    // localStorage.setItem('idrol', idrol);
+    // localStorage.setItem('nombre', nombre);
+    // localStorage.setItem('saludo', '');
     this.userToken = idToken;
   }
 
 
   leerToken() {
     
-      if (localStorage.getItem('token')) {
-          let token = localStorage.getItem('token');
-          this.userToken = "";
-          if(token != null ){
-            this.userToken = token;
-            if (this.noAuth()) 
-                this.router.navigateByUrl('/homecliente');
-            }
-          }  
+      // if (localStorage.getItem('token')) {
+      //     let token = localStorage.getItem('token');
+      //     this.userToken = "";
+      //     if(token != null ){
+      //       this.userToken = token;
+      //       if (this.noAuth()) 
+      //           this.router.navigateByUrl('/homecliente');
+      //       }
+      //     }  
       return this.userToken  ;
   }
 
   leerIdUsuario() {
-    if (localStorage.getItem('id')) {
-        return localStorage.getItem('id');
-    }
-    else {
-        return  '';
-    }
+    // if (localStorage.getItem('id')) {
+    //     return localStorage.getItem('id');
+    // }
+    // else {
+    //     return  '';
+    // }
   }
   
   leerNombre() {
-    if (localStorage.getItem('nombre')) {
-        var leerToken = localStorage.getItem('nombre');
-        return leerToken;
-    }
-    else {
-        return  '';
-    }
+    // if (localStorage.getItem('nombre')) {
+    //     var leerToken = localStorage.getItem('nombre');
+    //     return leerToken;
+    // }
+    // else {
+    //     return  '';
+    // }
   }
 
   leerRol() {
-    if (localStorage.getItem('idrol')) {
-        var leerToken = localStorage.getItem('idrol');
-        return leerToken;
-    }
-    else {
-        return  '';
-    }
+    // if (localStorage.getItem('idrol')) {
+    //     var leerToken = localStorage.getItem('idrol');
+    //     return leerToken;
+    // }
+    // else {
+    //     return  '';
+    // }
   }
 
 

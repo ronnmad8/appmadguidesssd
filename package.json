@@ -31,6 +31,7 @@
     "express": "^4.15.2",
     "font-awesome": "^4.7.0",
     "leaflet": "^1.8.0",
+    "mock-browser": "^0.92.14",
     "ngx-pagination": "^5.1.1",
     "ngx-swiper-wrapper": "^8.0.2",
     "ngx-wow": "^2.0.1",

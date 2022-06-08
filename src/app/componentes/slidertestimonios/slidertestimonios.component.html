@@ -1,0 +1,63 @@
+<div class="container">
+
+  <div class="h50" ></div>
+  <div id="divlogotestim" class="imglogotestim w-100 mx-auto text-center" >
+    <div >
+      <img src="../../../assets/images/isotipo-madguides.svg" data-src="../../../assets/images/isotipo-madguides.svg"
+            alt="" class="imglogotestim lazyload "   >
+    </div>
+  </div>
+  <div class="h35" ></div>
+  <div class="row p-0 m-0  ">
+    <div class="col-12 p-0 text-center">
+      <div id="titulotestimonios" >
+        <span class="colGRIS1">Lo que los viajeros dicen sobre </span>
+        <span class="colROJO3"> MadGuides</span>
+      </div>
+    </div>
+  </div>
+  <div class="h65" ></div>
+  <div id="carrtestim" class="w-100">
+      <swiper [config]="config">
+      <div class="p-0 m-0" *ngFor="let testimonio of listatestimonioshome">
+          <div class="panelTestimonio"  >
+              <div class="intpanelTestim w-100 d-flex">
+                <div class="imgtestim text-center p-0" >
+                    <picture>
+                        <source media="(min-width: 0px)" srcset="{{testimonio.urlimagen}}"
+                            data-srcset="{{testimonio.urlimagen}}">
+                        <img src="{{testimonio.urlimagen}}" data-src="{{testimonio.urlimagen}}"
+                            alt="" class="imgtestim bordecirculo">
+                    </picture>
+                </div>
+                <div class="w70"></div>
+                <div class="infotestim"  >
+                    <div class="w-100 d-flex">
+                        <div class="autortestim ">
+                            <div>{{testimonio.autor}}</div>
+                        </div>
+                        <div class="w80"></div>
+                        <div class="nombrevisitatestim ">
+                            <div>{{testimonio.visita}}</div>
+                        </div>
+                    </div>
+                    <div class="texttestim ">
+                      <div class="w-100">
+                        {{testimonio.texto.length > 190 ?  testimonio.texto.substring(0, 187)+"..."   :  testimonio.texto     }}
+                      </div>
+                    </div>
+                    <div class="w-100 d-flex ">
+                      <div class="titulotestim ">
+                          <div>{{testimonio.titulo}}</div>
+                      </div>
+                      <div class="veracttestim cupo "  (click)="verActividad()" >
+                          <div class="bordeme">Ver Actividad ></div> 
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </swiper>
+  </div>
+</div>

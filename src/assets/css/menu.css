@@ -11,8 +11,96 @@
   border:2px solid rgb(2, 168, 146) !important;
 }
 
+.carrito{
+  width: 56px;
+  height: 100%;
+  background-color: var(--c_GRIS1);
+  color: var(--c_BLANCO) !important;
+  text-align: center;
+}
 
+.bar{
+  width: 60px;
+  height: 100%;
+  text-align: center;
+  margin-right: auto;
+  margin-left: 0;
+}
 
+.baridiomas{
+  width: 100px;
+  height: 100%;
+  text-align: center;
+}
+
+.posabsollink {
+  position: absolute !important;
+  top: 20px;
+  left: 0;
+  right: 0;
+}
+
+.posabsolbar {
+  position: absolute !important;
+  bottom: 24px !important; 
+  right: 0;
+  left: 0;
+}
+
+.posabsolbaridiomas {
+  position: absolute !important;
+  bottom: 20px !important; 
+  right: 10px;
+}
+
+.modalidiomas{
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  left: 1px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 120px;
+  height: 160px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+.modalusuario{
+  z-index: 10;
+  position: absolute;
+  top: 85px !important; 
+  right: -60px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  min-width: 700px;
+  width: 100%;
+  height: 513px;
+  border-radius: 0 0  25px 25px ;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid var(--c_BLANCO);
+  overflow: auto;
+}
+
+.modalcarrito{
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  right: 1px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 360px;
+  height: 420px;
+  border-radius: 2px;
+  padding: 0px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
 
 
 .menumvl {
@@ -20,6 +108,7 @@
   right: 0 !important;
   top: 0 !important;
   z-index: 889 !important;
+  
 }
 
 .menupc {
@@ -32,6 +121,7 @@
   margin-left: auto !important;
   margin-right: auto !important;
   max-width: 1920px !important;
+
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
 }
 
@@ -116,6 +206,41 @@
 
   /**************menu **********/
   
+  .imlogomenupc{
+    width: 132px !important;
+    height: 50px !important;
+  }
+
+  #enlace1{
+    width: 137px !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin-right: 20px !important;
+    margin-left: 0px !important;
+    margin-top: 20px;
+  }
+  #enlace2{
+    padding: 0 !important;
+    width: 40px !important;
+    height: auto !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    margin-top: 20px;
+  }
+  #enlace3{
+    padding: 0 !important;
+    width: 55px !important;
+    height: auto !important;
+    margin-left: 20px !important;
+    margin-right: 0px !important;
+    margin-top: 20px;
+  }
+
+  .divlogo_pc{
+    z-index: 10; max-width: 264px;
+    padding: 0;
+  }
+
   .hamb {
     cursor: pointer;
     position: fixed;
@@ -222,66 +347,18 @@
     right: -15px;
   }
 
-    
-  .limenu {
-    color: #656565;
-    font-size: 20px !important;
-    border-top: 0.5px solid #656565;
-    border-bottom: 0.5px solid #656565;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-  }
-  
-  .lisubmenu {
-    color: #656565;
-    background-color: #efefef;
-    font-size: 16px !important;
-    border-top: 0.5px solid #656565;
-    border-bottom: 0.5px solid #656565;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-    text-align: left !important;
-  }
-  
-  .lisub2menu {
-    color: #656565;
-    background-color: #fefaa7;
-    font-size: 16px !important;
-    border-top: 0.5px solid #656565;
-    border-bottom: 0.5px solid #656565;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-    text-align: left !important;
-  }
-  
-  .limenupc {
-    font-size: 18px !important;
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
-    min-width: 100px;
-  }
-  
-  .limenupc.subs {
-    min-width: 150px !important;
-  }
-  
-  .lisubmenupc {
-    color: #656565;
-    background-color: #efefef;
-    font-size: 16px !important;
-    border: 0.5px solid #efefef;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    min-width: 240px !important;
-    text-align: left !important;
-  }
-  
   .limenu.active,
   .lisubmenu.active {
     color: #000000 !important;
   }
 
 
+  .posabsolmenu {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 
   .posfixedmenu {
     position: fixed !important;
@@ -336,7 +413,7 @@
   }
 }
 
-@media (min-width: 1490px) {
+@media (min-width: 1190px) {
   .pc {
     display: inherit;
   }
@@ -350,7 +427,7 @@
 
 /*movil ************************************************/
 
-@media (max-width: 1490px) {
+@media (max-width: 1190px) {
 
 
 
@@ -403,7 +480,7 @@
   
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1190px) {
   .mhcook {
     height: 300px !important;
     max-height: 300px;

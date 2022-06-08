@@ -1,116 +1,250 @@
 <div id="wrapper" class="pagewrapper posrel">
-  
 
-    <!--pc-->
-    <div class="menupc pc" *ngIf="!isAdminweb"
-      [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }" >
-      <nav id="navpc" class="container mx-auto">
-        <div class="row mx-auto">
+  <!--pc-->
+  <div class="menupc pc" *ngIf="!isAdminweb" [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }">
+    <nav id="navpc" class="container mx-auto px-0">
+      <div class="row h84 colGRIS1">
 
-          <div class="col-2" style="z-index: 10">
-            <div class="cupo p-2 ml-2 posabsol" style="left: 5px; top: -40px"  routerLink="home" (click)="mostrar()"  >
-              <img src="../../assets/images/logo-vertical.svg" style="width:120px; height: auto;" draggable="false">
-            </div>
+        <div class="col-3 divlogopc" >
+          <div class="cupo p-0 posabsol" style="left: 5px; top: 12px" routerLink="home" (click)="mostrar()">
+            <img src="../../assets/images/logo-madguides.svg" class="imlogomenupc" draggable="false">
           </div>
-
-          <div class="col-10">
-            <div class="d-flex px-3 ">
-
-              <div class="posrel limenupc text-center" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
-                <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow " *ngIf="hov2"></div>
-                </div>
-                <div class="cupo mx-auto px-1 fs-16" routerLink="/quienessomos" routerLinkActive="active">
-                  <span>Quienes Somos</span>
-                </div>
-              </div>
-
-              <div class="posrel limenupc text-center" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
-                <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow" *ngIf="hov3"></div>
-                </div>
-                <div class="cupo mx-auto px-1 fs-16" routerLink="/blog" routerLinkActive="active">
-                  <span>Blog</span>
-                </div>
-              </div>
-
-              <div class="posrel limenupc text-center mr-2" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
-                <div class="posabsollink">
-                  <div class="lineAma animated fadeInDown slow" *ngIf="hov4"></div>
-                </div>
-                <div class="cupo mx-auto px-1 fs-16" routerLink="/buscador" routerLinkActive="active">
-                  <span>Ayuda</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
         </div>
-      </nav>
-    </div>
 
-    <!--movil-->
+        <div class="col-5 px-0">
+          <div class="d-flex mt-2">
 
-    <div class="menumvl mvl" *ngIf="!isAdminweb">
-      <nav id="sidebar" class="sbar" [ngClass]="ocultar">
-        <div class="mr-3 ttmenu ">
-          <div class="px-2 posrel" style="height: 90px">
-            <div class="hambInt" title="cerrar menu" (click)="menu()" style="width: 80px">
-              <i class="fas fa-bars mr-1 fs-32"></i>
-              <i class="fas fa-angle-right"></i>
-            </div>
-            <div class="posabsol cupo" style="right: 20px; top: 20px" routerLink="home" (click)="mostrar()"  >
-              <img src="../../assets/images/imagotipo.svg" style="width:190px; height: auto;" draggable="false">
-            </div>
-          </div>
-
-          <div class="panscrollM">
-
-            <div class="posrel limenu pl-4 m-0  ">
-              <div class="cupo w-50  " routerLink="/home" routerLinkActive="active" (click)="mostrar()">
-                <span>HOME</span>
+            <div id="enlace1" class="posrel" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
+              <div class="cupo fs-20" routerLink="/quienessomos" routerLinkActive="active">
+                <span>Quienes Somos</span>
               </div>
             </div>
 
-            <div class="posrel limenu pl-4 m-0  ">
-              <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
-                <span>QUIENES SOMOS</span>
+            <div id="enlace2" class="posrel" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
+              <div class="cupo fs-20" routerLink="/blog" routerLinkActive="active">
+                <span>Blog</span>
               </div>
             </div>
 
-            <div class="posrel limenu pl-4 m-0  ">
-              <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
-                <span>BLOG</span>
+            <div id="enlace3" class="posrel" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
+              <div class="cupo fs-20" routerLink="/buscador" routerLinkActive="active">
+                <span>Ayuda</span>
               </div>
             </div>
-
-            <div class="posrel limenu pl-4 m-0  ">
-              <div class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
-                <span>AYUDA</span>
-              </div>
-            </div>
-
-            <div class="mh100"></div>
 
           </div>
         </div>
-      </nav>
-    </div>
+
+        <div class="col-4 d-flex text-right ">
+          
+          <div class="posrel bar ml-auto mr-1" >
+            <div class="cupo posabsolbar py-2 " >
+              <img src="../../assets/images/i-lupa.svg" class="cupo im50" (click)="mostrarbusqueda()" draggable="false">
+            </div>
+            <!-- <i class="posabsolbar fa-solid fa-search text-center fs-20 py-2"></i> -->
+          </div>
+          <div class="baridiomas posrel mx-1" (click)="mostraridiomas()">
+            <div class="cupo posabsolbaridiomas colGRIS7 cupo d-flex fs-20 py-2">
+              <div class="pr-2  ">{{idioma}}</div>
+              <div>
+                <i class=" fa fa-angle-down fs-16"></i>
+              </div>
+            </div>
+            <div class="modalidiomas animated fadeInDown" *ngIf="veridiomas">
+              <div *ngFor="let idioma of idiomas">
+                <div class="cupo" (click)="cambiaridioma(idioma)" >{{idioma}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="bar posrel mx-1 colGRIS1" >
+            <div class="cupo posabsolbar py-2 " >
+              <img src="../../assets/images/i-perfil.svg" class="cupo im50" (click)="mostrarusuario()" draggable="false">
+            </div>
+
+            <div class="modalusuario animated fadeInDown" *ngIf="verusuario">
+              <form class="validate-form" [formGroup]="forma">
+                <div class="row my-4">
+                  <div class="col-xl-2"></div>
+                  <div class="col-xl-8 mx-auto">
+                     <span class="fs-24 ff-JB">
+                      
+                      </span>
+                  </div>
+                  <div class="col-xl-2"></div>
+                </div>
+                <div class="row my-4">
+                  <div class="col-xl-2"></div>
+                  <div class="col-xl-4">
+                    <div class="cuad posrel my-1">
+                      <input class="w-100" type="text" placeholder="Email" name="email" id="email" formControlName="email">
+                      <div *ngIf="usuariosel != '' " class="fieldpeq">
+                        Email
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4">
+                    <div class="cuad posrel my-1">
+                      <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre" formControlName="nombre">
+                      <div *ngIf="passwordsel != '' " class="fieldpeq">
+                        Nombre
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-2"></div>
+                </div>
+          
+                <div class="row my-4">
+                  <div class="col-xl-2"></div>
+                  <div class="col-xl-4 ">
+                    <div  class="custom-control custom-checkbox mx-auto">
+                      <input type="checkbox"  class="custom-control-input  fs-18" name="aceptacion" id="aceptacion" formControlName="aceptacion">
+                      <label for="aceptacion" class="custom-control-label  fs-18 ml-3"> Acepto <a routerLink="/politicaprivacidad">la política de privacidad</a> </label>
+                  </div>
+                  </div> 
+                  <div class="col-xl-4">
+                   <div class="w-100 text-xl-right text-center my-1">
+                    <button *ngIf="btactivadoT" type="button" class="btgris cupo" >
+                      Enviar
+                    </button>
+                    <button *ngIf="!btactivadoT" type="button" class="btgris apagado" >
+                      Enviar
+                    </button>
+                   </div>
+                  </div>
+                  <div class="col-xl-2"></div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <div class="carrito posrel">
+            <div class="cupo posabsolbar py-2 " >
+              <img src="../../assets/images/i-carrito.svg" class="cupo im50" (click)="mostrarcarrito()"  draggable="false">
+            </div>
+            <div class="modalcarrito animated fadeInDown p-0" *ngIf="vercarrito">
+
+              <div class="bordeli w95" *ngFor="let visita of visitascarrito">
+                <div class="row my-2 posrel">
+                  <div class="col-xl-4">
+                    <div class="pc pl-1">
+                      <picture>
+                        <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
+                        <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt="" class="mh80 lazyload ">
+                      </picture>
+                    </div>
+                    <div class="mvl">
+                      <picture>
+                        <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
+                        <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt="" class="mh200 lazyload ">
+                      </picture>
+                    </div>
+                  </div>
+                  <div class="col-xl-8 posrel">
+                    <div class="posabsol" style="right: 7px; top: 0">
+                      <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
+                        <i class="fa-regular fa-circle-xmark colGRIS3"></i>
+                      </span>
+                    </div>
+                    <div class="posabsol colROJO3" style="right: 7px; bottom: 0">
+                      {{visita.precioPersona}} €
+                    </div>
+                    <div class="fs-18 ff-JB colROJO3">
+                      {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                    </div>
+                    <div class="colGRIS3 posrel" style="min-height: 40px">
+                      {{visita.texto.length > 60 ? visita.texto.substring(0,57)+"..." : visita.texto }}
+                    </div>
+                    <div class="colGRIS3 posrel">
+                      2 Adultos, 1 menor
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bordeli w-100" >
+                <div class="my-2 posrel">
+                  <div class="fs-14 pl-2 colGRIS3">
+                    {{visitascarrito.length}} actividades
+                  </div>
+                  <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
+                    {{totalcarrito}} €
+                  </div>
+                </div>
+              </div>
+              <div class="w-100 posabsol" style="bottom: 5px; left: 0; right: 0 " >
+                <div class="my-2 mx-auto text-center"  >
+                    <button class="btredondoRojo" type="button">
+                      <span class="ff-JB" >Finalizar reserva</span>  
+                    </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+  </div>
+
+  <!--movil-->
+
+  <div class="menumvl mvl" *ngIf="!isAdminweb">
+    <nav id="sidebar" class="sbar" [ngClass]="ocultar">
+      <div class="mr-3 ttmenu ">
+        <div class="px-2 posrel mh100">
+          <div class="hambInt" title="cerrar menu" (click)="menu()" style="width: 80px">
+            <i class="fas fa-bars mr-1 fs-32"></i>
+            <i class="fas fa-angle-right"></i>
+          </div>
+          <div class="posabsol cupo" style="right: 20px; top: 20px" routerLink="home" (click)="mostrar()">
+            <img src="../../assets/images/imagotipo.svg" style="width:190px; height: auto;" draggable="false">
+          </div>
+        </div>
+
+        <div class="panscrollM">
+
+          <div class="posrel limenu pl-4 m-0  ">
+            <div class="cupo w-50  " routerLink="/home" routerLinkActive="active" (click)="mostrar()">
+              <span>HOME</span>
+            </div>
+          </div>
+
+          <div class="posrel limenu pl-4 m-0  ">
+            <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
+              <span>QUIENES SOMOS</span>
+            </div>
+          </div>
+
+          <div class="posrel limenu pl-4 m-0  ">
+            <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
+              <span>BLOG</span>
+            </div>
+          </div>
+
+          <div class="posrel limenu pl-4 m-0  ">
+            <div class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
+              <span>AYUDA</span>
+            </div>
+          </div>
+
+          <div class="mh100"></div>
+
+        </div>
+      </div>
+    </nav>
+  </div>
 
 
 
-    <!--content-->
+  <!--content-->
 
-    <div class="bgBLANCO page-content p-0 m-0" >
-      
-        <router-outlet></router-outlet>
+  <div class="bgBLANCO page-content p-0 m-0">
 
-    </div>
+    <router-outlet></router-outlet>
 
- 
+  </div>
+
+
 </div>
-
-
-
-

@@ -10,7 +10,6 @@ export class VisitasModel{
     urlpc: string;
     urlmovil: string;
     alt: string;
-    valoraciones: number;
     precioPersona: number;
     duracion: number;
     
@@ -21,7 +20,6 @@ export class VisitasModel{
         this.urlpc = "";
         this.urlmovil = "";
         this.alt = "";
-        this.valoraciones = 0;
         this.precioPersona = 0;
         this.duracion = 0;
         

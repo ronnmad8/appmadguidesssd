@@ -138,7 +138,7 @@ export class ImagenesService {
       tipos_id: idtipo
     };
 
-    return "https://madguides.es/assets/images/imagenbannerhome.jpg";
+    return "https://madguides.es/assets/images/banner-home.jpg";
 
     // return this.http.post( `${this.url}`, filtData )
     // .pipe(
@@ -210,8 +210,8 @@ export class ImagenesService {
     let im = new ImagenesModel();
     im.rutapc = "assets/images/sinimagen.png";
     if(idenlace == "1"){
-      im.rutapc = "assets/images/imagenbannerhome.jpg";
-      im.rutamovil = "assets/images/imagenbannerhome.jpg";
+      im.rutapc = "assets/images/banner-home.jpg";
+      im.rutamovil = "assets/images/banner-home.jpg";
       im.tipo_id = 1;
       im.nombre = "imagenbanner";
     

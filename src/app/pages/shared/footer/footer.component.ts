@@ -42,7 +42,6 @@ import { AuthService } from 'src/app/services/auth.service';
     }
 
     loginadminout() {
-
       this.logout();
     }
 

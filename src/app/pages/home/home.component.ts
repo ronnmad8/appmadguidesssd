@@ -44,13 +44,13 @@ export class HomeComponent implements OnInit{
   tipotextoseccion: number = 1;
 
   ////1
-  posiciona1: number = 1;
-  link1: string = "";
-  posiciont1: number = 1;
-  titulo1: string = ""
-  imagenlacea1: string = "";
-  imagenlaceamovil1: string = "";
-  linka1: string = "";
+  // posiciona1: number = 1;
+  // link1: string = "";
+  // posiciont1: number = 1;
+  // titulo1: string = ""
+  // imagenlacea1: string = "";
+  // imagenlaceamovil1: string = "";
+  // linka1: string = "";
 
 
   constructor(

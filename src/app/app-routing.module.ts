@@ -11,6 +11,11 @@ const routes: Routes = [
   { path: 'blog' , component: HomeComponent},
   { path: 'contacto' , component: HomeComponent},
   { path: 'buscador' , component: BuscadorComponent},
+  { path: 'politicaprivacidad' , component: BuscadorComponent},
+  { path: 'politicacookies' , component: BuscadorComponent},
+  { path: 'avisolegal' , component: BuscadorComponent},
+  { path: 'politicacompra' , component: BuscadorComponent},
+  { path: 'medidascovid' , component: BuscadorComponent},
 
 
   //////////////////////////////////////////////default

@@ -17,6 +17,8 @@ import { BannerComponent } from './componentes/banner/banner.component';
 import { BannerhomeComponent } from './componentes/bannerhome/bannerhome.component';
 import { SlidervisitasComponent } from './componentes/slidervisitas/slidervisitas.component';
 import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SlidertestimoniosComponent } from './componentes/slidertestimonios/slidertestimonios.component';
+import { ZonacontactoComponent } from './componentes/zonacontacto/zonacontacto.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -53,7 +55,9 @@ const routes: Routes = [
     FooterComponent,
     BannerComponent,
     BannerhomeComponent,
-    SlidervisitasComponent
+    SlidervisitasComponent,
+    SlidertestimoniosComponent,
+    ZonacontactoComponent
 
   ],
   imports: [

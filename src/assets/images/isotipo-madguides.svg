@@ -1,0 +1,16 @@
+<svg id="Grupo_122" data-name="Grupo 122" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="209.543" height="91.479" viewBox="0 0 209.543 91.479">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_86" data-name="Rectángulo 86" width="209.543" height="91.479" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_121" data-name="Grupo 121" clip-path="url(#clip-path)">
+    <path id="Trazado_634" data-name="Trazado 634" d="M77.262,47.011A37.786,37.786,0,1,1,115.048,84.8,37.785,37.785,0,0,1,77.262,47.011" transform="translate(-10.32 -1.232)" fill="#eaaa00"/>
+    <path id="Trazado_635" data-name="Trazado 635" d="M132.241,94.928l0,0h0Z" transform="translate(-17.664 -12.68)" fill="#fff"/>
+    <path id="Trazado_636" data-name="Trazado 636" d="M142.543,44.952s-25.652.106-25.573.027L117,53.073l15.461-.027a16.18,16.18,0,1,1-4.687-16.122h12.161a25.962,25.962,0,1,0-23.984,37.851c.3.011.609.023.916.023A25.968,25.968,0,0,0,142.49,53.034c.069-.426.11-.862.159-1.294a25.721,25.721,0,0,0,.185-2.905,26.191,26.191,0,0,0-.29-3.882" transform="translate(-12.143 -3.055)" fill="#fff"/>
+    <path id="Trazado_637" data-name="Trazado 637" d="M109.6,10.653l0,0h0Z" transform="translate(-14.64 -1.423)" fill="#fff"/>
+    <path id="Trazado_638" data-name="Trazado 638" d="M.014,41.92l79.125,7.662a26.181,26.181,0,0,1-.29-3.882,25.7,25.7,0,0,1,.185-2.905c.049-.433.089-.869.159-1.3a25.967,25.967,0,0,1,25.621-21.764c.307,0,.611.013.916.023L97.868,0,94.963,9.23l0,0h0A37.783,37.783,0,0,0,68.949,33.8L.014,41.92H0" fill="#cd163f"/>
+    <path id="Trazado_639" data-name="Trazado 639" d="M132.244,94.928l0,0h0Z" transform="translate(-17.664 -12.68)" fill="#fff"/>
+    <path id="Trazado_640" data-name="Trazado 640" d="M225.548,56.017h-.014L156.6,64.134A37.8,37.8,0,0,1,130.583,88.7h0l0,0-2.905,9.23-7.861-19.759c.3.01.608.023.916.023a25.968,25.968,0,0,0,25.621-21.764c.069-.426.11-.861.159-1.294a25.721,25.721,0,0,0,.185-2.905,26.191,26.191,0,0,0-.29-3.882l79.125,7.662" transform="translate(-16.005 -6.459)" fill="#cd163f"/>
+  </g>
+</svg>

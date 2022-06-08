@@ -1,0 +1,103 @@
+<div class="w-100 p-0 m-0">
+  <div id="bancontacto"  class="imagebannerseccion posrel w-100">
+    <picture>
+      <source media="(min-width: 968px)" srcset="{{imagenzonacontacto.rutapc}}"
+        data-srcset="{{imagenzonacontacto.rutapc}}">
+      <source media="(min-width: 0px)" srcset="{{imagenzonacontacto.rutamovil}}"
+        data-srcset="{{imagenzonacontacto.rutamovil}}">
+      <img src="{{imagenzonacontacto.rutapc}}" data-src="{{imagenzonacontacto.rutapc}}" alt="banner madguides"
+        class="imagebannerseccion lazyload " onerror="this.src='assets/images/sinimagen.jpg' ">
+    </picture>
+
+    <div id="posabsollemacontacto" class="w-100"  >
+        <div id="lemacontacto">
+            <span>
+            Madrid único para viajeros únicos
+            </span>  
+        </div>
+    </div>
+  </div>
+
+  <div class="posrel h300 " >
+
+    <div class="posabsolcontactohome ">
+      <div class="container posrel">
+  
+        <div class="panelcontactohome mx-auto">
+          <form class="validate-form" [formGroup]="forma">
+            <div id="intpanelcontactohome" class="p-0" >
+              <div class="w-100">
+                <div id="pontecontac">
+                  <div>
+                    <i class="fs-26 fa-regular fa-paper-plane mr-1 colROJO3"></i>
+                    <span class="fs-24 ff-JB">
+                     Ponte en contacto con nosotros
+                     </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 d-flex p-0 posrel">
+                <div id="nombrecontact">
+                  <div class="cuad">
+                    <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre" formControlName="nombre">
+                    <div *ngIf="nombresel != '' " class="fieldpeq">
+                      Nombre
+                    </div>
+                  </div>
+                </div>
+                <div id="emailcontact">
+                  <div class="cuad">
+                    <input class="w-100" type="text" placeholder="Email" name="email" id="email" formControlName="email">
+                    <div *ngIf="emailsel != '' " class="fieldpeq">
+                      Email
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 d-flex p-0 posrel">
+                
+                <div id="mensajecontact " class="">
+                  <div class="cuadG">
+                    <textarea class="" type="text" placeholder="Mensaje" cols="4" name="mensaje" id="mensaje"
+                      formControlName="mensaje">
+                    </textarea>
+                    <div *ngIf="mensajesel != '' " class="fieldpeq">
+                      Mensaje
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="w-100 d-flex p-0">
+                
+                <div id="aceptocontact">
+                  <div  class="custom-control custom-checkbox ">
+                    <input type="checkbox"  class="custom-control-input " name="aceptacion" id="aceptacion" formControlName="aceptacion">
+                    <label for="aceptacion" class="custom-control-label "> Acepto <a routerLink="/politicaprivacidad">la política de privacidad</a> </label>
+                  </div>
+                </div> 
+
+                <div id="btcontact" class="w-100  text-right ">
+                  <button *ngIf="btactivadoT" type="button" class="btgris cupo" >
+                    Enviar
+                  </button>
+                  <button *ngIf="!btactivadoT" type="button" class="btgris apagado" >
+                    Enviar
+                  </button>
+                </div>
+
+              </div>
+            
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

@@ -1,6 +1,6 @@
 
   <div class="mhbannerhome " >
-      <div class=" animated fadeIn slow posrel" *ngIf="cargados"  >
+      <div class=" animated fadeIn slow posrel"   >
             <picture>
               <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}"
                 data-srcset="{{imagenbanner.rutapc}}" >
@@ -9,30 +9,32 @@
               <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}"
                 alt="banner madguides" class="imagebannerhome" onerror="this.src='assets/images/sinimagen.jpg' "   >
             </picture>
-            <div class="posabsolbeforemodal">
+            <div class="posabsolbeforemodal h-100">
               <div class="container posrel">
                 <div class="animated fadeInUp  posabsolmodalbannerhome"  style="animation-delay: 1.8s"  >
                   <div class="panelbuscadorhome  mx-auto">
-                      <div class="pt-5 px-1 pb-0 text-center">
-                        <span id="titulomodalbuscador" class="ff-JB">
+                      <div id="titulomodalbuscador">
+                        <div  class="ff-JB">
                           Excursiones por Madrid <br>
                           y sus alrededores
-                        </span>
+                        </div>
                       </div>
-                      <div id="subtitulomodalbuscador" class="py-4 px-1 text-center">
-                        <span>
-                          Visitas guiadas y
-                        </span>
-                        <span class="ff-JB">
-                          personalizas en tu idioma
-                        </span>
+                      <div id="subtitulomodalbuscador" class="text-center">
+                        <div>
+                          <span>
+                            Visitas guiadas y
+                          </span>
+                          <span class="ff-JB">
+                            personalizas en tu idioma
+                          </span>
+                        </div>
                       </div>
-                      <div class="pt-3 pb-0 px-1 text-center ">
-
-                        <div class="cjbuscador posrel">
+                      
+                      <div id="cjbuscador" class="posrel">
+                        <div>
                           <input  type="text" class="colGRIS1 posabsolcjbuscador" placeholder=" ¿Que quieres visitar?" />
                           <button class="btredondoRojo posabsolbtbuscador" type="button">
-                            <span class="ff-JB mr-2" >Buscar</span> 
+                            <span class="ff-JB ml-4 mr-3" >Buscar</span> 
                             <span><i class="fa fa-arrow-right "></i></span> 
                           </button>
                         </div>
