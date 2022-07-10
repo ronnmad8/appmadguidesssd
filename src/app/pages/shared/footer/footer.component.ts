@@ -16,6 +16,8 @@ import { AuthService } from 'src/app/services/auth.service';
     //@ViewChild(LoginComponent, null) loginentrar;
 
     adminactive: boolean;
+    widg1show = false;
+    widg2show = false;
 
     constructor(
       private auth: AuthService,
@@ -48,6 +50,15 @@ import { AuthService } from 'src/app/services/auth.service';
     logout() {
       this.adminactive = false;
       this.auth.logout();
+    }
+
+    showwidg1(){
+      this.widg1show = !this.widg1show;
+      this.widg2show = false;
+    }
+    showwidg2(){
+      this.widg2show = !this.widg2show;
+      this.widg1show = false;
     }
 
       

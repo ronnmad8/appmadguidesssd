@@ -208,10 +208,19 @@ export class ImagenesService {
     };
   
     let im = new ImagenesModel();
+
+    
     im.rutapc = "assets/images/sinimagen.png";
     if(idenlace == "1"){
       im.rutapc = "assets/images/banner-home.jpg";
       im.rutamovil = "assets/images/banner-home.jpg";
+      im.tipo_id = 1;
+      im.nombre = "imagenbanner";
+    
+    }
+    if(idenlace == "2"){
+      im.rutapc = "assets/images/banner-ficha-de-producto.jpg";
+      im.rutamovil = "assets/images/banner-ficha-de-producto.jpg";
       im.tipo_id = 1;
       im.nombre = "imagenbanner";
     
@@ -229,6 +238,8 @@ export class ImagenesService {
     // );
 
   }
+
+  
 
 
   

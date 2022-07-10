@@ -1,11 +1,11 @@
 <div id="wrapper" class="pagewrapper posrel">
 
   <!--pc-->
-  <div class="menupc pc" *ngIf="!isAdminweb" [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }">
+  <div class="menupc pc" [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }">
     <nav id="navpc" class="container mx-auto px-0">
-      <div class="row h84 colGRIS1">
+      <div class="row hbarmenupc colGRIS1">
 
-        <div class="col-3 divlogopc" >
+        <div class="col-3 divlogopc">
           <div class="cupo p-0 posabsol" style="left: 5px; top: 12px" routerLink="home" (click)="mostrar()">
             <img src="../../assets/images/logo-madguides.svg" class="imlogomenupc" draggable="false">
           </div>
@@ -36,15 +36,15 @@
         </div>
 
         <div class="col-4 d-flex text-right ">
-          
-          <div class="posrel bar ml-auto mr-1" >
-            <div class="cupo posabsolbar py-2 " >
-              <img src="../../assets/images/i-lupa.svg" class="cupo im50" (click)="mostrarbusqueda()" draggable="false">
+
+          <!-- <div class="bar posrel ml-auto mr-1">
+            <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
+              <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
             </div>
-            <!-- <i class="posabsolbar fa-solid fa-search text-center fs-20 py-2"></i> -->
-          </div>
-          <div class="baridiomas posrel mx-1" (click)="mostraridiomas()">
-            <div class="cupo posabsolbaridiomas colGRIS7 cupo d-flex fs-20 py-2">
+          </div> -->
+
+          <div class="baridiomas posrel ml-auto mr-1">
+            <div class="cupo posabsolbaridiomas colGRIS7 cupo d-flex fs-20 py-2" (click)="mostraridiomas()">
               <div class="pr-2  ">{{idioma}}</div>
               <div>
                 <i class=" fa fa-angle-down fs-16"></i>
@@ -52,197 +52,309 @@
             </div>
             <div class="modalidiomas animated fadeInDown" *ngIf="veridiomas">
               <div *ngFor="let idioma of idiomas">
-                <div class="cupo" (click)="cambiaridioma(idioma)" >{{idioma}}</div>
+                <div class="cupo" (click)="cambiaridioma(idioma)">{{idioma}}</div>
               </div>
             </div>
           </div>
-          <div class="bar posrel mx-1 colGRIS1" >
-            <div class="cupo posabsolbar py-2 " >
-              <img src="../../assets/images/i-perfil.svg" class="cupo im50" (click)="mostrarusuario()" draggable="false">
-            </div>
 
-            <div class="modalusuario animated fadeInDown" *ngIf="verusuario">
-              <form class="validate-form" [formGroup]="forma">
-                <div class="row my-4">
-                  <div class="col-xl-2"></div>
-                  <div class="col-xl-8 mx-auto">
-                     <span class="fs-24 ff-JB">
-                      
-                      </span>
-                  </div>
-                  <div class="col-xl-2"></div>
-                </div>
-                <div class="row my-4">
-                  <div class="col-xl-2"></div>
-                  <div class="col-xl-4">
-                    <div class="cuad posrel my-1">
-                      <input class="w-100" type="text" placeholder="Email" name="email" id="email" formControlName="email">
-                      <div *ngIf="usuariosel != '' " class="fieldpeq">
-                        Email
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-4">
-                    <div class="cuad posrel my-1">
-                      <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre" formControlName="nombre">
-                      <div *ngIf="passwordsel != '' " class="fieldpeq">
-                        Nombre
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-2"></div>
-                </div>
-          
-                <div class="row my-4">
-                  <div class="col-xl-2"></div>
-                  <div class="col-xl-4 ">
-                    <div  class="custom-control custom-checkbox mx-auto">
-                      <input type="checkbox"  class="custom-control-input  fs-18" name="aceptacion" id="aceptacion" formControlName="aceptacion">
-                      <label for="aceptacion" class="custom-control-label  fs-18 ml-3"> Acepto <a routerLink="/politicaprivacidad">la política de privacidad</a> </label>
-                  </div>
-                  </div> 
-                  <div class="col-xl-4">
-                   <div class="w-100 text-xl-right text-center my-1">
-                    <button *ngIf="btactivadoT" type="button" class="btgris cupo" >
-                      Enviar
-                    </button>
-                    <button *ngIf="!btactivadoT" type="button" class="btgris apagado" >
-                      Enviar
-                    </button>
-                   </div>
-                  </div>
-                  <div class="col-xl-2"></div>
-                </div>
-              </form>
+          <div class="bar posrel mx-1 colGRIS1">
+            <div class="cupo posabsolbar py-2 " (click)="mostrarusuario()">
+              <img src="../../assets/images/i-perfil.svg" class="im50" draggable="false">
             </div>
-
           </div>
 
-          <div class="carrito posrel">
-            <div class="cupo posabsolbar py-2 " >
-              <img src="../../assets/images/i-carrito.svg" class="cupo im50" (click)="mostrarcarrito()"  draggable="false">
+          <div class="carrito posrel" [ngClass]="{ 'carritoactivo': vercarrito}">
+            <div class="cupo posabsolbar py-2 " (click)="mostrarcarrito()">
+              <img src="../../assets/images/i-carrito.svg" class="im50" draggable="false">
             </div>
-            <div class="modalcarrito animated fadeInDown p-0" *ngIf="vercarrito">
+          </div>
 
-              <div class="bordeli w95" *ngFor="let visita of visitascarrito">
-                <div class="row my-2 posrel">
-                  <div class="col-xl-4">
-                    <div class="pc pl-1">
-                      <picture>
-                        <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
-                        <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt="" class="mh80 lazyload ">
-                      </picture>
-                    </div>
-                    <div class="mvl">
-                      <picture>
-                        <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
-                        <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt="" class="mh200 lazyload ">
-                      </picture>
-                    </div>
-                  </div>
-                  <div class="col-xl-8 posrel">
-                    <div class="posabsol" style="right: 7px; top: 0">
-                      <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
-                        <i class="fa-regular fa-circle-xmark colGRIS3"></i>
-                      </span>
-                    </div>
-                    <div class="posabsol colROJO3" style="right: 7px; bottom: 0">
-                      {{visita.precioPersona}} €
-                    </div>
-                    <div class="fs-18 ff-JB colROJO3">
-                      {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
-                    </div>
-                    <div class="colGRIS3 posrel" style="min-height: 40px">
-                      {{visita.texto.length > 60 ? visita.texto.substring(0,57)+"..." : visita.texto }}
-                    </div>
-                    <div class="colGRIS3 posrel">
-                      2 Adultos, 1 menor
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </div>
+      </div>
+    </nav>
 
-              <div class="bordeli w-100" >
-                <div class="my-2 posrel">
-                  <div class="fs-14 pl-2 colGRIS3">
-                    {{visitascarrito.length}} actividades
-                  </div>
-                  <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
-                    {{totalcarrito}} €
-                  </div>
-                </div>
-              </div>
-              <div class="w-100 posabsol" style="bottom: 5px; left: 0; right: 0 " >
-                <div class="my-2 mx-auto text-center"  >
-                    <button class="btredondoRojo" type="button">
-                      <span class="ff-JB" >Finalizar reserva</span>  
-                    </button>
-                </div>
-              </div>
+    <div class="container posrel ">
 
-            </div>
+      <div id="modalcarrito" class="pc posabsolmodalcarrito" *ngIf="vercarrito">
+        <div id="panelcarritovacio" *ngIf="carritovacio">
+          <div class="text-center py-3">
+            Tu carrito está vacío
           </div>
         </div>
 
+        <div id="panelcarrito" *ngIf="!carritovacio">
+
+          <div id="divcarrito">
+            <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
+              <div class="cartamodalcarrito d-flex ">
+                <div class="imgcartamoadalcarrito">
+                  <div class="pc pl-1">
+                    <picture>
+                      <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
+                      <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                        class="imgcartamoadalcarrito lazyload ">
+                    </picture>
+                  </div>
+                  <div class="mvl">
+                    <picture>
+                      <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
+                      <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                        class="imgcartamoadalcarrito lazyload ">
+                    </picture>
+                  </div>
+                </div>
+
+                <div class="posrel infocartamodalcarrito">
+                  <div class="posabsol" style="right: 5px; top: 0">
+                    <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
+                      <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
+                    </span>
+                  </div>
+                  <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
+                    {{visita.precioPersona}} €
+                  </div>
+                  <div id="titulomodalcarrito">
+                    {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                  </div>
+                  <div id="texto1modalcarrito">
+                    {{visita.texto.length > 40 ? visita.texto.substring(0,37)+"..." : visita.texto }}
+                  </div>
+                  <div id="texto2modalcarrito">
+                    2 Adultos, 1 menor
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="bordeli w-100">
+            <div class="my-2 posrel">
+              <div class="fs-14 pl-2 colGRIS3">
+                {{visitascarrito.length}} actividades
+              </div>
+              <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
+                {{totalcarrito}} €
+              </div>
+            </div>
+          </div>
+
+          <div class="w-100">
+            <div class="my-3 mx-auto text-center">
+              <button class="btredondoRojoCarrito" type="button">
+                <span class="ff-JB">Finalizar reserva</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </nav>
+    </div>
+
   </div>
 
   <!--movil-->
+  <div class="mvl posfixedmenumvl ">
+    <div class="d-flex posrel mt-3">
+      <div class="cupo w-100 text-center mx-auto " routerLink="home">
+        <img src="../../assets/images/logo-madguides.svg" style="width:110px; height: auto;" draggable="false">
+      </div>
+      <div>
+        <i class="fas fa-bars fs-28 posabsol" style="left: 20px; top: 6px" title="abrir" menu (click)="menu()"></i>
+      </div>
+      <div class="carritomenumvl" (click)="mostrarcarrito()">
+        <img src="../../assets/images/i-carritoN.svg" class="im50" draggable="false">
+      </div>
+      <div class="lupamenumvl" (click)="mostrarbusqueda()">
+        <img src="../../assets/images/i-lupa.svg" class="im50" draggable="false">
+      </div>
+    </div>
+  </div>
 
-  <div class="menumvl mvl" *ngIf="!isAdminweb">
+  <div class="menumvl mvl">
     <nav id="sidebar" class="sbar" [ngClass]="ocultar">
-      <div class="mr-3 ttmenu ">
-        <div class="px-2 posrel mh100">
-          <div class="hambInt" title="cerrar menu" (click)="menu()" style="width: 80px">
-            <i class="fas fa-bars mr-1 fs-32"></i>
-            <i class="fas fa-angle-right"></i>
-          </div>
-          <div class="posabsol cupo" style="right: 20px; top: 20px" routerLink="home" (click)="mostrar()">
-            <img src="../../assets/images/imagotipo.svg" style="width:190px; height: auto;" draggable="false">
+      <div class="posrel ">
+
+        <div id="abrirmicuenta" class="w-100 d-flex px-2 py-2" (click)="mostrarusuariob(true)">
+          <div class="pl-4">Mi cuenta</div>
+          <div class="cupo imperfil text-right pr-2 ml-auto mr-0 ">
+            <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
         </div>
-
+        <div id="abriridioma" class="d-flex px-2 py-2" style="bottom: 120px">
+          <div class="pl-4 m-0 ">Idioma</div>
+          <div class="cupo imperfil text-right pr-2 ml-auto mr-0 " (click)="mostraridiomas()">
+            {{idioma}}
+            <i class=" fa fa-angle-down fs-16"></i>
+          </div>
+        </div>
         <div class="panscrollM">
 
           <div class="posrel limenu pl-4 m-0  ">
-            <div class="cupo w-50  " routerLink="/home" routerLinkActive="active" (click)="mostrar()">
-              <span>HOME</span>
-            </div>
-          </div>
-
-          <div class="posrel limenu pl-4 m-0  ">
             <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
-              <span>QUIENES SOMOS</span>
+              <span>Quienes somos</span>
             </div>
           </div>
 
           <div class="posrel limenu pl-4 m-0  ">
             <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
-              <span>BLOG</span>
+              <span>Blog</span>
             </div>
           </div>
 
           <div class="posrel limenu pl-4 m-0  ">
-            <div class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
-              <span>AYUDA</span>
+            <div class="cupo w-50  " routerLink="/contacto" routerLinkActive="active" (click)="mostrar()">
+              <span>Contacto</span>
             </div>
           </div>
-
-          <div class="mh100"></div>
 
         </div>
       </div>
     </nav>
   </div>
 
+  <div class="container posrel mx-auto conta ">
+
+    <div id="modalcarritomovil" class="mvl  posabsolmodalcarritomovil" *ngIf="vercarrito">
+      <div id="panelcarritovaciomovil" *ngIf="carritovacio">
+        <div class="text-center py-3">
+          Tu carrito está vacío
+        </div>
+      </div>
+      <div id="panelcarritomovil" *ngIf="!carritovacio">
+        <div id="panelcarritocondatomovil">
+          <div class="text-xl-center text-left py-1 px-3">
+            Resumen del carrito
+          </div>
+        </div>
+        <div id="divcarritomovil">
+          <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
+            <div class="cartamodalcarrito d-flex ">
+              <div class="imgcartamoadalcarrito">
+                <div class="pc pl-1">
+                  <picture>
+                    <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
+                    <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                      class="imgcartamoadalcarrito lazyload ">
+                  </picture>
+                </div>
+                <div class="mvl">
+                  <picture>
+                    <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
+                    <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                      class="imgcartamoadalcarrito lazyload ">
+                  </picture>
+                </div>
+              </div>
+              <div class="posrel infocartamodalcarrito">
+                <div class="posabsol" style="right: 5px; top: 0">
+                  <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
+                    <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
+                  </span>
+                </div>
+                <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
+                  {{visita.precioPersona}} €
+                </div>
+                <div id="titulomodalcarrito">
+                  {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                </div>
+                <div id="texto1modalcarrito">
+                  {{visita.texto.length > 40 ? visita.texto.substring(0,37)+"..." : visita.texto }}
+                </div>
+                <div id="texto2modalcarrito">
+                  2 Adultos, 1 menor
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bordeli w-100">
+          <div class="py-2 posrel">
+            <div class="fs-14 pl-2 colGRIS3">
+              {{visitascarrito.length}} actividades
+            </div>
+            <div id="preciocarrito" class="posabsol colGRIS1 " style="right: 7px; bottom: 7px">
+              {{totalcarrito}} €
+            </div>
+          </div>
+        </div>
+        <div class="w-100 py-3">
+          <div class="mx-auto text-center">
+            <button class="btredondoRojoCarrito" type="button">
+              <span class="ff-JB">Finalizar reserva</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalmicuenta" class="posabsolmicuentamodal">
+      <div id="panelmicuenta" *ngIf="verusuario">
+        <div id="divmicuenta">
+          <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+            <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+              <i class="fa fa-angle-left fs-20"></i>
+            </div>
+            <div id="abrirmicuentatitulo" class="px-3">Mi cuenta</div>
+          </div>
+          <div class="px-3">
+            <div id="accedemicuenta">
+              Accede a tu área de usuario
+            </div>
+            <div id="cjusuariomicuenta">
+              <input type="text" class="colGRIS1 cjmicuenta" placeholder=" Usuario o email" id="emailmicuanta"
+                name="emailmicuenta" />
+            </div>
+            <div class="posrel" id="cjpasswordmicuenta">
+              <input type="text" class="colGRIS1 cjmicuenta" placeholder=" Contraseña" id="passwordmicuenta"
+                name="passwordmicuenta" />
+              <div class="posabsol" style="top: 10px; right: 15px"> <i class="fa-solid fa-eye-slash"></i> </div>
+            </div>
+            <div class="d-flex" id="recuerdamimicuenta">
+              <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
+                <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
+                <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
+              </div>
+              <div class="mt-1 ml-2">Recordarme</div>
+            </div>
+            <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+              <button class="btredondoRojomicuenta " type="button">
+                <span>Iniciar sesión</span>
+              </button>
+              <div id="heolvidadomicuenta">
+                He olvidado mi contraseña
+              </div>
+            </div>
+            <div id="oaccedemicuenta">
+              O accede con
+            </div>
+            <div class="w-100 p-0 ">
+              <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
+                <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
+                <span>Facebook</span>
+              </button>
+              <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                <img src="../../assets/images/logog.png" class="imredes" draggable="false">
+                <span>Google</span>
+              </button>
+            </div>
+            <div id="notienesmicuenta">
+              <span>¿No tienes cuenta?</span><span class="colROJO3"> Registrate aquí</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 
   <!--content-->
 
   <div class="bgBLANCO page-content p-0 m-0">
 
-    <router-outlet></router-outlet>
+    <router-outlet  ></router-outlet>
 
   </div>
 

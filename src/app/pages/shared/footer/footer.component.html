@@ -1,97 +1,150 @@
 <footer class="footer">
 
-    <div class="w-100 bgBLANCO2 h300"  >
+    <div class="w-100 bgBLANCO2 py-2"  >
+            <div class="container pc">
 
-            <div class="container ">
-                <div id="intfooter" class="row">
-
-                    <div class="col-xl-3 col-lg-6 p-0 ">
+                <div class="intfooter" class="row">
+                    <div class="col-xl-3 ">
                         <div class="mr-xl-auto ml-xl-0 mx-auto  cupo"                                 routerLink="/home">
                             <img id="logofooter" src="assets/images/logo-madguides-vertical.svg " 
                                 draggable="false">
                         </div>
                     </div>
-        
-                    <div class="col-xl-3 col-lg-6  p-0 ">
+                    <div class="col-xl-3 ">
+                        
                         <div class="mx-auto colGRIS1"   >
                             <div class="mb-3">
                                 <h4 class="fs-20 ff-JB ">
                                     MADGuides
                                 </h4>
                             </div>
-                            <div class="fs-18 cupocupo" routerLink="/quienessomos">
+                            <div class="enlacefoot" routerLink="/quienessomos">
                                 <span>Quienes somos</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/blog">
+                            <div class="enlacefoot" routerLink="/blog">
                                 <span>Blog</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/ayuda">
+                            <div class="enlacefoot" routerLink="/ayuda">
                                 <span>Ayuda</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/medidascovid">
+                            <div class="enlacefoot" routerLink="/medidascovid">
                                 <span>Medidas Covid-19</span>
                             </div>
-        
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6 p-0 ">
+                    <div class="col-xl-3">
                         <div class="mx-auto colGRIS1">
                             <div class="mb-3">
                                 <h4 class="fs-20 ff-JB ">
                                     Legal
                                 </h4>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/politicaprivacidad">
+                            <div class="enlacefoot" routerLink="/politicaprivacidad">
                                 <span>Política de privacidad</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/avisolegal">
+                            <div class="enlacefoot" routerLink="/avisolegal">
                                 <span>Aviso legal</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/politicacookies">
+                            <div class="enlacefoot" routerLink="/politicacookies">
                                 <span>Política de cookies</span>
                             </div>
-                            <div class="fs-18 cupo" routerLink="/politicacompra">
+                            <div class="enlacefoot" routerLink="/politicacompra">
                                 <span>Política de compra y devolución</span>
                             </div>
-        
-                        </div>
-
-                    </div>
-
-                    <div class="col-xl-3 col-lg-6 p-0 ">
-                        <div class="posrel d-flex  " >
-                            <div class="ml-xl-auto mr-xl-3 mx-auto " >
-                                <img src="assets/images/i-sello-de-calidad.svg " class="im100"
-                                    draggable="false">
-                            </div>
-                            <div class="mx-xl-2 mx-auto " title="no tengo este icono">
-                                <img src="assets/images/i-sello-de-calidad.svg " class="im100"
-                                    draggable="false"  >
-                            </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 ">
+                        <div class="posrel d-flex " >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mvl px-3">
+                <div class="col-12 my-2">
+                    <div class="mx-auto text-center cupo"                                 routerLink="/home">
+                        <img id="logofooter2" src="assets/images/logo-madguides-vertical.svg " 
+                            draggable="false">
+                    </div>
+                </div>
+                
+                <div class="col-12 ">
 
+                    <div class="mx-auto colGRIS1"   >
+                        <div id="widg1" (click)="showwidg1()"  class="accord cupo d-flex "  >
+                            <div class="text-left">
+                                <span>
+                                MADGuides
+                                </span>
+                            </div>
+                            <div class="text-right  ml-auto mr-1">
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                        </div>
+                        <div id="divwdg1" *ngIf="widg1show" class="animated fadeIn my-2" >
+                            <div class="enlacefoot" routerLink="/quienessomos">
+                                <span>Quienes somos</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/blog">
+                                <span>Blog</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/ayuda">
+                                <span>Ayuda</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/medidascovid">
+                                <span>Medidas Covid-19</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mx-auto colGRIS1">
+                        <div id="widg2" (click)="showwidg2()" class="accord cupo d-flex "  >
+                            <div class="text-left">
+                                <span >
+                                Legal
+                                </span>
+                            </div>
+                            <div class="text-right ml-auto mr-1 ">
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                        </div>
+                        <div id="divwidg2" *ngIf="widg2show" class="bordebot  animated fadeIn my-2" >
+                            <div class="enlacefoot" routerLink="/politicaprivacidad">
+                                <span>Política de privacidad</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/avisolegal">
+                                <span>Aviso legal</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/politicacookies">
+                                <span>Política de cookies</span>
+                            </div>
+                            <div class="enlacefoot" routerLink="/politicacompra">
+                                <span>Política de compra y devolución</span>
+                            </div>
+                        </div>
+                        <div class="h30"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="bgGRIS1 " style="min-height: 65px">
-            <div class="container">
-                <div class="row posrel">
+        <div id="barrafooter"  >
+           
+                <div class="w-100 posrel d-flex">
 
-                    <div class="col-xl-8 text-xl-left text-center my-3">
+                    <div class="text-left my-3 mr-auto ml-0 ">
                         <div class="fs-16 colGRIS3">
                             <a href="https://endesys.com" target="_blank">Powered by Endesys</a>
                         </div>
                     </div>
-                    <div class="col-xl-4 text-xl-right text-center my-3 ">
-                        <a class="mx-4" href="https://www.facebook.com/" target="_blank" title="madguides en Facebook">
+                    <div class="text-right my-3 ml-auto mr-0">
+                        <a class="mx-xl-4 mx-2" href="https://www.facebook.com/" target="_blank" title="madguides en Facebook">
                             <i class="fa fa-facebook colBLANCO fs-24"></i>
                         </a>
-                        <a class="mx-4" href="https://twitter.com/" target="_blank" title="madguides en Twitter">
+                        <a class="mx-xl-4 mx-2" href="https://twitter.com/" target="_blank" title="madguides en Twitter">
                             <i class="fa fa-twitter colBLANCO fs-24"></i>
                         </a>
-                        <a class="mx-4" href="https://instagram.com" target="_blank" title="proyectosxanadu en Youtube">
+                        <a class="mx-xl-4 mx-2" href="https://instagram.com" target="_blank" title="proyectosxanadu en Youtube">
                             <i class="fa fa-instagram colBLANCO fs-24"></i>
                         </a>
                     </div>
@@ -101,7 +154,6 @@
                     </div>
 
                 </div>
-            </div>
         </div>
 
 

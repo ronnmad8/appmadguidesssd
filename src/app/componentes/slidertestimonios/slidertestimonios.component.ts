@@ -45,6 +45,18 @@ export class SlidertestimoniosComponent implements OnInit {
     slidesOffsetBefore: 0,
     slidesOffsetAfter: 0,
     spaceBetween: 1,
+    breakpoints: {
+      1290: {
+        slidesPerView: 1
+      },
+      590: {
+        slidesPerView: 1.05
+      },
+      490: {
+        slidesPerView: 1.15
+      },
+
+    }
 
   };
 

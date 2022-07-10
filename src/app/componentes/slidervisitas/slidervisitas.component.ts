@@ -46,31 +46,34 @@ export class SlidervisitasComponent implements OnInit {
     spaceBetween: 1,
     breakpoints: {
         1290: {
-          slidesPerView: 3.5
+          slidesPerView: 4
         },
         1190: {
-          slidesPerView: 3.25
+          slidesPerView: 4
         },
         1090: {
-          slidesPerView: 3.0
+          slidesPerView: 4
         },
         990: {
-          slidesPerView: 2.75
+          slidesPerView: 3.6
         },
         890: {
-          slidesPerView: 2.5
+          slidesPerView: 3.3
         },
         790: {
-          slidesPerView: 2.25
+          slidesPerView: 3
         },
         690: {
-          slidesPerView: 2
+          slidesPerView: 2.5
         },
         590: {
-          slidesPerView: 1.5
+          slidesPerView: 2
         },
         490: {
-          slidesPerView: 1.2
+          slidesPerView: 1.6
+        },
+        400: {
+          slidesPerView: 1.4
         },
 
     }

@@ -1,0 +1,612 @@
+    @media (max-width: 1198px) {
+
+      .pc {
+        display: none !important;
+      }
+    
+      .mvl {
+        display: inherit !important;
+      }
+
+
+
+      /*******modal buscador**start*********/
+     
+      .posabsoliconosmodal {
+        top: 390px !important;
+      }
+      
+      #diviconos {
+        width: 100% !important;
+        height: 75px;
+        margin-right: auto ;
+        max-width: 380px;
+        padding-right: 0;
+      }
+      
+      #diviconos div{
+      font-size: 12px !important;
+      }
+      
+      #iconobanner1{
+        height: 31px; 
+        width: 24px;
+      }
+      
+
+      .mhbannerhome{
+        min-height: 534px !important;
+        
+      }
+
+      .imagenbanner{
+        top:0px;
+      }
+      
+
+      .imagebannerhome {
+        margin-top: 50px !important;
+        min-height: 534px !important;
+        height: 534px !important;
+      }
+
+      #titulomodalbuscador{
+        font-size: 20px !important;
+        padding-top: 20px!important;
+        padding-bottom: 10px!important;
+        width: 222px !important;
+      }
+      #titulomodalbuscador div{
+        height: 54px !important;
+        min-height: 54px !important;
+      }
+
+      #subtitulomodalbuscador{
+        font-size: 12px !important;
+        margin-bottom: 10px !important;
+        padding-top: 0px!important;
+        padding-bottom: 10px!important;
+        width: 100% !important;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #subtitulomodalbuscador div{
+        height: 20px !important;
+        min-height: 20px !important;
+      }
+
+      .posabsolbtbuscador{
+        position: absolute !important;
+        top: 4.5px !important;
+        left: auto !important;
+        right: 10.5px !important;
+      }
+       
+      .posabsolmodalbannerhome {
+        top: 50px !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+      }
+
+      .posabsolbeforemodal {
+        top: 50px !important;
+        height: 534px !important;
+        min-height: 534px;
+      }
+      
+      #panelbuscadorhome{
+        
+        max-width: 328px !important;
+        min-width: 95% !important;
+        width: 95% !important;
+        min-height: 207px !important;
+        height: 207px !important;
+        padding: 10px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .btredondoRojo{
+        padding: 5px !important;
+        border-radius: 25px !important;
+        min-width: 110px !important;
+        width: 110px !important;
+        height: 34px !important;
+        font-size: 13px !important;
+      }
+
+      .posabsolcjbuscador{
+        position: absolute !important;
+        top: 2px !important;
+        left: 5px !important;
+        right: auto !important;
+        width: 135px !important;
+        height: 28px !important;
+        margin-left: 12px !important;
+        margin-top: 3px !important;
+        margin-bottom: auto !important;
+        font-size: 13px !important;
+      }
+    
+      #cjbuscador {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 90% !important;
+        height: 41px !important;
+        border-radius: 25px !important;
+        padding: 0px 7px !important;
+        font-size: 18px !important;
+      }
+      #divcjbuscador{
+        height: 44px!important;
+      }
+
+ 
+      .posabsolprop{
+        position: absolute !important;
+        left: 0;
+        right: 0;
+        top:45px;
+        z-index: 3100 !important;
+        visibility:visible !important;
+      }
+      
+      #panelpropbuscador{
+        min-height: 250px;
+        height: 100%;
+        width: 100% !important;
+        min-width: 280px;
+        background-color: var(--c_BLANCO) !important;
+        border-radius: 0 0 8px 8px;
+        
+      }
+      
+      .cartamodalprop{
+        min-height: 30px;
+        padding: 4px 20px !important;
+      }
+      
+      .imgcartamodalprop{
+        width: 28px !important;
+        height: 28px !important;
+      }
+      
+      .infocartamodalprop{
+        min-width: 0px;
+        width: 100%;
+        height: 24px;
+        padding-left: 10px !important;
+        padding-right: 5px;
+        padding-top: 10px;
+      }
+      
+      #textomodalprop{
+        color: var(--c_GRIS1) !important;
+        font-size: 13px !important;
+        min-height: 0px;
+        width: 100%;
+      }
+      
+      #listaprop{
+        min-height: 200px; 
+        height: 100%;
+        width: 100%;
+        max-width: 320px !important;
+        overflow: auto;
+      }
+      
+      #vertodosprop{
+        width: 100%;
+        height: 50px;
+        padding-left: 40px !important;
+        padding-right: 5px;
+        padding-top: 15px;
+        font-size: 13px;
+      }
+      
+      #flechaprop{
+        color: var(--c_GRIS1);
+        font-size: 12px;
+        padding-top: 15px;
+      }
+      
+
+
+
+
+
+
+      /*******modal buscador**end*********/
+
+
+      /********visitas*st*********/
+      #btvertodas{
+        padding: 8px  ;
+        width: 194px !important;
+        height: 34px !important;
+        font-size: 12px !important;
+        font-family: Jost-Bold !important;
+      }
+
+      .dist1{
+        height: 30px !important;
+      }
+      .dist2{
+        height: 20px !important;
+      }
+      .dist3{
+        height: 45px !important;
+      }
+
+      #titulovisitas{
+        font-size: 20px !important;
+        width: 100% !important;
+      }
+      #visitastemporada{
+        font-size: 13px !important;
+        height: 28px !important;
+        width: 150px !important;
+      }
+      #divvisitas{
+        height: 310px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .panelVisita {
+        box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+        width: 215px;
+        height: 306px;        
+      }
+      .imgvisita{
+        height: 168px !important;
+        width: 215px !important;
+      }
+      .titvisita{
+        min-height: 21px !important;
+        font-size: 16px !important;
+        font-family: Jost-Bold;
+        color: var(--c_GRIS1);
+        padding-left: 18px ;
+        padding-right: 18px;
+        padding-top: 16px;
+        padding-bottom: 8px;
+      }
+      .titvisita span{
+        height: 21px !important;
+      }
+      .textvisita{
+        min-height: 42px !important;
+        font-size: 10px !important;
+      }
+      .textvisita span{
+        height: 42px !important;
+      }
+      .infovisita{
+        min-height: 21px;
+        color: var(--c_GRIS3) !important;
+        padding-top: 5px;
+        padding-bottom: 2px;
+      }
+      .preciovisita{
+        height: 21px;
+        width: 100px;
+      }
+      .preciovisitaeuro{
+        font-size: 16px!important;
+        font-family: Jost-Bold;
+      }
+      .porpersona{
+        font-size: 10px!important;
+      }
+      .horasvisita{
+        height: 21px !important;
+      }
+      .imghorasvisita {
+        height: 12px !important;
+        text-align: right;
+      }
+      .cantidadhorasvisita{
+        font-size: 16px !important;
+      }
+
+
+
+
+
+      /*********visitas*end********/
+      
+
+      /********testimonios mvl st************/
+      .posimgtestim{
+        right: 30px;
+        left: auto;
+        top: 15px;
+      }
+
+      #titulotestimonios{
+        font-size: 20px !important;
+      }
+      .imgtestim{
+        width: 65px;
+        height: 65px;
+      }
+      .imglogotestim{
+        height: 52px;
+      }
+      .panelTestimonio {
+        max-width: 92% !important;
+        width: 95%;
+        height: 219px;
+        min-height: 219px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+      }
+      #carrtestim{
+        height: auto !important;
+        width: 98% ;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: auto;
+        padding-bottom: auto;
+      }
+
+      .autortestim{
+        left: 15px !important;
+        top: 10px !important;
+        width: 50%;
+        font-size: 16px !important
+      }
+      .nombrevisitatestim{
+        left: 15px !important;
+        top: 50px !important;
+        width: 50%;
+        font-size: 10px !important;
+      }
+      .titulotestim{
+        left: 15px !important;
+        top: 90px !important;
+        font-size: 10px !important;
+      }
+      .titulotestim div{
+        height: 60px;
+        max-height: 60px;
+      }
+      .veracttestim{
+        padding: 0px !important;
+        right: 5px !important;
+        bottom: auto !important;
+        top: 170px;
+        width: 100px !important;
+      }
+      .veracttestim div{
+        font-size: 12px!important;
+        height: 20px !important;
+        width: 85px !important;
+        margin-right: 0 !important;
+      }
+      .texttestim{
+        left: 15px !important;
+        top: 100px !important;
+        width: 90% !important;
+      }
+      .texttestim div{
+        font-size: 10px !important;
+        height: 100px !important;
+      }
+      .infotestim{
+        width: 100%;
+        height: auto;
+        
+        padding: 0 !important;
+      }
+        
+      /*********testimonios mvl end**************/
+
+      /****contacto mvl st*******/
+      
+      #pontecontac{
+        width: 100% !important;
+        padding-bottom: 0 !important;
+      }
+      #pontecontac div{
+        font-size: 18px !important;
+        font-family: Jost-Bold;
+      }
+      #intpanelcontactohome {
+        width: 100% !important;
+        height: 100%;
+        max-width: 600px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .panelcontactohome {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .posabsolcontactohome{
+        position: relative !important;
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        max-width: 100%;
+      }
+
+      .posabsolcontactohome {
+        min-height: 450px;
+      }
+
+      #aceptocontact{
+        margin-bottom: 10px !important;
+        font-size: 12px !important;
+      }
+      #aceptocontact .custom-control-label{
+        padding-top: 3px !important;
+      }
+
+
+      #basecontactohome{
+        height: 420px;
+        min-height: 420px;
+      }
+
+      #posabsollemacontacto{
+        width: 80%;
+        min-width:280px;
+      }
+      #posabsollemacontacto div{
+        font-size: 24px !important;
+        line-height: 1.0 !important;
+      }
+
+      #nombrecontact{
+        font-size: 18px !important;
+        height: 42px !important;
+        padding-right: 5px !important;
+      }
+      
+      #emailcontact{
+        font-size: 18px !important;
+        height: 42px !important;
+        padding-left: 5px !important;
+      }
+      
+      #mensajecontact{
+        font-size: 18px !important;
+        height: 84px !important; 
+      }
+
+      .cuad{
+        font-size: 16px !important;
+      }
+      .cuadG {
+        margin-top: 12px !important;
+        font-size: 16px !important;
+      }
+
+      #btcontact{
+
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 10px !important;
+      }
+      #btcontact button{
+        height: 34px !important;
+        width: 120px !important;
+        font-size: 12px !important;
+        font-family: Jost-Bold !important;
+        padding: 8px  ;
+      }
+      
+      
+      /*****contacto mvl end******/
+
+
+
+      /*************footer st***************/
+
+      .accord{
+        min-height: 30px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+        width: 100%;
+        border-bottom: 1px solid var(--c_GRIS1);
+      }
+      .accord div{
+        font-size: 16px !important;
+        font-family: Jost-Bold !important ;
+      }
+      
+      #logofooter2{
+        height: 64px;
+        width: 66px;
+      }
+
+      .enlacefoot{
+        font-size: 16px !important;
+        cursor: pointer !important;
+      }
+
+      /*************footer end***************/
+
+
+
+
+
+
+
+
+
+      
+        .panel,
+        .panelG,
+        .panelaA,
+        .panelpeq {
+          box-shadow: inherit !important;
+          width: 100% !important;
+          min-width: 300px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+          padding: 8px;
+          min-height: 300px;
+          position: inherit;
+          margin-top: 100px !important;
+        }
+      
+        
+      
+        .panscrollG {
+          height: inherit !important;
+          min-height: inherit !important;
+          border: inherit !important;
+        }
+
+        /* .imagebannerseccion {
+          min-height: 400px !important;
+          height: 400px !important;
+          object-position: auto center;
+        } */
+      
+        .myCustomModalClass .modal-dialog {
+          min-width: 50vh !important ;
+          max-width: 55vh !important;
+          height: auto;
+          /* margin: auto !important; */
+        }
+
+
+        .swiper-button-next, .swiper-button-prev{
+          display: none !important;
+        }
+
+
+       
+
+    }
+
+
+    /* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+
+/* Style the accordion panel. Note: hidden by default */
+.pan {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}

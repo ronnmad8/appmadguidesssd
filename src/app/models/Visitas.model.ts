@@ -12,7 +12,9 @@ export class VisitasModel{
     alt: string;
     precioPersona: number;
     duracion: number;
-    
+    idiomas: string[] ;
+    idioma: string;
+
     constructor(){
         this.id = 0;
         this.titulo = "";
@@ -22,8 +24,8 @@ export class VisitasModel{
         this.alt = "";
         this.precioPersona = 0;
         this.duracion = 0;
-        
-
+        this.idiomas = [];
+        this.idioma = "";
     }
 
 

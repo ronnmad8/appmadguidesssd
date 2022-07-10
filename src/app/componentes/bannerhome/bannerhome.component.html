@@ -1,49 +1,158 @@
+<div class="mhbannerhome ">
+  <div class=" posrel"   >
 
-  <div class="mhbannerhome " >
-      <div class=" posrel"   >
-            <picture>
-              <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}"
-                data-srcset="{{imagenbanner.rutapc}}" >
-              <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}"
-                data-srcset="{{imagenbanner.rutamovil}}"  >
-              <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}"
-                alt="banner madguides" class="imagebannerhome" onerror="this.src='assets/images/sinimagen.jpg' "   >
-            </picture>
-            <div class="posabsolbeforemodal h-100 animated fadeIn slow">
-              <div class="container posrel">
-                <div class="animated fadeInUp  posabsolmodalbannerhome"  style="animation-delay: 1.8s"  >
-                  <div id="panelbuscadorhome">
-                      <div id="titulomodalbuscador">
-                        <div  class="ff-JB">
-                          Excursiones por Madrid <br>
-                          y sus alrededores
-                        </div>
-                      </div>
-                      <div id="subtitulomodalbuscador" class="text-center">
-                        <div>
-                          <span>
-                            Visitas guiadas y
-                          </span>
-                          <span class="ff-JB">
-                            personalizas en tu idioma
-                          </span>
-                        </div>
-                      </div>
-                      
-                      <div id="cjbuscador" class="posrel">
-                        <div>
-                          <input  type="text" class="colGRIS1 posabsolcjbuscador" placeholder=" ¿Que quieres visitar?" />
-                          <button class="btredondoRojo posabsolbtbuscador" type="button">
-                            <span>Buscar</span> 
-                            <span><i class="fa fa-arrow-right "></i></span> 
-                          </button>
-                        </div>
-                        
-                      </div>
-                  </div>
-                </div>
+    <!-- <div class="bar posrel ml-auto mr-1">
+            <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
+              <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
+            </div>
+    </div> -->
+
+
+    <div class="posabsolbeforemodal ">
+      <div class="container posrel ">
+
+        <div class="animated fadeInUp  posabsolmodalbannerhome" style="animation-delay: 1.8s"
+          *ngIf="mostrarmodalbuscador">
+          <div id="panelbuscadorhome">
+            <div id="titulomodalbuscador">
+              <div class="ff-JB">
+                Excursiones por Madrid <br>
+                y sus alrededores
+              </div>
+            </div>
+            <div id="subtitulomodalbuscador">
+              <div>
+                <span>
+                  Visitas guiadas y
+                </span>
+                <span class="ff-JB">
+                  personalizas en tu idioma
+                </span>
               </div>
             </div>
 
+            <div id="cjbuscador" class="posrel">
+              <div id="divcjbuscador">
+                <input #cjbusqueda type="text" class="colGRIS1 posabsolcjbuscador" placeholder=" ¿Que quieres visitar?" 
+                 (keyup)="buscarprop()" [(ngModel)]="busqueda"  />
+                <button class="btredondoRojo posabsolbtbuscador" type="button" routerLink="/buscador"  >
+                  <span>Buscar</span>
+                  <span><i class="fa fa-arrow-right "></i></span>
+                </button>
+              </div>
+         
+              <div class="posabsolprop">
+                <div id="panelpropbuscador" *ngIf="busqueda.length > 0"  >
+                  <div id="listaprop" class="bordeli p-0 m-0">
+                    <div class="p-0" *ngFor="let visita of visitasprop">
+                      <div class="cartamodalprop d-flex ">
+                        <div class="imgcartamodalprop">
+                          <div class="pc pl-1">
+                            <picture>
+                              <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
+                              <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                                class="imgcartamodalprop lazyload "  >
+                            </picture>
+                          </div>
+                          <div class="mvl">
+                            <picture>
+                              <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
+                              <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                                class="imgcartamodalprop lazyload ">
+                            </picture>
+                          </div>
+                        </div>
+        
+                        <div class="posrel infocartamodalprop cupo">
+                          <div id="textomodalprop">
+                            {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="posrel d-flex" >
+                    <div id="vertodosprop" class="cupo" (click)="vertodos()"  >
+                      Ver todos los resultados para 
+                      <span class="colROJO2 ml-1" >"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." : busqueda}}"</span>
+                    </div>
+                    <div>
+                      <i id="flechaprop" class="fa fa-arrow-right mr-4"></i>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        
+
+        <div class=" posabsoliconosmodal">
+          <div class="container posrel ">
+            <div id="diviconos">
+              <div class="w-100 row">
+                <div class="col-3">
+                  <div class="p-0 text-center">
+                    <img id="iconobanner1" src="assets/images/i-guias-oficiales.svg " draggable="false"
+                      style="height: 39px; width: 30px">
+                  </div>
+                  <div class="text-center py-2">
+                    Guias <br>
+                    Oficiales
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="p-0 text-center">
+                    <img id="iconobanner2" src="assets/images/i-grupos-reducidos.svg " draggable="false"
+                      style="height: 39px; width: 30px">
+                  </div>
+                  <div class="text-center py-2">
+                    Grupos <br>
+                    Reducidos
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="p-0 text-center">
+                    <img id="iconobanner3" src="assets/images/i-hablamos-tu-idioma.svg " draggable="false"
+                      style="height: 39px; width: 30px">
+                  </div>
+                  <div class="text-center py-2">
+                    Hablamos <br>
+                    tu idioma
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="p-0 text-center">
+                    <img id="iconobanner4" src="assets/images/i-precios-finales.svg " draggable="false"
+                      style="height: 39px; width: 30px">
+                  </div>
+                  <div class="text-center py-2">
+                    Precios <br>
+                    Finales
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+    </div>
+
+
+    <div class="imagenbanner"  >
+      <picture>
+        <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}" data-srcset="{{imagenbanner.rutapc}}">
+        <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}" data-srcset="{{imagenbanner.rutamovil}}">
+        <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}" alt="banner madguides"
+          class="imagebannerhome" onerror="this.src='assets/images/sinimagen.jpg' ">
+      </picture>
+    </div>
+
   </div>
+</div>

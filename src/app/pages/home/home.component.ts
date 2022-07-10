@@ -42,12 +42,13 @@ export class HomeComponent implements OnInit{
   textosall: TextosModel[] = [];
   tiposeccion: number = 2;
   tipotextoseccion: number = 1;
+  mostrarmodalbuscador: boolean = true;
 
   ////1
   // posiciona1: number = 1;
   // link1: string = "";
   // posiciont1: number = 1;
-  // titulo1: string = ""
+  // titulo1: string = "";
   // imagenlacea1: string = "";
   // imagenlaceamovil1: string = "";
   // linka1: string = "";
@@ -74,6 +75,7 @@ export class HomeComponent implements OnInit{
     this.wowService.init();
     //ids para home
     this.idenlace = 1;
+    
   }
   
 

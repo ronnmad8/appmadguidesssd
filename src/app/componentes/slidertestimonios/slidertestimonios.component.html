@@ -10,64 +10,63 @@
   </div>
 
   <div class="h35"></div>
-  
-    <div class="row p-0 m-0  ">
-      <div class="col-12 p-0 text-center">
-        <div id="titulotestimonios">
-          <span class="colGRIS1">Lo que los viajeros dicen sobre </span>
-          <span class="colROJO3"> MadGuides</span>
-        </div>
+
+  <div class="row p-0 m-0  ">
+    <div class="col-12 p-0 text-center ">
+      <div id="titulotestimonios">
+        <span class="colGRIS1">Lo que los viajeros dicen sobre </span>
+        <span class="colROJO3"> MadGuides</span>
       </div>
-    </div>
-
-    <div class="h65"></div>
-
-    <div id="carrtestim" >
-      <swiper [config]="config">
-        <div class="p-0 m-0" *ngFor="let testimonio of listatestimonioshome">
-          <div class="panelTestimonio">
-            <div class="intpanelTestim p-4 row  posrel ">
-              <div class="imgtestim posimgtestim">
-                <picture>
-                  <source media="(min-width: 0px)" srcset="{{testimonio.urlimagen}}"
-                    data-srcset="{{testimonio.urlimagen}}">
-                  <img src="{{testimonio.urlimagen}}" data-src="{{testimonio.urlimagen}}" alt=""
-                    class="imgtestim bordecirculo">
-                </picture>
-              </div>
-              <div class="col-xl-4 col-0 ">  
-              </div>
-              <div class="col-xl-8 col-12  infotestim">
-                <div class="row">
-                  <div class="autortestim col-xl-4  autortestim text-left mr-auto ml-1">
-                    <div>{{testimonio.autor}}</div>
-                  </div>
-                  <div class="visitatestim col-xl-8 nombrevisitatestim text-xl-right text-left">
-                    <div>{{testimonio.visita}}</div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="texttestim ">
-                    <div>
-                      {{testimonio.texto.length > 190 ? testimonio.texto.substring(0, 187)+"..." : testimonio.texto }}
-                    </div>
-                  </div>
-                </div>
-                <div class="w-100 d-flex ">
-                  <div class="titulotestim ">
-                    <div>{{testimonio.titulo}}</div>
-                  </div>
-                  <div class="veracttestim cupo " (click)="verActividad()">
-                    <div class="bordeme">Ver Actividad ></div>
-                  </div>
-                </div>
-              </div>
-          </div>
-
-            </div>
-          </div>
-        
-      </swiper>
     </div>
   </div>
 
+  <div class="h65"></div>
+
+  <div id="carrtestim ">
+    <swiper [config]="config">
+      <div class=" p-0 m-0 " *ngFor="let testimonio of listatestimonioshome ">
+        <div class="panelTestimonio ">
+          <div class="row  posrel  mx-auto">
+            <div class=" imgtestim posimgtestim ">
+              <picture>
+                <source media="(min-width: 0px)" srcset="{{testimonio.urlimagen}}"
+                  data-srcset="{{testimonio.urlimagen}}">
+                <img src="{{testimonio.urlimagen}}" data-src="{{testimonio.urlimagen}}" alt=""
+                  class="imgtestim bordecirculo">
+              </picture>
+            </div> 
+            <div class="col-xl-4 col-0 ">
+            </div>
+            <div class="col-xl-8 col-12  infotestim posrel">
+
+              <div class="autortestim ">
+                <div class="pc">{{testimonio.autor}}</div>
+                <div class="mvl">{{testimonio.autor.length > 20 ? testimonio.autor.substring(0,17)+"..." : testimonio.autor }}</div>
+              </div>
+
+              <div class="nombrevisitatestim " >
+                <div>{{testimonio.visita.length > 23 ? testimonio.visita.substring(0, 20)+"..." : testimonio.visita }}</div>
+              </div>
+
+              <div class="texttestim " >
+                <div>
+                  {{testimonio.texto.length > 190 ? testimonio.texto.substring(0, 187)+"..." : testimonio.texto }}
+                </div>
+              </div> 
+
+              <div class="titulotestim">
+                <div>{{testimonio.titulo}}</div>
+              </div> 
+
+              <div class="veracttestim cupo "   (click)="verActividad()">
+                <div class="bordeme">Ver Actividad ></div>
+              </div> 
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </swiper>
+  </div>
+</div>

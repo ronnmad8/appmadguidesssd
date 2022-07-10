@@ -132,6 +132,15 @@ export class AuthService {
     // }
   }
 
+  leerReordarme() {
+    if (localStorage.getItem('recordarme')) {
+        return localStorage.getItem('recordarme');
+    }
+    else {
+        return  '';
+    }
+  }
+
 
     noAuth(): boolean {
     let noesta = true;

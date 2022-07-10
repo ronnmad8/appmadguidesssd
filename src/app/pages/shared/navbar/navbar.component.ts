@@ -56,6 +56,10 @@ export class NavbarComponent implements OnInit {
   passwordsel: string = "";
   usuariosel: string = "";
   verpass: boolean = false;
+
+  recordarme: boolean = false;
+  carritovacio: boolean = true;
+  mostrarmodalbuscador: boolean = false;
   
   constructor(
     //private auth: AuthService,
@@ -88,11 +92,11 @@ export class NavbarComponent implements OnInit {
   onWindowScroll() {
     let scrollPosition = window.pageYOffset ;
      this.menusticky = false;
+
      if(this.possc > scrollPosition){
        this.menusticky = true;
      }
      this.possc = scrollPosition;
-     console.log(this.possc);
   }
 
   crearFormulario() {
@@ -138,33 +142,7 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  mostrarcarrito(){
-    this.vercarrito = !this.vercarrito;
-    this.verusuario = false;
-    this.veridiomas = false;
-    this.verbusqueda = false;
-  }
-
-  mostrarusuario(){
-    this.verusuario = !this.verusuario;
-    this.vercarrito = false;
-    this.veridiomas = false;
-    this.verbusqueda = false;
-  }
-
-  mostraridiomas(){
-    this.veridiomas = !this.veridiomas;
-    this.vercarrito = false;
-    this.verusuario = false;
-    this.verbusqueda = false;
-  }
-
-  mostrarbusqueda(){
-    this.verbusqueda = !this.verbusqueda;
-    this.vercarrito = false;
-    this.verusuario = false;
-    this.veridiomas = false;
-  }
+  
 
   eliminarvisitacarrito(visitaid: number){
 
@@ -176,20 +154,24 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  cambiaridioma(idioma: string){
-    this.idioma = idioma;
-  }
+  
 
   getVisitascarrito(){
     this.visitascarrito = this.globalService.getVisitascarrito();
+    if(this.visitascarrito.length > 0){
+      this.carritovacio = false;
+    }
     this.visitascarrito.forEach((el)=>{
       this.totalcarrito += el.precioPersona;
     })
     //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
     
   }
-  
 
+  recordarmemicuenta(){
+    this.recordarme = !this.recordarme;
+  }
+  
   onActivate(componentReference: any) {
 
     // if(componentReference.menuAdmin != undefined){
@@ -201,6 +183,58 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  //ver modales
+
+  resetmodales(){
+    this.vercarrito = false;
+    this.veridiomas = false;
+    this.verbusqueda = false;
+  }
+
+  cambiaridioma(idioma: string){
+    this.idioma = idioma;
+    this.veridiomas = false;
+  }
+
+  mostrarcarrito(){
+    
+    this.mostrarmodalbuscador = false;
+    this.verusuario = false;
+    this.veridiomas = false;
+    this.verbusqueda = false;
+    this.vercarrito = !this.vercarrito;
+  }
+
+  mostrarusuario(){
+    this.mostrarmodalbuscador = false;
+    this.vercarrito = false;
+    this.veridiomas = false;
+    this.verbusqueda = false;
+    this.verusuario =  !this.verusuario;
+  }
+  mostrarusuariob(val: boolean){
+    
+    this.mostrarmodalbuscador = false;
+    this.vercarrito = false;
+    this.veridiomas = false;
+    this.verbusqueda = false;
+    this.verusuario =  val;
+  }
+
+  mostraridiomas(){
+    this.mostrarmodalbuscador = false;
+    this.vercarrito = false;
+    this.verusuario = false;
+    this.verbusqueda = false;
+    this.veridiomas = !this.veridiomas;
+  }
+
+  mostrarbusqueda(){
+    this.resetmodales();
+    //focus en buscador
+  }
+
+  
 
 
 }

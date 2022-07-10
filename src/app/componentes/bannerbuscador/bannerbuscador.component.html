@@ -1,0 +1,101 @@
+<div class="mhbannerbuscador ">
+  <div class="posrel w-100">
+
+
+    <div class="container  " style="height: 0px; position: fixed; z-index: 9999;" *ngIf="menuvisto">
+
+      <div class="bar posrel ml-auto mr-1">
+        <div class="cupo posabsollupa py-2 " (click)="vercajabusca()">
+          <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
+        </div>
+      </div>
+      <div class="posabsolmodalbannerbuscador" *ngIf="verbusca" >
+
+
+        <div class="posrel">
+          <div class="brdbot">
+            <input #cjbusqueda type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" [(ngModel)]="busqueda"
+              class="cajaquebuscas" />
+
+          </div>
+
+          <div class="posabsolpropbuscador">
+            <div id="panelpropbuscador" *ngIf="busqueda.length > 0">
+              <div id="listaprop" class="bordeli p-0 m-0">
+                <div class="p-0" *ngFor="let visita of visitasprop">
+                  <div class="cartamodalprop d-flex ">
+                    <div class="imgcartamodalprop">
+                      <div class="pc pl-1">
+                        <picture>
+                          <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
+                          <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                            class="imgcartamodalprop lazyload ">
+                        </picture>
+                      </div>
+                      <div class="mvl">
+                        <picture>
+                          <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}"
+                            data-srcset="{{visita.urlmovil}}">
+                          <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                            class="imgcartamodalprop lazyload ">
+                        </picture>
+                      </div>
+                    </div>
+
+                    <div class="posrel infocartamodalprop cupo">
+                      <div id="textomodalprop">
+                        {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="posrel d-flex">
+                <div id="vertodosprop" class="cupo" (click)="vertodos()">
+                  Ver todos los resultados para
+                  <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
+                    busqueda}}"</span>
+                </div>
+                <div>
+                  <i id="flechaprop" class="fa fa-arrow-right mr-4 mt-2 cupo" (click)="vertodos()"  ></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+    <div class="posabsolresultado d-xl-flex ">
+
+      <div class="posrel d-flex pl-2 mt-2">
+        <img src="../../assets/images/i-luparojo.svg" class="imicono1" draggable="false">
+        <div id="textoresultado">Resultado de la búsqueda</div>
+        <div id="buscaresultado">"museos"</div>
+
+      </div>
+      <div class="posrel px-2 mt-2">
+        <div id="contresultado">18 actividades encontradas</div>
+      </div>
+    </div>
+
+    <div class="imagenbanner ">
+      <picture>
+        <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}" data-srcset="{{imagenbanner.rutapc}}">
+        <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}" data-srcset="{{imagenbanner.rutamovil}}">
+        <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}" alt="banner madguides"
+          class="imagebannerbuscador" onerror="this.src='assets/images/sinimagen.jpg' ">
+      </picture>
+    </div>
+
+
+
+
+  </div>
+</div>

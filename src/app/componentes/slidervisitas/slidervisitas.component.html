@@ -1,7 +1,6 @@
 <div class="container">
-  <div class="h90" ></div>
-  
-  <div class="row p-0 m-0  ">
+  <div class="dist1"></div>
+  <div class="row p-0 m-0 ">
     <div class="col-12 p-0 text-center ">
         <div id="titulovisitas">
           <span class="colGRIS1">Visitas </span>
@@ -9,13 +8,13 @@
         </div>
     </div>
   </div>
-  <div class="h65" ></div>
+  <div class="dist3" ></div>
   <div id="divvisitas" class="w-100"  >
       <swiper  [config]="config" >
       <div class="p-0 m-0"  *ngFor="let visita of listavisitashome">
           <div class="panelVisita posrel"  >
               <div class="visitastemporada" >
-                <div class="p-2">
+                <div>
                     Visita de temporada
                 </div>
               </div>
@@ -43,12 +42,12 @@
 
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
-                        <span class="fs-20 ff-JB colGRIS1">{{visita.precioPersona}}€ </span>
-                        <span class="fs-12 colGRIS1">por persona</span> 
+                        <span class="preciovisitaeuro">{{visita.precioPersona}}€ </span>
+                        <span class="porpersona">por persona</span> 
                       </div>
                       <div class="horasvisita"> 
-                        <img class="mb-2 mr-1" src='assets/images/i-reloj.svg' alt="">
-                        <span class="fs-20 colROJO3 ff-JB">{{visita.duracion}}h</span>
+                        <img  class="imghorasvisita  mb-2 mr-1" src='assets/images/i-reloj.svg' alt="">
+                        <span class="cantidadhorasvisita ">{{visita.duracion}}h</span>
                         
                       </div>
                   </div>
@@ -57,14 +56,14 @@
         </div>
     </swiper>
   </div>
-  <div class="h70" ></div>
+  <div class="dist1" ></div>
   <div class="row p-0 m-0">
     <div class="col-12 p-0 text-center">
         <button id="btvertodas" type="button" class="cupo" >
-          <span class="fs-20">Ver todas las visitas</span>  
+          <span>Ver todas las visitas</span>  
         </button>
     </div>
   </div>
-  <div class="h70" ></div>
+  <div class="dist2" ></div>
 
 </div>
