@@ -11,7 +11,7 @@
     <div class="posabsolbeforemodal ">
       <div class="container posrel ">
 
-        <div class="animated fadeInUp  posabsolmodalbannerhome" style="animation-delay: 1.8s"
+        <div class="animated fadeInUp  posabsolmodalbannerhome" style="animation-delay: 1.2s"
           *ngIf="mostrarmodalbuscador">
           <div id="panelbuscadorhome">
             <div id="titulomodalbuscador">
@@ -34,7 +34,7 @@
             <div id="cjbuscador" class="posrel">
               <div id="divcjbuscador">
                 <input #cjbusqueda type="text" class="colGRIS1 posabsolcjbuscador" placeholder=" ¿Que quieres visitar?" 
-                 (keyup)="buscarprop()" [(ngModel)]="busqueda"  />
+                 (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda"  />
                 <button class="btredondoRojo posabsolbtbuscador" type="button" routerLink="/buscador"  >
                   <span>Buscar</span>
                   <span><i class="fa fa-arrow-right "></i></span>
@@ -42,22 +42,22 @@
               </div>
          
               <div class="posabsolprop">
-                <div id="panelpropbuscador" *ngIf="busqueda.length > 0"  >
+                <div id="panelpropbuscador" *ngIf="busqueda.length > 0 && visitasprop.length > 0"  >
                   <div id="listaprop" class="bordeli p-0 m-0">
                     <div class="p-0" *ngFor="let visita of visitasprop">
                       <div class="cartamodalprop d-flex ">
                         <div class="imgcartamodalprop">
                           <div class="pc pl-1">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
-                              <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
+                              <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
                                 class="imgcartamodalprop lazyload "  >
                             </picture>
                           </div>
                           <div class="mvl">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}" data-srcset="{{visita.urlmovil}}">
-                              <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.url_movil}}" data-srcset="{{visita.url_movil}}">
+                              <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
                                 class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>
@@ -65,7 +65,7 @@
         
                         <div class="posrel infocartamodalprop cupo">
                           <div id="textomodalprop">
-                            {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                            {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
                           </div>
                         </div>
                       </div>
@@ -145,11 +145,11 @@
     </div>
 
 
-    <div class="imagenbanner"  >
+    <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.8s" >
       <picture>
-        <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}" data-srcset="{{imagenbanner.rutapc}}">
-        <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}" data-srcset="{{imagenbanner.rutamovil}}">
-        <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}" alt="banner madguides"
+        <source media="(min-width: 968px)" srcset="{{imagenbanner.url}}" data-srcset="{{imagenbanner.url}}">
+        <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}" data-srcset="{{imagenbanner.url_movil}}">
+        <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}" alt="banner madguides"
           class="imagebannerhome" onerror="this.src='assets/images/sinimagen.jpg' ">
       </picture>
     </div>

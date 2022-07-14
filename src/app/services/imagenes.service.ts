@@ -29,38 +29,38 @@ export class ImagenesService {
 
   
 
-  modificarImagen( imagen: ImagenesModel, file1: File, file2: File ) {
-    this.userToken = this.auth.leerToken();
-    let endpoint =  '/imagenes/modificar' ;
-    this.url = this.apiurl + endpoint;
+  // modificarImagen( imagen: ImagenesModel, file1: File, file2: File ) {
+  //   this.userToken = this.auth.leerToken();
+  //   let endpoint =  '/imagenes/modificar' ;
+  //   this.url = this.apiurl + endpoint;
 
-    var pData: FormData = new FormData();
-    pData.append('imagepc', file1 );
-    pData.append('imagemovil', file2 );
-    pData.append('id', imagen.id.toString() );
-    pData.append('nombre', imagen.nombre );
-    pData.append('rutapc', imagen.rutapc );
-    pData.append('rutamovil', imagen.rutamovil );
-    if(file1 != null){
-      pData.append('nombreimagepc', file1.name );
-    }
-    if(file2 != null){
-      pData.append('nombreimagemovil', file2.name );
-    }
+  //   var pData: FormData = new FormData();
+  //   pData.append('imagepc', file1 );
+  //   pData.append('imagemovil', file2 );
+  //   pData.append('id', imagen.id.toString() );
+  //   pData.append('nombre', imagen.nombre );
+  //   pData.append('rutapc', imagen.rutapc );
+  //   pData.append('rutamovil', imagen.rutamovil );
+  //   if(file1 != null){
+  //     pData.append('nombreimagepc', file1.name );
+  //   }
+  //   if(file2 != null){
+  //     pData.append('nombreimagemovil', file2.name );
+  //   }
     
-    const headers = new HttpHeaders ({
-      'Authorization': this.userToken
-    });
-    return this.http.post( `${this.url}`, pData, {headers} )
-    .pipe(
-      map( res => res as ImagenesModel) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
+  //   const headers = new HttpHeaders ({
+  //     'Authorization': this.userToken
+  //   });
+  //   return this.http.post( `${this.url}`, pData, {headers} )
+  //   .pipe(
+  //     map( res => res as ImagenesModel) ,
+  //     catchError((err) => {
+  //       console.error("Error  " , err.error);
+  //               return err.error;
+  //     })
+  //   );
     
-  }
+  // }
 
 
   getListaImagenes() {
@@ -196,49 +196,7 @@ export class ImagenesService {
   }
 
 
-  getImagenBanner(idenlace :string)  {
-    
-    let endpoint = '/imagenes/filtpos' ;
-    this.url = this.apiurl + endpoint;
-    const filtData = {
-      enlaces_id: idenlace,
-      tipos_id: 1,
-      posicion: 1 
-      
-    };
   
-    let im = new ImagenesModel();
-
-    
-    im.rutapc = "assets/images/sinimagen.png";
-    if(idenlace == "1"){
-      im.rutapc = "assets/images/banner-home.jpg";
-      im.rutamovil = "assets/images/banner-home.jpg";
-      im.tipo_id = 1;
-      im.nombre = "imagenbanner";
-    
-    }
-    if(idenlace == "2"){
-      im.rutapc = "assets/images/banner-ficha-de-producto.jpg";
-      im.rutamovil = "assets/images/banner-ficha-de-producto.jpg";
-      im.tipo_id = 1;
-      im.nombre = "imagenbanner";
-    
-    }
-
-    return im;
-
-    // return this.http.post( `${this.url}`, filtData )
-    // .pipe(
-    //   map( res => res as ImagenesModel[]) ,
-    //   catchError((err) => {
-    //     console.error("Error  " , err.error);
-    //             return err.error;
-    //   })
-    // );
-
-  }
-
   
 
 

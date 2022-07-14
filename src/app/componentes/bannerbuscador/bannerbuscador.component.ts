@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
@@ -14,9 +14,10 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
   selector: 'app-bannerbuscador',
   templateUrl: './bannerbuscador.component.html'
 })
-export class BannerbuscadorComponent implements OnInit {
+export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
+  @Input() imagebanner: ImagenesModel ;
 
 
   show: boolean = true;
@@ -43,11 +44,15 @@ export class BannerbuscadorComponent implements OnInit {
 
   ngOnInit(): void {
      this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.rutapc = "";
-     this.imagenbanner.rutamovil = "";
+     this.imagenbanner.url = "";
+     this.imagenbanner.url_movil = "";
      //imagen  banner
-     this.getImagenBanner("2");
+     
      this.getVisitasprop();
+  }
+
+  ngAfterViewInit(){ 
+
   }
 
   @HostListener("window:scroll")
@@ -63,12 +68,9 @@ export class BannerbuscadorComponent implements OnInit {
 
 
   getImagenBanner(idenlace: string){
-    let posicion = 1;//posicion 1º
-    let resp = this.imagenesService.getImagenBanner(idenlace) ;
-       if(resp != null){
-         this.imagenbanner = resp ;
-       }
-       this.cargados = true;
+  
+
+       this.imagenbanner = this.imagebanner ;
   
   }
 

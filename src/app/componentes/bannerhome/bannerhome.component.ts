@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
@@ -6,6 +6,7 @@ import { TextosModel } from 'src/app/models/Textos.model';
 import { ImagenesService } from '../../services/imagenes.service';
 import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
+import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
 
@@ -14,9 +15,10 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
   selector: 'app-bannerhome',
   templateUrl: './bannerhome.component.html'
 })
-export class BannerhomeComponent implements OnInit {
+export class BannerhomeComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
+  
 
 
   show: boolean = true;
@@ -29,7 +31,8 @@ export class BannerhomeComponent implements OnInit {
   constructor(
     private imagenesService: ImagenesService,
     private textosService: TextosService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private homeService: HomeService
 
   ) {
   ///    
@@ -38,35 +41,29 @@ export class BannerhomeComponent implements OnInit {
 
   ngOnInit(): void {
      this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.rutapc = "";
-     this.imagenbanner.rutamovil = "";
-     //imagen  banner
-     this.getImagenBanner("1");
-     this.getVisitasprop();
+     this.imagenbanner.url = "";
+     this.imagenbanner.url_movil = "";
+     
   }
 
-  getImagenBanner(idenlace: string){
-    let posicion = 1;//posicion 1º
-    let resp = this.imagenesService.getImagenBanner(idenlace) ;
-       if(resp != null){
-         this.imagenbanner = resp ;
-       }
-       this.cargados = true;
+  ngAfterViewInit(){
+    
   }
 
-  getVisitasprop(){
-    this.visitasprop = this.globalService.getVisitasprop();
-    
-    //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
-    
+  getImagenBanner(bannertop: ImagenesModel){
+    this.imagenbanner = bannertop ;
   }
+
 
   vertodos(){
     ///ir a buscador
   }
 
   buscarprop(){
-    let textoabuscar = this.busqueda;
+    this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
+      this.visitasprop = resp as VisitasModel[]; 
+
+    }) ;
   }
 
 

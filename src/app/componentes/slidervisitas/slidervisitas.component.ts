@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute  } from '@angular/router';
@@ -7,6 +7,7 @@ import { NgwWowService } from 'ngx-wow';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
+import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 
 
@@ -14,12 +15,13 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
   selector: 'app-slidervisitas',
   templateUrl: './slidervisitas.component.html'
 })
-export class SlidervisitasComponent implements OnInit {
+export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
+  @Input() dataHome: any;
 
   public show: boolean = true;
   public cargados: boolean = false;
-  public listavisitashome: VisitasModel[] = [];
+  public listavisitashome: RecomendadasModel[] = [];
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -89,17 +91,20 @@ export class SlidervisitasComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getVisitashome();
 
   }
+  ngAfterViewInit() {
+    // this.message = this.child.message
+  }
 
-  
 
-  getVisitashome(){
-    this.listavisitashome = this.homeService.getVisitashome();
-    //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
-    
+  getVisitashome() {
+      this.homeService.getRecomendadosHome().subscribe( (resp ) =>{
+        this.listavisitashome = resp as RecomendadasModel[];
+        this.cargados = true;
+      } ) ; 
   }
 
   

@@ -4,7 +4,7 @@ import { FeaturesModel } from './Features.model';
 import { TagsModel } from './Tags.model';
 
 
-export class VisitasModel{
+export class RecomendadasModel{
     
     id: number;
     uuid: string;
@@ -36,8 +36,6 @@ export class VisitasModel{
     feature_include: FeaturesModel[];
     feature_exclude: FeaturesModel[];
     tags: TagsModel[];
-
-    idiomas: any[];
 
     constructor(){
         this.id = 0;

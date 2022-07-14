@@ -6,8 +6,9 @@ import { Observable, Subject } from 'rxjs';
 import { NgwWowService } from 'ngx-wow';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
-import { TestimoniosModel } from 'src/app/models/Testimonios.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
+import { ComentariosModel } from 'src/app/models/Cometarios.model';
+import { ImagenesModel } from 'src/app/models/Imagenes.model';
 
 
 
@@ -20,7 +21,8 @@ export class SlidertestimoniosComponent implements OnInit {
 
   public show: boolean = true;
   public cargados: boolean = false;
-  public listatestimonioshome: TestimoniosModel[] = [];
+  public listacomentarioshome: ComentariosModel[] = [];
+  imagenlogo: ImagenesModel = new ImagenesModel();
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -71,19 +73,23 @@ export class SlidertestimoniosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getTestimonioshome();
+    this.getComentarioshome();
+
   }
 
-  getTestimonioshome(){
-    this.listatestimonioshome = this.homeService.getTestimonioshome();
-    //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listatestimonioshome = resp ;} })
-    
+  getComentarioshome(){
+    this.homeService.getComentariosHome().subscribe( (resp) => {
+      this.listacomentarioshome =  resp as ComentariosModel[];
+      this.cargados = true;
+    } );
   }
 
   verActividad(){
     alert("ver actividad");
   }
   
-  
+  getImagenLogo(logo: ImagenesModel){
+    this.imagenlogo = logo ;
+  }
 
 }

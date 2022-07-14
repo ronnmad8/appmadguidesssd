@@ -3,7 +3,7 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
-
+import { Options } from "@angular-slider/ngx-slider";
 @Component({
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html'
@@ -20,7 +20,7 @@ export class BusquedaComponent implements OnInit {
   valormaximo: number = 0;;
   valorfiltroprecio: number = 0;
 
-
+  vfiltros: boolean = true;
   veridiomas: boolean = true;
   verduracion: boolean = true;
   verfranja: boolean = true;
@@ -29,6 +29,13 @@ export class BusquedaComponent implements OnInit {
   ordsel: string = "Relevancia";
   mostraridiomasdisponibles: boolean = false;
   selectedVisita: string = "";
+  isrespon: boolean = false;
+  valuePrecio: number = 0;
+  highValuePrecio: number = 0;
+  optionsPrecio: Options = {
+    floor: 0,
+    ceil: 0
+  };
   constructor(
     private buscadorService: BuscadorService,
   ) { }
@@ -42,7 +49,18 @@ export class BusquedaComponent implements OnInit {
     this.getCaracteristicasFiltro();
     this.getPreciosFiltro();
     this.getListaOrdenar()
+    this.isresponsive();
+
   }
+
+  isresponsive(){
+    let scree = window.innerWidth;
+    if(scree < 1198){
+      this.isrespon = true;
+      this.vfiltros = false;
+    }
+  }
+
 
   getVisitaspaginadas(){
     this.listavisitaspaginadas = this.buscadorService.getVisitasBuscador();
@@ -92,6 +110,11 @@ export class BusquedaComponent implements OnInit {
   getPreciosFiltro(){
      this.valormaximo = 2000;
      this.valorfiltroprecio = 2000;
+     this.highValuePrecio = this.valormaximo ;
+     this.optionsPrecio = {
+      floor: 0,
+      ceil: this.valormaximo 
+    };
      
   }
   getCaracteristicasFiltro(){
@@ -136,6 +159,9 @@ export class BusquedaComponent implements OnInit {
   verfiltrosprecios(){
     this.verprecios = !this.verprecios;
   }
+  verfiltros(value: boolean){
+    this.vfiltros = value;
+  }
   
   cambiarorden(sel: any){
     let v = sel.value ;
@@ -148,6 +174,26 @@ export class BusquedaComponent implements OnInit {
 }
  deSelect(){
   this.selectedVisita = "";
+}
+
+verdetalle(visita: VisitasModel){
+  console.log("ver detalle", visita);
+  alert("ver detalle de "+visita.title);
+}
+
+veractividades(){
+  console.log("ver actividades");
+
+}
+
+quitarfiltros(){
+  console.log("quitar filtros");
+
+}
+
+ordenarbusqueda(){
+  console.log("ordenar");
+
 }
 
 

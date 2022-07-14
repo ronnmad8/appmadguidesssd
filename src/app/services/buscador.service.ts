@@ -8,7 +8,6 @@ import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { VisitasModel } from '../models/Visitas.model';
-import { TestimoniosModel } from '../models/Testimonios.model';
 
 
 @Injectable({
@@ -63,12 +62,12 @@ export class BuscadorService {
     /////////pruebas
     let visitas: VisitasModel[] = [];
     let visitaTest: VisitasModel = new VisitasModel();
-    visitaTest.urlpc = "assets/images/imagenVisita.jpg";
-    visitaTest.urlmovil = "assets/images/imagenVisita.jpg";
-    visitaTest.precioPersona = 23;
-    visitaTest.duracion = 2;
-    visitaTest.titulo = "Visita a Madrid";
-    visitaTest.texto = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
+    visitaTest.url = "assets/images/imagenVisita.jpg";
+    visitaTest.url_movil = "assets/images/imagenVisita.jpg";
+    visitaTest.price = 23;
+    visitaTest.duration = 2;
+    visitaTest.title = "Visita a Madrid";
+    visitaTest.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
     
     visitaTest.idiomas = ["Español", "Inglés, Italiano", "Portugués","Alemán"] ;
     

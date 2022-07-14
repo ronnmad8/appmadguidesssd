@@ -4,7 +4,7 @@
 
   <div id="divlogotestim" class="imglogotestim w-100 mx-auto text-center">
     <div>
-      <img src="../../../assets/images/isotipo-madguides.svg" data-src="../../../assets/images/isotipo-madguides.svg"
+      <img src="{{imagenlogo.url}}" data-src="{{imagenlogo.url}}"
         alt="" class="imglogotestim lazyload ">
     </div>
   </div>
@@ -24,14 +24,14 @@
 
   <div id="carrtestim ">
     <swiper [config]="config">
-      <div class=" p-0 m-0 " *ngFor="let testimonio of listatestimonioshome ">
+      <div class=" p-0 m-0 " *ngFor="let comentario of listacomentarioshome ">
         <div class="panelTestimonio ">
           <div class="row  posrel  mx-auto">
             <div class=" imgtestim posimgtestim ">
               <picture>
-                <source media="(min-width: 0px)" srcset="{{testimonio.urlimagen}}"
-                  data-srcset="{{testimonio.urlimagen}}">
-                <img src="{{testimonio.urlimagen}}" data-src="{{testimonio.urlimagen}}" alt=""
+                <source media="(min-width: 0px)" srcset="{{comentario.image}}"
+                  data-srcset="{{comentario.image}}">
+                <img src="{{comentario.image}}" data-src="{{comentario.image}}" alt=""
                   class="imgtestim bordecirculo">
               </picture>
             </div> 
@@ -40,22 +40,22 @@
             <div class="col-xl-8 col-12  infotestim posrel">
 
               <div class="autortestim ">
-                <div class="pc">{{testimonio.autor}}</div>
-                <div class="mvl">{{testimonio.autor.length > 20 ? testimonio.autor.substring(0,17)+"..." : testimonio.autor }}</div>
+                <div class="pc">{{comentario.name}}</div>
+                <div class="mvl">{{comentario.name.length > 20 ? comentario.name.substring(0,17)+"..." : comentario.name }}</div>
               </div>
 
               <div class="nombrevisitatestim " >
-                <div>{{testimonio.visita.length > 23 ? testimonio.visita.substring(0, 20)+"..." : testimonio.visita }}</div>
+                <div>{{ comentario.title.length > 23 ? comentario.title.substring(0, 20)+"..." : comentario.title }}</div>
               </div>
 
               <div class="texttestim " >
                 <div>
-                  {{testimonio.texto.length > 190 ? testimonio.texto.substring(0, 187)+"..." : testimonio.texto }}
+                  {{comentario.description.length > 190 ? comentario.description.substring(0, 187)+"..." : comentario.description }}
                 </div>
               </div> 
 
               <div class="titulotestim">
-                <div>{{testimonio.titulo}}</div>
+                <div>{{comentario.title.length > 35 ? comentario.title.substring(0, 32)+"..." : comentario.title}}</div>
               </div> 
 
               <div class="veracttestim cupo "   (click)="verActividad()">

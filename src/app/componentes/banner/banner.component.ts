@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
@@ -12,9 +12,10 @@ import { TextosService } from '../../services/textos.service';
   selector: 'app-banner',
   templateUrl: './banner.component.html'
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, AfterViewInit {
 
   @Input() enlace: string = "";
+  @Input() imageBanner: ImagenesModel;
 
   public show: boolean = true;
   public textobanner :TextosModel = new TextosModel() ;
@@ -34,20 +35,18 @@ export class BannerComponent implements OnInit {
 
   ngOnInit(): void {
      this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.rutapc = "";
-     this.imagenbanner.rutamovil = "";
-     //imagen  banner
-     this.getImagenBanner(this.enlace);
+     this.imagenbanner.url = "";
+     this.imagenbanner.url_movil = "";
+     
+     
   }
 
-  getImagenBanner(idenlace: string){
+  ngAfterViewInit(){
+    this.getImagenBanner();
+  }
 
-    let tipotexto = 1;//tipo titulo ppal
-    let resp = this.imagenesService.getImagenBanner(idenlace);
-       if(resp != null){
-         this.imagenbanner = resp as ImagenesModel ;
-       }
-       this.cargados = true;
+  getImagenBanner(){
+    this.imagenbanner = this.imageBanner ;
   
   }
 

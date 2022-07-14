@@ -44,10 +44,10 @@ export class ZonacontactoComponent implements OnInit {
   ngOnInit(): void {
     
     this.imagenzonacontacto = new ImagenesModel();
-    this.imagenzonacontacto.rutapc = "";
-    this.imagenzonacontacto.rutamovil = "";
+    this.imagenzonacontacto.url = "";
+    this.imagenzonacontacto.url_movil = "";
     //imagen  zonacontacto
-    this.getImagenBanner(this.enlace);
+    
   }
 
 
@@ -74,14 +74,8 @@ export class ZonacontactoComponent implements OnInit {
     });
   }
 
-  getImagenBanner(idenlace: string){
-
-    let tipotexto = 1;//tipo titulo ppal
-    let resp = this.homeService.getImagenZonacontactoHome();
-       if(resp != null){
-         this.imagenzonacontacto = resp as ImagenesModel ;
-       }
-  
+  getImagenBanner(bannerbottom: ImagenesModel){
+    this.imagenzonacontacto = bannerbottom ;
   }
 
 

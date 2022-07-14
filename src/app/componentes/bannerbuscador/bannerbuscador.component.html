@@ -1,7 +1,6 @@
 <div class="mhbannerbuscador ">
   <div class="posrel w-100">
 
-
     <div class="container  " style="height: 0px; position: fixed; z-index: 9999;" *ngIf="menuvisto">
 
       <div class="bar posrel ml-auto mr-1">
@@ -27,16 +26,16 @@
                     <div class="imgcartamodalprop">
                       <div class="pc pl-1">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.urlpc}}" data-srcset="{{visita.urlpc}}">
-                          <img src="{{visita.urlpc}}" data-src="{{visita.urlpc}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
+                          <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
                       <div class="mvl">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.urlmovil}}"
-                            data-srcset="{{visita.urlmovil}}">
-                          <img src="{{visita.urlmovil}}" data-src="{{visita.urlmovil}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.url_movil}}"
+                            data-srcset="{{visita.url_movil}}">
+                          <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
@@ -44,7 +43,7 @@
 
                     <div class="posrel infocartamodalprop cupo">
                       <div id="textomodalprop">
-                        {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." : visita.titulo }}
+                        {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
                       </div>
                     </div>
                   </div>
@@ -74,10 +73,11 @@
 
     <div class="posabsolresultado d-xl-flex ">
 
-      <div class="posrel d-flex pl-2 mt-2">
+      <div class="posrel d-flex pl-2 mt-xl-2 mt-3">
         <img src="../../assets/images/i-luparojo.svg" class="imicono1" draggable="false">
-        <div id="textoresultado">Resultado de la búsqueda</div>
-        <div id="buscaresultado">"museos"</div>
+        <div class="pc" id="textoresultado">Resultado de la búsqueda</div>
+        <div class="mvl" id="textoresultadomovil">Búsqueda</div>
+        <div id="buscaresultado">"museos "</div>
 
       </div>
       <div class="posrel px-2 mt-2">
@@ -85,12 +85,12 @@
       </div>
     </div>
 
-    <div class="imagenbanner ">
+    <div class="imagenbannerbuscador ">
       <picture>
-        <source media="(min-width: 968px)" srcset="{{imagenbanner.rutapc}}" data-srcset="{{imagenbanner.rutapc}}">
-        <source media="(min-width: 0px)" srcset="{{imagenbanner.rutamovil}}" data-srcset="{{imagenbanner.rutamovil}}">
-        <img src="{{imagenbanner.rutapc}}" data-src="{{imagenbanner.rutapc}}" alt="banner madguides"
-          class="imagebannerbuscador" onerror="this.src='assets/images/sinimagen.jpg' ">
+        <source media="(min-width: 968px)" srcset="{{imagenbanner.url}}" data-srcset="{{imagenbanner.url}}">
+        <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}" data-srcset="{{imagenbanner.url_movil}}">
+        <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}" alt="banner madguides"
+          class="imgbannerbusc " onerror="this.src='assets/images/sinimagen.jpg' ">
       </picture>
     </div>
 

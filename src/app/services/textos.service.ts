@@ -28,30 +28,30 @@ export class TextosService {
 
 
   
-  modificarTexto( textos: TextosModel ) {
-    this.userToken = this.auth.leerToken();
-    let endpoint =  '/textos/modificar' ;
-    this.url = this.apiurl + endpoint;
+  // modificarTexto( textos: TextosModel ) {
+  //   this.userToken = this.auth.leerToken();
+  //   let endpoint =  '/textos/modificar' ;
+  //   this.url = this.apiurl + endpoint;
 
-    const productoData = {
-      id: textos.id,
-      texto: textos.texto
+  //   const productoData = {
+  //     id: textos.id,
+  //     texto: textos.texto
 
-    };
+  //   };
 
-    const headers = new HttpHeaders ({
-      'Authorization': this.userToken 
-    });
-    return this.http.post( `${this.url}`, productoData, {headers} )
-    .pipe(
-      map( res => res as TextosModel) ,
-      catchError((err) => {
-        console.error("Error " ,  err.error);
-                return err.error;
-      })
-    );
+  //   const headers = new HttpHeaders ({
+  //     'Authorization': this.userToken 
+  //   });
+  //   return this.http.post( `${this.url}`, productoData, {headers} )
+  //   .pipe(
+  //     map( res => res as TextosModel) ,
+  //     catchError((err) => {
+  //       console.error("Error " ,  err.error);
+  //               return err.error;
+  //     })
+  //   );
     
-  }
+  // }
 
 
 

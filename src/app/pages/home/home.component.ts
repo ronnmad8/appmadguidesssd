@@ -11,11 +11,15 @@ import { ImagenesService } from '../../services/imagenes.service';
 import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
+import { HomeService } from '../../services/home.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { BannerhomeComponent } from 'src/app/componentes/bannerhome/bannerhome.component';
+import { SlidervisitasComponent } from 'src/app/componentes/slidervisitas/slidervisitas.component';
+import { SlidertestimoniosComponent } from 'src/app/componentes/slidertestimonios/slidertestimonios.component';
+import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 
 
 
@@ -30,10 +34,15 @@ import { BannerhomeComponent } from 'src/app/componentes/bannerhome/bannerhome.c
 export class HomeComponent implements OnInit{
 
   @Output() menuPublic: EventEmitter<any> = new EventEmitter();
-    
+  @ViewChild(BannerhomeComponent) bh: BannerhomeComponent;
+  @ViewChild(SlidervisitasComponent ) sv: SlidervisitasComponent;
+  @ViewChild(SlidertestimoniosComponent) st: SlidertestimoniosComponent;
+  @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
+  
   imagenbanner: ImagenesModel;
   cliente: ClientesModel = new ClientesModel();
-  imagenes :ImagenesModel[] = [];
+  imageneshome :ImagenesModel[] = [];
+  textoshome :TextosModel[] = [];
   idenlace: number ;
   enlacedestacado: string = "";
   texto1: string = "";
@@ -43,15 +52,14 @@ export class HomeComponent implements OnInit{
   tiposeccion: number = 2;
   tipotextoseccion: number = 1;
   mostrarmodalbuscador: boolean = true;
+  
+  
+  //imagenes
+  bannerbottom: ImagenesModel = new ImagenesModel();
+  bannertop: ImagenesModel = new ImagenesModel();
+  logotexto: ImagenesModel = new ImagenesModel();
+  logo: ImagenesModel = new ImagenesModel();
 
-  ////1
-  // posiciona1: number = 1;
-  // link1: string = "";
-  // posiciont1: number = 1;
-  // titulo1: string = "";
-  // imagenlacea1: string = "";
-  // imagenlaceamovil1: string = "";
-  // linka1: string = "";
 
 
   constructor(
@@ -63,7 +71,8 @@ export class HomeComponent implements OnInit{
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
-      private title: Title
+      private title: Title,
+      private homeService: HomeService,
 
   )
   {
@@ -75,29 +84,46 @@ export class HomeComponent implements OnInit{
     this.wowService.init();
     //ids para home
     this.idenlace = 1;
-    
   }
   
 
   ngOnInit() {
-
     this.menuPublic.emit(0);
-
-  }
-
-
-  getImageneBanner(){
-    
-    this.imagenesService.getImagenesFilt(this.idenlace, 1).subscribe( (resp ) =>{
-      this.imagenbanner = resp as ImagenesModel;
-    
-    })
-    
+    this.getImageneshome()
+  
   }
 
   scrollToElement(element: Element): void {
     element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
+
+  getImageneshome(){
+    this.homeService.getImagenesHome().subscribe( (resp) => {
+      this.imageneshome =  resp as ImagenesModel[];
+      
+      this.bannertop = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
+      this.bannerbottom = this.imageneshome.find(x => x.image_name == 'bannerbottom') ?? new ImagenesModel();
+      this.logotexto = this.imageneshome.find(x => x.image_name == 'logo-texto') ?? new ImagenesModel();
+      this.logo = this.imageneshome.find(x => x.image_name == 'logo') ?? new ImagenesModel();
+debugger
+      this.bh.getImagenBanner(this.bannertop);
+      this.zc.getImagenBanner(this.bannerbottom);
+      this.st.getImagenLogo(this.logo);
+
+    } );
+  }
+
+  getTextoshome(){
+    this.homeService.getTextosHome().subscribe( (resp) => {
+      this.textoshome =  resp as TextosModel[];
+      
+    } );
+  }
+
+
+
+  
+
 
   
 

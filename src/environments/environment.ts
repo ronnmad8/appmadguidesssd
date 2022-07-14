@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiurl: '/api'
+  apiurl: 'https://turismo.endesys.com/api'
 };
 /*
  * For easier debugging in development mode, you can import the following file

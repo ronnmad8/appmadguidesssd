@@ -21,6 +21,7 @@ import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-w
 import { SlidertestimoniosComponent } from './componentes/slidertestimonios/slidertestimonios.component';
 import { ZonacontactoComponent } from './componentes/zonacontacto/zonacontacto.component';
 import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -71,8 +72,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes, routerOptions),
-    SwiperModule
-
+    SwiperModule,
+    NgxSliderModule
     
   ],
   providers: [

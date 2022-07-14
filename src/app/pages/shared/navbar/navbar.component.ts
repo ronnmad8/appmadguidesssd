@@ -149,7 +149,7 @@ export class NavbarComponent implements OnInit {
     this.visitascarrito.forEach((el,index)=>{
       if(el.id == visitaid){
         this.visitascarrito.splice(index,1)
-        this.totalcarrito -= el.precioPersona ;
+        this.totalcarrito -= el.price ;
       }
     })
   }
@@ -162,7 +162,7 @@ export class NavbarComponent implements OnInit {
       this.carritovacio = false;
     }
     this.visitascarrito.forEach((el)=>{
-      this.totalcarrito += el.precioPersona;
+      this.totalcarrito += el.price;
     })
     //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
     
