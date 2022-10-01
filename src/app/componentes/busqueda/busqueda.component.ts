@@ -4,6 +4,7 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { Options } from "@angular-slider/ngx-slider";
+import { EventsrespModel } from 'src/app/models/Eventsresp.model';
 @Component({
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html'
@@ -11,7 +12,7 @@ import { Options } from "@angular-slider/ngx-slider";
 export class BusquedaComponent implements OnInit {
 
   tipos: string[] = [];
-  listavisitaspaginadas: VisitasModel[] = [];
+  listavisitas: VisitasModel[] = [];
   idiomasfiltro: string[] = [];
   duracionesfiltro: string[] = [];
   franjafiltro: string[] = [];
@@ -41,7 +42,7 @@ export class BusquedaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getVisitaspaginadas()
+    this.getVisitasBuscador()
     this.getTipos();
     this.getIdiomasFiltro();
     this.getDuracionesFiltro();
@@ -62,9 +63,13 @@ export class BusquedaComponent implements OnInit {
   }
 
 
-  getVisitaspaginadas(){
-    this.listavisitaspaginadas = this.buscadorService.getVisitasBuscador();
-    //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
+  getVisitasBuscador(){
+    this.buscadorService.getVisitasBuscador().subscribe( (resp) => 
+    { 
+       
+       this.listavisitas = resp as VisitasModel[];
+       console.log("  BUSCADOR ", this.listavisitas);
+    })
     
   }
 

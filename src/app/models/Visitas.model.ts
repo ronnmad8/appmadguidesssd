@@ -38,7 +38,7 @@ export class VisitasModel{
     tags: TagsModel[];
 
     idiomas: any[];
-
+    
     constructor(){
         this.id = 0;
         this.uuid = "";
@@ -66,6 +66,9 @@ export class VisitasModel{
         this.time_end = 0;
         this.time_date= "";
         this.duration = 0;
+        this.feature_include = [];
+        this.feature_exclude = [];
+       
     }
 
 

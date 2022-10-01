@@ -10,11 +10,8 @@
     </picture>
 
     <div id="posabsollemacontacto" class="w-100 d-xl-flex text-center "  >
-        <div class="ml-xl-4 mx-1">
-            Madrid único 
-        </div>
-        <div class=" mr-xl-4 mx-1">
-            para viajeros únicos
+        <div class="ml-xl-4 mr-xl-4 mx-1">
+          {{image_message}}
         </div>
     </div>
   </div>
@@ -33,7 +30,7 @@
                     <img src="../../../assets/images/i-contacto.svg" data-src="../../../assets/images/i-contacto.svg"
         alt="" class=" lazyload ">
                     <span>
-                     Ponte en contacto con nosotros
+                     {{form_title}}
                      </span>
                   </div>
                 </div>
@@ -44,7 +41,7 @@
                   <div class="cuad">
                     <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre" formControlName="nombre">
                     <div *ngIf="nombresel != '' " class="fieldpeq">
-                      Nombre
+                      {{form_name}}
                     </div>
                   </div>
                 </div>
@@ -52,7 +49,7 @@
                   <div class="cuad">
                     <input class="w-100" type="text" placeholder="Email" name="email" id="email" formControlName="email">
                     <div *ngIf="emailsel != '' " class="fieldpeq">
-                      Email
+                      {{form_email}}
                     </div>
                   </div>
                 </div>
@@ -66,7 +63,7 @@
                       formControlName="mensaje">
                     </textarea>
                     <div *ngIf="mensajesel != '' " class="fieldpeq2">
-                      Mensaje
+                      {{form_message}}
                     </div>
                   </div>
                 </div>
@@ -78,19 +75,18 @@
                 <div id="aceptocontact" class="col-xl-6">
                   <div  class="custom-control custom-checkbox ">
                     <input type="checkbox"  class="custom-control-input " name="aceptacion" id="aceptacion" formControlName="aceptacion">
-                    <label for="aceptacion" class="custom-control-label "> Acepto <a routerLink="/politicaprivacidad">la política de privacidad</a> </label>
+                    <label for="aceptacion" class="custom-control-label ">{{form_policy}} <a routerLink="/politicaprivacidad">{{form_link}}</a> </label>
                   </div>
                 </div> 
 
                 <div id="btcontact" class="col-xl-6 w-100  text-xl-right text-center">
                   <button *ngIf="btactivadoT" type="button" class="btgris cupo" >
-                    Enviar
+                    {{form_button}}
                   </button>
                   <button *ngIf="!btactivadoT" type="button" class="btgris apagado" >
-                    Enviar
+                    {{form_button}}
                   </button>
                 </div>
-s
               </div>
             </div>
           </form>

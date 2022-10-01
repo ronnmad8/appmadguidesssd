@@ -14,6 +14,7 @@ export class ImagenesModel{
     description: string;
     alt: string;
     iso: string;
+    sel: boolean;
     
     constructor(){
         this.id = 0;
@@ -25,6 +26,7 @@ export class ImagenesModel{
         this.description = "";
         this.alt = "";
         this.iso = "";
+        this.sel = false;
     
 
     }

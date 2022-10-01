@@ -12,6 +12,7 @@ import { RecomendadasModel } from '../models/Recomendadas.model';
 import { HomerespModel } from '../models/Homeresp.model';
 import { ComentariosModel } from '../models/Cometarios.model';
 import { EventsrespModel } from '../models/Eventsresp.model';
+import { TextosModel } from '../models/Textos.model';
 
 
 @Injectable({
@@ -58,28 +59,7 @@ export class HomeService {
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  getImagenesFilt(idenlace :number, idtipo :number)  {
-    
-    let endpoint = '/imagenes/filt' ;
-    this.url = this.apiurl + endpoint;
-    const filtData = {
-      enlaces_id: idenlace,
-      tipos_id: idtipo
-      
-    };
-    return this.http.post( `${this.url}`, filtData )
-    .pipe(
-      map( res => res as ImagenesModel[]) ,
-      catchError((err) => {
-        console.error("Error  ", err.error);
-        // if(err.includes("Unauthorized")){
-        //   this.router.navigateByUrl("/homecliente");
-        // }
-        return err.error;
-      })
-    );
-
-  }
+  
 
 
   getRecomendadosHome()  {
@@ -198,12 +178,13 @@ export class HomeService {
         return imagenes;    
         } ) ,
         catchError((err) => {
-          debugger
           console.error("Error  " , err.error);
                   return err.error;
         })
       );
     }
+
+
 
     getTextosHome()  {
       let endpoint = '/home?messages' ;
@@ -212,23 +193,9 @@ export class HomeService {
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-    
-          var imagenes: ImagenesModel[] = [];
-          var homeresp :HomerespModel = resp as HomerespModel;
-          var imagesData = homeresp.comments; 
-          imagesData.forEach((el: any, index: number) => {
-          var imagen: ImagenesModel = new ImagenesModel();
-          imagen.id = index;
-          imagen.title = el.image.language[0].title ?? "";
-          imagen.description = el.image.language[0].descripcion ?? "";
-          imagen.title = el.visit.language[0].title ?? "";
-          imagen.description = el.visit.language[0].description ?? "";
-          imagen.iso = el.visit.language[0].iso ?? "";
+          var homeresp :HomerespModel = resp as HomerespModel;  
           
-          imagenes.push(imagen);
-        });
-
-        return imagenes;    
+          return homeresp.messages;    
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -265,18 +232,6 @@ export class HomeService {
         })
       );
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

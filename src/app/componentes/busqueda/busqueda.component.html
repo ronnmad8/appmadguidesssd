@@ -29,32 +29,36 @@
         </div>
     </div>
     <div class="">
-        <div id="fncordenar" class="mvl w-100 d-flex posrel" (click)="verfiltros(false)">
-            <div id="ordenar" class="w-50 text-center py-2 cupo" (click)="ordenarbusqueda()"  >
-                <i class="fa-solid fa-angle-down mr-1"></i>
-                <span>Ordenar</span> 
-            </div>
-            <div id="filtrar" class="w-50 text-center py-2 cupo" (click)="verfiltros(true)"  >
-                <i class="fa-solid fa-bars-filter"></i>
-                <span>Filtrar (3)</span> 
+        <div class="mvl">
+            <div id="fncordenar" class="w-100 d-flex posrel " (click)="verfiltros(false)">
+                <div id="ordenar" class="w-50 text-center py-2 cupo" (click)="ordenarbusqueda()"  >
+                    <i class="fa-solid fa-angle-down mr-1"></i>
+                    <span>Ordenar</span> 
+                </div>
+                <div id="filtrar" class="w-50 text-center py-2 cupo" (click)="verfiltros(true)"  >
+                    <i class="fa-solid fa-bars-filter"></i>
+                    <span>Filtrar (3)</span> 
+                </div>
             </div>
         </div>
     </div>
     <div class="mh40"></div>
     <div id="contenidobusca" class="w-100 d-xl-flex ">
 
-        <div id="filtros"      *ngIf="vfiltros"  >
-            <div id="filtratubusc" class="mvl w-100 d-flex posrel" (click)="verfiltros(false)">
-                <div id="filtratubusctitulo" class="px-3">Filtra tu búsqueda</div>
-                <div class="cupo posabsol" style="right: 12px; top: 10px">
-                  <i class="fa fa-times fs-20"></i>
+        <div id="filtros"  *ngIf="vfiltros"  >
+            <div class="mvl">
+                <div id="filtratubusc" class="mvl w-100 d-flex posrel" (click)="verfiltros(false)">
+                    <div id="filtratubusctitulo" class="px-3">Filtra tu búsqueda</div>
+                    <div class="cupo posabsol" style="right: 12px; top: 10px">
+                      <i class="fa fa-times fs-20"></i>
+                    </div>
                 </div>
             </div>
 
             <div class="pb-4" [ngClass]="{ 'panscrollVH': isrespon }">
                 <div id="introducefechas">
                     <div id="introducefechastexto">
-                        <span>Introduce tus fechas para encontrar actividades displnibles:</span>
+                        <span>Introduce tus fechas para encontrar actividades disponibles:</span>
                     </div>
                     <div id="introducefechascal" class="d-flex">
                         <img src="../../assets/images/i-calendario.svg" class="imicono2" draggable="false">
@@ -186,7 +190,7 @@
                 </div>
             </div>
 
-            <div class="p-0 m-0" *ngFor="let visita of listavisitaspaginadas; let i =index">
+            <div class="p-0 m-0" *ngFor="let visita of listavisitas; let i =index">
                 <div class="panelVisitaBuscador d-flex posrel cupo" (click)="verdetalle(visita)">
                     <div class="visitastemporada">
                         <div>
@@ -209,7 +213,7 @@
 
                     <div class="panelinfovisitabuscador">
                         <div class="titvisitabuscador">
-                            <span>{{visita.title}} {{i}}</span>
+                            <span>{{visita.title.length > 30 ? visita.title.substring(0,27)+"..." : visita.title}} {{i}}</span>
                         </div>
                         <div class="textvisitabuscador">
                             <span>{{visita.description.length > 90 ? visita.description.substring(0,87)+"..." : visita.description

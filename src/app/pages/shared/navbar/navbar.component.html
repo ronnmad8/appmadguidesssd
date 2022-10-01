@@ -1,7 +1,7 @@
 <div id="wrapper" class="pagewrapper posrel">
 
   <!--pc-->
-  <div class="menupc pc" [ngClass]="{ 'posabsolmenu': !menusticky,'posfixedmenu': menusticky  }">
+  <div class="menupc pc posfixedmenu"   [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
     <nav id="navpc" class="container mx-auto px-0">
       <div class="row hbarmenupc colGRIS1">
 
@@ -37,13 +37,13 @@
 
         <div class="col-4 d-flex text-right ">
 
-          <!-- <div class="bar posrel ml-auto mr-1">
+          <div class="bar posrel ml-auto mr-0">
             <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
               <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
             </div>
-          </div> -->
+          </div>
 
-          <div class="baridiomas posrel ml-auto mr-1">
+          <div class="baridiomas posrel ml-1 mr-1">
             <div class="cupo posabsolbaridiomas colGRIS7 cupo d-flex fs-20 py-2" (click)="mostraridiomas()">
               <div class="pr-2  ">{{idioma}}</div>
               <div>
@@ -150,6 +150,71 @@
         </div>
       </div>
     </div>
+
+
+    <div class="container  " style="height: 0px; position: fixed; z-index: 9999;" *ngIf="menusticky">
+      <div class="posabsolmodalbannerbuscador" *ngIf="verbusca" >
+
+        <div class="posrel">
+          <div class="brdbot">
+            <input #cjbusqueda type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" [(ngModel)]="busqueda"
+              class="cajaquebuscas" />
+
+          </div>
+
+          <div class="posabsolpropbuscador">
+            <div id="panelpropbuscador" *ngIf="busqueda.length > 0">
+              <div id="listaprop" class="bordeli p-0 m-0">
+                <div class="p-0" *ngFor="let visita of visitasprop">
+                  <div class="cartamodalprop d-flex ">
+                    <div class="imgcartamodalprop">
+                      <div class="pc pl-1">
+                        <picture>
+                          <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
+                          <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
+                            class="imgcartamodalprop lazyload ">
+                        </picture>
+                      </div>
+                      <div class="mvl">
+                        <picture>
+                          <source media="(min-width: 0px)" srcset="{{visita.url_movil}}"
+                            data-srcset="{{visita.url_movil}}">
+                          <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
+                            class="imgcartamodalprop lazyload ">
+                        </picture>
+                      </div>
+                    </div>
+
+                    <div class="posrel infocartamodalprop cupo">
+                      <div id="textomodalprop">
+                        {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="posrel d-flex">
+                <div id="vertodosprop" class="cupo" (click)="vertodos()">
+                  Ver todos los resultados para
+                  <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
+                    busqueda}}"</span>
+                </div>
+                <div>
+                  <i id="flechaprop" class="fa fa-arrow-right mr-4 mt-2 cupo" (click)="vertodos()"  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
 
   </div>
 

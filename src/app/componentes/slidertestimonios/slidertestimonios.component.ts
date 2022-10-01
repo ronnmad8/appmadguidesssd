@@ -9,6 +9,7 @@ import { HomeService } from '../../services/home.service';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { ComentariosModel } from 'src/app/models/Cometarios.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
+import { TextosModel } from 'src/app/models/Textos.model';
 
 
 
@@ -23,6 +24,10 @@ export class SlidertestimoniosComponent implements OnInit {
   public cargados: boolean = false;
   public listacomentarioshome: ComentariosModel[] = [];
   imagenlogo: ImagenesModel = new ImagenesModel();
+
+  message1: string = "";
+  message2: string = "";
+  button: string = "";
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -87,9 +92,18 @@ export class SlidertestimoniosComponent implements OnInit {
   verActividad(){
     alert("ver actividad");
   }
-  
+
   getImagenLogo(logo: ImagenesModel){
     this.imagenlogo = logo ;
   }
+  
+  getTextos(textos: TextosModel){
+    
+    
+    this.message1 = textos.visit.message1;
+    this.message2 = textos.visit.message1;
+    this.button = textos.visit.button;
+
+  } 
 
 }

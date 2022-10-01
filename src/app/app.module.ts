@@ -22,6 +22,12 @@ import { SlidertestimoniosComponent } from './componentes/slidertestimonios/slid
 import { ZonacontactoComponent } from './componentes/zonacontacto/zonacontacto.component';
 import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { SlidervisitaComponent } from './componentes/slidervisita/slidervisita.component';
+import { VisitaComponent } from './pages/visita/visita.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { SlidervisitasinteresarComponent } from './componentes/slidervisitasinteresar/slidervisitasinteresar.component';
+import { SlidervisitamovilComponent } from './componentes/slidervisitamovil/slidervisitamovil.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -52,6 +58,7 @@ const routes: Routes = [
     AppComponent,
     BaseComponent,
     HomeComponent,
+    VisitaComponent,
     BuscadorComponent,
     NavbarComponent,
     FooterComponent,
@@ -62,7 +69,9 @@ const routes: Routes = [
     ZonacontactoComponent,
     BannerbuscadorComponent,
     BusquedaComponent,
-
+    SlidervisitaComponent,
+    SlidervisitasinteresarComponent,
+    SlidervisitamovilComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'madguides' }),
@@ -73,7 +82,12 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes, routerOptions),
     SwiperModule,
-    NgxSliderModule
+    NgxSliderModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
+    
     
   ],
   providers: [

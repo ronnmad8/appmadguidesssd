@@ -8,4 +8,12 @@ export class FeaturesModel {
     description: string;
     iso: string;
 
+    constructor() {
+        this.id = 0;
+        this.uuid = "";
+        this.title = "";
+        this.description = "";
+        this.iso = "";
+    }
+
 }

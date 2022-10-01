@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener, Inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { GlobalService } from '../../../services/global.service';
 //import { AuthService } from '../../../services/auth.service';
 import {
@@ -10,6 +10,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { VisitasModel } from 'src/app/models/Visitas.model';
+import { BuscadorComponent } from '../../buscador/buscador.component';
+import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
+import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
+import { HomeService } from '../../../services/home.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +23,9 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 
 
 export class NavbarComponent implements OnInit {
+
+  @ViewChild(BannerbuscadorComponent ) bb: BannerbuscadorComponent;
+  @ViewChild(RouterOutlet ) ro: RouterOutlet;
   
   modalI: NgbModalRef ;
   modalOptions: NgbModalOptions;
@@ -33,7 +40,7 @@ export class NavbarComponent implements OnInit {
   isAdminweb: boolean = false;
   ocultar: string = "";
   ocultado: boolean = false;
-  menusticky :boolean = false;
+  menusticky :boolean = true;
   possc :number = 0;
   nombreusuario: string;
   
@@ -60,23 +67,33 @@ export class NavbarComponent implements OnInit {
   recordarme: boolean = false;
   carritovacio: boolean = true;
   mostrarmodalbuscador: boolean = false;
+  rutaactual: string = "";
+
+  verbusca: boolean = false;
+  menuvisto :boolean = true;
+  visitasprop: VisitasModel[] = [];
+  busqueda: string = "";
   
   constructor(
     //private auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private homeService: HomeService,
+    private activatedRoute: ActivatedRoute,
+    
   ) 
   {
     this.crearFormulario();    
     this.cambiosFormulario();
+
   }
   
   ngOnInit() {
     ///prueba viajes carrito
     this.getVisitascarrito();
-
+    this.getRutaActual();
     this.modalOptions = {
       backdrop: "static",
       backdropClass: "customBackdrop",
@@ -97,6 +114,18 @@ export class NavbarComponent implements OnInit {
        this.menusticky = true;
      }
      this.possc = scrollPosition;
+  }
+  
+
+  getRutaActual(){
+      this.router.events.subscribe((el) => {
+      if ( el instanceof NavigationEnd) {
+          if(el.url.includes('buscador')){
+            this.rutaactual = "buscador";
+          }
+      }
+  });
+    
   }
 
   crearFormulario() {
@@ -230,9 +259,26 @@ export class NavbarComponent implements OnInit {
   }
 
   mostrarbusqueda(){
+    
     this.resetmodales();
-    //focus en buscador
+    // si se encuentra en buscador
+    
+    if(this.rutaactual == "buscador"){
+      this.verbusca = true;
+    }
+
   }
+
+  buscarprop(){
+    this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
+    this.visitasprop = resp as VisitasModel[]; 
+  }) ;
+}
+
+vertodos(){
+  ///ir a buscador
+  this.router.navigate(['/buscador']);
+}
 
   
 

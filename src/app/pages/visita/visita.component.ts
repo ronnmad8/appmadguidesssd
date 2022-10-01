@@ -11,41 +11,41 @@ import { ImagenesService } from '../../services/imagenes.service';
 import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
-import { BuscadorService } from '../../services/buscador.service';
-
+import { VisitaService } from '../../services/visita.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
-import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
-import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
-import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
 
+
+import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
+import { SlidervisitaComponent } from 'src/app/componentes/slidervisita/slidervisita.component';
 
 
 @Component({
-  selector: 'app-buscador',
-  templateUrl: './buscador.component.html'
+  selector: 'app-visita',
+  templateUrl: './visita.component.html'
 
 })
 
 
-export class BuscadorComponent implements OnInit{
+export class VisitaComponent implements OnInit{
 
   @Output() menuPublic: EventEmitter<any> = new EventEmitter();
-  @ViewChild(BannerbuscadorComponent) bb: BannerbuscadorComponent;
-  @ViewChild(BusquedaComponent ) bu: BusquedaComponent;
-  @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
+
+  @ViewChild(ZonacontactoComponent) zo: ZonacontactoComponent;
+  @ViewChild(SlidervisitaComponent) vi: SlidervisitaComponent;
   
-  imagenesbuscador :ImagenesModel[] = [];
-  textosbuscador :TextosModel = new TextosModel();
+  imagenesproducto :ImagenesModel[] = [];
+  visitaId: number = 0;
+  textosproducto :TextosModel = new TextosModel();
 
   constructor(
       private router: Router,
       private imagenesService: ImagenesService,
       private textosService: TextosService,
       private alertasService: AlertasService,
-      private buscadorService: BuscadorService,
+      private visitaService: VisitaService,
       private wowService: NgwWowService,
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
@@ -59,7 +59,7 @@ export class BuscadorComponent implements OnInit{
     // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
     // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
 
-
+    this.visitaId = 1;
 
 
   }
@@ -67,39 +67,10 @@ export class BuscadorComponent implements OnInit{
 
   ngOnInit() {
 
-    //this.menuPublic.emit(0);
+    this.menuPublic.emit(0);
 
   }
 
-
-
-  getImagenesbuscador(){
-    this.buscadorService.getImagenesBuscador().subscribe( (resp) => {
-      this.imagenesbuscador =  resp as ImagenesModel[];
-      
-      // this.bannertop = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
-      // this.bannerbottom = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
-      
-
-      // this.bb.getImagenBanner(this.bannertop);
-      // this.zc.getImagenBanner(this.bannerbottom);
-      //this.bu.getImagen(this.);
-
-    } );
-  }
-
-  getTextoshome(){
-    
-    this.buscadorService.getTextosBucador().subscribe( (resp) => {
-      this.textosbuscador =  resp as TextosModel;
-
-      //this.bh.getTextos(this.textosbuscador);
-      //  this.zc.getTextos(this.textosbuscador);
-      //  this.st.getTextos(this.textosbuscador);
-      //this.sv.getTextos(this.textosbuscador);
-      
-    } );
-  }
 
 
 

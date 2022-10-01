@@ -1,18 +1,21 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
-export class TagsModel {
+export class LanguagesModel {
     id: number;
     uuid: string;
-    title: string;
-    description: string;
     iso: string;
-
+    name_title: string;
+    name_iso: string;
+    
+    
     constructor(){
         this.id = 0;
         this.uuid= "";
-        this.title= "";
-        this.description= "";
         this.iso= "";
+        this.name_title= "";
+        this.name_iso= "";
+    
+
     }
 }

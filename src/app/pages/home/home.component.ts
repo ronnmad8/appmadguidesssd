@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit{
   imagenbanner: ImagenesModel;
   cliente: ClientesModel = new ClientesModel();
   imageneshome :ImagenesModel[] = [];
-  textoshome :TextosModel[] = [];
+  textoshome :TextosModel = new TextosModel();
   idenlace: number ;
   enlacedestacado: string = "";
   texto1: string = "";
@@ -90,7 +90,8 @@ export class HomeComponent implements OnInit{
   ngOnInit() {
     this.menuPublic.emit(0);
     this.getImageneshome()
-  
+    this.getImageneshome();
+    this.getTextoshome();
   }
 
   scrollToElement(element: Element): void {
@@ -105,20 +106,27 @@ export class HomeComponent implements OnInit{
       this.bannerbottom = this.imageneshome.find(x => x.image_name == 'bannerbottom') ?? new ImagenesModel();
       this.logotexto = this.imageneshome.find(x => x.image_name == 'logo-texto') ?? new ImagenesModel();
       this.logo = this.imageneshome.find(x => x.image_name == 'logo') ?? new ImagenesModel();
-debugger
+
       this.bh.getImagenBanner(this.bannertop);
       this.zc.getImagenBanner(this.bannerbottom);
       this.st.getImagenLogo(this.logo);
+      //this.sv.getImagenes(this.logo);
 
     } );
   }
 
   getTextoshome(){
     this.homeService.getTextosHome().subscribe( (resp) => {
-      this.textoshome =  resp as TextosModel[];
+      this.textoshome =  resp as TextosModel;
+
+      //this.bh.getTextos(this.textoshome);
+       this.zc.getTextos(this.textoshome);
+       this.st.getTextos(this.textoshome);
+      //this.sv.getTextos(this.textoshome);
       
     } );
   }
+
 
 
 

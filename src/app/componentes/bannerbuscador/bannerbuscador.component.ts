@@ -6,6 +6,7 @@ import { TextosModel } from 'src/app/models/Textos.model';
 import { ImagenesService } from '../../services/imagenes.service';
 import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
+import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
 
@@ -35,7 +36,8 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
   constructor(
     private imagenesService: ImagenesService,
     private textosService: TextosService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private homeService: HomeService
 
   ) {
   ///    
@@ -44,11 +46,10 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
      this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.url = "";
+     this.imagenbanner.url = "../../assets/images/banner-ficha-de-producto.jpg";
      this.imagenbanner.url_movil = "";
      //imagen  banner
      
-     this.getVisitasprop();
   }
 
   ngAfterViewInit(){ 
@@ -67,17 +68,6 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
   }
 
 
-  getImagenBanner(idenlace: string){
-  
-
-       this.imagenbanner = this.imagebanner ;
-  
-  }
-
-  buscarprop(){
-    let textoabuscar = this.busqueda;
-  }
-
   vertodos(){
     ///ir a buscador
   }
@@ -86,14 +76,11 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
     this.verbusca = !this.verbusca;
   }
 
-
-  getVisitasprop(){
-    this.visitasprop = this.globalService.getVisitasprop();
-    
-    //.subscribe( (resp : ArticulocoleccionesModel[]) => { if(resp != null){this.listavisitashome = resp ;} })
-    
+  buscarprop(){
+      this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
+      this.visitasprop = resp as VisitasModel[]; 
+    }) ;
   }
-  
 
   
   
