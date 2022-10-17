@@ -9,6 +9,9 @@ import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { VisitaService } from 'src/app/services/visita.service';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 
 
 @Component({
@@ -17,12 +20,11 @@ import { VisitaService } from 'src/app/services/visita.service';
 })
 export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
  
-  @Input() dataHome: any;
+  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() relatedData: VisitasResultadoModel[] = [];
 
   public show: boolean = true;
   public cargados: boolean = false;
-  public listavisitasrelacionadas: VisitasModel[] = [];
-
  
   constructor(
     private wowService: NgwWowService,
@@ -35,23 +37,18 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {    
-    //this.getVisitashome();
-    this.listavisitasrelacionadas = [];
-
-    ///fake 4 visitas
+    
   }
+
   ngAfterViewInit() {
-    // this.message = this.child.message
+    
   }
 
 
-  getVisitasRelacionadas(){ 
-      this.visitaService.getRelacionadas().subscribe( (resp ) =>{
-        this.listavisitasrelacionadas = resp as VisitasModel[];
-        this.cargados = true;
-      } ) ; 
+  vertodascategoria(){
+    let category_uuid = this.relatedData[0].category_lang_uuid;
+    this.router.navigate(['/buscador/category', category_uuid]);
   }
-
   
   
 

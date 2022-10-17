@@ -19,6 +19,68 @@ export class GlobalService {
   url: string = "";
   apiurl: string;
 
+  ////////////
+  week: any = [
+    "Lunes",
+    "Martes",
+    "Miercoles",
+    "Jueves",
+    "Viernes",
+    "Sabado",
+    "Domingo"
+  ];
+  
+  months: any = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ];
+
+  listahoras: any[] = [
+    { key : "0", value : "00:00"},
+    { key : "1", value : "01:00"},
+    { key : "2", value : "02:00"},
+    { key : "3", value : "03:00"},
+    { key : "4", value : "04:00"},
+    { key : "5", value : "05:00"},
+    { key : "6", value : "06:00"},
+    { key : "7", value : "07:00"},
+    { key : "8", value : "08:00"},
+    { key : "9", value : "09:00"},
+    { key : "10", value : "10:00"},
+    { key : "11", value : "11:00"},
+    { key : "12", value : "12:00"},
+    { key : "13", value : "13:00"},
+    { key : "14", value : "14:00"},
+    { key : "15", value : "15:00"},
+    { key : "16", value : "16:00"},
+    { key : "17", value : "17:00"},
+    { key : "18", value : "18:00"},
+    { key : "19", value : "19:00"},
+    { key : "20", value : "20:00"},
+    { key : "21", value : "21:00"},
+    { key : "22", value : "22:00"},
+    { key : "23", value : "23:00"},
+
+  ];
+
+  
+
+  redes: any = [
+    { name : "facebook", logo : "assets/images/i-facebookN.svg"},
+    { name : "twitter", logo : "assets/images/i-twitterN.svg"},
+    { name : "instagram", logo : "assets/images/i-instagramN.svg"},
+  ];
+
   constructor(
     private http: HttpClient,
     private auth: AuthService,
@@ -27,11 +89,26 @@ export class GlobalService {
     this.apiurl = environment.apiurl;
   }
 
+ 
 
+
+  getFormatNumber(n: number) {
+    if(n != 0){
+      let num = n.toFixed(2);
+      let numsp = num.split(".");
+      if(numsp[1].length == 1){
+        numsp[1] = numsp[1] + "0";
+      }
+      if(numsp[1].length > 2){
+        numsp[1] = numsp[1].substring(0,2);
+      }
+      return numsp[0] + "." + numsp[1];
+    }
+    else{
+      return "0";
+    }  
+  }
   
-
-  
-
 
   getImagenesFilt(idenlace :number, idtipo :number)  {
     
@@ -55,10 +132,6 @@ export class GlobalService {
     );
 
   }
-
-
-  
-
 
 
   getVisitascarrito()  {
@@ -189,42 +262,6 @@ export class GlobalService {
 
 
 
-
-  // getImagenBannerHome()  {
-
-  //   let tipos_id = 1;
-  //   let enlaces_id = 1;
-  //   let posicion = 1;
-    
-  //   let endpoint = '/imagenes/filtpos' ;
-  //   this.url = this.apiurl + endpoint;
-  //   const filtData = {
-  //     enlaces_id: enlaces_id,
-  //     tipos_id: tipos_id,
-  //     posicion: posicion 
-      
-  //   }
-  
-  //   let im = new ImagenesModel();
-  //   im.rutapc = "assets/images/sinimagen.jpg";
-  //   im.rutapc = "assets/images/banner-home.jpg";
-  //   im.rutamovil = "assets/images/banner-home.jpg";
-  //   im.tipo_id = tipos_id;
-
-  //   return im;
-
-    // return this.http.post( `${this.url}`, filtData )
-    // .pipe(
-    //   map( res => res as ImagenesModel[]) ,
-    //   catchError((err) => {
-    //     console.error("Error  " , err.error);
-    //             return err.error;
-    //   })
-    // );
-
-  //}
-
-  
   
 
   

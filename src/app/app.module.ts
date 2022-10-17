@@ -23,11 +23,17 @@ import { ZonacontactoComponent } from './componentes/zonacontacto/zonacontacto.c
 import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SlidervisitaComponent } from './componentes/slidervisita/slidervisita.component';
-import { VisitaComponent } from './pages/visita/visita.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SlidervisitasinteresarComponent } from './componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { SlidervisitamovilComponent } from './componentes/slidervisitamovil/slidervisitamovil.component';
+import { ZonapagoComponent } from './componentes/zonapago/zonapago.component';
+import { CarritoComponent } from './pages/carrito/carrito.component';
+import { CompraComponent } from './pages/compra/compra.component';
+import { ZonacompraComponent } from './componentes/zonacompra/zonacompra.component';
+import { CapitalizePipeComponent } from './pipes/capitalize.component';
+import { VisitadetailComponent } from './pages/visitadetail/visitadetail.component';
+import { FnumberPipeComponent } from './pipes/fnumber.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -58,7 +64,6 @@ const routes: Routes = [
     AppComponent,
     BaseComponent,
     HomeComponent,
-    VisitaComponent,
     BuscadorComponent,
     NavbarComponent,
     FooterComponent,
@@ -72,6 +77,13 @@ const routes: Routes = [
     SlidervisitaComponent,
     SlidervisitasinteresarComponent,
     SlidervisitamovilComponent,
+    CarritoComponent,
+    ZonapagoComponent,
+    CompraComponent,
+    ZonacompraComponent,
+    CapitalizePipeComponent,
+    FnumberPipeComponent,
+    VisitadetailComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'madguides' }),

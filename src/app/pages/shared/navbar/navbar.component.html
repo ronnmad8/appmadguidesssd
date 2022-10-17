@@ -5,37 +5,37 @@
     <nav id="navpc" class="container mx-auto px-0">
       <div class="row hbarmenupc colGRIS1">
 
-        <div class="col-3 divlogopc">
-          <div class="cupo p-0 posabsol" style="left: 5px; top: 12px" routerLink="home" (click)="mostrar()">
+        <div class="col-3 divlogo_pc posrel">
+          <div class="cupo p-0 posabsol" style="left: 15px; top: 12px" routerLink="home" (click)="mostrar()">
             <img src="../../assets/images/logo-madguides.svg" class="imlogomenupc" draggable="false">
           </div>
         </div>
 
-        <div class="col-5 px-0">
+        <div class="col-5 px-0" *ngIf="!isZonapago"  >
           <div class="d-flex mt-2">
 
             <div id="enlace1" class="posrel" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
               <div class="cupo fs-20" routerLink="/quienessomos" routerLinkActive="active">
-                <span>Quienes Somos</span>
+                <span>{{message.menu.who}}</span>
               </div>
             </div>
 
             <div id="enlace2" class="posrel" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
               <div class="cupo fs-20" routerLink="/blog" routerLinkActive="active">
-                <span>Blog</span>
+                <span>{{message.menu.blog}}</span>
               </div>
             </div>
 
             <div id="enlace3" class="posrel" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
               <div class="cupo fs-20" routerLink="/buscador" routerLinkActive="active">
-                <span>Ayuda</span>
+                <span>{{message.menu.help}}</span>
               </div>
             </div>
 
           </div>
         </div>
 
-        <div class="col-4 d-flex text-right ">
+        <div class="col-4 d-flex text-right "  *ngIf="!isZonapago" >
 
           <div class="bar posrel ml-auto mr-0">
             <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
@@ -70,12 +70,19 @@
           </div>
 
         </div>
+
+        <div class="col-9 posrel"   *ngIf="isZonapago"  >
+          <div class="posabsol d-flex" style="top: 24px; right: 15px" >
+            <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px" draggable="false">
+            <div class="fs-24 ml-2">Pago seguro</div>
+          </div>
+        </div>
       </div>
     </nav>
 
     <div class="container posrel ">
 
-      <div id="modalcarrito" class="pc posabsolmodalcarrito" *ngIf="vercarrito">
+      <div id="modalcarrito" class="pc posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
         <div id="panelcarritovacio" *ngIf="carritovacio">
           <div class="text-center py-3">
             Tu carrito está vacío
@@ -141,7 +148,7 @@
 
           <div class="w-100">
             <div class="my-3 mx-auto text-center">
-              <button class="btredondoRojoCarrito" type="button">
+              <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']"  >
                 <span class="ff-JB">Finalizar reserva</span>
               </button>
             </div>
@@ -210,12 +217,6 @@
       </div>
     </div>
 
-
-
-
-
-
-
   </div>
 
   <!--movil-->
@@ -257,13 +258,13 @@
 
           <div class="posrel limenu pl-4 m-0  ">
             <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
-              <span>Quienes somos</span>
+              <span>{{message.menu.who}}</span>
             </div>
           </div>
 
           <div class="posrel limenu pl-4 m-0  ">
             <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
-              <span>Blog</span>
+              <span>{{message.menu.blog}}</span>
             </div>
           </div>
 
@@ -345,7 +346,7 @@
         </div>
         <div class="w-100 py-3">
           <div class="mx-auto text-center">
-            <button class="btredondoRojoCarrito" type="button">
+            <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']"   >
               <span class="ff-JB">Finalizar reserva</span>
             </button>
           </div>
@@ -366,12 +367,12 @@
             <div id="accedemicuenta">
               Accede a tu área de usuario
             </div>
-            <div id="cjusuariomicuenta">
-              <input type="text" class="colGRIS1 cjmicuenta" placeholder=" Usuario o email" id="emailmicuanta"
+            <div class="cj">
+              <input type="text" class="colGRIS1 " placeholder=" Usuario o email" id="emailmicuanta"
                 name="emailmicuenta" />
             </div>
-            <div class="posrel" id="cjpasswordmicuenta">
-              <input type="text" class="colGRIS1 cjmicuenta" placeholder=" Contraseña" id="passwordmicuenta"
+            <div class="cj posrel" >
+              <input type="text" class="colGRIS1 " placeholder=" Contraseña" id="passwordmicuenta"
                 name="passwordmicuenta" />
               <div class="posabsol" style="top: 10px; right: 15px"> <i class="fa-solid fa-eye-slash"></i> </div>
             </div>
@@ -386,11 +387,11 @@
               <button class="btredondoRojomicuenta " type="button">
                 <span>Iniciar sesión</span>
               </button>
-              <div id="heolvidadomicuenta">
+              <div class="heolvidadomicuenta">
                 He olvidado mi contraseña
               </div>
             </div>
-            <div id="oaccedemicuenta">
+            <div class="oaccedemicuenta">
               O accede con
             </div>
             <div class="w-100 p-0 ">
@@ -411,7 +412,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
 
@@ -419,7 +419,7 @@
 
   <div class="bgBLANCO page-content p-0 m-0">
 
-    <router-outlet  ></router-outlet>
+    <router-outlet (activate)="onActivate($event)"  ></router-outlet>
 
   </div>
 

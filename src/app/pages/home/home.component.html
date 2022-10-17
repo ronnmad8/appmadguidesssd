@@ -1,25 +1,24 @@
 <div class="w-100 ">
 
-    <div #sec1 class="" >
-        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador"    ></app-bannerhome>
+    <div #banner class="" >
+        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador"  [messageData]="message" [bannertopData]="bannertop"    ></app-bannerhome>
     </div>
 
-    <div #sec2 class=" " >
-        <app-slidervisitas ></app-slidervisitas>
+    <div #recomendadas class=" " >
+        <app-slidervisitas [messageData]="message"   [recommendedData]="recommended"  ></app-slidervisitas>
     </div>
     
-    <section #sec3 class=" " >
-        <app-slidertestimonios></app-slidertestimonios>
+    <section #testimonios>
+        <app-slidertestimonios [messageData]="message" [commentsData]="comments" [logoData]="logo" ></app-slidertestimonios>
     </section>
     
     <div class="mh100"></div>
 
-    <section #sec3 class="my-3" >
-       <app-zonacontacto></app-zonacontacto>
+    <section #contacto class="my-3" >
+       <app-zonacontacto [messageFormData]="messagesForm" [messageImageData]="messageImage"   [bannerbottomData]="bannerbottom"   ></app-zonacontacto>
     </section>
 
 </div>
-
 
 <div>
 </div>

@@ -10,6 +10,7 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 import { ComentariosModel } from 'src/app/models/Cometarios.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
 
 
 
@@ -19,15 +20,14 @@ import { TextosModel } from 'src/app/models/Textos.model';
 })
 export class SlidertestimoniosComponent implements OnInit {
  
-
+  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() commentsData: ComentariosModel[] = [];
+  @Input() logoData: ImagenesModel = new ImagenesModel;
+  
   public show: boolean = true;
   public cargados: boolean = false;
-  public listacomentarioshome: ComentariosModel[] = [];
-  imagenlogo: ImagenesModel = new ImagenesModel();
+  public listaComentariosHome: ComentariosModel[] = [];
 
-  message1: string = "";
-  message2: string = "";
-  button: string = "";
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -78,32 +78,15 @@ export class SlidertestimoniosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getComentarioshome();
-
-  }
-
-  getComentarioshome(){
-    this.homeService.getComentariosHome().subscribe( (resp) => {
-      this.listacomentarioshome =  resp as ComentariosModel[];
-      this.cargados = true;
-    } );
-  }
-
-  verActividad(){
-    alert("ver actividad");
-  }
-
-  getImagenLogo(logo: ImagenesModel){
-    this.imagenlogo = logo ;
-  }
-  
-  getTextos(textos: TextosModel){
     
-    
-    this.message1 = textos.visit.message1;
-    this.message2 = textos.visit.message1;
-    this.button = textos.visit.button;
 
-  } 
+  }
+
+
+    verdetalle(comentario: ComentariosModel){
+      this.router.navigate(['/visita', comentario.visit_lang_title , comentario.visit_uuid ]);
+    }
+
+ 
 
 }

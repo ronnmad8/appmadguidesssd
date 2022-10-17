@@ -1,90 +1,92 @@
 <div class="w-100 p-0 m-0">
-  <div id="bancontacto"  class="imagebannerseccion posrel w-100 ">
+  <div id="bancontacto" class="imagebannerseccion posrel w-100 ">
     <picture>
-      <source media="(min-width: 968px)" srcset="{{imagenzonacontacto.url}}"
-        data-srcset="{{imagenzonacontacto.url}}">
-      <source media="(min-width: 0px)" srcset="{{imagenzonacontacto.url_movil}}"
-        data-srcset="{{imagenzonacontacto.url_movil}}">
-      <img src="{{imagenzonacontacto.url}}" data-src="{{imagenzonacontacto.url}}" alt="banner madguides"
+      <source media="(min-width: 968px)" srcset="{{bannerbottomData.url}}" data-srcset="{{bannerbottomData.url}}">
+      <source media="(min-width: 0px)" srcset="{{bannerbottomData.url_movil}}"
+        data-srcset="{{bannerbottomData.url_movil}}">
+      <img src="{{bannerbottomData.url}}" data-src="{{bannerbottomData.url}}" alt="banner madguides"
         class="imagebannerseccion lazyload " onerror="this.src='assets/images/sinimagen.jpg' ">
     </picture>
 
-    <div id="posabsollemacontacto" class="w-100 d-xl-flex text-center "  >
-        <div class="ml-xl-4 mr-xl-4 mx-1">
-          {{image_message}}
-        </div>
+    <div id="posabsollemacontacto" class="w-100 d-xl-flex text-center ">
+      <div class="mx-auto">
+        {{messageImageData.message}}
+      </div>
     </div>
   </div>
 
-  <div id="basecontactohome" class="posrel" >
-
+  <div id="basecontactohome" class="posrel">
     <div class="posabsolcontactohome ">
       <div class="container posrel">
-  
         <div class="panelcontactohome mx-auto">
           <form class="validate-form" [formGroup]="forma">
-            <div id="intpanelcontactohome" class="p-0" >
+            <div id="intpanelcontactohome" class="p-0">
               <div class="w-100 text-left">
                 <div id="pontecontac">
                   <div>
-                    <img src="../../../assets/images/i-contacto.svg" data-src="../../../assets/images/i-contacto.svg"
-        alt="" class=" lazyload ">
+                    <img src="assets/images/i-contacto.svg" data-src="assets/images/i-contacto.svg"
+                      alt="" class=" lazyload ">
                     <span>
-                     {{form_title}}
-                     </span>
+                      {{messageFormData.title}}
+                    </span>
                   </div>
                 </div>
               </div>
 
               <div class="row d-flex p-0 posrel">
-                <div id="nombrecontact" class="col-6" >
+                <div id="nombrecontact" class="col-6">
                   <div class="cuad">
-                    <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre" formControlName="nombre">
+                    <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre"
+                      formControlName="nombre">
                     <div *ngIf="nombresel != '' " class="fieldpeq">
-                      {{form_name}}
+                      {{messageFormData.name}}
                     </div>
                   </div>
                 </div>
                 <div id="emailcontact" class="col-6">
                   <div class="cuad">
-                    <input class="w-100" type="text" placeholder="Email" name="email" id="email" formControlName="email">
+                    <input class="w-100" type="text" placeholder="Email" name="email" id="email"
+                      formControlName="email">
                     <div *ngIf="emailsel != '' " class="fieldpeq">
-                      {{form_email}}
+                      {{messageFormData.email}}
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="row d-flex p-0 posrel">
-                
+
                 <div id="mensajecontact " class="col-12">
                   <div class="cuadG">
                     <textarea class="" type="text" placeholder="Mensaje" cols="4" name="mensaje" id="mensaje"
                       formControlName="mensaje">
                     </textarea>
                     <div *ngIf="mensajesel != '' " class="fieldpeq2">
-                      {{form_message}}
+                      {{messageFormData.message}}
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div class="row d-xl-flex p-0">
-                
-                <div id="aceptocontact" class="col-xl-6">
-                  <div  class="custom-control custom-checkbox ">
-                    <input type="checkbox"  class="custom-control-input " name="aceptacion" id="aceptacion" formControlName="aceptacion">
-                    <label for="aceptacion" class="custom-control-label ">{{form_policy}} <a routerLink="/politicaprivacidad">{{form_link}}</a> </label>
-                  </div>
-                </div> 
 
-                <div id="btcontact" class="col-xl-6 w-100  text-xl-right text-center">
-                  <button *ngIf="btactivadoT" type="button" class="btgris cupo" >
-                    {{form_button}}
+                <div id="aceptocontact" class="col-xl-8 d-flex">
+                    <div >
+                    <input type="checkbox" name="aceptarpoliticas" name="aceptacion" id="aceptacion"
+                      formControlName="aceptacion">
+                    </div>
+                    <div class="fs-16 mx-2 w-100">
+                      {{messageFormData.message}} <a routerlink="/politicaprivacidad">{{messageFormData.policy}}</a> <a
+                      routerlink="/politicaprivacidad">{{messageFormData.link}}</a>
+                    </div>
+                </div>
+
+                <div id="btcontact" class="col-xl-4 text-xl-right text-center">
+                  <button *ngIf="btactivadoT" type="button" class="btgris cupo">
+                    {{messageFormData.button}}
                   </button>
-                  <button *ngIf="!btactivadoT" type="button" class="btgris apagado" >
-                    {{form_button}}
+                  <button *ngIf="!btactivadoT" type="button" class="btgris apagado">
+                    {{messageFormData.button}}
                   </button>
                 </div>
               </div>
@@ -94,5 +96,4 @@
       </div>
     </div>
   </div>
-
 </div>

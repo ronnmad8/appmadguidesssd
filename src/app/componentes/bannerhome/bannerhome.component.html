@@ -16,27 +16,26 @@
           <div id="panelbuscadorhome">
             <div id="titulomodalbuscador">
               <div class="ff-JB">
-                Excursiones por Madrid <br>
-                y sus alrededores
+                {{messageData.tour.title}}
               </div>
             </div>
             <div id="subtitulomodalbuscador">
               <div>
                 <span>
-                  Visitas guiadas y
+                  {{messageData.tour.message1}}
                 </span>
                 <span class="ff-JB">
-                  personalizas en tu idioma
+                  {{messageData.tour.message2}}
                 </span>
               </div>
             </div>
 
             <div id="cjbuscador" class="posrel">
               <div id="divcjbuscador">
-                <input #cjbusqueda type="text" class="colGRIS1 posabsolcjbuscador" placeholder=" ¿Que quieres visitar?" 
+                <input #cjbusqueda type="text" class="colGRIS1 posabsolcjbuscador" [placeholder]="messageData.tour.input" 
                  (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda"  />
-                <button class="btredondoRojo posabsolbtbuscador" type="button" routerLink="/buscador"  >
-                  <span>Buscar</span>
+                <button class="btredondoRojo posabsolbtbuscador" type="button" (click)="verbuscador()"  >
+                  <span>{{messageData.tour.button}}</span>
                   <span><i class="fa fa-arrow-right "></i></span>
                 </button>
               </div>
@@ -49,36 +48,36 @@
                         <div class="imgcartamodalprop">
                           <div class="pc pl-1">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
-                              <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}">
+                              <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
                                 class="imgcartamodalprop lazyload "  >
                             </picture>
                           </div>
                           <div class="mvl">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.url_movil}}" data-srcset="{{visita.url_movil}}">
-                              <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}">
+                              <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
                                 class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>
                         </div>
         
-                        <div class="posrel infocartamodalprop cupo">
+                        <div class="posrel infocartamodalprop cupo"  (click)="verdetalle(visita)"  >
                           <div id="textomodalprop">
-                            {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
+                            {{visita.visit_lang_title.length > 30 ? visita.visit_lang_title.substring(0,27)+"..." : visita.visit_lang_title }}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="posrel d-flex" >
-                    <div id="vertodosprop" class="cupo" (click)="vertodos()"  >
+                  <div class="posrel d-flex cupo" (click)="verbuscador()">
+                    <div id="vertodosprop"   >
                       Ver todos los resultados para 
                       <span class="colROJO2 ml-1" >"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." : busqueda}}"</span>
                     </div>
                     <div>
-                      <i id="flechaprop" class="fa fa-arrow-right mr-4"></i>
+                      <i id="flechaprop" class="fa fa-arrow-right mx-4"></i>
                     </div>
                   </div>
 
@@ -86,10 +85,7 @@
               </div>
             </div>
           </div>
-
         </div>
-
-        
 
         <div class=" posabsoliconosmodal">
           <div class="container posrel ">
@@ -101,8 +97,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    Guias <br>
-                    Oficiales
+                    {{messageData.icons.guide}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -111,8 +106,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    Grupos <br>
-                    Reducidos
+                    {{messageData.icons.group}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -121,8 +115,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    Hablamos <br>
-                    tu idioma
+                    {{messageData.icons.talk}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -131,8 +124,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    Precios <br>
-                    Finales
+                    {{messageData.icons.price}}
                   </div>
                 </div>
 
@@ -147,9 +139,9 @@
 
     <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.8s" >
       <picture>
-        <source media="(min-width: 968px)" srcset="{{imagenbanner.url}}" data-srcset="{{imagenbanner.url}}">
-        <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}" data-srcset="{{imagenbanner.url_movil}}">
-        <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}" alt="banner madguides"
+        <source media="(min-width: 968px)" srcset="{{bannertopData.url}}" data-srcset="{{bannertopData.url}}">
+        <source media="(min-width: 0px)" srcset="{{bannertopData.url_movil}}" data-srcset="{{bannertopData.url_movil}}">
+        <img src="{{bannertopData.url}}" data-src="{{bannertopData.url}}" alt="banner madguides"
           class="imagebannerhome" onerror="this.src='assets/images/sinimagen.jpg' ">
       </picture>
     </div>

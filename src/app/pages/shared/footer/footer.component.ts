@@ -1,9 +1,11 @@
 import { NullTemplateVisitor } from '@angular/compiler';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlertasService } from 'src/app/services/alertas.service';
+import { HomeService } from 'src/app/services/home.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagesModel } from 'src/app/models/Messages.model';
 
 
 @Component({
@@ -14,7 +16,9 @@ import { AuthService } from 'src/app/services/auth.service';
   export class FooterComponent implements OnInit {
 
     //@ViewChild(LoginComponent, null) loginentrar;
+    @Input() nomostrarenlacesfooter:boolean  = false;
 
+    message: MessagesModel = new MessagesModel();
     adminactive: boolean;
     widg1show = false;
     widg2show = false;
@@ -22,6 +26,7 @@ import { AuthService } from 'src/app/services/auth.service';
     constructor(
       private auth: AuthService,
       private alertasService: AlertasService,
+      private homeService: HomeService,
       private router: Router
     ) {
       //leer persona
@@ -29,7 +34,19 @@ import { AuthService } from 'src/app/services/auth.service';
     }
 
     ngOnInit() {
+      this.getMessageFooter();
       //this.loginadmin();
+    }
+
+    getMessageFooter(){
+ 
+        this.homeService.getMessagesHome().subscribe( (resp) => {
+          let respuesta: any =  resp ;
+          
+          this.message = respuesta[1] ;
+
+        } );
+    
     }
 
     identificar(){

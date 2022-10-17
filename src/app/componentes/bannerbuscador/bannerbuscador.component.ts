@@ -8,6 +8,9 @@ import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { MessagesSearchModel } from 'src/app/models/MessagesSearch.model';
 
 
 
@@ -18,43 +21,40 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
-  @Input() imagebanner: ImagenesModel ;
+  @Input() bannerfichadeproductoData: ImagenesModel = new ImagenesModel();
+  @Input() messageSearchData: MessagesSearchModel = new MessagesSearchModel();
+  @Input() numactividades: number = 0;
+  @Input() busqueda: string = "";
+
 
 
   show: boolean = true;
   textobanner :TextosModel = new TextosModel() ;
   imagenbanner: ImagenesModel = new ImagenesModel();
   cargados: boolean = false;
-  idenlace: string = "1";
-  busqueda: string = "";
+
   visitasprop: VisitasModel[] = [];
   verbusca :boolean = false;
   menuvisto :boolean = true;
   possc :number = 0;
-  
+
 
   constructor(
-    private imagenesService: ImagenesService,
-    private textosService: TextosService,
-    private globalService: GlobalService,
     private homeService: HomeService
 
   ) {
-  ///    
+    //this.bannerfichadeproductoData.url = "../../assets/images/sinimagen.jpg";
   }
 
 
   ngOnInit(): void {
-     this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.url = "../../assets/images/banner-ficha-de-producto.jpg";
-     this.imagenbanner.url_movil = "";
-     //imagen  banner
-     
+    
   }
 
   ngAfterViewInit(){ 
 
   }
+
 
   @HostListener("window:scroll")
   onWindowScroll() {
@@ -83,6 +83,4 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
   }
 
   
-  
-
 }

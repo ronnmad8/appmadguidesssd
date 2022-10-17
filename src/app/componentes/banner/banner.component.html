@@ -7,8 +7,9 @@
                 data-srcset="{{imagenbanner.url}}" >
               <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}"
                 data-srcset="{{imagenbanner.url_movil}}"  >
+              <img src='assets/images/sinimagen.jpg' class="imagebannerseccion " *ngIf="imagenbanner.url == null"  >
               <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}"
-                alt="banner madguides" class="imagebannerseccion lazyload " onerror="this.src='assets/images/sinimagen.jpg' "   >
+                alt="banner madguides" class="imagebannerseccion lazyload " onerror="this.error=null;this.src='assets/images/sinimagen.jpg' "   >
             </picture>
 
       </div>

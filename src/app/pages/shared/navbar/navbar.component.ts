@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { GlobalService } from '../../../services/global.service';
 //import { AuthService } from '../../../services/auth.service';
@@ -14,6 +14,7 @@ import { BuscadorComponent } from '../../buscador/buscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
 import { HomeService } from '../../../services/home.service';
+import { MessagesModel } from 'src/app/models/Messages.model';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +27,8 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild(BannerbuscadorComponent ) bb: BannerbuscadorComponent;
   @ViewChild(RouterOutlet ) ro: RouterOutlet;
+  @Output() nomostrarenfooter: EventEmitter<any> = new EventEmitter();
+  @Output() simostrarenfooter: EventEmitter<any> = new EventEmitter();
   
   modalI: NgbModalRef ;
   modalOptions: NgbModalOptions;
@@ -38,6 +41,7 @@ export class NavbarComponent implements OnInit {
   veridiomas: boolean = false;
   verbusqueda: boolean = false;
   isAdminweb: boolean = false;
+  isZonapago: boolean = false;
   ocultar: string = "";
   ocultado: boolean = false;
   menusticky :boolean = true;
@@ -57,7 +61,7 @@ export class NavbarComponent implements OnInit {
   enlacebuscador = "/buscador";
   
   logoB :boolean = true ;
-
+  message: MessagesModel;
   forma: FormGroup;
   btactivadoT: boolean = false;
   passwordsel: string = "";
@@ -91,6 +95,7 @@ export class NavbarComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.getMessageMenu();
     ///prueba viajes carrito
     this.getVisitascarrito();
     this.getRutaActual();
@@ -101,7 +106,10 @@ export class NavbarComponent implements OnInit {
     };
 
     this.isAdminweb = false;
+    this.isZonapago = false;
     this.logoB = false;
+    
+    this.simostrarenfooter.emit();
   }
 
 
@@ -115,6 +123,45 @@ export class NavbarComponent implements OnInit {
      }
      this.possc = scrollPosition;
   }
+
+  onActivate(componentReference: any) {
+
+    // if(componentReference.menuAdmin != undefined){
+    //   this.isAdminweb = true ;
+    // }
+    // if(componentReference.menuPublic != undefined){
+    //   this.isAdminweb = false ; 
+    // }
+
+    
+    if(componentReference.zonapago != undefined ){
+      this.isZonapago = true;
+      this.nomostrarenfooter.emit();
+    }
+    else if(componentReference.zonanopago != undefined ){
+      this.isZonapago = false;
+      this.simostrarenfooter.emit();
+    }
+    else{
+      this.isZonapago = false;
+      this.simostrarenfooter.emit();
+    }
+
+    
+
+  }
+
+
+  getMessageMenu(){
+ 
+    this.homeService.getMessagesHome().subscribe( (resp) => {
+      let respuesta: any =  resp ;
+      
+      this.message = respuesta[0] ;
+
+    } );
+
+}
   
 
   getRutaActual(){
@@ -201,16 +248,7 @@ export class NavbarComponent implements OnInit {
     this.recordarme = !this.recordarme;
   }
   
-  onActivate(componentReference: any) {
-
-    // if(componentReference.menuAdmin != undefined){
-    //   this.isAdminweb = true ;
-    // }
-    // if(componentReference.menuPublic != undefined){
-    //   this.isAdminweb = false ; 
-    // }
-
-  }
+  
 
   //ver modales
 
@@ -271,9 +309,9 @@ export class NavbarComponent implements OnInit {
 
   buscarprop(){
     this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
-    this.visitasprop = resp as VisitasModel[]; 
-  }) ;
-}
+      this.visitasprop = resp as VisitasModel[]; 
+    }) ;
+  }
 
 vertodos(){
   ///ir a buscador

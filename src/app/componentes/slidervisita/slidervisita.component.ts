@@ -1,43 +1,50 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+  Renderer2,
+} from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
+import { ProviderService } from '../../services/provider.service';
 import { ListasService } from '../../services/listas.service';
-import { Options } from "@angular-slider/ngx-slider";
-import { EventsrespModel } from 'src/app/models/Eventsresp.model';
-import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
+import { GlobalService } from '../../services/global.service';
+import { Options } from '@angular-slider/ngx-slider';
+import {
+  SwiperModule,
+  SwiperComponent,
+  SwiperConfigInterface,
+  SwiperDirective,
+  SwiperPaginationInterface,
+  SwiperScrollbarInterface,
+} from 'ngx-swiper-wrapper';
 import { Router } from '@angular/router';
 import { NgwWowService } from 'ngx-wow';
 import * as moment from 'moment';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
-
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 
 @Component({
   selector: 'app-slidervisita',
-  templateUrl: './slidervisita.component.html'
-  
+  templateUrl: './slidervisita.component.html',
 })
-
-
 export class SlidervisitaComponent implements OnInit {
 
-  
-
-  @Input() visitaId: number = 0;
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
 
-  visita: VisitasModel = new VisitasModel();
-  tipos: string[] = [];
-  listaImagenesVisita: ImagenesModel[] = [];
-  listaImagenesVisitaLat: ImagenesModel[] = [];
-  isrespon: boolean = false;
+  visitaresultado: VisitasResultadoModel = new VisitasResultadoModel();
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -64,396 +71,463 @@ export class SlidervisitaComponent implements OnInit {
     spaceBetween: 1,
     breakpoints: {
       1290: {
-        slidesPerView: 1
+        slidesPerView: 1,
       },
       590: {
-        slidesPerView: 1.05
+        slidesPerView: 1.05,
       },
       490: {
-        slidesPerView: 1.15
+        slidesPerView: 1.15,
       },
-
-    }
-
+    },
   };
 
-  ////////////
-  week: any = [
-    "Lunes",
-    "Martes",
-    "Miercoles",
-    "Jueves",
-    "Viernes",
-    "Sabado",
-    "Domingo"
-  ];
-  months: any = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre"
-  ];
-  listahoras: any = [
-    { key : "1", value : "08:00"},
-    { key : "2", value : "09:00"},
-    { key : "3", value : "10:00"},
-    { key : "4", value : "11:00"},
-    { key : "5", value : "12:00"},
-    { key : "6", value : "13:00"},
-    { key : "7", value : "14:00"},
-    
-  ];
+  listaidiomas: LanguagesModel[] = [];
+  listaidiomasvisita: LanguagesModel[] = [];
   
-  listaidiomas: any[] = [
-    { key : "1", value : "español"},
-    { key : "2", value : "english"},
-    { key : "3", value : "français"},
-
-  ];
-  redes: any = [
-    { name : "facebook", logo : "assets/images/i-facebookN.svg"},
-    { name : "twitter", logo : "assets/images/i-twitterN.svg"},
-    { name : "instagram", logo : "assets/images/i-instagramN.svg"},
-  ];
+  isrespon: boolean = false;
+  //imagenes
+  listaImagenesVisita: ImagenesModel[] = [];
+  listaImagenesVisitaLat: ImagenesModel[] = [];
+  
+  //calendario
   monthSelect: any[];
   dateSelect: any;
   dateValue: any;
   mSelect: any;
   ySelect: any;
-  privada: boolean = false;
+  week: string[] = [];
+  months: string[] = [];
+  horas: any[] = [];
+  listahoras: any[] = [];
+  listahorasvisita: any[] = [];
+  //acordeon ocultar
   vcale: boolean = false;
   vhora: boolean = false;
   vidiom: boolean = false;
   vpers: boolean = false;
   pegaj: number = 1;
-  //sels
+  //seleccionados
   daySel: any;
   horaSel: any = 0;
   idiomaSel: any = 0;
   adultoSel: number = 0;
   ninosSel: number = 0;
   menoresSel: number = 0;
+  //info acordeon
+  horainfo: string = '';
+  caleinfo: string = '';
+  idiominfo: string = '';
   maximopersonas: number = 0;
-  horainfo: string = "";
-  caleinfo: string = "";
-  idiominfo: string = "";
-  
+  sumapersonas: number = 0;
   precioadultos: number = 0;
   precioninos: number = 0;
   preciomenores: number = 0;
-
   precioadultototal: number = 0;
   precioninostotal: number = 0;
   preciomenorestotal: number = 0;
   preciototal: number = 0;
-
+  privada: boolean = false;
+  precioadultosst: string = "0";
+  precioninosst: string = "0";
+  preciomenoresst: string = "0";
+  precioadultototalst: string = "0";
+  precioninostotalst: string = "0";
+  preciomenorestotalst: string = "0";
+  preciototalst: string = "0";
+  //validar
   calenovalid: boolean = false;
   horanovalid: boolean = false;
   idiomanovalid: boolean = false;
   persnovalid: boolean = false;
+  //pestañas
   pestaactiv: number = 1;
   vermas: boolean = false;
-  descripcion: string = "";
-  descripcioncorta: string = "";
-  precios: string = "";
-  detalles: string = "";
-  idomasdisponibles: string = "";
-  cancelaciones: string = "";
-  puntodeencuentro: string = "";
-  googlemapsvisita: string = "https://goo.gl/maps/stMedKZoKh7f1qGC9";
+  descripcion: string = '';
+  descripcioncorta: string = '';
+  precios: string = '';
+  detalles: string = '';
+  idomasdisponibles: string = '';
+  cancelaciones: string = '';
+  puntodeencuentro: string = '';
+  googlemapsvisita: string = 'https://goo.gl/maps/stMedKZoKh7f1qGC9';
+  //redes
   verredes: boolean = false;
-
+  redes: any[] = [];
+  messages: VisitaAssetsModel = new VisitaAssetsModel();
+  idiomasdisponibles: string = '';
 
   constructor(
     private wowService: NgwWowService,
     private router: Router,
     private visitaService: VisitaService,
+    private providerService: ProviderService,
     private listasService: ListasService,
+    private globalService: GlobalService,
     private renderer: Renderer2
-  ) { 
-    this.wowService.init(); 
+  ) {
+    this.wowService.init();
   }
 
   ngOnInit(): void {
+    this.listenProvider();
+    this.week = this.globalService.week;
+    this.months = this.globalService.months;
+    this.redes = this.globalService.redes;
+    this.listahoras = this.globalService.listahoras;
+ 
+    //español por defecto siempre
+    let espa = new LanguagesModel();
+    espa.id = 1;
+    espa.name = 'Español';
+    espa.current_iso = 'es';
+    espa.iso = 'es';
+    this.listaidiomasvisita.push(espa);
+
     this.vcale = true;
-    this.getVisita();
     this.isresponsive();
     let hoy = moment();
-    let estemes = hoy.format("MM");
-    let esteyear = hoy.format("YYYY");
-
+    let estemes = hoy.format('MM');
+    let esteyear = hoy.format('YYYY');
     this.getDaysFromDate(estemes, esteyear);
-
-    this.precioadultos = 50;
-    this.precioninos = 40;
-    this.preciomenores = 0;
-    this.maximopersonas = 40;
-
-    this.descripcion = "Aunque la frase no tiene sentido, tiene una larga historia. Durante varios siglos, los tipógrafos han utilizado esta frase para mostrar las características más distintivas de sus fuentes. Se utiliza porque las letras que contiene y el espaciado entre caracteres de esas combinaciones revelan de la mejor forma posible el espesor, el diseño y otras características importantes del tipo de letra. Un ejemplar de 1994 de la revista Before & After asocia Lorem ipsum  a una versión latina revuelta de un pasaje de de Finibus Bonorum et Malorum, un tratado sobre la teoría de la ética escrito por Cicerón en el año 45 A.C. El pasaje se ha extraído del texto que dice Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit  que se traduciría como No hay nadie que ame el dolor mismo, que lo busque y lo quiera tener, simplemente porque es el dolor." ;
-    this.descripcioncorta = this.descripcion.substring(0, 200);
-    this.detalles = "sentido, tiene una larga historia. Durante vari sentido, tiene una larg sentido, tiene una larga historia. Durante vari sentido, tiene una larga historia. Durante vari";
-    this.idomasdisponibles = "Tour disponibles en español, english, français";
-    this.cancelaciones = "Cancelacion gratuita. Si no vas a poder asistir al tour. por favor cancela la reserva, sino el guía te estará esperando";
-    this.puntodeencuentro = "Nos encontraremos delante del museo en la calle de Ruiz de Alarcón, 23, 28014 Madrid frente a la estatua de Velázquez  ";
- 
+    this.getIdiomas();
   }
 
-  @HostListener("window:scroll")
+  @HostListener('window:scroll')
   onWindowScroll() {
-    let posactual = window.pageYOffset ;
-    let posdetallevisita = (this.detallevisita.nativeElement.offsetTop) - 120;
+    let posactual = window.pageYOffset;
+    let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
     let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
-    
-    if(posactual <= posdetallevisita){
+
+    if (posactual <= posdetallevisita) {
       this.pegaj = 1;
-    }
-    else if (posactual > posdetallevisita) {
+    } else if (posactual > posdetallevisita) {
       this.pegaj = 2;
       let hdetallecale = this.detallecale.nativeElement.offsetHeight;
       let dif = posfinaldetalle - hdetallecale;
-      if(posactual >= dif  ){
+      if (posactual >= dif) {
         this.pegaj = 3;
       }
-    } 
-    
-    
+    }
   }
 
-  isresponsive(){
+  isresponsive() {
     let scree = window.innerWidth;
-    if(scree < 1198){
+    if (scree < 1198) {
       this.isrespon = true;
     }
   }
 
+  listenProvider(){
+    this.providerService.getThrowVisita.subscribe((resp)=>{
+      var provVisita = resp as VisitasResultadoModel;
+      if(provVisita.visit_uuid != null){
+        this.getVisitaResultado(provVisita);
+      }
+    });
 
-  getVisita(){
-
-    this.visita = this.visitaService.getVisita(1) ;
-    this.listaImagenesVisita = this.visitaService.getImagenesvisita(1); 
-    this.listaImagenesVisitaLat = this.listaImagenesVisita;
-    this.listaImagenesVisitaLat[0].sel = true;
-  }
-
-  getIndexSel() {
-
-    let imm = this.imagenlista.swiperSlides?.nativeElement.childNodes;
-    imm.forEach((el: any) => {
-      if(el.classList.contains('swiper-slide-active')){
-        this.listaImagenesVisitaLat.forEach((lt: any) => {
-          lt.sel = false;
-          let idd = el.id.replace("im-", "");
-          if(lt.id == idd){
-            lt.sel = true;
-          }
-        })
+    this.providerService.getThrowMessagesVisita.subscribe((resp)=>{
+      var provVisitaMessage = resp as VisitaAssetsModel;
+      if(provVisitaMessage != null){
+        this.getMesageResultado(provVisitaMessage);
       }
     });
   }
 
+  getIdiomas() {
+    this.listasService.getIdiomas().subscribe((resp) => {
+      this.listaidiomas = resp as LanguagesModel[];
+    });
+  }
 
-  verHora(){
+  getMesageResultado(provVisitaMessage: VisitaAssetsModel){
+    this.messages = provVisitaMessage;
+    console.log("assets++++ ",provVisitaMessage);
+  }
+
+
+  getVisitaResultado(visita: VisitasResultadoModel) {
+    this.visitaresultado = visita;
+    //imagenes slider
+    this.listaImagenesVisita = this.getImagenesVisita();
+    this.listaImagenesVisitaLat = this.listaImagenesVisita;
+    this.listaImagenesVisitaLat[0].sel = true;
+
+    //info
+    this.descripcion = visita.visit_lang_description;
+    this.descripcioncorta = this.descripcion.substring(0, 200);
+    this.maximopersonas = visita.visit_time_max; //*************************************************visita.visit_max_persons
+    this.sumapersonas = 0; ///aqui deberiamos saber disponibles en bbdd!!!!!!!!!!!!!!!!!!
+    let preciocalculado: number = Number( (((visita.visit_time_precio ?? 0) * 100)/100) * (((visita.visit_time_duration ?? 0) * 100)/100) ); 
+    let preciocalculadost = (this.globalService.getFormatNumber(preciocalculado)); 
+    
+    this.precioadultos =  preciocalculado;//*********************correccion cuando esten los precios por edades
+    this.precioninos = preciocalculado; //*************************correccion cuando esten los precios por edades
+    this.preciomenores =  0;
+
+    this.precioadultosst =  preciocalculadost;//correccion cuando esten los precios por edades
+    this.precioninosst = preciocalculadost; //correccion cuando esten los precios por edades
+    this.preciomenoresst =  "0";
+    
+    let iso= visita.visit_time_iso;
+    this.listaidiomas.forEach((idioma) => {
+      if (idioma.iso == iso && this.listaidiomasvisita.map(x=>x.iso).indexOf(iso) == -1) {
+        this.listaidiomasvisita.push(idioma);
+        this.idiomasdisponibles += idioma.name + ', ';
+      }
+    });
+    
+    this.listahoras.forEach((hora) => {
+      let initsp = visita.visit_time_init.split(':'); 
+      let res = initsp[0] +":"+initsp[1];
+      if (hora.value == res ) {
+        this.listahorasvisita.push(hora);
+      }
+    });
+    
+  }
+
+  getIndexSel() {
+    let imm = this.imagenlista.swiperSlides?.nativeElement.childNodes;
+    imm.forEach((el: any) => {
+      if (el.classList.contains('swiper-slide-active')) {
+        this.listaImagenesVisitaLat.forEach((lt: any) => {
+          lt.sel = false;
+          let idd = el.id.replace('im-', '');
+          if (lt.id == idd) {
+            lt.sel = true;
+          }
+        });
+      }
+    });
+  }
+
+  verHora() {
     this.vhora = !this.vhora;
     this.vcale = false;
     this.vpers = false;
     this.vidiom = false;
   }
-  verIdioma(){
+  verIdioma() {
     this.vhora = false;
     this.vcale = false;
     this.vpers = false;
     this.vidiom = !this.vidiom;
   }
-  verPersona(){
+  verPersona() {
     this.vhora = false;
     this.vcale = false;
     this.vpers = !this.vpers;
     this.vidiom = false;
   }
-  verCale(){
+  verCale() {
     this.vhora = false;
     this.vcale = !this.vcale;
     this.vpers = false;
     this.vidiom = false;
   }
 
-  caleinfosel(v: string){
+  caleinfosel(v: string) {
     this.caleinfo = v;
-    if(this.horaSel != null){
+    if (this.horaSel != null) {
       this.horanovalid = false;
     }
   }
-  horainfosel(v: string){
+  horainfosel(v: string) {
     this.horainfo = v;
-    if(this.horaSel != null){
+    if (this.horaSel != null) {
       this.horanovalid = false;
     }
   }
-  idiomainfosel(v: string){
+  idiomainfosel(v: string) {
     this.idiominfo = v;
-    if(this.idiomaSel != null){
+    if (this.idiomaSel != null) {
       this.idiomanovalid = false;
     }
-    
   }
-  
 
-  restaradulto(){
-    this.adultoSel-- ;
-    this.precioadultototal = this.adultoSel * this.precioadultos;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
+  restaradulto() {
+    this.adultoSel--;
+    this.sumapersonas--;
+    this.setPreciototal();
   }
-  sumaradulto(){
-    this.adultoSel++ ;
-    this.precioadultototal = this.adultoSel * this.precioadultos;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
+  sumaradulto() {
+    if(this.sumapersonas < this.maximopersonas){
+      this.adultoSel++;
+      this.sumapersonas++;
+      this.setPreciototal();
+      this.persnovalid = false;
+    }    
   }
-  restarninos(){
-    this.ninosSel-- ;
-    this.precioninostotal = this.ninosSel * this.precioninos;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
+  restarninos() {
+    this.ninosSel--;
+    this.sumapersonas--;
+    this.setPreciototal();
   }
-  sumarninos(){
-    this.ninosSel++ ;
-    this.precioninostotal = this.ninosSel * this.precioninos;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
-  }
-  restarmenores(){
-    this.menoresSel-- ;
-    this.preciomenorestotal = this.menoresSel * this.preciomenores;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-  }
-  sumarmenores(){
-    this.menoresSel++ ;
-    this.preciomenorestotal = this.menoresSel * this.preciomenores;
-    this.preciototal = this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
-  }
-  
-  cambiarprivada(priv:any){
-    this.privada = priv.checked;
-    if(this.privada){
-      this.adultoSel = this.maximopersonas;
-      this.ninosSel = 0;
-      this.menoresSel = 0;
-      this.precioadultototal = this.maximopersonas * this.precioadultos;
-      this.precioninostotal = 0;
-      this.preciomenorestotal = 0;
-      this.preciototal = this.precioadultototal;
+  sumarninos() {
+    if(this.sumapersonas < this.maximopersonas){
+      this.ninosSel++;
+      this.sumapersonas++;
+      this.setPreciototal();
       this.persnovalid = false;
     }
-    else{
+  }
+  restarmenores() {
+    this.menoresSel--;
+    this.sumapersonas--;
+    this.setPreciototal();
+  }
+  sumarmenores() {
+    if(this.sumapersonas < this.maximopersonas){
+      this.menoresSel++;
+      this.sumapersonas++;
+      this.setPreciototal();
+      this.persnovalid = false;
+    }
+  }
+  setPreciototal() {
+    this.precioadultototal = this.adultoSel * (this.precioadultos * 100) / 100;
+    this.precioadultototalst = this.globalService.getFormatNumber(this.precioadultototal) ;
+    this.precioninostotal = this.ninosSel * (this.precioninos * 100) / 100;
+    this.precioninostotalst = this.globalService.getFormatNumber(this.precioninostotal) ;
+    this.preciomenorestotal = this.menoresSel * (this.preciomenores * 100) / 100;
+    this.preciomenorestotalst = this.globalService.getFormatNumber(this.preciomenorestotal) ;
+    this.preciototal = ((this.precioadultototal* 100) + (this.precioninostotal * 100) + (this.preciomenorestotal * 100)) / 100;
+    this.preciototalst = this.globalService.getFormatNumber(this.preciototal) ;
+  }
+
+  cambiarprivada(priv: any) {
+    this.privada = priv.checked;
+    if (this.privada) {
+      this.adultoSel = this.maximopersonas;
+      this.sumapersonas = this.maximopersonas;
+      this.ninosSel = 0;
+      this.menoresSel = 0;
+      this.precioadultototal = (this.maximopersonas * (this.precioadultos * 100)) / 100;
+      this.precioninostotal = 0;
+      this.preciomenorestotal = 0;
+      this.setPreciototal();
+      this.persnovalid = false;
+    } else {
       this.adultoSel = 0;
       this.precioadultototal = 0;
       this.preciototal = 0;
+      this.setPreciototal();
+      this.sumapersonas = 0;
     }
   }
 
-  ScrollToElement(element: Element, numpesta: number){
+  ScrollToElement(element: Element, numpesta: number) {
     this.pestaactiv = numpesta;
-    element.scrollIntoView({behavior: "smooth", block: "start", inline: "start"}) ;
- 
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'start',
+    });
   }
 
-  abrirverredes(){
+  abrirverredes() {
     this.verredes = !this.verredes;
   }
 
-  compartir(visita: VisitasModel, red: string){
+  compartir(visita: VisitasResultadoModel, red: string) {
     //comnpartir
-    alert("compartir en " + red);
+    alert('compartir en ' + red);
   }
 
-  abrirvermas(){
+  abrirvermas() {
     this.vermas = !this.vermas;
   }
 
-
   getDaysFromDate(month: any, year: any) {
-    const startDate = moment.utc(`${year}/${month}/01`)
-    const endDate = startDate.clone().endOf('month')
+    const startDate = moment.utc(`${year}/${month}/01`);
+    const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
-    const diffDays = endDate.diff(startDate, 'days', true)
+    const diffDays = endDate.diff(startDate, 'days', true);
     const numberDays = Math.round(diffDays);
     const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
       a = parseInt(a) + 1;
       const dayObject = moment(`${year}-${month}-${a}`);
       return {
-        name: dayObject.format("dddd"),
+        name: dayObject.format('dddd'),
         value: a,
-        indexWeek: dayObject.isoWeekday()
+        indexWeek: dayObject.isoWeekday(),
+        month: dayObject.format('MM'),
+        year: dayObject.format('YYYY'),
       };
     });
 
     this.monthSelect = arrayDays;
-    this.mSelect = this.months[this.dateSelect.format("M") - 1];
-    this.ySelect = this.dateSelect.format("YYYY");
+    this.mSelect = this.months[this.dateSelect.format('M') - 1];
+    this.ySelect = this.dateSelect.format('YYYY');
+
+    arrayDays.forEach((day: any) => {
+      if (
+        day.month == this.daySel.month &&
+        day.value == this.daySel.value &&
+        day.year == this.daySel.year
+      ) {
+        day.selected = true;
+      }
+      else{
+        day.selected = false;
+      }
+    });
   }
 
   changeMonth(flag: any) {
     if (flag < 0) {
-      const prevDate = this.dateSelect.clone().subtract(1, "month");
-      this.getDaysFromDate(prevDate.format("MM"), prevDate.format("YYYY"));
+      const prevDate = this.dateSelect.clone().subtract(1, 'month');
+      this.getDaysFromDate(prevDate.format('MM'), prevDate.format('YYYY'));
     } else {
-      const nextDate = this.dateSelect.clone().add(1, "month");
-      this.getDaysFromDate(nextDate.format("MM"), nextDate.format("YYYY"));
+      const nextDate = this.dateSelect.clone().add(1, 'month');
+      this.getDaysFromDate(nextDate.format('MM'), nextDate.format('YYYY'));
     }
   }
 
   clickDay(day: any) {
     this.daySel = day;
-    const monthYear = this.dateSelect.format('YYYY-MM')
-    const parse = `${monthYear}-${day.value}`
-    const objectDate = moment(parse)
+    const monthYear = this.dateSelect.format('YYYY-MM');
+    const parse = `${monthYear}-${day.value}`;
+    const objectDate = moment(parse);
     this.dateValue = objectDate;
     this.vcale = false;
-    this.caleinfo = objectDate.format("DD/MM/YYYY");
+    this.caleinfo = objectDate.format('DD/MM/YYYY');
     this.calenovalid = false;
+    this.getDaysFromDate(this.dateSelect.format('MM'), this.dateSelect.format('YYYY'));
   }
 
+  getImagenesVisita() {
+    // this.visitaService.getImagenesvisita().subscribe((resp)=>{
+    //   this.visitaSel.imagenes = resp as ImagenesModel;
+    // })
 
-  reservarvisita(){
 
+    return this.visitaService.getImagenesvisita();
+  }
+
+  reservarvisita() {
     //validar
     let valido = true;
-    if(this.caleinfo == ""){
+    if (this.caleinfo == '') {
       valido = false;
       this.calenovalid = true;
     }
-    if(this.horainfo == ""){
+    if (this.horainfo == '') {
       valido = false;
       this.horanovalid = true;
     }
-    if(this.idiominfo == ""){
+    if (this.idiominfo == '') {
       valido = false;
       this.idiomanovalid = true;
     }
-    if(this.adultoSel == 0 && this.ninosSel == 0 && this.menoresSel == 0){
+    if (this.adultoSel == 0 && this.ninosSel == 0 && this.menoresSel == 0) {
       valido = false;
       this.persnovalid = true;
     }
 
-    if(valido){
-      alert("valido");
+    if (valido) {
+      alert('reservar');
     }
-
-
   }
-  
-
-
-
-
 }
-
-

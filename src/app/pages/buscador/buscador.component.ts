@@ -1,6 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute, NavigationEnd  } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { NgwWowService } from 'ngx-wow';
@@ -12,6 +12,7 @@ import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { BuscadorService } from '../../services/buscador.service';
+import { HomeService } from '../../services/home.service';
 
 
 import { Meta, Title } from '@angular/platform-browser';
@@ -20,6 +21,15 @@ import { TextosModel } from 'src/app/models/Textos.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
+import { VisitasModel } from 'src/app/models/Visitas.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { ResultadoModel } from 'src/app/models/Resultado.model';
+import { HomerespModel } from 'src/app/models/Homeresp.model';
+import { DuracionesModel } from 'src/app/models/Duraciones.model';
+import { FiltersModel } from 'src/app/models/Filters.model';
+import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
+import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
+import { MessagesSearchModel } from 'src/app/models/MessagesSearch.model';
 
 
 
@@ -30,22 +40,36 @@ import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.compone
 })
 
 
-export class BuscadorComponent implements OnInit{
+export class BuscadorComponent implements OnInit, AfterViewInit {
 
   @Output() menuPublic: EventEmitter<any> = new EventEmitter();
   @ViewChild(BannerbuscadorComponent) bb: BannerbuscadorComponent;
   @ViewChild(BusquedaComponent ) bu: BusquedaComponent;
   @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
   
-  imagenesbuscador :ImagenesModel[] = [];
-  textosbuscador :TextosModel = new TextosModel();
+  
+  bannerfichadeproducto :ImagenesModel = new ImagenesModel();
+  bannerbottom :ImagenesModel = new ImagenesModel();
+  resultadoBuscador :ResultadoModel = new ResultadoModel();
+  texts: string[] = [];
+  messageSearch: MessagesSearchModel = new MessagesSearchModel();
+  messageForm: MessagesFormModel = new MessagesFormModel();
+  messageImage: MessagesImageModel = new MessagesImageModel();
+  message: MessagesModel = new MessagesModel();
+  filters: FiltersModel = new FiltersModel();
+  filtersrutacategorias: string= "";
+  filtersrutatitle: string= "";
+  page: number = 1;
+  numactividades: number = 0;
 
   constructor(
+      private acro : ActivatedRoute,
       private router: Router,
       private imagenesService: ImagenesService,
       private textosService: TextosService,
       private alertasService: AlertasService,
       private buscadorService: BuscadorService,
+      private homeService: HomeService,
       private wowService: NgwWowService,
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
@@ -59,44 +83,114 @@ export class BuscadorComponent implements OnInit{
     // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
     // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
 
-
-
-
+    
   }
   
 
   ngOnInit() {
-
-    //this.menuPublic.emit(0);
-
+    this.getMessagesSearch();
+    this.getMessagesForm();
+    this.getMessagesImage();
+    this.getMessages();
+    this.getImagenesBuscador();
+   
+    this.menuPublic.emit(0);
+    
+    
   }
 
 
+  ngAfterViewInit() {
+    //parametro uuid 
+    this.acro.params.subscribe(
+      (params: Params) => {
+        ///categoria filtro ruta
+        let cat_uuid = params.category_uuid;
+        if(cat_uuid != null){
+          this.filtersrutacategorias = cat_uuid
+        }
+        ///recomendados filtro ruta
+        let recommended = params.recommended;
+        if(recommended){
+          //this.filters.recommended = true;
+        }
+        ///title filtro ruta
+        let title = params.title;
+        if(title != null){
+          this.filtersrutatitle = title;
+        }
 
-  getImagenesbuscador(){
-    this.buscadorService.getImagenesBuscador().subscribe( (resp) => {
-      this.imagenesbuscador =  resp as ImagenesModel[];
-      
-      // this.bannertop = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
-      // this.bannerbottom = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
-      
+        this.getVisitasBuscador();
+      }
+      );
+  }
 
-      // this.bb.getImagenBanner(this.bannertop);
-      // this.zc.getImagenBanner(this.bannerbottom);
-      //this.bu.getImagen(this.);
+
+  getImagenesBuscador(){
+    this.homeService.getImagenesHome().subscribe( (resp) => {
+      let imagenes =  resp as ImagenesModel[];
+      this.bannerfichadeproducto = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
+      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
+    } );
+  }
+
+
+  getVisitasBuscador(){
+    
+    ///filters
+    if(this.bu != null){
+      this.filters = this.bu.filters;
+    }
+    if(this.filtersrutatitle != ""){
+      this.filters.title = this.filtersrutatitle;
+
+    }
+    if(this.filtersrutacategorias != ""){
+      this.filters.categorias.push(this.filtersrutacategorias);
+    }
+
+    this.page = this.bu.page;
+    this.bu.loading = true;
+    this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
+
+      this.resultadoBuscador =  resp as ResultadoModel;
+      this.bu.getVisitasBuscador(this.resultadoBuscador);
+      this.numactividades = this.resultadoBuscador.total;
+      setTimeout(() => {
+        this.bu.loading = false;
+      }, 500);
+    } );
+    setTimeout(() => {
+      this.bu.loading = false;
+    }, 10000);
+  }
+
+  getMessagesSearch(){
+    this.homeService.getMessagesSeacrh().subscribe( (resp) => {
+      let respuesta: MessagesSearchModel =  resp as MessagesSearchModel; ;
+      this.messageSearch = respuesta;
+      
+    } );
+  }
+
+  getMessagesForm(){
+    this.homeService.getMessagesForm().subscribe( (resp) => {
+      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
+      this.messageForm = respuesta;
+    } );
+  }
+
+  getMessagesImage(){
+    this.homeService.getMessagesImage().subscribe( (resp) => {
+      this.messageImage =  resp  as MessagesImageModel;
 
     } );
   }
 
-  getTextoshome(){
-    
-    this.buscadorService.getTextosBucador().subscribe( (resp) => {
-      this.textosbuscador =  resp as TextosModel;
-
-      //this.bh.getTextos(this.textosbuscador);
-      //  this.zc.getTextos(this.textosbuscador);
-      //  this.st.getTextos(this.textosbuscador);
-      //this.sv.getTextos(this.textosbuscador);
+  getMessages(){
+    this.homeService.getMessagesHome().subscribe( (resp) => {
+      let respuesta: MessagesModel =  resp as MessagesModel; ;
+      this.message = respuesta;
       
     } );
   }

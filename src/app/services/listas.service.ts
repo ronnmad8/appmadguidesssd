@@ -6,6 +6,9 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LanguagesModel } from '../models/Languages.model';
+import { CategoriasModel } from '../models/Categorias.model';
+import { TagsModel } from '../models/Tags.model';
+import { SelectModel } from '../models/Select.model';
 
 
 @Injectable({
@@ -27,99 +30,39 @@ export class ListasService {
 
   getCategorias() {
     this.userToken = this.auth.leerToken();
-    let endpoint = '/categorias' ;
+    let endpoint = '/select/category/parent/child' ;
     this.url = this.apiurl + endpoint;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers}  )
+    return this.http.get( `${this.url}` )
     .pipe(map( resp => {
-        return  resp;
+        return  resp ;
     } ));
   }
 
-  getEnlaces() {
+
+
+  getTags() {
     this.userToken = this.auth.leerToken();
-    let endpoint = '/enlaces' ;
+    let endpoint = '/select/tags' ;
     this.url = this.apiurl + endpoint;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers}  )
-    .pipe(map( resp => {
-        return  resp;
-    } ));
-  }
-
-
-  getPersonas() {
-    this.userToken = this.auth.leerToken();
-    let endpoint =  '/personas';
-    this.url = this.apiurl + endpoint ;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers }  )
-    .pipe(map( resp => {
-        return resp;
-    } ));
-  }
-
-
-  getTipos() {
-    this.userToken = this.auth.leerToken();
-    let endpoint = '/tipos' ;
-    this.url = this.apiurl + endpoint;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers}  )
+    return this.http.get( `${this.url}`)
     .pipe(map( (resp) => {
-        return  resp;
+        let tags = resp as TagsModel[];
+        return tags;
     } ));
   }
 
-  getTipotextos() {
-    this.userToken = this.auth.leerToken();
-    let endpoint = '/tipotextos' ;
-    this.url = this.apiurl + endpoint;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers}  )
-    .pipe(map( (resp) => {
-        return  resp;
-    } ));
-  }
-
-  getAcabadoscategorias() {
-    this.userToken = this.auth.leerToken();
-    let endpoint = '/acabadoscategorias' ;
-    this.url = this.apiurl + endpoint;
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    return this.http.get( `${this.url}`, { headers}  )
-    .pipe(map( (resp) => {
-        return  resp;
-    } ));
-  }
 
   getIdiomas() {
-    // this.userToken = this.auth.leerToken();
-    // let endpoint = '/languages' ;
-    // this.url = this.apiurl + endpoint;
-    // const headers = new HttpHeaders({ 'Authorization': this.userToken });
-    // return this.http.get( `${this.url}`, { headers}  )
-    // .pipe(map( (resp) => {
-    //     return  resp;
-    // } ));
+    this.userToken = this.auth.leerToken();
+    let endpoint = '/select/language' ;
+    this.url = this.apiurl + endpoint;
+    
+    return this.http.get( `${this.url}`)
+    .pipe(map( (resp) => {
+        let idiomas = resp as LanguagesModel[];
+        return idiomas;
+    } ));
  
-    let lang1  = new LanguagesModel();
-    lang1.iso = "es";
-    lang1.name_iso = "es";
-    lang1.name_title = "español";
-    let lang2  = new LanguagesModel();
-    lang2.iso = "en";
-    lang2.name_iso = "en";
-    lang2.name_title = "english";
-    let lang3  = new LanguagesModel();
-    lang3.iso = "fr";
-    lang3.name_iso = "fr";
-    lang3.name_title = "français";
-
-    let lista = [lang1, lang2, lang3];
-    return lista;
-
-
   }
 
 

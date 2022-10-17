@@ -31,20 +31,20 @@
 
         <div class="p-2 text-left ">
             <div id="titulovisita">
-                <span class="colGRIS1">{{visita.title}} </span>
+                <span class="colGRIS1">{{visitaSel.title}} </span>
             </div>
         </div>
 
         <div class="p-2 d-flex ml-auto mr-0 posrel">
 
             <div>
-                <span class="preciovisitaeuro fs-14">{{visita.price}}€ </span>
+                <span class="preciovisitaeuro fs-14">{{visitaSel.price}}€ </span>
                 <span class="colGRIS1 mr-2 fs-12">por persona</span>
             </div>
             <div class="linvertical mx-2"></div>
             <div class="horasvisit">
                 <img class="imghorasvisita mb-1 mr-1" src='assets/images/i-reloj.svg' alt="">
-                <span class="fs-14 colROJO1">{{visita.duration}}h</span>
+                <span class="fs-14 colROJO1">{{visitaSel.duration}}h</span>
             </div>
             <div class="cupo ml-auto mr-1" (click)="abrirverredes()">
                 <img src="../../assets/images/i-compartir.svg" class="imicono4 mb-2" draggable="false">
@@ -52,7 +52,7 @@
 
                 <div class="modalredes animated fadeInDown" *ngIf="verredes">
                     <div *ngFor="let r of redes">
-                        <div class="cupo d-flex" (click)="compartir(visita, r.name)">
+                        <div class="cupo d-flex" (click)="compartir(visitaSel, r.name)">
                             <div class="colGRIS3"> {{r.name}} </div>
                             <div class="ml-auto mr-1">
                                 <img class="h16" [src]='r.logo' [alt]="r.name" />

@@ -1,0 +1,86 @@
+<div class="container p-0 ">
+
+    <div class="h60"></div>
+
+    <div #carrito id="compra">
+        <div class="p-0 m-0 posrel">
+            <div class="d-flex">
+                <div class="h-100 w-100 mr-2 posrel">
+
+                    <div class="panelFull ">
+                        <div class="fs-24 ff-JB">
+                            <i class="far fa-circle-check colVerde mr-2 posrel" style="top:0px"></i>
+                            Gracias por la compra
+                        </div>
+                        <div class="pl-2 fs-18 my-3">
+                            Hemos enviado un email a tuemail@gmail.com con el detalle de tu reserva. Si has introducido un email incorrecto pulsa aquí para modificarlo.
+                        </div>
+                    </div>
+
+                    <div class="w-100 d-flex">
+
+                        <div class="panelReservafirmada" *ngFor="let visitapedido of listaPedido">
+
+                            <div style="width: 280px; height: 100%">
+                                <div #imageneslatid id="im-{{visitapedido.id}}" class="cupo">
+                                    <picture>
+                                        <source media="(min-width: 0px)" srcset="{{visitapedido.url}}"
+                                            data-srcset="{{visitapedido.url}}">
+                                        <img class="imglat" src="{{visitapedido.url}}" data-src="{{visitapedido.url}}"
+                                            alt="{{visitapedido.id}}" style="height: 194px ;">
+                                    </picture>
+                                </div>
+                            </div>
+
+                            <div class="posrel h-100  p-4">
+
+                                <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
+                                    Visita guiada al Museo del Prado
+                                </div>
+                                <div class="lh-1-4">
+                                    Viernes 29 de Abril de 2022 a las 10:00
+                                </div>
+                                <div class="lh-1-4">
+                                    Idioma: <span class="ml-1">Español</span>
+                                </div>
+                                <div class="fs-14 lh-1-4 ff-JB">
+                                    2 Adultos, 1 menor
+                                </div>
+                                <div class="fs-14 lh-1-4">
+                                    *Visita privada
+                                </div>
+                                <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2" >
+                                    Código de Reserva:
+                                    <span class="colROJO2">65832hd2</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div style="width: 400px">
+                            <div class="posrel">
+                                <div class="posabsol " style="right: 0 ; top: 10px">
+                                    <div class="mt-4 mx-auto text-center">
+                                        <button class="btredondoRojoVerReservas " type="button"
+                                            (click)="verMisReservas()">
+                                            <span class="ff-JB">Ver mis reservas</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+            
+
+
+        </div>
+    </div>
+
+    <div #finaldetalle id="finaldetalle" class="h100"></div>
+
+</div>

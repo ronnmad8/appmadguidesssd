@@ -8,7 +8,6 @@
           <div class="brdbot">
             <input #cjbusqueda type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" [(ngModel)]="busqueda"
               class="cajaquebuscas" />
-
           </div>
 
           <div class="posabsolpropbuscador">
@@ -60,32 +59,26 @@
     </div> -->
 
 
-
     <div class="posabsolresultado d-xl-flex ">
-
       <div class="posrel d-flex pl-2 mt-xl-2 mt-3">
         <img src="../../assets/images/i-luparojo.svg" class="imicono1" draggable="false">
-        <div class="pc" id="textoresultado">Resultado de la búsqueda</div>
-        <div class="mvl" id="textoresultadomovil">Búsqueda</div>
-        <div id="buscaresultado">"museos "</div>
-
+        <div class="pc" id="textoresultado">{{messageSearchData.title}}</div>
+        <div class="mvl" id="textoresultadomovil">{{messageSearchData.title}}</div>
+        <div id="buscaresultado" class="mx-2">"{{busqueda}}"</div>
       </div>
       <div class="posrel px-2 mt-2">
-        <div id="contresultado">18 actividades encontradas</div>
+        <div id="contresultado">{{numactividades}} {{messageSearchData.activity}} {{messageSearchData.find}} </div>
       </div>
     </div>
 
-    <div class="imagenbannerbuscador ">
+    <div class="imagenbannerbuscador animated fadeIn ">
       <picture>
-        <source media="(min-width: 968px)" srcset="{{imagenbanner.url}}" data-srcset="{{imagenbanner.url}}">
-        <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}" data-srcset="{{imagenbanner.url_movil}}">
-        <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}" alt="banner madguides"
-          class="imgbannerbusc " onerror="this.src='assets/images/sinimagen.jpg' ">
+        <source media="(min-width: 968px)" srcset="{{bannerfichadeproductoData.url}}" data-srcset="{{bannerfichadeproductoData.url}}">
+        <source media="(min-width: 0px)" srcset="{{bannerfichadeproductoData.url_movil}}" data-srcset="{{bannerfichadeproductoData.url_movil}}">
+        
+        <img src="{{bannerfichadeproductoData.url}}" data-src="{{bannerfichadeproductoData.url}}" 
+          class="imgbannerbusc " onerror="this.error= null;this.src='../../assets/images/sinimagen.jpg' ">
       </picture>
     </div>
-
-
-
-
   </div>
 </div>

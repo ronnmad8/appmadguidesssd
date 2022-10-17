@@ -1,38 +1,39 @@
-<footer class="footer">
+<footer class="footer"  >
 
-    <div class="w-100 bgBLANCO2 py-2"  >
-            <div class="container pc">
+    <div class="w-100 bgBLANCO2 py-2"   >
+            <div class="container pc"  [ngClass]="{ 'footh300': !nomostrarenlacesfooter,'footh137' :  nomostrarenlacesfooter }" >
 
-                <div class="intfooter" class="row">
-                    <div class="col-xl-3 ">
-                        <div class="mr-xl-auto ml-xl-0 mx-auto  cupo"                                 routerLink="/home">
+                <div class="intfooter" class="row"  >
+
+                    <div class="col-xl-3 " *ngIf="!nomostrarenlacesfooter" >
+                        <div class="mr-xl-auto ml-xl-0 mx-auto  cupo" routerLink="/home">
                             <img id="logofooter" src="assets/images/logo-madguides-vertical.svg " 
                                 draggable="false">
                         </div>
                     </div>
-                    <div class="col-xl-3 ">
+                    <div class="col-xl-3 "  *ngIf="!nomostrarenlacesfooter" >
                         
                         <div class="mx-auto colGRIS1"   >
                             <div class="mb-3">
                                 <h4 class="fs-20 ff-JB ">
-                                    MADGuides
+                                    {{message.home.menu1.title}}
                                 </h4>
                             </div>
                             <div class="enlacefoot" routerLink="/quienessomos">
-                                <span>Quienes somos</span>
+                                <span>{{message.home.menu1.who}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/blog">
-                                <span>Blog</span>
+                                <span>{{message.home.menu1.blog}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/ayuda">
-                                <span>Ayuda</span>
+                                <span>{{message.home.menu1.help}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/medidascovid">
-                                <span>Medidas Covid-19</span>
+                                <span>{{message.home.menu1.covid}}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-4" *ngIf="!nomostrarenlacesfooter">
                         <div class="mx-auto colGRIS1">
                             <div class="mb-3">
                                 <h4 class="fs-20 ff-JB ">
@@ -40,36 +41,60 @@
                                 </h4>
                             </div>
                             <div class="enlacefoot" routerLink="/politicaprivacidad">
-                                <span>Política de privacidad</span>
+                                <span>{{message.home.menu2.policy}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/avisolegal">
-                                <span>Aviso legal</span>
+                                <span>{{message.home.menu2.notice}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/politicacookies">
-                                <span>Política de cookies</span>
+                                <span>{{message.home.menu2.cookie}}</span>
                             </div>
                             <div class="enlacefoot" routerLink="/politicacompra">
+                                <span>{{message.home.menu2.purchase}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-3 " *ngIf="nomostrarenlacesfooter" >
+                        <div class="mr-xl-auto ml-xl-0 mx-auto  cupo" routerLink="/home">
+                            <img id="logofooter3" src="assets/images/logo-madguides-vertical.svg " 
+                                draggable="false">
+                        </div>
+                    </div>
+                    <div class="col-xl-3 "  *ngIf="nomostrarenlacesfooter" >
+                        <div class="posrel colGRIS1"   >
+                            <div class="posabsol" style="left: 0; top: 50px" routerLink="/quienessomos">
                                 <span>Política de compra y devolución</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 ">
-                        <div class="posrel d-flex " >
+                    <div class="col-xl-6 "  *ngIf="nomostrarenlacesfooter" >
+                        <div class="posrel colGRIS1" >
+                            <div class="posabsol d-flex" style="right: 0; top: 50px"  >
+                                <div class="posrel" style="left: -30px">PAGO SEGURO</div> 
+                                <div>
+                                    <img src="../../assets/images/i-mastercard.svg" class="imicono3" draggable="false">
+                                </div>
+                                <div>
+                                    <img src="../../assets/images/i-visa.svg" class="imicono3" draggable="false">
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="row mvl px-3">
                 <div class="col-12 my-2">
-                    <div class="mx-auto text-center cupo"                                 routerLink="/home">
+                    <div class="mx-auto text-center cupo" routerLink="/home">
                         <img id="logofooter2" src="assets/images/logo-madguides-vertical.svg " 
                             draggable="false">
                     </div>
                 </div>
                 
-                <div class="col-12 ">
+                <div class="col-12 "  *ngIf="!nomostrarenlacesfooter" >
 
-                    <div class="mx-auto colGRIS1"   >
+                    <div class="mx-auto colGRIS1" >
                         <div id="widg1" (click)="showwidg1()"  class="accord cupo d-flex "  >
                             <div class="text-left">
                                 <span>
@@ -96,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12" *ngIf="!nomostrarenlacesfooter" >
                     <div class="mx-auto colGRIS1">
                         <div id="widg2" (click)="showwidg2()" class="accord cupo d-flex "  >
                             <div class="text-left">
@@ -127,6 +152,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div id="barrafooter"  >
            

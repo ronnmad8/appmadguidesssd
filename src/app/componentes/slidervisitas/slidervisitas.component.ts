@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute  } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { NgwWowService } from 'ngx-wow';
@@ -9,6 +8,7 @@ import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
+import { MessagesModel } from 'src/app/models/Messages.model';
 
 
 @Component({
@@ -17,11 +17,12 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 })
 export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
-  @Input() dataHome: any;
+  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() recommendedData: RecomendadasModel[] = [];
 
   public show: boolean = true;
-  public cargados: boolean = false;
-  public listavisitashome: RecomendadasModel[] = [];
+  
+  
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -77,7 +78,6 @@ export class SlidervisitasComponent implements OnInit, AfterViewInit {
         400: {
           slidesPerView: 1.4
         },
-
     }
   };
 
@@ -88,26 +88,29 @@ export class SlidervisitasComponent implements OnInit, AfterViewInit {
   ) 
   {  
       this.wowService.init(); 
+      
   }
 
 
   ngOnInit(): void {    
-    this.getVisitashome();
+    
 
   }
+
   ngAfterViewInit() {
-    // this.message = this.child.message
+    
   }
 
 
-  getVisitashome() {
-      this.homeService.getRecomendadosHome().subscribe( (resp ) =>{
-        this.listavisitashome = resp as RecomendadasModel[];
-        this.cargados = true;
-      } ) ; 
+  verrecomendadas(){
+    this.router.navigate(['/buscador/recommended', true]);
   }
 
-  
-  
+  verdetalle(visita: RecomendadasModel){
+    
+    //this.router.navigate(['/visita', visita.visit_title, visita.visit_uuid  ]);
+    this.router.navigate(['/visitatitulo/', visita.visit_title  ]);
+  }
+
 
 }

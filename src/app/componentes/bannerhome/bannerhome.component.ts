@@ -8,6 +8,11 @@ import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { ResultadoModel } from 'src/app/models/Resultado.model';
+
 
 
 
@@ -18,17 +23,16 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 export class BannerhomeComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
+  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() bannertopData: ImagenesModel = new ImagenesModel();
   
 
-
-  show: boolean = true;
-  textobanner :TextosModel = new TextosModel() ;
-  imagenbanner: ImagenesModel = new ImagenesModel();
-  cargados: boolean = false;
-  visitasprop: VisitasModel[] = [];
+  visitasprop: VisitasResultadoModel[] = [];
   busqueda: string = "";
 
   constructor(
+    private acro : ActivatedRoute,
+    private router: Router,
     private imagenesService: ImagenesService,
     private textosService: TextosService,
     private globalService: GlobalService,
@@ -40,30 +44,32 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-     this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.url = "";
-     this.imagenbanner.url_movil = "";
+     
      
   }
 
   ngAfterViewInit(){
-    
   }
 
-  getImagenBanner(bannertop: ImagenesModel){
-    this.imagenbanner = bannertop ;
-  }
-
-
+  
   vertodos(){
     ///ir a buscador
   }
 
   buscarprop(){
     this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
-      this.visitasprop = resp as VisitasModel[]; 
-
+      let resultado = resp as ResultadoModel;
+      this.visitasprop = resultado.data as VisitasResultadoModel[];
+      
     }) ;
+  }
+  
+  verbuscador(){
+    this.router.navigate(['/buscador/title', this.busqueda]);
+  }
+
+  verdetalle(visita: VisitasResultadoModel){
+    this.router.navigate(['/visita', visita.visit_lang_title , visita.visit_uuid]);
   }
 
 

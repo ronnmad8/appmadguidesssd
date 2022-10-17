@@ -20,8 +20,11 @@ import { BannerhomeComponent } from 'src/app/componentes/bannerhome/bannerhome.c
 import { SlidervisitasComponent } from 'src/app/componentes/slidervisitas/slidervisitas.component';
 import { SlidertestimoniosComponent } from 'src/app/componentes/slidertestimonios/slidertestimonios.component';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
-
-
+import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
+import { ComentariosModel } from 'src/app/models/Cometarios.model';
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
+import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 
 
 @Component({
@@ -41,31 +44,27 @@ export class HomeComponent implements OnInit{
   
   imagenbanner: ImagenesModel;
   cliente: ClientesModel = new ClientesModel();
-  imageneshome :ImagenesModel[] = [];
-  textoshome :TextosModel = new TextosModel();
-  idenlace: number ;
-  enlacedestacado: string = "";
-  texto1: string = "";
-  texto2: string = "";
-
-  textosall: TextosModel[] = [];
-  tiposeccion: number = 2;
-  tipotextoseccion: number = 1;
+  
   mostrarmodalbuscador: boolean = true;
-  
-  
+  imageneshome :ImagenesModel[] = [];
+  recommended: RecomendadasModel[] = [];
+  comments: ComentariosModel[] = [];
+  message: MessagesModel ;
+  messagesForm: MessagesFormModel = new MessagesFormModel();
+  messageImage: MessagesImageModel = new MessagesImageModel();
+
   //imagenes
-  bannerbottom: ImagenesModel = new ImagenesModel();
-  bannertop: ImagenesModel = new ImagenesModel();
-  logotexto: ImagenesModel = new ImagenesModel();
-  logo: ImagenesModel = new ImagenesModel();
+  bannerproducto: ImagenesModel = new ImagenesModel(); //banner-ficha-de-producto
+  bannerbottom: ImagenesModel = new ImagenesModel(); //bannerbottom
+  bannertop: ImagenesModel = new ImagenesModel(); //bannertop
+  logovertical: ImagenesModel = new ImagenesModel(); //logo-madguides-vertical
+  logotexto: ImagenesModel = new ImagenesModel(); //logo-texto
+  logo: ImagenesModel = new ImagenesModel(); //logo
 
 
 
   constructor(
       private router: Router,
-      private imagenesService: ImagenesService,
-      private textosService: TextosService,
       private alertasService: AlertasService,
       private wowService: NgwWowService,
       private auth: AuthService,
@@ -82,16 +81,19 @@ export class HomeComponent implements OnInit{
     this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
 
     this.wowService.init();
-    //ids para home
-    this.idenlace = 1;
+
   }
   
 
   ngOnInit() {
     this.menuPublic.emit(0);
-    this.getImageneshome()
+    this.getRecommended();
     this.getImageneshome();
-    this.getTextoshome();
+    this.getMessages();
+    this.getMessagesForm();
+    this.getMessagesImage();
+    this.getComments();
+    
   }
 
   scrollToElement(element: Element): void {
@@ -102,41 +104,53 @@ export class HomeComponent implements OnInit{
     this.homeService.getImagenesHome().subscribe( (resp) => {
       this.imageneshome =  resp as ImagenesModel[];
       
-      this.bannertop = this.imageneshome.find(x => x.image_name == 'bannertop') ?? new ImagenesModel();
-      this.bannerbottom = this.imageneshome.find(x => x.image_name == 'bannerbottom') ?? new ImagenesModel();
-      this.logotexto = this.imageneshome.find(x => x.image_name == 'logo-texto') ?? new ImagenesModel();
-      this.logo = this.imageneshome.find(x => x.image_name == 'logo') ?? new ImagenesModel();
-
-      this.bh.getImagenBanner(this.bannertop);
-      this.zc.getImagenBanner(this.bannerbottom);
-      this.st.getImagenLogo(this.logo);
-      //this.sv.getImagenes(this.logo);
+      this.bannertop = this.imageneshome.find(x => x.name == 'bannertop') ?? new ImagenesModel();
+      this.bannerbottom = this.imageneshome.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
+      this.logo = this.imageneshome.find(x => x.name == 'logo') ?? new ImagenesModel();
+      //this.logotexto = this.imageneshome.find(x => x.name == 'logo-texto') ?? new ImagenesModel();
 
     } );
   }
 
-  getTextoshome(){
-    this.homeService.getTextosHome().subscribe( (resp) => {
-      this.textoshome =  resp as TextosModel;
-
-      //this.bh.getTextos(this.textoshome);
-       this.zc.getTextos(this.textoshome);
-       this.st.getTextos(this.textoshome);
-      //this.sv.getTextos(this.textoshome);
-      
+  getMessages(){
+    this.homeService.getMessagesHome().subscribe( (resp) => {
+      let respuesta: any =  resp ;
+      this.message = respuesta[0] ?? new MessagesModel();
     } );
   }
 
+  getMessagesForm(){
+    this.homeService.getMessagesForm().subscribe( (resp) => {
+      this.messagesForm =  resp  as MessagesFormModel;
 
+    } );
+  }
 
+  getMessagesImage(){
+    this.homeService.getMessagesImage().subscribe( (resp) => {
+      this.messageImage =  resp  as MessagesImageModel;
+
+    } );
+  }
+
+  getRecommended(){
+    this.homeService.getRecomendadasHome().subscribe( (resp) => {
+      this.recommended = resp as RecomendadasModel[];
+      console.log(this.recommended);
+    });
+  }
+
+  getComments(){
+    this.homeService.getCommentsHome().subscribe( (resp) => {
+      this.comments =  resp as ComentariosModel[];
+
+    } );
+  }
 
   
 
 
-  
 
-  
-  
 
 
   

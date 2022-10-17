@@ -924,7 +924,7 @@
   margin-bottom: 30px !important;
   margin-right: 10px !important;
   margin-left: 10px !important;
-  
+  position: relative !important;
 }
 
 .panelinfovisitabuscador{
@@ -1129,7 +1129,8 @@
 }
 
 .imgsel{
-  border: 1px solid var(--c_GRIS1);
+  border: 1px solid var(--c_ROJO2);
+  filter: brightness(1.2);
 }
 
 .contenimvl{
@@ -1399,6 +1400,8 @@
         height: 64px;
         width: 66px;
       }
+
+      
 
       .enlacefoot{
         font-size: 16px !important;

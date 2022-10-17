@@ -1,0 +1,806 @@
+<div class="w-100 d-flex p-0 m-0 bgROJO2">
+    <div class="container px-xl-1 colBLANCO fs-20" style="height: 70px ;">
+        <div class="row p-3 ">
+            <div id="paso1" class=" col-xl-4 text-center h40">
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 1">
+                    <div class="circulopasos ">
+                        1
+                    </div>
+                    <span class="descripcionpaso"> Revisa tu pedido </span>
+                </div>
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 1">
+                    <div class="circulopasosapagado ">
+                        1
+                    </div>
+                    <span class="descripcionpasoapagado"> Revisa tu pedido </span>
+                </div>
+            </div>
+            <div id="paso2" class="col-xl-4 d-flex text-center h40">
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 2">
+                    <div class="circulopasos ">
+                        2
+                    </div>
+                    <span class="descripcionpaso"> Datos personales </span>
+                </div>
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
+                    <div class="circulopasosapagado ">
+                        2
+                    </div>
+                    <span class="descripcionpasoapagado"> Datos personales </span>
+                </div>
+            </div>
+            <div id="paso3" class=" col-xl-4 text-center h40">
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 3">
+                    <div class="circulopasos ">
+                        3
+                    </div>
+                    <span class="descripcionpaso"> Método de pago </span>
+                </div>
+                <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
+                    <div class="circulopasosapagado ">
+                        3
+                    </div>
+                    <span class="descripcionpasoapagado"> Método de pago </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="containerpaso1" class="container p-0 " *ngIf="pasoactivo == 1">
+
+    <div class="h60"></div>
+
+    <div #carrito id="carrito" class=" d-flex">
+        <div class="p-0 m-0">
+
+            <div class="conteni d-flex">
+                <div>
+                    <div class="h-100 w-100 mr-2">
+
+                        <div class="panelVisitaCarrito" *ngFor="let visitapedido of listaPedido">
+
+                            <div style="width: 280px; height: 100%">
+                                <div #imageneslatid id="im-{{visitapedido.id}}" class="chimaglat cupo">
+                                    <picture>
+                                        <source media="(min-width: 0px)" srcset="{{visitapedido.url}}"
+                                            data-srcset="{{visitapedido.url}}">
+                                        <img class="imglat" src="{{visitapedido.url}}" data-src="{{visitapedido.url}}"
+                                            alt="{{visitapedido.id}}" style="height: 194px ;">
+                                    </picture>
+                                </div>
+                            </div>
+
+                            <div class="posrel h-100 w-100 p-4">
+
+                                <div class="posabsol d-flex" style="right: 15px; top: 20px">
+
+                                    <div class="cupo " (click)="editarvisitapedido(visitapedido, calemodal)">
+                                        <img src="../../assets/images/i-editar.svg" class="imicono24 posrel"
+                                            style="top: -5px" draggable="false">
+                                    </div>
+                                    <div class="cupo" (click)="eliminarvisitapedido(visitapedido)">
+                                        <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
+                                    </div>
+                                </div>
+
+                                <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
+                                    Visita guiada al Museo del Prado
+                                </div>
+                                <div class="lh-1-2">
+                                    Viernes 29 de Abril de 2022 a las 10:00
+                                </div>
+                                <div class="lh-1-2">
+                                    Idioma: <span class="ml-1">Español</span>
+                                </div>
+                                <div class="fs-14 lh-1-2">
+                                    2 Adultos, 1 menor
+                                </div>
+                                <div class="posabsol fs-24 ff-JB colGRIS1" style="right: 15px; bottom: 15px; top: auto">
+                                    {{visita.price}} €
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="posrel ml-2">
+                    <div class="posabsol ">
+                        <div #preciototalpedido id="preciototalpedido"
+                            [ngClass]="{ 'posfixed80': pegaj == 2, 'posrelinicio': pegaj == 1, 'posrelfinal': pegaj == 3  }">
+
+                            <div class="panelPreciototal">
+                                <div class="precioAmarillo posrel">
+                                    <div>Precio total</div>
+                                    <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{sumatotal}} €</div>
+
+                                </div>
+                                <div class="mt-4 mx-auto text-center">
+                                    <button class="btredondoRojoPreciototal " type="button" (click)="continuar()">
+                                        <span class="ff-JB">Continuar</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div #finaldetalle id="finaldetalle" class="h100"></div>
+
+</div>
+
+
+<div id="containerpaso2" class="container p-0 " *ngIf="pasoactivo == 2">
+
+    <div class="h60"></div>
+
+    <div class="p-0 m-0">
+        <div class="conteni d-flex">
+
+            <div id="resumen posrel">
+
+                <div class="panelResumen">
+                    <div class=" posrel d-flex h50">
+                        <div class="fs-20 ff-JB">Resumen</div>
+                        <div class="posabsolRight">
+                            <div class="btline127" (click)="modificarCarrito()">
+                                <div>Modificar</div>
+                                <div class="linefull"></div>
+                                <div>carrito</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3" style="min-height:260px">
+
+                        <div class="my-3" *ngFor="let visitapedido of listaPedido">
+
+                            <div class="fs-16 lh-1-4 mb-1 d-flex">
+                                <div style="width: 268px">
+                                    Titulo de la visita
+                                </div>
+                                <div class="text-right" style="width: 68px">
+                                    220 €
+                                </div>
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                Viernes 29 de Abril de 2022 a las 10:00
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                Idioma: <span class="ml-1">Español</span>
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                2 Adultos, 1 menor
+                            </div>
+                            <div class="fs-14 lh-1-4 colVERDE">
+                                Cancelaciones hasta 24 horas antes de la visita
+                            </div>
+                        </div>
+                    </div>
+                    <div class="precioAmarillo posrel mt-4">
+                        <div>Precio total</div>
+                        <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{sumatotal}} €</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="registro" class="posrel ml-2 zonaregistro">
+                <div class="h-100 w-100 mr-2">
+                    <div class="hazlogin" (click)="abrirRegistrar(loginmodal)">
+                        <div>Regístrate o <span class="colROJO2">Inicia sesión más rapido con tus redes sociales</span>
+                        </div>
+                        <div class="posabsol" style="right: 18px; top: 14px">
+                            <span>Login con </span>
+                            <span class="mx-1"><img src="../../assets/images/i-facebookG.svg" class="imicono8l"
+                                    draggable="false"></span>
+                            <span class="mx-1"><img src="../../assets/images/i-google+G.svg" class="imicono8l"
+                                    draggable="false"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="panelDatosReserva">
+                        <div class="row px-2">
+                            <div class="col-12 fs-20 ff-JB px-2">Registro: Datos de la reserva</div>
+
+                            <div class="col-6 px-2 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre " id="nombrereserva"
+                                        name="nombrereserva" />
+                                </div>
+                            </div>
+                            <div class="col-6 px-2 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
+                                        id="apellidosreserva" name="apellidosreserva" />
+                                </div>
+                            </div>
+                            <div class="col-6 px-2 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Correo electrónico "
+                                        id="correoreserva" name="correoreserva" />
+                                </div>
+                            </div>
+                            <div class="col-3 pl-2 pr-1 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo "
+                                        id="prefijoreserva" name="prefijoreserva" />
+                                </div>
+                            </div>
+                            <div class="col-3 pl-1 pr-2 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Teléfono movil "
+                                        id="movilreserva" name="movilreserva" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aceptapoliticas">
+                        <div class="w-100 d-flex">
+                            <div >
+                                <input type="checkbox" name="aceptarpoliticas"  >
+                            </div>
+                            <div class="fs-16 mx-2">
+                                Acepto <a routerlink="">la política de privacidad </a>y <a routerlink="">las
+                                    condiciones generales</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 ml-auto mr-0 text-right">
+                        <button class="btredondoRojoContinuar " type="button" (click)="continuar()">
+                            <span class="ff-JB">Continuar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div #finaldetalle id="finaldetalle" class="h100"></div>
+
+</div>
+
+<div id="containerpaso3" class="container p-0 " *ngIf="pasoactivo == 3">
+
+    <div class="h60"></div>
+
+    <div class="p-0 m-0">
+        <div class="conteni d-flex">
+
+            <div id="resumen posrel">
+
+                <div class="panelResumen">
+                    <div class=" posrel d-flex h50">
+                        <div class="fs-20 ff-JB">Resumen</div>
+                        <div class="posabsolRight">
+                            <div class="btline127" (click)="modificarCarrito()">
+                                <div>Modificar</div>
+                                <div class="linefull"></div>
+                                <div>carrito</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3" style="min-height:260px">
+
+                        <div class="my-3" *ngFor="let visitapedido of listaPedido">
+
+                            <div class="fs-16 lh-1-4 mb-1 d-flex">
+                                <div style="width: 268px">
+                                    Titulo de la visita
+                                </div>
+                                <div class="text-right" style="width: 68px">
+                                    220 €
+                                </div>
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                Viernes 29 de Abril de 2022 a las 10:00
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                Idioma: <span class="ml-1">Español</span>
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                2 Adultos, 1 menor
+                            </div>
+                            <div class="fs-14 lh-1-4 colVERDE">
+                                Cancelaciones hasta 24 horas antes de la visita
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="precioAmarillo posrel mt-4">
+                        <div>Precio total</div>
+                        <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{sumatotal}} €</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="metodopago" class="posrel ml-2 zonaregistro">
+                <div class="h-100 w-100 mr-2">
+
+                    <div class="panelMetodopago">
+                        <div class="row px-2">
+                            <div class="col-12 fs-20 ff-JB px-2 my-4">Metodo de pago</div>
+                            <div class="col-12 px-2 d-flex">
+                                <div class="mx-2">
+                                    <i class="fa fa-check colROJO2 fs-24" ></i>
+                                </div>
+                                <div class="mx-2 fs-20">Tarjeta</div>
+                                <div class="mx-2">
+                                    <img src="../../assets/images/i-mastercard.svg" class="imicono3" draggable="false">
+                                </div>
+                                <div class="mx-2">
+                                    <img src="../../assets/images/i-visa.svg" class="imicono3" draggable="false">
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 scolGRIS1" placeholder=" Número tarjeta " id="numerotarjeta"
+                                        name="numerotarjeta" />
+                                        <div class="crediticono"  >
+                                            <img src="../../assets/images/i-creditcard.svg" class="imicono3" draggable="false">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-6 px-2 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Fecha de expiración "
+                                        id="expiraciontarjeta" name="expiraciontarjeta" />
+                                </div>
+                            </div>
+                            <div class="col-6 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" CVC/CVV "
+                                        id="cvctarjeta" name="cvctarjeta" />
+                                        <div class="crediticono" >
+                                            <img src="../../assets/images/i-creditcardCVC.svg" class="imicono3" draggable="false">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-8 pl-2 pr-1 ">
+                                <div class="cj">
+                                    <input type="text" class="w-100 colGRIS1" placeholder=" Titular tarjeta "
+                                        id="titulartarjeta" name="titulartarjeta" />
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="btredondoRojoPagar " type="button" (click)="reservarvisita()" *ngIf="!btpagarapagado"  >
+                                    <span class="ff-JB">Pagar</span>
+                                </button>
+                                <button class="btredondoPagarapagado " type="button" *ngIf="btpagarapagado"  >
+                                    <span class="ff-JB">Pagar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div #finaldetalle id="finaldetalle" class="h100"></div>
+
+</div>
+
+
+<ng-template #calemodal let-modal>
+
+    <div class="mx-auto w-100 p-0">
+
+        <div class="modal-header posrel">
+            <div class="w-100 mx-auto text-center">
+                <h4 class="modal-title" id="modal-basic-title ml-4">
+                    <span class="ff-JB">{{visitaSel.title}}</span>
+                </h4>
+            </div>
+
+        </div>
+        <div class="modal-body mx-auto text-center ">
+            <div #detallecale id="detallecale" class="m-0 p-4 divcalendarmodal ">
+
+                <div #cale id="cale" class="cajaselecvisita" *ngIf="caleinfo != ''">
+                    <div class="w-100 d-flex cupo" (click)="verCale()">
+                        <div class="fs-20 ml-0 mr-auto">
+                            <span class="ml-1 colGRIS1">
+                                {{caleinfo}}
+                            </span>
+                        </div>
+                        <div class="text-right mr-0 ml-auto w-100">
+                            <i class="fa fa-angle-down" *ngIf="!vcale"></i>
+                            <i class="fa fa-angle-up" *ngIf="vcale"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper-calendar p-0 animated fadeIn" *ngIf="vcale || caleinfo == ''">
+                    <div class="header-calendar">
+                        <div>
+                            <div (click)="changeMonth(-1)" class="text-center arrowcalendar">
+                                <i class="fa fa-angle-left "> </i>
+                            </div>
+                        </div>
+                        <div class="month-calendar">{{mSelect}}</div>
+                        <div class="age-calendar">{{ySelect}}</div>
+                        <div>
+                            <div (click)="changeMonth(1)" class="text-center arrowcalendar">
+                                <i class="fa fa-angle-right "> </i>
+                            </div>
+                        </div>
+                    </div>
+                    <ol class="olCalendar">
+                        <li *ngFor="let day of week" class="day-name ilCalendar ">{{day | slice:0:1}}</li>
+
+                        <li class="liCalendar" [ngClass]="{'liCalendarSelected': day == daySel   }"
+                            (click)="clickDay(day)" [style.gridColumnStart]="first ? day?.indexWeek : 'auto'"
+                            *ngFor="let day of monthSelect; let first = first">
+                            <span>{{day?.value}}</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="p-0 my-3">
+                    <div #hora class="cajaselecvisita">
+                        <div class="w-100 d-flex cupo" (click)="verHora()">
+                            <div class="fs-20 ml-0 mr-auto">
+                                <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
+                                    Hora
+                                </span>
+                                <span class="ml-1 colGRIS1">
+                                    {{horainfo}}
+                                </span>
+                            </div>
+                            <div class="text-right mr-0 ml-auto w-100">
+                                <i class="fa fa-angle-down" *ngIf="!vhora"></i>
+                                <i class="fa fa-angle-up" *ngIf="vhora"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-0 m-0">
+                        <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vhora">
+                            <div *ngFor="let li of listahoras" class="col-3 p-0 m-0">
+                                <input name="rbhora" id="rbhora-{{li.key}}" type="radio" value="{{li.key}}"
+                                    (click)="horainfosel(li.value)" [(ngModel)]="horaSel">
+                                <label class="ml-1" for="rbhora-{{li.key}}">{{li.value}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-0 my-3">
+                    <div #idioma class="cajaselecvisita">
+                        <div class="w-100 d-flex cupo" (click)="verIdioma()">
+                            <div class="fs-20 ml-0 mr-auto">
+                                <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
+                                    Idioma
+                                </span>
+                                <span class="ml-1 colGRIS1">
+                                    {{idiominfo}}
+                                </span>
+                            </div>
+                            <div class="text-right mr-0 ml-auto w-100">
+                                <i class="fa fa-angle-down" *ngIf="!vidiom"></i>
+                                <i class="fa fa-angle-up" *ngIf="vidiom"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-0 m-0">
+                        <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vidiom">
+                            <div *ngFor="let li of listaidiomas" class="col-6 p-0 m-0">
+                                <input name="rbidiom" id="rbidiom-{{li.key}}" type="radio" value="{{li.key}}"
+                                    (click)="idiomainfosel(li.value)" [(ngModel)]="idiomaSel">
+                                <label class="ml-2" for="rbidiom-{{li.key}}">{{li.value}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-0 my-3">
+                    <div #persona class="cajaselecvisita">
+                        <div class="w-100 d-flex cupo" (click)="verPersona()">
+                            <div class="fs-20 text-left d-flex">
+                                <span class="colGRIS1 ff-JB" *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
+                                    Personas
+                                </span>
+                                <div class="posrel fs-18" style="top: 0px"
+                                    *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
+                                    <div class="w-100 d-flex">
+
+                                        <div class=" colGRIS1" style="min-width: 100px">
+                                            Adultos {{adultoSel}}
+                                        </div>
+                                        <div class=" colGRIS1 " style="min-width: 90px">
+                                            Niños {{ninosSel}}
+                                        </div>
+                                        <div class=" colGRIS1 " style="min-width: 100px">
+                                            Menores {{menoresSel}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right mr-0 ml-auto w-100">
+                                <i class="fa fa-angle-down" *ngIf="!vpers"></i>
+                                <i class="fa fa-angle-up" *ngIf="vpers"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-0 m-0">
+                        <div class="px-3 pt-2 m-0 animated fadeIn" [hidden]="!vpers">
+                            <div #adulto class="row my-2">
+                                <div class="col-4 text-left posrel">
+                                    <div class="fs-8 posabsol" style="top: -6px">Adulto</div>
+                                    <div class="fs-16">{{precioadultos}} €</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="w-100 d-flex mw100">
+                                        <div class="posrelbtm5">
+                                            <div *ngIf="adultoSel == 0">
+                                                <img src="../../assets/images/i-restarapagado.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                            <div class="cupo" *ngIf="adultoSel > 0" (click)="restaradulto()">
+                                                <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                        <div class="fs-16 text-center w50">
+                                            {{adultoSel}}
+                                        </div>
+                                        <div class="posrelbtm5">
+                                            <div class="cupo" (click)="sumaradulto()">
+                                                <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="fs-16">{{precioadultototal}} €</div>
+                                </div>
+                            </div>
+
+                            <div #ninos class="row my-2">
+                                <div class="col-4 text-left posrel">
+                                    <div class="fs-8 posabsol" style="top: -6px">ninos</div>
+                                    <div class="fs-16">{{precioninos}} €</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="w-100 d-flex mw100">
+                                        <div class="posrelbtm5">
+                                            <div *ngIf="ninosSel == 0">
+                                                <img src="../../assets/images/i-restarapagado.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                            <div class="cupo" *ngIf="ninosSel > 0" (click)="restarninos()">
+                                                <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                        <div class="fs-16 text-center w50">
+                                            {{ninosSel}}
+                                        </div>
+                                        <div class="posrelbtm5">
+                                            <div class="cupo" (click)="sumarninos()">
+                                                <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="fs-16">{{precioninostotal}} €</div>
+                                </div>
+                            </div>
+
+                            <div #menores class="row my-2">
+                                <div class="col-4 text-left posrel">
+                                    <div class="fs-8 posabsol" style="top: -6px">menores</div>
+                                    <div class="fs-16">{{preciomenores}} €</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="w-100 d-flex mw100">
+                                        <div class="posrelbtm5">
+                                            <div *ngIf="menoresSel == 0">
+                                                <img src="../../assets/images/i-restarapagado.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                            <div class="cupo" *ngIf="menoresSel > 0" (click)="restarmenores()">
+                                                <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                        <div class="fs-16 text-center w50">
+                                            {{menoresSel}}
+                                        </div>
+                                        <div class="posrelbtm5">
+                                            <div class="cupo" (click)="sumarmenores()">
+                                                <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                    draggable="false">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <div class="fs-16">{{preciomenorestotal}} €</div>
+                                </div>
+                            </div>
+
+                            <div #total class="my-3 d-flex posrel">
+                                <div class="fs-16 ">Precio total</div>
+                                <div class="fs-16 ff-JB posabsol" style="right: 0">
+                                    <div> {{sumaSel}} €</div>
+                                </div>
+                            </div>
+                            <div #maximo class="d-flex w-100 posrel my-3">
+                                <div class="ml-0 mr-auto ">
+                                    <div class="fs-12">*Máximas personas visita <span
+                                            class="ff-JB">{{maximopersonas}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div #checkprivada class="d-flex w-100 posrel my-3">
+                                <div class="ml-0 mr-auto ">
+                                    <div class="fs-20 mr-2 posrel " style="top: -3px">
+                                        <input #priv type="checkbox" name="privada" id="privada" [value]="privada"
+                                            (change)="cambiarprivada(priv)">
+                                    </div>
+                                </div>
+                                <div class="mr-0 ml-auto">
+                                    <div class="fs-16 ">
+                                        Contratar visita privada.
+                                    </div>
+                                    <div class="fs-12 ffita colGRIS2">
+                                        *Implica asumir el precio al coste máximo de la visita independientemente
+                                        del número
+                                        total de asistentes.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div #validacioncale class="d-flex w-100 posrel my-1" *ngIf="calenovalid">
+                        <div class=" posrel " style="top:-4px">
+                            <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
+                        </div>
+                        <div>
+                            <div class="fs-16 colROJO1">Elige la <span class="ff-JB">fecha</span> de la visita</div>
+                        </div>
+                    </div>
+                    <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
+                        <div class=" posrel " style="top:-4px">
+                            <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
+                        </div>
+                        <div>
+                            <div class="fs-16 colROJO1">Selecciona la <span class="ff-JB">hora</span> para la visita
+                            </div>
+                        </div>
+                    </div>
+                    <div #validacionidioma class="d-flex w-100 posrel my-1" *ngIf="idiomanovalid">
+                        <div class=" posrel " style="top:-4px">
+                            <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
+                        </div>
+                        <div>
+                            <div class="fs-16 colROJO1">Selecciona <span class="ff-JB">idioma</span> para la visita
+                            </div>
+                        </div>
+                    </div>
+                    <div #validacionpers class="d-flex w-100 posrel my-1" *ngIf="persnovalid">
+                        <div class=" posrel " style="top:-4px">
+                            <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
+                        </div>
+                        <div>
+                            <div class="fs-16 colROJO1">Selecciona <span class="ff-JB">número de personas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="p-0 m-0">
+                    <div class="d-flex">
+                        <div class="w-50">
+                            <div class="my-0 mx-auto text-center">
+                                <button class="btredondoCancelar " type="button" (click)="cerrarcalemodal()">
+                                    <span class="ff-JB">Cancelar</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="w-50">
+                            <div class="my-0 mx-auto text-center">
+                                <button class="btredondoRojoActualizar " type="button" (click)="reservarvisita()">
+                                    <span class="ff-JB">Reservar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #loginmodal let-modal>
+
+    <div class="mx-auto w-100 p-0">
+
+        <div class="modal-body">
+
+            <div id="divmicuenta">
+                <div class="w-100 d-flex posrel">
+                    <div class="px-3 ff-JB fs-24 ">Mi cuenta</div>
+                    <div class="posabsol" style="right: -24px">
+                        <div class="cupo" (click)="modal.dismiss()">
+                            <i class="fa fa-x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-3">
+                    <div class="my-3 fs-18">
+                        Iniciar sesión para pagar más rápido
+                    </div>
+                    <div class="cj">
+                        <input type="text" class="colGRIS1 " placeholder=" Usuario o email" id="emailmicuantaar"
+                            name="emailmicuentaar" />
+                    </div>
+                    <div class="cj posrel">
+                        <input type="text" class="colGRIS1 " placeholder=" Contraseña" id="passwordmicuentaar"
+                            name="passwordmicuentaar" />
+                        <div class="posabsol" style="top: 10px; right: 15px"> <i class="fa-solid fa-eye-slash"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex" id="recuerdamimicuenta">
+                        <div class="cupo mx-1 pt-1" (click)="recordarmemicuentaalregistrar()">
+                            <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarmealregistrar"></i>
+                            <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarmealregistrar"></i>
+                        </div>
+                        <div class="mt-1 ml-2">Recordarme</div>
+                    </div>
+                    <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                        <button class="btredondoRojomicuenta " type="button">
+                            <span>Iniciar sesión</span>
+                        </button>
+                        <div class="heolvidadomicuenta">
+                            He olvidado mi contraseña
+                        </div>
+                    </div>
+                    <div class="oaccedemicuenta">
+                        O accede con
+                    </div>
+                    <div class="w-100 p-0 ">
+                        <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
+                            <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
+                            <span>Facebook</span>
+                        </button>
+                        <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                            <img src="../../assets/images/logog.png" class="imredes" draggable="false">
+                            <span>Google</span>
+                        </button>
+                    </div>
+                    <div id="notienesmicuenta">
+                        <span>¿No tienes cuenta?</span><span class="colROJO3"> Registrate aquí</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</ng-template>

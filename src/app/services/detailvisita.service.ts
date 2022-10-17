@@ -1,0 +1,56 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ImagenesModel } from '../models/Imagenes.model';
+import { catchError, map} from 'rxjs/operators' ;
+import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
+import { JsonPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { VisitasModel } from '../models/Visitas.model';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DetailvisitaService {
+  
+
+ 
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private router: Router
+  ) {
+    
+  }
+
+
+  
+  
+
+  
+
+
+  
+
+  }
+
+
+
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+
+

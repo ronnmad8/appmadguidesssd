@@ -5,6 +5,7 @@
   padding-right: 0 !important;
 }
 
+
 .pc {
   display: inherit;
 }
@@ -38,6 +39,10 @@
 
 
 /*-------------------global--------------------------*/
+html {
+  scroll-behavior: smooth;
+}
+
 
 html{
     --c_BLANCO: #FFFFFF;
@@ -59,6 +64,7 @@ html{
     --c_GRIS10: #DDDFE3;
     --c_AMARILLO2: #EAAA0070;
     --c_AMARILLO3: #EAAA0029;
+    --c_VERDE: #609D56;
 
 }
 
@@ -121,6 +127,7 @@ html {
   margin-top: auto;
   margin-bottom: 0px;
   width: 100%;
+  
 }
 
 
@@ -138,6 +145,10 @@ input[type='radio']:checked:after {
   visibility: visible;
   border: 2px solid white;
 }
+
+
+
+
 
 
 a {
@@ -317,6 +328,9 @@ img {
 .colGRIS9 {
   color: var(--c_GRIS9) !important;
 }
+.colVERDE {
+  color: var(--c_VERDE) !important;
+}
 
 .bgAMARILLO {
   background-color: var(--c_AMARILLO) !important;
@@ -421,6 +435,10 @@ img {
 
 .mh140 {
   min-height: 140px;
+}
+.mh136 {
+  min-height: 136px;
+  height: 136px;
 }
 
 .mh30 {
@@ -626,6 +644,24 @@ img {
   top: 12px !important;
   
 }
+.posabsolNo{
+  position: absolute !important;
+  left: 274px !important;
+  top: -45px !important;
+  
+}
+.posabsolRight{
+  position: absolute !important;
+  right: 4px !important;
+  top: 4px !important;
+  
+}
+.posabsolR{
+  position: absolute !important;
+  right: 0px !important;
+  top: -1px !important;
+  
+}
 
 .cupo {
   cursor: pointer !important;
@@ -696,6 +732,7 @@ th {
     margin-left: auto;
     margin-right: auto;
     height: 100% !important;
+    min-height: 80vh !important;
   }
   
   
@@ -812,6 +849,11 @@ th {
     margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .shad{
+    box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+    border-radius: 7px !important;
   }
 
   
@@ -1099,10 +1141,24 @@ th {
     padding-bottom: 0px !important;
   }
 
+  .linefull{
+    height: 1px !important;
+    background-color: var(--c_GRIS3);
+    margin: 0 !important;
+    width: 100%;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
 
+  .linelight{
+    height: 1px !important;
+    background-color: var(--c_GRIS2);
+    margin: 0 !important;
+    width: 100%;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
 
-  
-  
   .swiper-button-next {
     content: '';
     background-image: url("../../assets/images/i-slider-flecha-derecha.svg") !important;
@@ -1597,7 +1653,7 @@ margin-right: auto;
 .visitastemporada{
   position: absolute !important;
   top: 16px; 
-  left: -8px; 
+  left: -2px; 
   right: 0; 
   width: 154px;
   color: var(--c_BLANCO);
@@ -2075,8 +2131,8 @@ margin-right: auto;
 .horizontal-parent {
   position: absolute;
   top: -1rem;
-  left: 200px;
-  width: 85vh;
+  left: 230px;
+  width: 600px;
   height: 45vw;
 }
 .horizontal-child {
@@ -2085,7 +2141,7 @@ margin-right: auto;
   top: -110px;
   display: block;
   width: 45vh;
-  height: 58vw;
+  height: 52vw;
   overflow-y: scroll;
   transform-origin: 100% 0%;
   transform: rotate(-90deg) translateY(-100vh);
@@ -2149,7 +2205,7 @@ margin-right: auto;
 
 .posabsolflechabusca{
   position: absolute;
-  right: -20px; 
+  right: -10px; 
   left: auto; 
   top: 24px; 
   background-color: #00000000;
@@ -2168,7 +2224,7 @@ margin-right: auto;
 }
 
 #contenidobusca{
-  min-height: 2729px;
+  min-height: 100vh;
   height: 1005;
 }
 
@@ -2283,6 +2339,14 @@ margin-right: auto;
   margin-bottom: 6px;
 }
 
+.imicono24{
+  height: 20px;	
+  width: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
 .custom-control label.checkfiltrotexto::before{
   font-size: 10px !important;
   height: 16px !important;
@@ -2368,16 +2432,18 @@ margin-right: auto;
   width: 858px;
   height: 222px;
   padding: 0px;
-  border-radius:  19px 0 0 19px ;
+  border-radius:  19px;
   margin-top: 30px !important;
   margin-bottom: 30px !important;
   margin-right: auto !important;
   margin-left: auto !important;
   overflow: hidden;
+  position: relative !important;
 }
 
 .panelinfovisitabuscador{
   height: 222px;
+  min-width: 570px;
 }
 
 .imgvisitabuscador{
@@ -2428,8 +2494,9 @@ margin-right: auto;
 .preciovisitabuscador{
   margin-top: auto;
   margin-bottom: 0px;
+  padding-right: 20px !important;
   height: 27px;
-  width: 126px;
+  min-width: 126px;
   color:var(--c_GRIS1);
   border-right: 1px solid var(--c_GRIS3);
 }
@@ -2447,7 +2514,7 @@ margin-right: auto;
   height: 27px;
   width: 100px;
   margin-right: auto;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .imghorasvisitabuscador {
   height: 16px;
@@ -2529,6 +2596,106 @@ margin-right: auto;
   right: 0px;
   padding: 10px;
 }
+
+.pastifiltro{
+  border-radius: 25px;
+  border:1px solid var(--c_GRIS1);
+  color: var(--c_BLANCO);
+  background-color: var(--c_GRIS1);
+  padding: 5px 75px 5px 15px;
+  min-height: 32px;
+  margin: 5px !important;
+  width: auto !important;
+
+}
+
+
+.filtdel{
+  right: -20px; 
+  min-width: 50px !important;
+}
+
+.posabsolfechasfiltro{
+  position: absolute !important;
+  left:20px; top: 130px; 
+  height: 414px; 
+  width: 279px;  
+  min-width: 279px; 
+  z-index: 1000; 
+  background-color: var(--c_BLANCO); 
+  color: var(--c_GRIS1);
+  border:1px solid var(--c_GRIS2);
+  border-radius: 7px;
+}
+
+.btRedondoCalendarFiltro{
+  border-radius: 25px;
+  border: 1px solid var(--c_GRIS2);
+  color: var(--c_GRIS1);
+  background-color: var(--c_BLANCO);
+  padding: 5px;
+  height: 40px;
+  margin: 5px !important;
+  width: auto !important;
+  min-width: 100px !important;
+}
+.btRedondoRojoCalendarFiltro{
+  border-radius: 25px;
+  border: 1px solid var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  background-color: var(--c_ROJO2);
+  padding: 5px;
+  height: 40px;
+  margin: 5px !important;
+  width: auto !important;
+  min-width: 100px !important;
+}
+
+.btRedondoBlancoCalendarFiltro{
+  border-radius: 25px;
+  border: 1px solid var(--c_BLANCO);
+  background-color: var(--c_BLANCO);
+  color: var(--c_ROJO2);
+  padding: 5px;
+  height: 40px;
+  margin: 5px !important;
+  width: auto !important;
+  min-width: 100px !important;
+}
+
+.btRedondoVerMasResultados{
+  border-radius: 25px;
+  border: 1px solid var(--c_GRIS3);
+  background-color: var(--c_GRIS3);
+  color: var(--c_BLANCO);
+  padding: 5px 20px;
+  height: 52px;
+  margin: 5px !important;
+  width:  296!important;
+  min-width: 296px !important;
+  font-size: 20px;
+}
+
+.daySelected{
+   background-color: var(--c_ROJO2) !important;
+   color: var(--c_BLANCO);
+   height: auto;
+   max-width: 30px ;
+   border-radius: 50%;
+   align-items: center;
+   text-align: center;
+   margin-left: 3px;
+   margin-right: 0;
+   padding: 4px;
+}
+
+.selcate{
+  border: 1px solid var(--c_GRIS1) !important;
+  background-color: var(--c_GRIS2) !important;
+}
+
+
+
 /***********contenido buscador pc end*****************/
 
 /************************buscador pc end**********************/
@@ -2578,7 +2745,8 @@ margin-right: auto;
 }
 
 .imgsel{
-  border: 1px solid var(--c_GRIS1);
+  border: 1px solid var(--c_ROJO2);
+  filter: brightness(1.2);
 }
 .ffimaglat{
   min-height: 546px;
@@ -2599,6 +2767,14 @@ margin-right: auto;
 .imageneslat{
   overflow:hidden; 
   border-radius: 7px;
+  width: auto !important;
+}
+
+.imagenescent{
+  overflow:hidden; 
+  border-radius: 7px;
+  width: auto !important;
+  min-width: 626px !important;
 }
 .chimaglat{
   position: relative !important;
@@ -2830,9 +3006,286 @@ margin-right: auto;
 /************************detalle pc end**********************/
 
 
+/**************carrito start*******************/
+
+.circulopasos{
+  background-color: var(--c_BLANCO) ;
+  color: var(--c_ROJO2);
+  padding-top: 4px;
+  border:1px solid var(--c_BLANCO); 
+  border-radius: 50%; 
+  width: 38px; 
+  height: auto;
+}
+
+.circulopasosapagado{
+  border:1px solid var(--c_GRIS2); 
+  border-radius: 50%; 
+  width: 38px; 
+  height: auto;
+  color: var(--c_GRIS2);
+  padding-top: 4px;
+}
+
+.descripcionpaso{
+  margin-left: 20px;
+  position:relative;
+  top: 4px;
+  font-family: Jost-Bold;
+}
+
+.descripcionpasoapagado{
+  margin-left: 20px;
+  position:relative;
+  top: 4px;
+  color: var(--c_GRIS2);
+}
+
+.panelVisitaCarrito{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 780px;
+  height: 194px;
+  padding: 0px;
+  border-radius:  19px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  overflow: hidden;
+  display: flex !important;
+}
+
+.panelPreciototal{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 384px;
+  min-height: 172px;
+  padding: 20px 15px;
+  border-radius:  7px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 20px !important;
+  overflow: hidden;
+}
+
+.precioAmarillo{
+  font-size: 24px;
+  display: flex !important;
+  color: var(--c_GRIS1);
+  height: 50px;
+  padding: 6px 10px;
+  background-color: #FCF2D9;
+}
+
+.btredondoRojoPreciototal{
+  height: 52px;
+  width: 234px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoRojoActualizar{
+  height: 52px;
+  width: 204px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoCancelar{
+  height: 52px;
+  width: 204px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_GRIS2);
+  background-color: var(--c_BLANCO);
+  color: var(--c_GRIS1);
+  font-size: 20px !important;
+}
+
+.divcalendarmodal{
+  height: auto;
+  width: 100%; 
+  padding: 24px !important;
+  min-width: 350px;
+  
+}
+
+.panelResumen{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 384px;
+  min-height: 422px;
+  padding: 20px 15px;
+  border-radius:  7px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  overflow: hidden;
+}
+
+.panelDatosReserva{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 780px;
+  height: 194px;
+  padding: 20px;
+  border-radius:  19px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 20px !important;
+  overflow: hidden;
+  
+}
+
+.zonaRegistro{
+  width: 800px;
+
+}
+
+.hazlogin{
+  margin-left: 20px; 
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex !important;
+  font-size: 18px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.aceptapoliticas{
+  margin-left: 20px; 
+  width: 100%;
+  display: flex !important;
+  font-size: 18px;
+  padding: 0 15px;
+}
 
 
 
+.btredondoRojoContinuar{
+  height: 52px;
+  width: 234px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btline127{
+  width: 127px;
+  font-size: 20px !important;
+  cursor: pointer;
+}
+
+.panelMetodopago{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 785px;
+  height: 428px;
+  padding: 20px;
+  border-radius:  19px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 20px !important;
+  overflow: hidden;
+  
+}
+
+.cj {
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 18px !important;
+  color: var(--c_GRIS7);
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  margin-top: 5px;
+  margin-bottom: 14px;
+  border: 1px solid var(--c_GRIS8) !important;
+}
+
+
+.btredondoRojoPagar{
+  height: 52px;
+  width: 180px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoPagarapagado{
+  height: 52px;
+  width: 180px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_GRIS3);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.crediticono{
+  position: absolute !important;
+  top: 10px; 
+  right: 5px; 
+  opacity: 0.1;
+}
+
+
+
+/***************carrito end******************/
+
+/***************compra star***************/
+
+.panelFull{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 1199px;
+  height: 122px;
+  padding: 20px;
+  border-radius:  19px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  overflow: hidden;
+}
+
+.panelReservafirmada{ 
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 785px;
+  height: 194px;
+  padding: 0px;
+  border-radius:  19px ;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 20px !important;
+  margin-left: 0px !important;
+  overflow: hidden;
+  display: flex !important;
+}
+
+.btredondoRojoVerReservas{
+  height: 52px;
+  width: 234px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  border:1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+/*************compra end******************/
 
 
 
@@ -2842,12 +3295,23 @@ margin-right: auto;
 
 /********  footer st pc     *********/
 
-.intfooter{
+.footh300{
+  padding-top: 70px;
+  height: 300px;
+  min-height: 300px;
+}
+
+.footh137{
   padding-top: 20px;
-  padding-bottom: 20px;
+  height: 137px;
+  min-height: 137px;
+}
+
+.intfooter{
+
   margin-left: auto;
   margin-right: auto;
-
+ 
 }
 
 #barrafooter{
@@ -2865,6 +3329,15 @@ margin-right: auto;
 .enlacefoot{
   font-size: 18px !important;
   cursor: pointer !important;
+}
+
+#logofooter3{
+  height: 80px !important;
+  width: 80px !important;
+}
+#logofooter{
+  height: 130px !important;
+  width: 130px !important;
 }
 
 

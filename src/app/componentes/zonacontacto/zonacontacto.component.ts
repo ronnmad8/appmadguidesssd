@@ -10,6 +10,9 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
+import { MessagesModel } from 'src/app/models/Messages.model';
+import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
+import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 
 
 
@@ -20,25 +23,18 @@ import {
 export class ZonacontactoComponent implements OnInit {
 
   @Input() enlace: string = "";
-
-  show: boolean = true;
-  textozonacontacto :TextosModel = new TextosModel() ;
-  imagenzonacontacto: ImagenesModel = new ImagenesModel();
+  @Input() messageFormData: MessagesFormModel = new MessagesFormModel();
+  @Input() messageImageData: MessagesImageModel = new MessagesImageModel();
+  @Input() bannerbottomData: ImagenesModel = new ImagenesModel;
   
+  show: boolean = true;
   forma: FormGroup;
   btactivadoT: boolean = false;
   nombresel: string = "";
   emailsel: string = "";
   mensajesel: string = "";
+  image_message: string= "";
 
-  image_message: string= "Madrid único para viajeros únicos";
-  form_title: string= "Ponte en contacto con nosotros";
-  form_name: string= "Nombre";
-  form_email: string= "Email";
-  form_message: string= "Mensaje";
-  form_policy: string= "Acepto la ";
-  form_link: string= "Política de privacidad";
-  form_button: string= "Enviar";
 
   constructor(
     private homeService: HomeService,
@@ -51,12 +47,7 @@ export class ZonacontactoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
-    this.imagenzonacontacto = new ImagenesModel();
-    this.imagenzonacontacto.url =  "../../assets/images/imagen-footer.jpg";
-    this.imagenzonacontacto.url_movil = "";
-    //imagen  zonacontacto
-    
+  
   }
 
 
@@ -83,27 +74,6 @@ export class ZonacontactoComponent implements OnInit {
     });
   }
 
-  getImagenBanner(bannerbottom: ImagenesModel){
-    this.imagenzonacontacto = bannerbottom ;
-  }
 
-
-  getTextos(textos: TextosModel){
-    
-    
-    this.image_message = textos.image.message;
-    this.form_title = textos.form.title;
-    this.form_name = textos.form.name;
-    this.form_email = textos.form.email;
-    this.form_message = textos.form.message;
-    this.form_policy = textos.form.policy;
-    this.form_link = textos.form.link;
-    this.form_button = textos.form.button;
-
-  } 
-
-
-  
-  
 
 }

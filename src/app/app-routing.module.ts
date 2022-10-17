@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BuscadorComponent } from './pages/buscador/buscador.component';
+import { CarritoComponent } from './pages/carrito/carrito.component';
+import { CompraComponent } from './pages/compra/compra.component';
 import { HomeComponent } from './pages/home/home.component';
-import { VisitaComponent } from './pages/visita/visita.component';
+import { VisitadetailComponent } from './pages/visitadetail/visitadetail.component';
 
 const routes: Routes = [
 
@@ -12,12 +14,19 @@ const routes: Routes = [
   { path: 'blog' , component: HomeComponent},
   { path: 'contacto' , component: HomeComponent},
   { path: 'buscador' , component: BuscadorComponent},
-  { path: 'visita' , component: VisitaComponent},
-  { path: 'politicaprivacidad' , component: BuscadorComponent},
-  { path: 'politicacookies' , component: BuscadorComponent},
-  { path: 'avisolegal' , component: BuscadorComponent},
-  { path: 'politicacompra' , component: BuscadorComponent},
-  { path: 'medidascovid' , component: BuscadorComponent},
+  { path: 'buscador/category/:category_uuid?' , component: BuscadorComponent},
+  { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
+  { path: 'buscador/title/:title' , component: BuscadorComponent},
+  { path: 'visita/:title/:uuid' , component: VisitadetailComponent},
+  { path: 'visitatitulo/:title' , component: VisitadetailComponent},
+  { path: 'carrito' , component: CarritoComponent},
+  { path: 'compra' , component: CompraComponent},
+  { path: 'politicaprivacidad' , component: HomeComponent},
+  { path: 'politicacookies' , component: HomeComponent},
+  { path: 'avisolegal' , component: HomeComponent},
+  { path: 'politicacompra' , component: HomeComponent},
+  { path: 'medidascovid' , component: HomeComponent},
+  { path: 'misreservas' , component: HomeComponent},
 
 
   //////////////////////////////////////////////default

@@ -1,15 +1,16 @@
 <div class="w-100 ">
 
     <div #sec1 class="" >
-        <app-bannerbuscador></app-bannerbuscador>
+        <app-bannerbuscador [bannerfichadeproductoData]="bannerfichadeproducto" [messageSearchData]="messageSearch" 
+        [numactividades]="numactividades" [busqueda]="filtersrutatitle"   ></app-bannerbuscador>
     </div>
 
     <div #sec2 class=" " >
-      <app-busqueda></app-busqueda>
+      <app-busqueda (filtrarBusqueda)="getVisitasBuscador()"   ></app-busqueda>
     </div>
 
     <section #sec3 class="my-3" >
-       <app-zonacontacto></app-zonacontacto>
+       <app-zonacontacto [messageFormData]="messageForm" [messageImageData]="messageImage" [bannerbottomData]="bannerbottom"   ></app-zonacontacto>
     </section>
     
 

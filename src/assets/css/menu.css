@@ -79,8 +79,9 @@
 
 .close {
   position: absolute;
-  right: 8px;
-  top: 0px;
+  right: 2px;
+  top: 4px;
+  cursor: pointer;
 }
 
 .switch {
@@ -569,7 +570,7 @@
   font-size: 20px !important;
 }
 
-#heolvidadomicuenta {
+.heolvidadomicuenta {
   font-size: 14px;
   color: var(--c_GRIS1);
   margin-left: auto;
@@ -579,7 +580,7 @@
   text-decoration: underline;
 }
 
-#oaccedemicuenta {
+.oaccedemicuenta {
   font-size: 18px;
   color: var(--c_GRIS1);
   margin-left: 0;

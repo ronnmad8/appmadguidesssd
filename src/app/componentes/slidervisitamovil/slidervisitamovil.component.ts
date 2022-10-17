@@ -14,7 +14,6 @@ import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ListasService } from '../../services/listas.service';
 import { Options } from '@angular-slider/ngx-slider';
-import { EventsrespModel } from 'src/app/models/Eventsresp.model';
 import {
   SwiperModule,
   SwiperComponent,
@@ -28,20 +27,21 @@ import { NgwWowService } from 'ngx-wow';
 import * as moment from 'moment';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-slidervisitamovil',
   templateUrl: './slidervisitamovil.component.html',
 })
 export class SlidervisitamovilComponent implements OnInit {
-  @Input() visitaId: number = 0;
+  @Input() visitaSel: VisitasModel = new VisitasModel();
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
 
-  visita: VisitasModel = new VisitasModel();
+  
   tipos: string[] = [];
   listaImagenesVisita: ImagenesModel[] = [];
   listaImagenesVisitaLat: ImagenesModel[] = [];
@@ -72,50 +72,13 @@ export class SlidervisitamovilComponent implements OnInit {
     spaceBetween: 1,
   };
 
-  ////////////
-  week: any = [
-    'Lunes',
-    'Martes',
-    'Miercoles',
-    'Jueves',
-    'Viernes',
-    'Sabado',
-    'Domingo',
-  ];
-  months: any = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre',
-  ];
-  listahoras: any = [
-    { key: '1', value: '08:00' },
-    { key: '2', value: '09:00' },
-    { key: '3', value: '10:00' },
-    { key: '4', value: '11:00' },
-    { key: '5', value: '12:00' },
-    { key: '6', value: '13:00' },
-    { key: '7', value: '14:00' },
-  ];
-
   listaidiomas: any[] = [
     { key: '1', value: 'español' },
     { key: '2', value: 'english' },
     { key: '3', value: 'français' },
   ];
-  redes: any = [
-    { name: 'facebook', logo: 'assets/images/i-facebookN.svg' },
-    { name: 'twitter', logo: 'assets/images/i-twitterN.svg' },
-    { name: 'instagram', logo: 'assets/images/i-instagramN.svg' },
-  ];
+
+ 
   monthSelect: any[];
   dateSelect: any;
   dateValue: any;
@@ -142,7 +105,6 @@ export class SlidervisitamovilComponent implements OnInit {
   precioadultos: number = 0;
   precioninos: number = 0;
   preciomenores: number = 0;
-
   precioadultototal: number = 0;
   precioninostotal: number = 0;
   preciomenorestotal: number = 0;
@@ -163,6 +125,11 @@ export class SlidervisitamovilComponent implements OnInit {
   puntodeencuentro: string = '';
   googlemapsvisita: string = 'https://goo.gl/maps/stMedKZoKh7f1qGC9';
   verredes: boolean = false;
+  week: string[] = [];
+  months: string[] = [];
+  horas: any[] = [];
+  redes: any[] = [];
+  listahoras: any[] = [];
 
   verZonePrecios: boolean = false;
   verZoneDetalle: boolean = false;
@@ -175,19 +142,23 @@ export class SlidervisitamovilComponent implements OnInit {
     private router: Router,
     private visitaService: VisitaService,
     private listasService: ListasService,
+    private globalService: GlobalService,
     private renderer: Renderer2
   ) {
     this.wowService.init();
   }
 
   ngOnInit(): void {
+    this.week = this.globalService.week;
+    this.months = this.globalService.months;
+    this.redes = this.globalService.redes;
+    this.listahoras = this.globalService.listahoras;
+
     this.vcale = true;
-    this.getVisita();
     this.isresponsive();
     let hoy = moment();
     let estemes = hoy.format('MM');
     let esteyear = hoy.format('YYYY');
-
     this.getDaysFromDate(estemes, esteyear);
 
     this.precioadultos = 50;
@@ -233,8 +204,7 @@ export class SlidervisitamovilComponent implements OnInit {
   }
 
   getVisita() {
-    this.visita = this.visitaService.getVisita(1);
-    this.listaImagenesVisita = this.visitaService.getImagenesvisita(1);
+    this.listaImagenesVisita = this.getImagenesVisita();
     this.listaImagenesVisitaLat = this.listaImagenesVisita;
     this.listaImagenesVisitaLat[0].sel = true;
   }
@@ -299,16 +269,9 @@ export class SlidervisitamovilComponent implements OnInit {
     }
   }
   idiomainfosel(v: any) {
-    let checke = v.target.checked;
-    if (checke) {
-      this.idiominfo = this.listaidiomas.find(
-        (el: any) => el.key == v.target.value
-      ).value;
-      this.idiomaSel = v.target.value;
-      if (this.idiomaSel != null) {
-        this.idiomanovalid = false;
-      }
-      this.setSecuencial();
+    this.idiominfo = v;
+    if (this.idiomaSel != null) {
+      this.idiomanovalid = false;
     }
   }
 
@@ -464,6 +427,13 @@ export class SlidervisitamovilComponent implements OnInit {
     this.caleinfo = objectDate.format('DD/MM/YYYY');
     this.calenovalid = false;
     this.setSecuencial();
+  }
+
+  getImagenesVisita() {
+    // this.visitaService.getImagenesvisita().subscribe((resp)=>{
+    //   this.visitaSel.imagenes = resp as ImagenesModel;
+    // })
+    return this.visitaService.getImagenesvisita();
   }
 
   setSecuencial() {
