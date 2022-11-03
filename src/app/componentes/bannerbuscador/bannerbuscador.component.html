@@ -1,73 +1,15 @@
 <div class="mhbannerbuscador ">
   <div class="posrel w-100">
 
-    <!-- <div class="container  " style="height: 0px; position: fixed; z-index: 9999;" *ngIf="menuvisto">
-      <div class="posabsolmodalbannerbuscador" *ngIf="verbusca" >
-
-        <div class="posrel">
-          <div class="brdbot">
-            <input #cjbusqueda type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" [(ngModel)]="busqueda"
-              class="cajaquebuscas" />
-          </div>
-
-          <div class="posabsolpropbuscador">
-            <div id="panelpropbuscador" *ngIf="busqueda.length > 0">
-              <div id="listaprop" class="bordeli p-0 m-0">
-                <div class="p-0" *ngFor="let visita of visitasprop">
-                  <div class="cartamodalprop d-flex ">
-                    <div class="imgcartamodalprop">
-                      <div class="pc pl-1">
-                        <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
-                          <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
-                            class="imgcartamodalprop lazyload ">
-                        </picture>
-                      </div>
-                      <div class="mvl">
-                        <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.url_movil}}"
-                            data-srcset="{{visita.url_movil}}">
-                          <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
-                            class="imgcartamodalprop lazyload ">
-                        </picture>
-                      </div>
-                    </div>
-
-                    <div class="posrel infocartamodalprop cupo">
-                      <div id="textomodalprop">
-                        {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="posrel d-flex">
-                <div id="vertodosprop" class="cupo" (click)="vertodos()">
-                  Ver todos los resultados para
-                  <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
-                    busqueda}}"</span>
-                </div>
-                <div>
-                  <i id="flechaprop" class="fa fa-arrow-right mr-4 mt-2 cupo" (click)="vertodos()"  ></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
     <div class="posabsolresultado d-xl-flex ">
       <div class="posrel d-flex pl-2 mt-xl-2 mt-3">
         <img src="../../assets/images/i-luparojo.svg" class="imicono1" draggable="false">
-        <div class="pc" id="textoresultado">{{messageSearchData.title}}</div>
-        <div class="mvl" id="textoresultadomovil">{{messageSearchData.title}}</div>
+        <div class="pc" id="textoresultado">Búsqueda</div>
+        <div class="mvl" id="textoresultadomovil">Búsqueda</div>
         <div id="buscaresultado" class="mx-2">"{{busqueda}}"</div>
       </div>
       <div class="posrel px-2 mt-2">
-        <div id="contresultado">{{numactividades}} {{messageSearchData.activity}} {{messageSearchData.find}} </div>
+        <div id="contresultado">{{numactividades}} actividades encontradas </div>
       </div>
     </div>
 

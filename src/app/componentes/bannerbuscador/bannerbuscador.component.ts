@@ -10,7 +10,7 @@ import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { MessagesSearchModel } from 'src/app/models/MessagesSearch.model';
+import { TextosearchModel } from 'src/app/models/Textosearch.model';
 
 
 
@@ -22,7 +22,7 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
   @Input() bannerfichadeproductoData: ImagenesModel = new ImagenesModel();
-  @Input() messageSearchData: MessagesSearchModel = new MessagesSearchModel();
+  @Input() messageSearchData: TextosearchModel = new TextosearchModel();
   @Input() numactividades: number = 0;
   @Input() busqueda: string = "";
 

@@ -15,12 +15,8 @@ import { TextosService } from '../../services/textos.service';
 export class BannerComponent implements OnInit, AfterViewInit {
 
   @Input() enlace: string = "";
-  @Input() imageBanner: ImagenesModel;
+  @Input() bannerData: ImagenesModel;
 
-  public show: boolean = true;
-  public textobanner :TextosModel = new TextosModel() ;
-  public imagenbanner: ImagenesModel = new ImagenesModel();
-  public cargados: boolean = false;
   
 
   constructor(
@@ -34,21 +30,13 @@ export class BannerComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-     this.imagenbanner = new ImagenesModel();
-     this.imagenbanner.url = "";
-     this.imagenbanner.url_movil = "";
-     
-     
+     ///
   }
 
   ngAfterViewInit(){
-    this.getImagenBanner();
+    ///
   }
 
-  getImagenBanner(){
-    this.imagenbanner = this.imageBanner ;
-  
-  }
 
 
   

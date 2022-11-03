@@ -1,0 +1,123 @@
+<div class="mh80"></div>
+<div class="container px-xl-0 px-1 pb-5 ">
+
+    <div class="h40"></div>
+    <div class="w-100 d-flex posrel mnh800" >
+
+        <div class="wfaq" >
+    
+            <div class="w-100 mb-4">
+                <div class="fs-24 ff-JB pb-1">
+                    {{messageFaqsData.title1}}
+                </div>
+                <div class="pl-2 fs-18 my-3">
+                    {{messageFaqsData.message1}}
+                </div>
+            </div>
+            <div class="posrel w-100 py-1">
+                <div class="pl-2 fs-18 my-1">
+                    {{messageFaqsData.question1}}
+                </div>
+                <div class="posabsolR cupo" (click)="verqu(1)">
+                    <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verq1"  >
+                    <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verq1"  >
+                </div>
+                <div class="p-0 m-0 animated fadeIn slow"  *ngIf="verq1">
+                    <div class="p-3 fs-18 my-1 bgBLANCO2 ">
+                        {{messageFaqsData.response1}}
+                    </div>
+                </div>  
+            </div>
+            <div class="posrel w-100 py-1">
+                <div class="pl-2 fs-18 my-1">
+                    {{messageFaqsData.question2}}
+                </div>
+                <div class="posabsolR cupo" (click)="verqu(2)">
+                    <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verq2"  >
+                    <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verq2"  >
+                </div>
+                <div class="p-0 m-0 animated fadeIn slow"  *ngIf="verq2">
+                    <div class="p-3 fs-18 my-1 bgBLANCO2 ">
+                        {{messageFaqsData.response2}}
+                    </div>
+                </div>  
+            </div>
+            <div class="posrel w-100 py-1">
+                <div class="pl-2 fs-18 my-1">
+                    {{messageFaqsData.question3}}
+                </div>
+                <div class="posabsolR cupo" (click)="verqu(3)">
+                    <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verq3"  >
+                    <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verq3"  >
+                </div>
+                <div class="p-0 m-0 animated fadeIn slow"  *ngIf="verq3">
+                    <div class="p-3 fs-18 my-1 bgBLANCO2 ">
+                        {{messageFaqsData.response3}}
+                    </div>
+                </div>  
+            </div>
+            <div class="posrel w-100 py-1">
+                <div class="pl-2 fs-18 my-1">
+                    {{messageFaqsData.question4}}
+                </div>
+                <div class="posabsolR cupo" (click)="verqu(4)">
+                    <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verq4"  >
+                    <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verq4"  >
+                </div>
+                <div class="p-0 m-0 animated fadeIn slow"  *ngIf="verq4">
+                    <div class="p-3 fs-18 my-1 bgBLANCO2 ">
+                        {{messageFaqsData.response4}}
+                    </div>
+                </div>  
+            </div>
+            <div class="posrel w-100 py-1">
+                <div class="pl-2 fs-18 my-1">
+                    {{messageFaqsData.question5}}
+                </div>
+                <div class="posabsolR cupo" (click)="verqu(5)">
+                    <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verq5"  >
+                    <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verq5"  >
+                </div>
+                <div class="p-0 m-0 animated fadeIn slow"  *ngIf="verq5">
+                    <div class="p-3 fs-18 my-1 bgBLANCO2 ">
+                        {{messageFaqsData.response5}}
+                    </div>
+                </div>  
+            </div>
+
+        </div>
+        <div class="ml-auto mr-0 posabsolR">
+            <div class="panelNoencuentras " >
+                <div class="w-100 ">
+                    <div class="fs-24 ff-JB pb-4">
+                        {{messageFaqsData.noencuentras}}
+                    </div>
+                    <div class="pl-1 fs-18 my-2 cupo" (click)="mandarwhatsapp()" >
+                        <span><img src="../../assets/images/i-whatsapp.svg" class="imicono2b " draggable="false"></span>
+                        <span class="px-1">{{messageFaqsData.whatsapp}}</span>
+                    </div>
+                    <div class="pl-2 fs-18 my-2">
+                        <a class="cupo" href="tel: +34917896745" >
+                            <span><img src="../../assets/images/i-telefono.svg" class="imicono2c " draggable="false"></span>
+                            <span class="px-1">{{messageFaqsData.telefono}}</span>
+                        </a>
+                        
+                    </div>
+                    <div class="pl-2 fs-18 mt-2">
+                        <a class="cupo" href="mailto:info@madguides.es" >
+                            <span><img src="../../assets/images/i-avion.svg" class="imicono2c " draggable="false"></span>
+                            <span class="px-1">{{messageFaqsData.escribenos}}</span>
+                        </a>
+                    </div>
+                    <div class="ml-5 fs-18 mb-3 cupo" [routerLink]="['/contacto']"   >
+                       <span class="posrel" style="left: 10px">{{messageFaqsData.formulario}}</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

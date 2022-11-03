@@ -1,16 +1,16 @@
 
-  <div id="bannerhome"  class="row p-0 m-0" style="height: 684px ; margin-top: 183px;" >
-      <div class="horizontal-container animated fadeIn slow posrel"   >
+  <div   class="mhbannerbuscador mb-5" >
+      <div class="posrel w-100"   >
        
-            <picture>
-              <source media="(min-width: 968px)" srcset="{{imagenbanner.url}}"
-                data-srcset="{{imagenbanner.url}}" >
-              <source media="(min-width: 0px)" srcset="{{imagenbanner.url_movil}}"
-                data-srcset="{{imagenbanner.url_movil}}"  >
-              <img src='assets/images/sinimagen.jpg' class="imagebannerseccion " *ngIf="imagenbanner.url == null"  >
-              <img src="{{imagenbanner.url}}" data-src="{{imagenbanner.url}}"
-                alt="banner madguides" class="imagebannerseccion lazyload " onerror="this.error=null;this.src='assets/images/sinimagen.jpg' "   >
-            </picture>
+        <div class="imagenbannerbuscador animated fadeIn ">
+          <picture>
+            <source media="(min-width: 968px)" srcset="{{bannerData.url}}" data-srcset="{{bannerData.url}}">
+            <source media="(min-width: 0px)" srcset="{{bannerData.url_movil}}" data-srcset="{{bannerData.url_movil}}">
+            
+            <img src="{{bannerData.url}}" data-src="{{bannerData.url}}" 
+              class="imgbannerbusc " onerror="this.error= null;this.src='../../assets/images/sinimagen.jpg' ">
+          </picture>
+        </div>
 
       </div>
   </div>

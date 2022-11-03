@@ -4,11 +4,11 @@ import { ComentariosModel } from './Cometarios.model';
 import { ImagenesModel } from './Imagenes.model';
 import { LanguagesModel } from './Languages.model';
 import { MessagesModel } from './Messages.model';
-import { RecomendadasModel } from './Recomendadas.model';
 import { TextosModel } from './Textos.model';
 import { VisitasModel } from './Visitas.model';
 
 export class VisitaAssetsModel {
+  titdesc: Titdesc;
   messages: Messages;
   data: Data;
   button: string;

@@ -19,7 +19,9 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
-import { VisitasPedidoModel } from 'src/app/models/VisitasPedido.model';
+import { CartModel } from 'src/app/models/Cart.model';
+import { ProviderService } from 'src/app/services/provider.service';
+
 
 
 @Component({
@@ -35,7 +37,7 @@ export class CompraComponent implements OnInit{
   @Output() zonanopago: EventEmitter<any> = new EventEmitter();
 
   
-  pedido :VisitasPedidoModel ;
+  pedido :CartModel ;
   carritoId: number = 0;
 
   constructor(
@@ -48,8 +50,8 @@ export class CompraComponent implements OnInit{
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
-      private title: Title
-
+      private title: Title,
+      private providerService: ProviderService,
   )
   {
     // this.title.setTitle( "▷ Madguides");
@@ -64,14 +66,13 @@ export class CompraComponent implements OnInit{
   
 
   ngOnInit() {
+    this.providerService.setThrowHiddModales(true);
     
-    this.getCompraRealizada();
+  
 
   }
 
-  getCompraRealizada() {
-    this.pedido = this.carritoService.getCompraRealizada(this.carritoId);
-  }
+
 
 
 

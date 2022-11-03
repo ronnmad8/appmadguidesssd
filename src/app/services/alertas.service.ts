@@ -66,7 +66,7 @@ export class AlertasService {
         submensaje +
         '</p>',
       title: 'WEB MADGUIDES',
-      timer: 1500,
+      timer: 2500,
       showCancelButton: false,
       showConfirmButton: false,
     });

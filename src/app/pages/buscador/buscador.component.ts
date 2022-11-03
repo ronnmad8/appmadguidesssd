@@ -1,3 +1,12 @@
+
+/*
+· app-bannerbuscado => mostrarmodalbuscador, messageSearch,  bannertop, 
+· app-busqueda 
+· app-zonacontacto => messageForm, messageImage, bannerbottom
+
+*/
+
+
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router';
@@ -29,7 +38,8 @@ import { DuracionesModel } from 'src/app/models/Duraciones.model';
 import { FiltersModel } from 'src/app/models/Filters.model';
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { MessagesSearchModel } from 'src/app/models/MessagesSearch.model';
+import { TextosearchModel } from 'src/app/models/Textosearch.model';
+import { ProviderService } from 'src/app/services/provider.service';
 
 
 
@@ -50,9 +60,10 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   
   bannerfichadeproducto :ImagenesModel = new ImagenesModel();
   bannerbottom :ImagenesModel = new ImagenesModel();
+  bannertop :ImagenesModel = new ImagenesModel();
   resultadoBuscador :ResultadoModel = new ResultadoModel();
   texts: string[] = [];
-  messageSearch: MessagesSearchModel = new MessagesSearchModel();
+  messageSearch: TextosearchModel = new TextosearchModel();
   messageForm: MessagesFormModel = new MessagesFormModel();
   messageImage: MessagesImageModel = new MessagesImageModel();
   message: MessagesModel = new MessagesModel();
@@ -74,7 +85,8 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
-      private title: Title
+      private title: Title,
+      private providerService: ProviderService,
 
   )
   {
@@ -82,14 +94,17 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
     // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
     // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
-
+    
     
   }
   
 
   ngOnInit() {
-    this.getMessagesSearch();
+    this.providerService.setThrowHiddModales(true);
+
+   // this.getMessagesSearch();
     this.getMessagesForm();
+    this.getMessagesSearch();
     this.getMessagesImage();
     this.getMessages();
     this.getImagenesBuscador();
@@ -127,10 +142,11 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
 
   getImagenesBuscador(){
-    this.homeService.getImagenesHome().subscribe( (resp) => {
+    this.buscadorService.getImagenesbuscador().subscribe( (resp) => {
       let imagenes =  resp as ImagenesModel[];
-      this.bannerfichadeproducto = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
       this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
+      this.bannerfichadeproducto = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
+
     } );
   }
 
@@ -166,8 +182,8 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   }
 
   getMessagesSearch(){
-    this.homeService.getMessagesSeacrh().subscribe( (resp) => {
-      let respuesta: MessagesSearchModel =  resp as MessagesSearchModel; ;
+    this.buscadorService.getMessagesSearch().subscribe( (resp) => {
+      let respuesta: TextosearchModel =  resp as TextosearchModel; ;
       this.messageSearch = respuesta;
       
     } );

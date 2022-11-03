@@ -28,7 +28,6 @@ import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { SlidervisitamovilComponent } from 'src/app/componentes/slidervisitamovil/slidervisitamovil.component';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
-import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 
@@ -69,20 +68,19 @@ export class VisitadetailComponent implements OnInit{
       private homeService: HomeService,
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
-      private title: Title
+      private title: Title,
+
 
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    ///
 
   }
   
 
   ngOnInit() {
-    this.menuPublic.emit(0);
+    
+    this.providerService.setThrowHiddModales(true);
     
     //parametro uuid 
     this.acro.params.subscribe(
@@ -90,12 +88,14 @@ export class VisitadetailComponent implements OnInit{
       
         this.visitauuid = params.uuid;
         let tituloparam = params.title;
-        console.log(" tit  ", tituloparam);
+        
         if(this.visitauuid != null){
+  
           this.getVisita(this.visitauuid );
           this.getRelatedUuid(this.visitauuid);
         }
         else if(tituloparam != null){
+          
           this.getVisitaTitle(tituloparam );
           this.getRelatedTitle(tituloparam);
         }
@@ -111,13 +111,29 @@ export class VisitadetailComponent implements OnInit{
 
   }
 
+
+  setMetas(){
+    // this.title.setTitle( "▷ Madguides");
+    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.meta.updateTag({ property :"og:url", content:  ("https://madguides.es/"+ this.router.url)  });
+    this.meta.updateTag({ property :"og:type", content: "website"  });
+    this.meta.updateTag({ property :"og:title", content:  this.visitaSel.visit_lang_title  });
+    this.meta.updateTag({ property :"og:description", content:  this.visitaSel.visit_lang_description  });
+    this.meta.updateTag({ property :"og:image", content:  this.visitaSel.visit_image_url  });
+  }
+  
+
   getVisita(uuid: string){
     if(uuid != "" && uuid != null){
       this.visitaService.getVisita(uuid).subscribe((resp)=>{
         
-        let resul = resp as VisitasResultadoModel[];
-        this.visitaSel = resul[0] ?? new VisitasResultadoModel();
+        let resul = resp as VisitasResultadoModel;
+        ///get first de lista de api
+        this.visitaSel = resul ?? new VisitasResultadoModel();
         this.providerService.setThrowVisita(this.visitaSel);
+        this.setMetas();
         
       })
     }
@@ -125,6 +141,7 @@ export class VisitadetailComponent implements OnInit{
       console.error("uuid no valido");
     }
   }
+
 
   getVisitaTitle(title: string){
    
@@ -138,6 +155,7 @@ export class VisitadetailComponent implements OnInit{
 
   }
 
+
   getMessages(){
       this.visitaService.getMessagesVisita().subscribe((resp)=>{
         this.messages = resp as VisitaAssetsModel;
@@ -145,12 +163,14 @@ export class VisitadetailComponent implements OnInit{
       })
   }
 
+
   getImagenesContacto(){
     this.homeService.getImagenesHome().subscribe( (resp) => {
       let imagenesResp =  resp as ImagenesModel[];
       this.bannerbottom = imagenesResp.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
     } );
   }
+
 
   getMessagesHome(){
     this.homeService.getMessagesHome().subscribe( (resp) => {
@@ -160,11 +180,13 @@ export class VisitadetailComponent implements OnInit{
     } );
   }
 
+
   getMessagesForm(){
     this.homeService.getMessagesForm().subscribe( (resp) => {
       this.messagesForm = resp as MessagesFormModel;
     } );
   }
+
 
   getMessagesImage(){
     this.homeService.getMessagesImage().subscribe( (resp) => {
@@ -172,25 +194,29 @@ export class VisitadetailComponent implements OnInit{
     } );
   }
 
+
   getRelatedUuid(uuid: string){
+    
     this.visitaService.getCategoryUuid(uuid).subscribe((d)=>{
-      let visita = d as VisitasResultadoModel[];
-      let catuuid = visita[0].category_lang_uuid;
+      let visita = d as VisitasResultadoModel;
+      let catuuid = visita.category_uuid; 
       this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
-      this.related = resp as VisitasResultadoModel[];
+        this.related = resp as VisitasResultadoModel[];
+        
       });
     })
   }
 
   getRelatedTitle(tit: string){
     this.visitaService.getCategoryTitle(tit).subscribe((d)=>{
-      let visita = d as VisitasResultadoModel[];
-      let catuuid = visita[0].category_lang_uuid;
+      let visita = d as VisitasResultadoModel;
+      let catuuid = visita.category_lang_uuid;
       this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
       this.related = resp as VisitasResultadoModel[];
       });
     })
   }
+
 
   getImagenesForm(){
     this.homeService.getImagenesHome().subscribe( (resp) => {
@@ -198,6 +224,9 @@ export class VisitadetailComponent implements OnInit{
       this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
     } );
   }
+
+
+  
   
 
   

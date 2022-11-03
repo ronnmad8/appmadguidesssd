@@ -8,6 +8,8 @@ import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { VisitasModel } from '../models/Visitas.model';
+import { TimesModel } from '../models/Times.model';
+import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 
 
 @Injectable({
@@ -20,6 +22,8 @@ export class GlobalService {
   apiurl: string;
 
   ////////////
+  listatiposidentificacion: any[] = [{'id':1,'name':'DNI'},{'id':2,'name':'CIF'},{'id':3,'name':'Pasaporte'}];
+
   week: any = [
     "Lunes",
     "Martes",
@@ -73,6 +77,19 @@ export class GlobalService {
 
   ];
 
+  idiomasIsos: any[] = [
+    { key : "es", value : "español", value_en : "Spanish"},
+    { key : "en", value : "ingles", value_en : "English"},
+    { key : "fr", value : "frances", value_en : "French"},
+    { key : "de", value : "aleman", value_en : "German"},
+    { key : "it", value : "italiano", value_en : "Italian"},
+    { key : "pl", value : "polaco", value_en : "Polish"},
+    { key : "gr", value : "griego", value_en : "Greek"},
+    { key : "pt", value : "portugues", value_en : "Portuguese"},
+
+
+  ];
+
   
 
   redes: any = [
@@ -89,7 +106,21 @@ export class GlobalService {
     this.apiurl = environment.apiurl;
   }
 
- 
+  getLanguage(){
+    
+    let clang: string = this.getCurrentLang() ?? 'es';
+    if(localStorage.getItem('currentLanguage')){
+      clang = localStorage.getItem('currentLanguage') ?? 'es';
+    }
+    return clang;
+  }
+
+  getCurrentLang() {
+    if (navigator.languages != undefined){
+      return navigator.languages[0]; 
+    } 
+    return navigator.language;
+  }
 
 
   getFormatNumber(n: number) {
@@ -133,128 +164,68 @@ export class GlobalService {
 
   }
 
-
-  getVisitascarrito()  {
-    
-    let endpoint = '/visitas/carrito' ;
-    this.url = this.apiurl + endpoint;
-    
-    /////////pruebas
-    let visitas: VisitasModel[] = [];
-    let visitaTest1: VisitasModel = new VisitasModel();
-    visitaTest1.url = "assets/images/imagenVisita.jpg";
-    visitaTest1.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest1.price = 23;
-    visitaTest1.duration = 2;
-    visitaTest1.title = "Visita a Madrid";
-    visitaTest1.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest1.id = 1;
-    visitas.push(visitaTest1);
-    
-    let visitaTest2: VisitasModel = new VisitasModel();
-    visitaTest2.url = "assets/images/imagenVisita.jpg";
-    visitaTest2.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest2.price = 23;
-    visitaTest2.duration = 2;
-    visitaTest2.title = "Visita a Madrid";
-    visitaTest2.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest2.id = 2;
-    visitas.push(visitaTest2);
-
-    let visitaTest3: VisitasModel = new VisitasModel();
-    visitaTest3.url = "assets/images/imagenVisita.jpg";
-    visitaTest3.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest3.price = 33;
-    visitaTest3.duration = 3;
-    visitaTest3.title = "Visita a Madrid";
-    visitaTest3.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest3.id = 3;
-    visitas.push(visitaTest3);
-
-    return visitas;
-
-
-    // return this.http.get( `${this.url}` )
-    // .pipe(
-    //   map( res => res as ImagenesModel[]) ,
-    //   catchError((err) => {
-    //     console.error("Error  " , err.error);
-    //             return err.error;
-    //   })
-    // );
-
+  getIdiomabyIso(iso: string){
+    let idioma = this.idiomasIsos.find(x => x.key == iso);
+    return idioma.value;
   }
 
-  getVisitasprop()  {
-    
-    let endpoint = '/visitas/carrito/propuestas' ;
-    this.url = this.apiurl + endpoint;
-    
-    /////////pruebas
-    let visitas: VisitasModel[] = [];
-    let visitaTest1: VisitasModel = new VisitasModel();
-    visitaTest1.url = "assets/images/imagenVisita.jpg";
-    visitaTest1.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest1.price = 23;
-    visitaTest1.duration = 2;
-    visitaTest1.title = "Visita a Madrid";
-    visitaTest1.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest1.id = 1;
-    visitas.push(visitaTest1);
-    
-    let visitaTest2: VisitasModel = new VisitasModel();
-    visitaTest2.url = "assets/images/imagenVisita.jpg";
-    visitaTest2.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest2.price = 23;
-    visitaTest2.duration = 2;
-    visitaTest2.title = "Visita a Madrid";
-    visitaTest2.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest2.id = 2;
-    visitas.push(visitaTest2);
-
-    let visitaTest3: VisitasModel = new VisitasModel();
-    visitaTest3.url = "assets/images/imagenVisita.jpg";
-    visitaTest3.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest3.price = 33;
-    visitaTest3.duration = 3;
-    visitaTest3.title = "Visita a Madrid";
-    visitaTest3.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest3.id = 3;
-    visitas.push(visitaTest3);
-
-    let visitaTest4: VisitasModel = new VisitasModel();
-    visitaTest4.url = "assets/images/imagenVisita.jpg";
-    visitaTest4.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest4.price = 44;
-    visitaTest4.duration = 4;
-    visitaTest4.title = "Visita a Madrid";
-    visitaTest4.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest4.id = 4;
-    visitas.push(visitaTest4);
-
-    let visitaTest5: VisitasModel = new VisitasModel();
-    visitaTest5.url = "assets/images/imagenVisita.jpg";
-    visitaTest5.url_movil = "assets/images/imagenVisita.jpg";
-    visitaTest5.price = 55;
-    visitaTest5.duration = 5;
-    visitaTest5.title = "Visita a Madrid";
-    visitaTest5.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus ante rhoncus iaculis auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut gravida felis ut nunc gravida, commodo ornare nibh molestie. Curabitur in dapibus tortor. Phasellus sed est in tellus pretium malesuada. Sed pellentesque laoreet est, sed semper ni";
-    visitaTest5.id = 5;
-    visitas.push(visitaTest5);
-
-    return visitas;
-
-
-    // return this.http.get( `${this.url}` )
-    // .pipe(
-    //   map( res => res as ImagenesModel[]) ,
-    //   catchError((err) => {
-    //     console.error("Error  " , err.error);
-    //             return err.error;
-    //   })
-    // );
-
+  getbyMes(nummes: number){
+    let mes = this.months[nummes];
+    return mes;
   }
+
+  getbyDia(dia: number){
+    let diasemana = this.week[dia];
+    return diasemana;
+  }
+
+  getFechaleg(fecha: string){
+    
+    let fechasp = (fecha).split("/");  ;
+    let fechadate = new Date(fechasp[2]+"-"+fechasp[1]+"-"+fechasp[0]);
+    let fechaleg =  this.getbyDia(fechadate.getDay())+" "+ fechadate.getDate() + " " + this.getbyMes(fechadate.getMonth()) + " " + fechadate.getFullYear();
+    return fechaleg;
+  }
+
+
+  mapperVisitas(visita: VisitasResultadoModel) {
+    let vi = new TimesModel();
+    vi.min = visita.visit_time_min;
+    vi.max = visita.visit_time_max;
+    vi.uuid = visita.visit_time_uuid;
+    vi.init = visita.visit_time_init;
+    vi.end = visita.visit_time_end;
+    vi.date = visita.visit_time_date;
+    vi.precio_mayores = visita.visit_time_precio_mayores;
+    vi.precio_menores = visita.visit_time_precio_menores;
+    vi.precio_pequenos = visita.visit_time_precio_pequenos;
+    vi.iso = visita.visit_time_iso;
+    vi.duration = visita.visit_time_duration;
+
+    if(visita.duration != null){
+      vi.duration = visita.duration;
+    }
+    if(visita.precio_mayores != null){
+      vi.precio_mayores = visita.precio_mayores;
+    }
+    if(visita.precio_menores != null){
+      vi.precio_menores = visita.precio_menores;
+    }
+    if(visita.precio_pequenos != null){
+      vi.precio_pequenos = visita.precio_pequenos;
+    }
+
+    visita.visit_time = [];
+    visita.visit_time.push(vi);
+    return visita;
+  }
+
+getlistatiposidentificacion(){
+  return this.listatiposidentificacion;
+}
+
+
+  
 
 
 

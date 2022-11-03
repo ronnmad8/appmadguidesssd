@@ -328,10 +328,8 @@
                         <div class="titvisitabuscador">
                             <span>{{visita.visit_lang_title.length > 30 ? visita.visit_lang_title.substring(0,27)+"..." : visita.visit_lang_title}} {{i}}</span>
                         </div>
-                        <div class="textvisitabuscador ">
-                            <span *ngIf="!isrespon" >{{visita.visit_lang_description.length > 90 ? visita.visit_lang_description.substring(0,87)+"..." : visita.visit_lang_description
-                                }}</span>
-                            <span *ngIf="isrespon" >{{visita.visit_lang_description.length > 30 ? visita.visit_lang_description.substring(0,27)+"..." : visita.visit_lang_description
+                        <div class="textvisitabuscador " *ngIf="!isrespon">
+                            <span  >{{visita.visit_lang_description.length > 90 ? visita.visit_lang_description.substring(0,87)+"..." : visita.visit_lang_description
                                 }}</span>
                         </div>
 

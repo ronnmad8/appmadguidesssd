@@ -52,17 +52,16 @@ export class BusquedaComponent implements OnInit {
   mesFin: string = '';
   diaFin: number = 0;
   fechasSel: any[] = [];
-
   isrespon: boolean = false;
 
   valormaximo: number = 0;
   valorfiltroprecio: number = 0;
   vfiltros: boolean = true;
-  veridiomas: boolean = true;
-  verduracion: boolean = true;
-  verfranja: boolean = true;
-  vercaracteristicas: boolean = true;
-  verprecios: boolean = true;
+  veridiomas: boolean = false;
+  verduracion: boolean = false;
+  verfranja: boolean = false;
+  vercaracteristicas: boolean = false;
+  verprecios: boolean = false;
   selectedVisita: string = '';
 
   fechaIni: string = '';
@@ -104,6 +103,9 @@ export class BusquedaComponent implements OnInit {
 
   page: number = 1;
   scrollPosition: number = 0;
+  verordenar: boolean = false;
+  ordfixed: boolean = false;
+
   constructor(
     private router: Router,
     private buscadorService: BuscadorService,
@@ -132,6 +134,14 @@ export class BusquedaComponent implements OnInit {
   @HostListener('window:scroll')
   onWindowScroll() {
     this.scrollPosition = window.pageYOffset;
+    console.log(this.scrollPosition);
+    if(this.isrespon){
+      if (this.scrollPosition > 206) {
+        this.ordfixed = true;
+      } else {
+        this.ordfixed = false;
+      }
+    }
   }
 
   isresponsive() {
@@ -139,6 +149,9 @@ export class BusquedaComponent implements OnInit {
     if (scree < 1198) {
       this.isrespon = true;
       this.vfiltros = false;
+    }else if(scree >= 1198){
+      this.isrespon = false;
+      this.vfiltros = true;
     }
   }
 
@@ -159,7 +172,7 @@ export class BusquedaComponent implements OnInit {
     this.resultado = result as ResultadoModel;
     this.listaresultados = this.listaresultados.concat(this.resultado.data);
     window.scrollTo({ top: this.scrollPosition + 10 });
-    console.log('RESULTADO ', this.listaresultados);
+
   }
 
   ///////////////filtrar end//////////////////////////////
@@ -510,16 +523,26 @@ export class BusquedaComponent implements OnInit {
     this.router.navigate(['/visita', title, uuid]);
   }
 
-  //modal fechas
+  verordenarmvl(){
+    this.verordenar=!this.verordenar;
+  }
 
-  ///final de filtros
+
   quitarfiltros() {
-    //reset filtros
+    this.idiomasfiltro.forEach((x) => (x.selected = false));
+    this.duracionesfiltro.forEach((x) => (x.selected = false));
+    this.franjasfiltro.forEach((x) => (x.selected = false));
+    this.caracteristicasfiltro.forEach((x) => (x.selected = false));
+    this.categoriasfiltro.forEach((x) => (x.selected = false));
+    this.precioIni = 0;
+    this.precioFin = 2000;
+    
+    this.filtPrecios = this.precioIni + ' - ' + this.precioFin;
+    this.filtCategorias = [];
     this.filtDuracion = [];
     this.filtFranja = [];
     this.filtCaracteristicas = [];
     this.filtLanguages = [];
-    this.filtPrecios = '';
     this.filtFechas = '';
     this.filters = new FiltersModel();
     this.filters.ordenar = this.listaordenarfiltro[0].tipo;

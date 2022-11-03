@@ -10,12 +10,12 @@
         <div class=" d-flex posabsolRight"  >
             <div class="horasvisit d-flex">
                 <img class="imghorasvisita  mt-1 mx-1 posrel" style="top: 2px" src='assets/images/i-reloj.svg' alt="">
-                <span class="cantidadhorasvisita ">{{visitaresultado.visit_time_duration}}h</span>
+                <span class="cantidadhorasvisita ">{{timesSel.duration}}h</span>
             </div>
             <div class="linvertical mx-3"></div>
             <div class="d-flex w-100">
                 <div class="colGRIS1 mx-3 fs-16 mt-1" >{{messages.messages.from}} </div>
-                <div class="preciovisitaeuro ml-2 mr-0">{{visitaresultado.visit_time_precio}} €</div>
+                <div class="preciovisitaeuro ml-2 mr-0">{{timesSel.precio_mayores}} €</div>
             </div>
             <div class="posabsol d-flex cupo" style="top: 30px; right: 0px" (click)="abrirverredes()">
                 <img src="../../assets/images/i-compartir.svg" class="imicono4" draggable="false">
@@ -42,10 +42,9 @@
 
     <div #detallevisita id="detallevisita" class=" d-flex">
         <div class="p-0 m-0 ffimaglat">
-
             <div class="conteni posrel d-flex">
 
-                <div class="p-0 m-0 fimaglat">
+                <div class="p-0 m-0 fimaglat max5ima">
                     <div class="p-0 m-0 imageneslat" *ngFor="let imageneslat of listaImagenesVisitaLat ">
                         <div #imageneslatid id="imlt-{{imageneslat.id}}" class="chimaglat cupo">
                             <picture>
@@ -60,15 +59,14 @@
 
                 <div class="detalleslider">
                     <swiper #imagenlista id="imagenlista" [config]="config" (slideChangeTransitionEnd)="getIndexSel()">
-
                         <div id="im-{{imagenes.id}}" class="p-0 m-0 imagenescent"
                             *ngFor="let imagenes of listaImagenesVisita">
                             <div class="posrel">
-                                <div class="visitastemporada">
+                                <!-- <div class="visitastemporada" >
                                     <div>
                                         {{messages.messages.season}} 
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="posrel w-100">
                                     <picture>
                                         <source media="(min-width: 0px)" srcset="{{imagenes.url}}"
@@ -79,12 +77,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </swiper>
                 </div>
 
                 <div class="posrel shad">
-                    <div class="posabsol" style="height: 1200px;">
+                    <div class="posabsol" >
                         <div #fdetallecale id="fdetallecale"
                             [ngClass]="{ 'posfixed80': pegaj == 2, 'posrelinicio': pegaj == 1, 'posrelfinal': pegaj == 3  }">
                             <div #detallecale id="detallecale" class="m-0 p-4 divcalendar ">
@@ -121,7 +118,8 @@
                                         <li *ngFor="let day of week" class="day-name ilCalendar ">{{day | slice:0:1}}
                                         </li>
 
-                                        <li class="liCalendar" [ngClass]="{'daySelected': ( day.selected ) }"
+                                        <li class="liCalendar" 
+                                        [ngClass]="{'daySelected': ( day.selected ), 'dayVisit': (day.visitday) }"
                                             (click)="clickDay(day)"
                                             [style.gridColumnStart]="first ? day?.indexWeek : 'auto'"
                                             *ngFor="let day of monthSelect; let first = first">
@@ -152,7 +150,7 @@
                                             <div *ngFor="let li of listahorasvisita" class="col-3 p-0 m-0">
                                                 <input name="rbhora" id="rbhora-{{li.key}}" type="radio"
                                                     value="{{li.key}}" (click)="horainfosel(li.value)"
-                                                    [(ngModel)]="horaSel">
+                                                    [(ngModel)]="horaSel" > 
                                                 <label class="px-1" for="rbhora-{{li.key}}">{{li.value}}</label>
                                             </div>
                                         </div>
@@ -196,15 +194,15 @@
                                                     *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
                                                     {{messages.data.people}}
                                                 </span>
-                                                <div class="posrel fs-18" style="top: 0px"
+                                                <div class="posrel fs-18 colGRIS2" style="top: 0px"
                                                     *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
-                                                    <span class="colGRIS1 ">
+                                                    <span  [ngClass]="{'colGRIS1': adultoSel > 0 }"  >
                                                         {{messages.price.adults}} {{adultoSel}}
                                                     </span>
-                                                    <span class="mx-3 colGRIS2 ">
+                                                    <span class="mx-3"  [ngClass]="{'colGRIS1': ninosSel > 0 }" >
                                                         {{messages.price.children}} {{ninosSel}}
                                                     </span>
-                                                    <span class="colGRIS2 ">
+                                                    <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }" >
                                                         Menores {{menoresSel}}
                                                     </span>
                                                 </div>
@@ -356,7 +354,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -399,7 +396,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="p-0 m-0">
@@ -414,7 +410,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -600,7 +595,7 @@
                             {{messages.details.meeting.description}}
                         </div>
                     </div>
-                    <a class="fs-14 my-3 colROJO1" [href]="googlemapsvisita" target="_blank" follow="nofollow">
+                    <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.visit_encuentro" target="_blank" follow="nofollow">
                         {{messages.details.meeting.link}}
                     </a>
                 </div>

@@ -16,6 +16,7 @@ export class ImagenesModel{
     alt: string;
     iso: string;
     sel: boolean;
+    temporada: boolean
     
     constructor(){
         this.id = 0;
@@ -29,6 +30,7 @@ export class ImagenesModel{
         this.alt = "";
         this.iso = "";
         this.sel = false;
+        this.temporada = false;
     
 
     }

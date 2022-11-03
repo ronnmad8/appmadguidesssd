@@ -15,7 +15,7 @@
           <div class="panelVisita posrel cupo"  (click)="verdetalle(visita)"  >
               <div class="visitastemporada" *ngIf="visita.visit_temporada == 1"  >
                 <div>
-                    Visita de temporada {{visita.visit_uuid}}
+                    Visita de temporada 
                 </div>
               </div>
               <div class="imgvisita" >
@@ -32,14 +32,14 @@
               </div>
               <div class="row p-0 m-0">
                   <div class="titvisita">
-                      <span>{{visita.visit_title}}</span>
+                      <span>{{visita.visit_lang_title}}</span>
                   </div>
                   <div class="textvisita">
-                    <span>{{visita.visit_description}}</span>
+                    <span>{{visita.visit_lang_description}}</span>
                   </div>
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
-                        <span class="preciovisitaeuro">{{visita.precio}}€ </span>
+                        <span class="preciovisitaeuro">{{visita.precio_mayores}}€ </span>
                         <span class="porpersona">por persona</span> 
                       </div>
                       <div class="horasvisita"> 

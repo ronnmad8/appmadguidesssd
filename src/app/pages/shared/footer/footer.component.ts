@@ -5,7 +5,10 @@ import { Router } from '@angular/router';
 import { AlertasService } from 'src/app/services/alertas.service';
 import { HomeService } from 'src/app/services/home.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { HeadfooterService } from 'src/app/services/headfooter.service';
 import { MessagesModel } from 'src/app/models/Messages.model';
+import { FooterModel } from 'src/app/models/Footer.model';
+import { ImagenesModel } from 'src/app/models/Imagenes.model';
 
 
 @Component({
@@ -18,7 +21,8 @@ import { MessagesModel } from 'src/app/models/Messages.model';
     //@ViewChild(LoginComponent, null) loginentrar;
     @Input() nomostrarenlacesfooter:boolean  = false;
 
-    message: MessagesModel = new MessagesModel();
+    messageFooter: FooterModel = new FooterModel();
+    logoFooter: ImagenesModel = new ImagenesModel();
     adminactive: boolean;
     widg1show = false;
     widg2show = false;
@@ -27,6 +31,7 @@ import { MessagesModel } from 'src/app/models/Messages.model';
       private auth: AuthService,
       private alertasService: AlertasService,
       private homeService: HomeService,
+      private headfooterService: HeadfooterService,
       private router: Router
     ) {
       //leer persona
@@ -35,39 +40,25 @@ import { MessagesModel } from 'src/app/models/Messages.model';
 
     ngOnInit() {
       this.getMessageFooter();
+      this.getLogoFooter();
       //this.loginadmin();
     }
 
     getMessageFooter(){
- 
-        this.homeService.getMessagesHome().subscribe( (resp) => {
-          let respuesta: any =  resp ;
-          
-          this.message = respuesta[1] ;
-
+        this.headfooterService.getMessagesFooter().subscribe( (resp) => {
+          this.messageFooter = resp as FooterModel ;
         } );
-    
     }
 
-    identificar(){
-      //this.loginentrar.login();
+
+    getLogoFooter(){
+      this.headfooterService.getLogoFooter().subscribe( (resp) => {
+        this.logoFooter = resp as ImagenesModel;
+      } );
     }
 
-    loginadmin() {
-      let personalocal= localStorage.getItem('persona');
-      if(personalocal != null){
-        this.adminactive = true;
-      }
-    }
 
-    loginadminout() {
-      this.logout();
-    }
 
-    logout() {
-      this.adminactive = false;
-      this.auth.logout();
-    }
 
     showwidg1(){
       this.widg1show = !this.widg1show;

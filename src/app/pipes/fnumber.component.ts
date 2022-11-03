@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FnumberPipeComponent implements PipeTransform {
   transform(value: number, ...args: string[]): number {
-    console.log(value);
+    
     let num = value.toString();
     let numsp = num.split(".");
     if(numsp[1].length == 1){

@@ -14,8 +14,8 @@
   <div class="row p-0 m-0  ">
     <div class="col-12 p-0 text-center ">
       <div id="titulotestimonios">
-        <span class="colGRIS1">{{messageData.opinions.title}} </span>
-        <span class="colROJO3"> {{messageData.opinions.view}}</span>
+        <span class="colGRIS1">{{messagesOpinionsData.title}} </span>
+        <span class="colROJO3"> Madguides</span>
       </div>
     </div>
   </div>
@@ -26,8 +26,8 @@
     <swiper [config]="config">
       <div class=" p-0 m-0 " *ngFor="let comentario of commentsData ">
         <div class="panelTestimonio ">
-          <div class="row  posrel  mx-auto">
-            <div class=" imgtestim posimgtestim ">
+          <div class="posrel d-flex">
+            <div class=" posimgtestim ">
               <picture>
                 <source media="(min-width: 0px)" srcset="{{comentario.image}}"
                   data-srcset="{{comentario.image}}">
@@ -54,9 +54,9 @@
                 <div>{{comentario.visit_lang_description.length > 35 ? comentario.visit_lang_description.substring(0, 32)+"..." : comentario.visit_lang_description}}</div>
               </div> 
               <div class="veracttestim cupo "   (click)="verdetalle(comentario)">
-                <div class="bordeme">  
-                    <i class="fa fa-eye fs-16"></i>
-                    {{messageData.opinions.view}}
+                <div class="bordeme d-flex">  
+                    {{messagesOpinionsData.view}}
+                    <i class="fa fa-angle-right fs-10 mx-1 mt-1"></i>
                 </div>
               </div> 
             </div>

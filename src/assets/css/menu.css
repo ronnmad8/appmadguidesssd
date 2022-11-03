@@ -152,6 +152,14 @@
   left: 0;
 }
 
+.posabsolbarlupa {
+  position: absolute !important;
+  bottom: 24px !important;
+  right: -150px;
+  left: 0;
+  z-index: 999;
+}
+
 .posabsolbaridiomas {
   position: absolute !important;
   bottom: 20px !important;
@@ -176,9 +184,9 @@
 
 #enlace2 {
   padding: 0 !important;
-  width: 40px !important;
+  width: 65px !important;
   height: auto !important;
-  margin-left: 20px !important;
+  margin-left: 10px !important;
   margin-right: 20px !important;
   margin-top: 20px;
 }
@@ -311,10 +319,28 @@
   position: absolute;
   top: 60px !important; 
   left: 1px !important;
+  text-align: left;
   background-color: var(--c_BLANCO2);
   color: var(--c_GRIS1);
   width: 120px;
-  height: 160px;
+  height: 230px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+.modallogueado{
+  text-align: left;
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  right: -20px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 140px;
+  height: 200px;
   border-radius: 2px;
   padding:15px;
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
@@ -464,27 +490,45 @@
 
 .posabsolmicuentamodal {
   position: absolute !important;
-  top: 80px !important;
+  top: 0px !important;
   right: 0 !important;
   left: auto !important;
   z-index: 901;
   overflow: auto;
 }
 
-#panelmicuenta {
+.panelcuenta {
   width: 752px;
   height: 100%;
-  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
+  /* box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important; */
+  border: 1px solid var(--c_GRIS8);
   padding: 0;
   border-radius: 0 0 40px 40px;
   margin-left: auto;
   margin-right: auto;
-  background-color: var(--c_BLANCO);
+  background-color: var(--c_BLANCO) !important;
+}
+
+.panelregistro {
+  width: 752px;
+  height: 100%;
+  /* box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important; */
+  padding: 0;
+  border-radius: 0 0 40px 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO) !important;
+}
+
+.scrld{
+  height: 600px;
+  overflow-x: hidden;
 }
 
 #divmicuenta {
   width: 422px;
-  height: 500px;
+  min-height: 300px;
+  height: auto;
   padding-top: 0px;
   margin-left: auto;
   margin-right: auto;
@@ -568,6 +612,44 @@
   background-color: var(--c_ROJO2);
   color: var(--c_BLANCO);
   font-size: 20px !important;
+}
+
+.btredondoRojomicuentamvl {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 95%;
+  height: 51px;
+  border: 1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoApagadomicuenta {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 223px;
+  height: 51px;
+  border: 1px solid var(--c_GRIS2);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+  cursor: no-drop !important;
+}
+
+.btredondoApagadomicuentamvl {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 95%;
+  height: 51px;
+  border: 1px solid var(--c_GRIS2);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+  cursor: no-drop !important;
 }
 
 .heolvidadomicuenta {
@@ -739,14 +821,32 @@
 
   /******modal idiomas**********/
 .modalidiomas{
-  z-index: 10;
-  position: absolute;
-  top: 60px !important; 
-  left: 1px !important;
+  position: absolute !important;
+  top: auto !important; 
+  bottom: 50px !important;
+  left: 150px !important;
+  text-align: left;
   background-color: var(--c_BLANCO2);
   color: var(--c_GRIS1);
   width: 120px;
-  height: 160px;
+  height: 230px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+.modallogueado{
+  text-align: left;
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  right: -20px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 140px;
+  height: 200px;
   border-radius: 2px;
   padding:15px;
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
@@ -761,12 +861,12 @@
 /*******modal carrito*****/
 
 
-.posabsolmodalcarritomovil {
+.posabsolmodalmovil {
   position: fixed;
   top: 80px !important;
   right: 0px !important;
   left: 0px !important;
-  z-index: 30;
+  z-index: 901;
   
 }
 
@@ -774,7 +874,7 @@
   height: 54px;
   width: 100%;
   font-size: 14px;  
-  background-color: var(--c_AMARILLO2);
+  background-color: var(--c_AMARILLO);
   color: var(--c_GRIS1);
   border: 0.5px solid #efefef;
 }
@@ -877,19 +977,12 @@
 
 /*******modal micuenta*****/
 
-.posabsolmicuentamodal {
-  position: fixed !important;
-  top: 80px !important;
-  right: 0 !important;
-  left: 0!important;
-  z-index: 901;
-  overflow: auto;
-}
 
-#panelmicuenta {
+.panelcuenta {
+
   width: 100% !important;
   min-width: 280px;
-  height: 553px;
+  height: 100%;
   box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
   padding: 0;
   border-radius: 0 !important;
@@ -897,6 +990,7 @@
   margin-right: auto;
   background-color: var(--c_BLANCO);
 }
+
 
 #divmicuenta {
   width: 100%;
@@ -977,17 +1071,6 @@
   left: auto !important;
 }
 
-.btredondoRojomicuenta {
-  font-family: Jost-Bold;
-  padding: 10px 10px;
-  border-radius: 40px;
-  width: 223px;
-  height: 51px;
-  border: 1px solid var(--c_ROJO2);
-  background-color: var(--c_ROJO2);
-  color: var(--c_BLANCO);
-  font-size: 20px !important;
-}
 
 #heolvidadomicuenta {
   font-size: 14px;

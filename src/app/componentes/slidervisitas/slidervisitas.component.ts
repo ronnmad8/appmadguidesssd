@@ -6,9 +6,9 @@ import { NgwWowService } from 'ngx-wow';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { MessagesModel } from 'src/app/models/Messages.model';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 
 
 @Component({
@@ -18,11 +18,9 @@ import { MessagesModel } from 'src/app/models/Messages.model';
 export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
   @Input() messageData: MessagesModel = new MessagesModel();
-  @Input() recommendedData: RecomendadasModel[] = [];
+  @Input() recommendedData: VisitasResultadoModel[] = [];
 
   public show: boolean = true;
-  
-  
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -106,10 +104,8 @@ export class SlidervisitasComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/buscador/recommended', true]);
   }
 
-  verdetalle(visita: RecomendadasModel){
-    
-    //this.router.navigate(['/visita', visita.visit_title, visita.visit_uuid  ]);
-    this.router.navigate(['/visitatitulo/', visita.visit_title  ]);
+  verdetalle(visita: VisitasResultadoModel){
+    this.router.navigate(['/visita/', visita.visit_lang_title, visita.visit_uuid  ]);
   }
 
 

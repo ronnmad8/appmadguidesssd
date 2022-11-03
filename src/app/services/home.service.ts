@@ -4,11 +4,11 @@ import { ImagenesModel } from '../models/Imagenes.model';
 import { catchError, map} from 'rxjs/operators' ;
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { VisitasModel } from '../models/Visitas.model';
-import { RecomendadasModel } from '../models/Recomendadas.model';
 import { HomerespModel } from '../models/Homeresp.model';
 import { ComentariosModel } from '../models/Cometarios.model';
 import { TextosModel } from '../models/Textos.model';
@@ -17,12 +17,17 @@ import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { MessagesFormModel} from '../models/MessageseForm.model';
 import { MessagesImageModel} from '../models/MessagesImage.model';
+import { utf8Encode } from '@angular/compiler/src/util';
+import { TextotourModel } from '../models/Textotour.model';
+import { TextoiconsModel } from '../models/Textoicons.model';
+import { TextorecomendadasModel } from '../models/Textorecomendadas.model';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  clang: string = 'es';
   userToken: string = "";
   idUsuario: string = "";
   url: string = "";
@@ -32,106 +37,51 @@ export class HomeService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private globalService: GlobalService,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = "&language="+this.globalService.getLanguage();
   }
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  getDataHome()  {
-    
-    let endpoint = '/home' ;
-    this.url = this.apiurl + endpoint;
-
-    return this.http.get( `${this.url}` )
-    .pipe(
-      map( res =>{
-        return res;
-      } ) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
-
-  }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  
 
 
   getRecomendadasHome()  {
       let endpoint = '/home?recommended' ;
-      this.url = this.apiurl + endpoint;
-  
+      this.url = this.apiurl + endpoint + this.clang;;
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var recomendadas:RecomendadasModel[] = [];
+          var recomendadas: VisitasResultadoModel[] = [];
           var homeresp :HomerespModel = resp as HomerespModel;
-          var recomendadasData: VisitasModel[] = homeresp.recommended as VisitasModel[]; 
-          console.log("rd ",recomendadasData);
-          recomendadasData.forEach((el: any, index: number) => {
-            var recomendado: RecomendadasModel = new RecomendadasModel();
-            recomendado.id = index;
-            recomendado.min = el.min ?? 0;
-            recomendado.max = el.max ?? 0;
-            recomendado.uuid = el.uuid ?? "";
-            recomendado.time_init = el.time_init ?? "";
-            recomendado.date= el.time_date ?? "";
-            recomendado.precio = el.precio ?? "";
-            recomendado.iso= el.iso ?? "";
-            recomendado.duration = el.duration ?? "";
-            recomendado.visit_uuid = el.visit_uuid ?? "";
-            recomendado.visit_refundable = el.visit_refundable ?? "";
-            recomendado.visit_privada = el.visit_privada ?? "";
-            recomendado.visit_temporada = el.visit_temporada ?? "";
-            recomendado.visit_accesibility = el.visit_accesibility ?? "";
-            recomendado.visit_iso = el.visit_iso ?? "";
-            recomendado.visit_uuid = el.visit_uuid ?? "";
-            recomendado.visit_title = el.visit_title ?? "";
-            recomendado.visit_description = el.visit_description ?? "";
-            recomendado.visit_metadata = el.visit_metadata ?? "";
-            recomendado.visit_image_uuid = el.visit_image_uuid ?? "";
-            recomendado.visit_image_url= el.visit_image_url ?? "";
-            recomendado.visit_image_url_movil = el.visit_image_url_movil ?? "";
-            recomendado.visit_image_url_gallery = el.visit_image_url_gallery ?? "";
-            recomendado.visit_image_name = el.visit_image_name ?? "";
-            recomendado.visit_image_iso = el.visit_image_iso ?? "";
-            recomendado.visit_image_title = el.visit_image_title ?? "";
-            recomendado.visit_image_description = el.visit_image_description ?? "";
-            recomendado.recommended = el.recommended ?? "";
-            recomendado.category_uuid = el.category_uuid ?? "";
-            recomendado.category_iso = el.category_iso ?? "";
-            recomendado.category_title = el.category_title ?? "";
-            recomendado.category_description = el.category_description ?? "";
-            recomendado.category_parent_uuid = el.category_parent_uuid ?? "";
-            recomendado.category_parent_iso = el.category_parent_iso ?? "";
-            recomendado.category_title = el.category_title ?? "";
-            recomendado.category_parent_description = el.category_parent_description ?? "";
-            
-           recomendadas.push(recomendado);
-        });
-        return recomendadas;    
-        } ) ,
+          recomendadas = homeresp.recommended as VisitasResultadoModel[];
+          
+          ///correccion TIMES lista o unico
+          recomendadas.forEach((el: any, index: number) => {
+            if(el.visit_time_uuid != null && el.visit_time == null){
+              el = this.globalService.mapperVisitas(el);
+              
+
+              // el.duration = el.visit_time[0].duration;
+              // el.precio_mayores = el.visit_time[0].precio_mayores;
+              // el.precio_menores = el.visit_time[0].precio_menores;
+              // el.precio_pequenos = el.visit_time[0].precio_pequenos;
+
+            }
+          });
+          return recomendadas;
+        }),
         catchError((err) => {
           console.error("Error  " , err.error);
-                  return err.error;
+          return err.error;
         })
       );
     }
     
   
-
-
     getCommentsHome()  {
       let endpoint = '/home?comments' ;
-      this.url = this.apiurl + endpoint;
-  
+      this.url = this.apiurl + endpoint + this.clang;
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
@@ -176,29 +126,15 @@ export class HomeService {
     }
 
 
-
     getImagenesHome()  {
-      let endpoint = '/home?images' ;
+      let endpoint = '/assets/find?file=bannerbottom,bannertop,logo' ;
       this.url = this.apiurl + endpoint;
   
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var imagenes: ImagenesModel[] = [];
-          var homeresp :HomerespModel = resp as HomerespModel;
-          var imagesData = homeresp.images; 
-          imagesData.forEach((el: any, index: number) => {
-          var imagen: ImagenesModel = new ImagenesModel();
-          imagen.id = index;
-          imagen.name = el.name ?? "";
-          imagen.url = el.url ?? "";
-          imagen.url_movil = el.url_movil ?? "";
-          imagen.url_galleria = el.url_galleria ?? "";
-
-          imagenes.push(imagen);
-        });
-
-        return imagenes;    
+          let data: ImagenesModel[] = resp as ImagenesModel[];
+          return data;    
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -208,18 +144,17 @@ export class HomeService {
     }
 
 
-
     getMessagesHome()  {
       let endpoint = '/home?messages' ;
-      this.url = this.apiurl + endpoint;
+      this.url = this.apiurl + endpoint + this.clang;
   
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
           var homeresp :HomerespModel = resp as HomerespModel;  
-          var messageData = homeresp.messages;
+          var data = homeresp.messages;
       
-          return messageData;    
+          return data;    
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -227,16 +162,17 @@ export class HomeService {
         })
       );
     }
+
 
     getMessagesContacto()  {
-      let endpoint = '/assets/form' ;
-      this.url = this.apiurl + endpoint;
-  
+      let endpoint = '/assets/form?' ;
+      this.url = this.apiurl + endpoint + this.clang;
+
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var messageData = resp as MessagesModel;  
-          return messageData;    
+          var data = resp as MessagesModel;  
+          return data;    
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -245,15 +181,70 @@ export class HomeService {
       );
     }
 
-    getMessagesSeacrh()  {
-      let endpoint = '/assets/search' ;
-      this.url = this.apiurl + endpoint;
+
+    getMessagesTour()  {
+      let endpoint = '/assets/home/tour?' ;
+      this.url = this.apiurl + endpoint + this.clang;
   
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var messageData = resp as MessagesModel;  
-          return messageData;   
+          var data = resp as TextotourModel;  
+          return data;   
+        } ) ,
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+    }
+
+
+    getMessagesIcons()  {
+      let endpoint = '/assets/home/tour/icons?' ;
+      this.url = this.apiurl + endpoint + this.clang;
+  
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( resp =>{
+          var data = resp as TextoiconsModel;  
+          return data;   
+        } ) ,
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+    }
+
+
+    getMessagesOpinions()  {
+      let endpoint = '/assets/home/opinions?' ;
+      this.url = this.apiurl + endpoint + this.clang;
+  
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( resp =>{
+          var data = resp as TextotourModel;  
+          return data;   
+        } ) ,
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+    }
+
+
+    getMessagesRecomendadas()  {
+      let endpoint = '/assets/home/visit?' ;
+      this.url = this.apiurl + endpoint + this.clang;
+  
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( resp =>{
+          var data = resp as TextorecomendadasModel;  
+          return data;   
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -264,14 +255,14 @@ export class HomeService {
 
 
     getMessagesForm()  {
-      let endpoint = '/assets/home/form' ;
+      let endpoint = '/assets/home/form?' ;
       this.url = this.apiurl + endpoint;
   
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var messageData = resp as MessagesFormModel;  
-          return messageData;   
+          var data = resp as MessagesFormModel;  
+          return data;   
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -280,15 +271,16 @@ export class HomeService {
       );
     }
 
+
     getMessagesImage()  {
-      let endpoint = '/assets/home/image' ;
-      this.url = this.apiurl + endpoint;
+      let endpoint = '/assets/home/image?' ;
+      this.url = this.apiurl + endpoint+ this.clang;
   
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var messageImageData = resp as MessagesImageModel; 
-          return messageImageData;   
+          var data = resp as MessagesImageModel; 
+          return data;   
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -299,13 +291,13 @@ export class HomeService {
 
 
     getCajaBuscaHome(busqueda:string){
-      let endpoint = '/visit?title='+busqueda.trim()+'&per_page=5'; ;
-      this.url = this.apiurl + endpoint;
+      let endpoint = '/visit?title='+busqueda.trim()+'&per_page=5'; 
+      this.url = this.apiurl + endpoint+ this.clang;
       return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
-          var visitas = resp as ResultadoModel;
-          return  visitas;    
+          var data = resp as ResultadoModel;
+          return  data;    
         } ) ,
         catchError((err) => {
           console.error("Error  " , err.error);
@@ -316,7 +308,6 @@ export class HomeService {
 
 
 
-  
   
 
 

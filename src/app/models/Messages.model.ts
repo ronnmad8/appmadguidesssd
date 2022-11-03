@@ -4,7 +4,6 @@ import { ComentariosModel } from './Cometarios.model';
 import { ImagenesModel } from './Imagenes.model';
 import { LanguagesModel } from './Languages.model';
 import { MessagesFormModel } from './MessageseForm.model';
-import { RecomendadasModel } from './Recomendadas.model';
 import { TextosModel } from './Textos.model';
 
 export class MessagesModel {

@@ -1,0 +1,291 @@
+<div class="container px-xl-0 px-1 ">
+
+
+
+    <div id="contenidobusca" class="w-100 d-xl-flex ">
+
+        <div id="menulatclienteadmin">
+            <div class="h80"></div>
+            <div class="pb-4 posrel" [ngClass]="{ 'panscrollVH': isrespon }">
+
+                <div id="selecenlace" class="menulateral pt-5 w-100">
+                    <div class="p-2 fs-20 posfixedW280 ">
+                        <div class="ff-JB py-0 m-0">
+                            Hola
+                        </div>
+                        <div class="ff-JB colROJO1 pt-0 py-0 m-0">
+                            {{usuario.name}} nombre
+                        </div>
+                        <div class="linefull my-3"></div>
+                        <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': vercuenta}"
+                            (click)="vermicuenta()">
+                            Mi Cuenta
+                        </div>
+                        <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': verreservas}"
+                            (click)="vermisreservas()">
+                            Reservas
+                        </div>
+                        <div class="menulatenlace py-1 m-0 cupo" [routerLink]="['/ayuda']"
+                            routerLinkActive="router-link-active">
+                            Ayuda
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div>
+            <div class="h100"></div>
+            <form class="validate-form" [formGroup]="forma">
+            <div class="p-0 m-0 animated fadeIn slow " [ngClass]="{'dnone' :!vercuenta } ">
+                <div class="panelMicuenta d-flex ">
+                    <div class="infoMicuenta posrel w-100">
+                        <div class="titmicuenta">
+                            <span>Mi cuenta </span>
+                        </div>
+                        <div class="posabsolR fs-16 p-4">
+                            <div>{{usuario.roles[0].name}}</div>
+                            <div *ngIf="usuario.afiliado != ''" >
+                                <span>ID de Afiliado:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}} _</span>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex px-3 pt-1 pb-4">
+                            <div class="logoavatar">
+                                <span class="p-0"><img src="../../assets/images/i-avatar.svg" class="imicono100 posrel"
+                                        draggable="false"></span>
+                            </div>
+                            <div class="posrel" style="left: 30px">
+                                <div>
+                                    {{ usuario.name.length > 30 ? usuario.name.substring(0,27)+"..." : usuario.name }}
+                                </div>
+                                <div>
+                                    {{ usuario.surname.length > 30 ? usuario.surname.substring(0,27)+"..." :
+                                    usuario.surname}}
+                                </div>
+                                <div>
+                                    {{ usuario.prefijo }} <span class="mx-1">{{usuario.telefono}}</span>
+                                </div>
+                                <div>
+                                    {{ usuario.email }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                    <div #paneldatospersonales id="paneldatospersonales" class="panelMicuenta d-flex ">
+                        <div class="infoMicuenta">
+                            <div class="titmicuenta">
+                                <span>Datos personales </span>
+                            </div>
+                            <div class="infoMicuenta w-100 d-flex">
+                                <div class="row px-2">
+
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre "
+                                                name="name" id="name" formControlName="name" />
+                                        </div>
+                                        <div class="lblform" >Nombre</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
+                                                name="surname" id="surname" formControlName="surname" />
+                                        </div>
+                                        <div class="lblform" >Apellidos</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="email" class="w-100 colGRIS1"
+                                                placeholder=" Correo electrónico " name="email" id="email"
+                                                formControlName="email" />
+                                        </div>
+                                        <div class="lblform" >Email</div>
+                                    </div>
+                                    <div class="col-3 pl-2 pr-1 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo "
+                                                name="prefijo" id="prefijo" formControlName="prefijo" />
+                                        </div>
+                                        <div class="lblform" >Prefijo</div>
+                                    </div>
+                                    <div class="col-3 pl-1 pr-2 posrel">
+                                        <div class="cj">
+                                            <input type="phone" class="w-100 colGRIS1" placeholder=" Teléfono movil "
+                                                name="telefono" id="telefono" formControlName="telefono" />
+                                        </div>
+                                        <div class="lblform" >Telefono</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
+                                <button class="btredondoRojoMicuenta  " type="button" (click)="modificarDatos()">
+                                    <span>Guardar cambios</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div #paneldatosfacturacion id="paneldatosfacturacion" class="panelMicuenta d-flex ">
+                        <div class="infoMicuenta">
+                            <div class="titmicuenta">
+                                <span> Datos de facturación </span>
+                            </div>
+                            <div class="infoMicuenta w-100 d-flex">
+                                <div class="row px-2">
+
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Nombre"
+                                                id="namefacturacion" name="namefacturacion"
+                                                formControlName="namefacturacion" />
+                                        </div>
+                                        <div class="lblform" >Nombre</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Apellidos"
+                                                id="surnamefacturacion" name="surnamefacturacion"
+                                                formControlName="surnamefacturacion" />
+                                        </div>
+                                        <div class="lblform" >Apellidos</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                      
+                                            <select #tipoiden class="cjselect w-100" id="tipoidentificacion"
+                                                name="tipoidentificacion" formControlName="tipoidentificacion">
+                                                <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
+                                                    {{li.name}}
+                                                </option>
+                                            </select>
+                                            <div class="lblform" >Tipo identificación</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Numero identificacion "
+                                                id="numeroidentificacion" name="numeroidentificacion"
+                                                formControlName="numeroidentificacion" />
+                                        </div>
+                                        <div class="lblform" >Número de identificación</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion"
+                                                name="direccion" formControlName="direccion" />
+                                        </div>
+                                        <div class="lblform" >Dirección</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Codigo postal "
+                                                id="codigopostal" name="codigopostal" formControlName="codigopostal" />
+                                        </div>
+                                        <div class="lblform" >Código postal</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad"
+                                                name="ciudad" formControlName="ciudad" />
+                                        </div>
+                                        <div class="lblform" >Ciudad</div>
+                                    </div>
+                                    <div class="col-6 px-2 posrel">
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="Pais " id="pais"
+                                                name="pais" formControlName="pais" />
+                                        </div>
+                                        <div class="lblform" >País</div>
+                                    </div>
+                                    <div class="col-6 px-2 ">
+                                        <div class="col-6 p-0 m-0">
+                                            <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
+                                            <label class="mx-2" for="rb-1">Particular</label>
+                                            <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">
+                                            <label class="mx-2" for="rb-2">Empresa</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
+                                <button class="btredondoRojoMicuenta  " type="button" (click)="modificarDatos()">
+                                    <span>Guardar cambios</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="p-0 m-0 animated fadeIn slow " [ngClass]="{'dnone' : !verreservas} ">
+                <div class="w-100 posrel">
+
+                    <div class="panelReservafirmada" *ngFor="let visitapedido of reservas ">
+
+                        <div style="width: 280px; height: 100%">
+                            <div #imageneslatid id="im-{{visitapedido.visit_uuid}}" class="cupo">
+                                <picture>
+                                    <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
+                                        data-srcset="{{visitapedido.visit_image_url}}">
+                                    <img class="imglat" src="{{visitapedido.visit_image_url}}"
+                                        data-src="{{visitapedido.visit_image_url}}"
+                                        alt="{{visitapedido.visit_lang_title}}" style="height: 194px ;">
+                                </picture>
+                            </div>
+                        </div>
+
+                        <div class="posrel h-100  p-4">
+
+                            <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
+                                {{visitapedido.visit_lang_title}}
+                            </div>
+                            <div class="lh-1-4">
+                                <span>{{visitapedido.visit_time[0].date | fechaleg }}</span>
+                                <span class="mx-1"> a las {{visitapedido.visit_time[0].init | horaleg }} </span>
+                            </div>
+                            <div class="lh-1-4">
+                                Idioma: <span class="ml-1">{{visitapedido.visit_time[0].iso | idiomaiso |
+                                    capitalize}}</span>
+                            </div>
+                            <div class="fs-14 lh-1-4 ff-JB">
+                                <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
+                                        style="margin-right: -3px; margin-top: -2px;"></i>
+                                    {{visitapedido.adultos}}</span>
+                                <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                                        style="margin-right: -3px; margin-top: 0px;"></i>
+                                    {{visitapedido.ninos}}</span>
+                                <span><i class="fa fa-person fs-12" title="Menores"
+                                        style="margin-right: -3px; margin-top: px;"></i>
+                                    {{visitapedido.menores}}</span>
+                            </div>
+                            <div class="fs-14 lh-1-4" *ngIf="visitapedido.visit_privada">
+                                *Visita privada
+                            </div>
+                            <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2">
+                                Código de Reserva:
+                                <span class="colROJO2">{{visitapedido.codigoreserva}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="posabsolR">
+                        <div class="posrel">
+                            <div class="posabsol " style="right: 0 ; top: 10px">
+                                <div class="mt-4 mx-auto text-center">
+                                    <button class="btredondoRojoVerReservas " type="button"
+                                        (click)="verMisReservas()">
+                                        <span class="ff-JB">Ver mis reservas</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

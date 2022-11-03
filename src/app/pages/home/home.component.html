@@ -1,20 +1,24 @@
 <div class="w-100 ">
 
     <div #banner class="" >
-        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador"  [messageData]="message" [bannertopData]="bannertop"    ></app-bannerhome>
+        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador" [messagesTourData]="messagesTour" 
+         [messagesIconsData]="messagesIcons" [bannertopData]="bannertop"    ></app-bannerhome>
     </div>
 
-    <div #recomendadas class=" " >
-        <app-slidervisitas [messageData]="message"   [recommendedData]="recommended"  ></app-slidervisitas>
+    <div #recomendadas class="" >
+        <app-slidervisitas    [recommendedData]="recommended"  ></app-slidervisitas>
     </div>
     
     <section #testimonios>
-        <app-slidertestimonios [messageData]="message" [commentsData]="comments" [logoData]="logo" ></app-slidertestimonios>
+        <app-slidertestimonios [commentsData]="comments" [logoData]="logo" 
+        [messagesOpinionsData]="messagesOpinions"  >
+        </app-slidertestimonios>
     </section>
     
     <div class="mh100"></div>
 
-    <section #contacto class="my-3" >
+    <section #contct id="contct" class="my-3" >
+        <div></div>
        <app-zonacontacto [messageFormData]="messagesForm" [messageImageData]="messageImage"   [bannerbottomData]="bannerbottom"   ></app-zonacontacto>
     </section>
 

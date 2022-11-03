@@ -1,13 +1,6 @@
 <div class="mhbannerhome ">
   <div class=" posrel"   >
 
-    <!-- <div class="bar posrel ml-auto mr-1">
-            <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
-              <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
-            </div>
-    </div> -->
-
-
     <div class="posabsolbeforemodal ">
       <div class="container posrel ">
 
@@ -16,26 +9,27 @@
           <div id="panelbuscadorhome">
             <div id="titulomodalbuscador">
               <div class="ff-JB">
-                {{messageData.tour.title}}
+                {{messagesTourData.title}}
               </div>
             </div>
             <div id="subtitulomodalbuscador">
               <div>
                 <span>
-                  {{messageData.tour.message1}}
+                  {{messagesTourData.message1}}
                 </span>
                 <span class="ff-JB">
-                  {{messageData.tour.message2}}
+                  {{messagesTourData.message2}}
                 </span>
               </div>
             </div>
 
             <div id="cjbuscador" class="posrel">
               <div id="divcjbuscador">
-                <input #cjbusqueda type="text" class="colGRIS1 posabsolcjbuscador" [placeholder]="messageData.tour.input" 
+                <input #cjbusqueda id="cjbusqueda" type="text" maxlength="30"  class="colGRIS1 posabsolcjbuscador" 
+                [placeholder]="messagesTourData.input" 
                  (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda"  />
                 <button class="btredondoRojo posabsolbtbuscador" type="button" (click)="verbuscador()"  >
-                  <span>{{messageData.tour.button}}</span>
+                  <span>{{messagesTourData.button}}</span>
                   <span><i class="fa fa-arrow-right "></i></span>
                 </button>
               </div>
@@ -97,7 +91,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messageData.icons.guide}}
+                    {{messagesIconsData.guide}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -106,7 +100,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messageData.icons.group}}
+                    {{messagesIconsData.group}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -115,7 +109,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messageData.icons.talk}}
+                    {{messagesIconsData.talk}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -124,7 +118,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messageData.icons.price}}
+                    {{messagesIconsData.price}}
                   </div>
                 </div>
 
@@ -137,7 +131,7 @@
     </div>
 
 
-    <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.8s" >
+    <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.2s" >
       <picture>
         <source media="(min-width: 968px)" srcset="{{bannertopData.url}}" data-srcset="{{bannertopData.url}}">
         <source media="(min-width: 0px)" srcset="{{bannertopData.url_movil}}" data-srcset="{{bannertopData.url_movil}}">

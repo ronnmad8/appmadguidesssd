@@ -19,6 +19,8 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
+import { CartModel } from 'src/app/models/Cart.model';
+import { ProviderService } from 'src/app/services/provider.service';
 
 
 @Component({
@@ -34,7 +36,7 @@ export class CarritoComponent implements OnInit{
   @Output() zonapago: EventEmitter<any> = new EventEmitter();
   @Input() solopaso1  : boolean = false;
   
-  listaPedido :VisitasModel[] = [];
+  pedido : CartModel = new CartModel();
   carritoId: number = 0;
 
   constructor(
@@ -47,7 +49,8 @@ export class CarritoComponent implements OnInit{
       private auth: AuthService,
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
-      private title: Title
+      private title: Title,
+      private providerService: ProviderService,
 
   )
   {
@@ -63,13 +66,14 @@ export class CarritoComponent implements OnInit{
   
 
   ngOnInit() {
-    this.menuPublic.emit(0);
+    this.providerService.setThrowHiddModales(true);
+
     this.getPedido();
 
   }
 
   getPedido() {
-    this.listaPedido = this.carritoService.getPedido();
+    this.pedido = this.carritoService.getCart();
   }
 
   setsolopaso1(evt: any) {

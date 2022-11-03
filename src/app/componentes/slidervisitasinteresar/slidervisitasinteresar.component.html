@@ -9,11 +9,11 @@
       </div>
     </div>
     <div class="dist3"></div>
-    <div id="divvisitas" class="w-100">
+    <div id="divvisitas" class="d-flex">
 
-      <div class="p-0 m-0" *ngFor="let visita of relatedData">
-        <div class="panelVisita posrel">
-          <div class="visitastemporada">
+      <div class="p-0 m-2" *ngFor="let visita of relatedData">
+        <div class="panelVisita posrel cupo" (click)="verdetalle(visita)" >
+          <div class="visitastemporada" *ngIf="visita.visit_temporada == 1" >
             <div>
               Visita de temporada
             </div>
@@ -40,12 +40,12 @@
 
             <div class="infovisita  d-flex w-100 ">
               <div class="preciovisita">
-                <span class="preciovisitaeuro">{{visita.visit_precio}}€ </span>
+                <span class="preciovisitaeuro">{{visita.visit_time[0].precio_mayores}}€ </span>
                 <span class="porpersona">por persona</span>
               </div>
               <div class="horasvisita">
                 <img class="imghorasvisita  mb-2 mr-1" src='assets/images/i-reloj.svg' alt="">
-                <span class="cantidadhorasvisita ">{{visita.visit_time_duration}}h</span>
+                <span class="cantidadhorasvisita ">{{visita.visit_time[0].duration}}h</span>
 
               </div>
             </div>

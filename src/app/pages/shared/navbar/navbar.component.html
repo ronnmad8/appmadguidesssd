@@ -1,58 +1,59 @@
 <div id="wrapper" class="pagewrapper posrel">
 
   <!--pc-->
-  <div class="menupc pc posfixedmenu"   [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
-    <nav id="navpc" class="container mx-auto px-0">
+  <div *ngIf="!isrespon" class="menupc posfixedmenu" [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
+    <nav id="navpc" class="pc container mx-auto px-0">
       <div class="row hbarmenupc colGRIS1">
 
         <div class="col-3 divlogo_pc posrel">
-          <div class="cupo p-0 posabsol" style="left: 15px; top: 12px" routerLink="home" (click)="mostrar()">
-            <img src="../../assets/images/logo-madguides.svg" class="imlogomenupc" draggable="false">
+          <div class="cupo p-0 posabsol" style="left: 15px; top: 12px" routerLink="home" (click)="quitarmodales()">
+            <img src="{{logoMenu.url}}" alt="{{logoMenu.name}}" class="imlogomenupc" draggable="false"
+              onerror="this.error= null;this.src='../../assets/images/sinimagen.webp' ">
           </div>
         </div>
 
-        <div class="col-5 px-0" *ngIf="!isZonapago"  >
+        <div class="col-5 px-0" *ngIf="!isZonapago">
           <div class="d-flex mt-2">
 
             <div id="enlace1" class="posrel" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
-              <div class="cupo fs-20" routerLink="/quienessomos" routerLinkActive="active">
-                <span>{{message.menu.who}}</span>
+              <div class="cupo fs-20" routerLink="/quienessomos" routerLinkActive="active" (click)="quitarmodales()">
+                <span [ngClass]="{'colNEGRO': hov2}">{{messageMenu.who}}</span>
               </div>
             </div>
 
             <div id="enlace2" class="posrel" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
-              <div class="cupo fs-20" routerLink="/blog" routerLinkActive="active">
-                <span>{{message.menu.blog}}</span>
+              <div class="cupo fs-20" routerLink="/contacto" routerLinkActive="active" (click)="quitarmodales()">
+                <span [ngClass]="{'colNEGRO': hov3}">Contacto</span>
               </div>
             </div>
 
             <div id="enlace3" class="posrel" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
-              <div class="cupo fs-20" routerLink="/buscador" routerLinkActive="active">
-                <span>{{message.menu.help}}</span>
+              <div class="cupo fs-20" routerLink="/ayuda" routerLinkActive="active" (click)="quitarmodales()">
+                <span [ngClass]="{'colNEGRO': hov4}">{{messageMenu.help}}</span>
               </div>
             </div>
 
           </div>
         </div>
 
-        <div class="col-4 d-flex text-right "  *ngIf="!isZonapago" >
+        <div class="col-4 d-flex text-right " *ngIf="!isZonapago">
 
           <div class="bar posrel ml-auto mr-0">
-            <div class="cupo posabsolbar py-2 " (click)="mostrarbusqueda()">
+            <div class="cupo posabsolbarlupa py-2 " (click)="mostrarbusqueda()">
               <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
             </div>
           </div>
 
           <div class="baridiomas posrel ml-1 mr-1">
             <div class="cupo posabsolbaridiomas colGRIS7 cupo d-flex fs-20 py-2" (click)="mostraridiomas()">
-              <div class="pr-2  ">{{idioma}}</div>
-              <div>
+              <div class="pr-2  ">{{idioma | capitalize}}</div>
+              <div class="mx-1">
                 <i class=" fa fa-angle-down fs-16"></i>
               </div>
             </div>
             <div class="modalidiomas animated fadeInDown" *ngIf="veridiomas">
-              <div *ngFor="let idioma of idiomas">
-                <div class="cupo" (click)="cambiaridioma(idioma)">{{idioma}}</div>
+              <div *ngFor="let idiom of idiomas">
+                <div class="cupo" (click)="cambiaridioma(idiom.iso)">{{idiom.name | capitalize}}</div>
               </div>
             </div>
           </div>
@@ -61,19 +62,43 @@
             <div class="cupo posabsolbar py-2 " (click)="mostrarusuario()">
               <img src="../../assets/images/i-perfil.svg" class="im50" draggable="false">
             </div>
+            <div class="posabsolnot" *ngIf="!loginok">
+              <i class="fa fa-circle fs-8 colROJO1"></i>
+            </div>
+            <div class="posabsolnot" *ngIf="loginok">
+              <i class="fa fa-circle fs-8 colVERDE"></i>
+            </div>
+            <div class="modallogueado animated fadeInDown" *ngIf="loginok && verusuario">
+              <div class="p-0 m-0">
+                <div class="ff-JB">{{usuario?.name}}</div>
+                <div class="colVERDE posrel" style="top: -6px">{{usuario?.rol}} </div>
+                <div class="linefull mt-0 my-1"></div>
+                <div class="cupo" (click)="irazonaclientemicuenta()">Mi cuenta</div>
+                <div class="cupo" (click)="irazonaclientereservas()">Reservas</div>
+                <div class="cupo" [routerLink]="['/ayuda']">Ayuda</div>
+                <div class="cupo" (click)="cerrarsesion()">
+                  Cerrar sesión
+                </div>
+
+              </div>
+            </div>
           </div>
 
           <div class="carrito posrel" [ngClass]="{ 'carritoactivo': vercarrito}">
             <div class="cupo posabsolbar py-2 " (click)="mostrarcarrito()">
               <img src="../../assets/images/i-carrito.svg" class="im50" draggable="false">
             </div>
+            <div class="posabsolcarro badge bgBLANCO colROJO1 ">
+              {{actividades}}
+            </div>
           </div>
 
         </div>
 
-        <div class="col-9 posrel"   *ngIf="isZonapago"  >
-          <div class="posabsol d-flex" style="top: 24px; right: 15px" >
-            <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px" draggable="false">
+        <div class="col-9 posrel" *ngIf="isZonapago">
+          <div class="posabsol d-flex" style="top: 24px; right: 15px">
+            <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px"
+              draggable="false">
             <div class="fs-24 ml-2">Pago seguro</div>
           </div>
         </div>
@@ -82,30 +107,25 @@
 
     <div class="container posrel ">
 
-      <div id="modalcarrito" class="pc posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
-        <div id="panelcarritovacio" *ngIf="carritovacio">
+      <div id="modalcarrito" class="posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
+        <div id="panelcarritovacio" *ngIf="pedido.visitasPedido.length == 0">
           <div class="text-center py-3">
             Tu carrito está vacío
           </div>
         </div>
 
-        <div id="panelcarrito" *ngIf="!carritovacio">
+        <div id="panelcarrito" *ngIf="pedido.visitasPedido.length > 0"
+          [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
 
           <div id="divcarrito">
-            <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
+            <div class="bordeli p-0" *ngFor="let visita of pedido.visitasPedido">
               <div class="cartamodalcarrito d-flex ">
                 <div class="imgcartamoadalcarrito">
-                  <div class="pc pl-1">
+                  <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
-                      <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
-                        class="imgcartamoadalcarrito lazyload ">
-                    </picture>
-                  </div>
-                  <div class="mvl">
-                    <picture>
-                      <source media="(min-width: 0px)" srcset="{{visita.url_movil}}" data-srcset="{{visita.url_movil}}">
-                      <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}"
+                        data-srcset="{{visita.visit_image_url}}">
+                      <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -113,21 +133,30 @@
 
                 <div class="posrel infocartamodalcarrito">
                   <div class="posabsol" style="right: 5px; top: 0">
-                    <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
+                    <span class="cupo" (click)="eliminarvisitacarrito(visita.visit_uuid)">
                       <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{visita.price}} €
+                    {{visita.precio}} €
                   </div>
-                  <div id="titulomodalcarrito">
-                    {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
+                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)">
+                    {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
+                    visita.visit_lang_title }}
                   </div>
                   <div id="texto1modalcarrito">
-                    {{visita.description.length > 40 ? visita.description.substring(0,37)+"..." : visita.description }}
+                    {{visita.visit_lang_description.length > 40 ? visita.visit_lang_description.substring(0,37)+"..." :
+                    visita.visit_lang_description }}
                   </div>
-                  <div id="texto2modalcarrito">
-                    2 Adultos, 1 menor
+                  <div class="d-flex" id="texto2modalcarrito">
+                    <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
+                        style="margin-right: -3px; margin-top: -2px;"></i>
+                      {{visita.adultos}}</span>
+                    <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                        style="margin-right: -3px; margin-top: 0px;"></i>
+                      {{visita.ninos}}</span>
+                    <span><i class="fa fa-person fs-12" title="Menores" style="margin-right: -3px; margin-top: px;"></i>
+                      {{visita.menores}}</span>
                   </div>
                 </div>
 
@@ -135,20 +164,20 @@
             </div>
           </div>
 
-          <div class="bordeli w-100">
+          <div class="bordeli p-1 w-100">
             <div class="my-2 posrel">
               <div class="fs-14 pl-2 colGRIS3">
-                {{visitascarrito.length}} actividades
+                {{actividades}} actividades
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
-                {{totalcarrito}} €
+                {{ totalcarrito }} €
               </div>
             </div>
           </div>
 
           <div class="w-100">
             <div class="my-3 mx-auto text-center">
-              <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']"  >
+              <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
                 <span class="ff-JB">Finalizar reserva</span>
               </button>
             </div>
@@ -156,45 +185,274 @@
 
         </div>
       </div>
+
+      <div id="modalmicuenta" class="posabsolmicuentamodal" *ngIf="!loginok">
+
+        <div id="panelmicuenta" class="panelcuenta" *ngIf="verusuario">
+
+          <form class="validate-form" [formGroup]="formlogin">
+            <div id="divmicuenta">
+              <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+                  <i class="fa fa-angle-left fs-20"></i>
+                </div>
+                <div id="abrirmicuentatitulo" class="px-3">{{messageLogin.title}}</div>
+              </div>
+              <div class="px-3">
+                <div id="accedemicuenta">
+                  {{messageLogin.subtitle}}
+                </div>
+                <div class="cj">
+                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                    name="email" formControlName="email" />
+                </div>
+                <div class="cj posrel">
+                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.password}}"
+                    id="password" name="password" formControlName="password" />
+                  <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                      (click)="verpassword(false)"></i> </div>
+                  <div class="posabsolRm10'" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                      (click)="verpassword(true)"></i> </div>
+                </div>
+                <div class="d-flex" id="recuerdamimicuenta">
+                  <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
+                    <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
+                    <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
+                  </div>
+                  <div class="mt-1 ml-2">{{messageLogin.remember}}</div>
+                </div>
+                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                  <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button" (click)="iniciarsesion()">
+                    <span>{{ messageLogin.session }}</span>
+                  </button>
+                  <button *ngIf="!btactivado" class="btredondoApagadomicuenta " type="button">
+                    <span>{{ messageLogin.session }}</span>
+                  </button>
+                  <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
+                    {{messageLogin.forgot}}
+                  </div>
+                </div>
+                <div class="oaccedemicuenta">
+                  {{messageLogin.accede}}
+                </div>
+                <div class="w-100 p-0 ">
+                  <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button" (click)="loginfacebook()">
+                    <img src="assets/images/logofb.png" class="imredes" draggable="false">
+                    <span>Facebook</span>
+                  </button>
+                  <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                    <img src="assets/images/logog.png" class="imredes" draggable="false">
+                    <span>Google</span>
+                  </button>
+                </div>
+                <div id="notienesmicuenta">
+                  <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                    {{messageLogin.register}}
+                  </span>
+                </div>
+
+              </div>
+            </div>
+            <div class="mh40"></div>
+          </form>
+
+        </div>
+        <div id="panelforget" class="panelcuenta" *ngIf="verforget"
+          [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
+
+          <form class="validate-form" [formGroup]="formforget">
+            <div id="divmicuenta">
+              <div class="mh30"></div>
+              <div id="titulomodalmicuenta" class="w-100 d-flex posrel">
+                <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+                  <i class="fa fa-angle-left fs-20"></i>
+                </div>
+                <div id="abrirmicuentatitulo" class="px-3">Olvidé mi contraseña</div>
+              </div>
+              <div class="px-3">
+                <div id="accedemicuenta">
+                  Enviar código de recuperación a mi correo
+                </div>
+                <div class="cj">
+                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                    name="email" formControlName="email" />
+                </div>
+
+                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                  <button *ngIf="btForgetactivado" class="btredondoRojomicuenta " type="button"
+                    (click)="renovarpassword()">
+                    <span>Enviar</span>
+                  </button>
+                  <button *ngIf="!btForgetactivado" class="btredondoApagadomicuenta " type="button">
+                    <span>Enviar</span>
+                  </button>
+                </div>
+                <div>
+                  <span></span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="mh40"></div>
+          </form>
+
+        </div>
+
+        <div id="panelmiregistro" class="panelcuenta" *ngIf="verregistrar"
+          [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
+          <div class="scrld">
+            <form class="validate-form" [formGroup]="formregister">
+              <div id="divmicuenta">
+                <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                  <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+                    <i class="fa fa-angle-left fs-20"></i>
+                  </div>
+                  <div id="abrirmicuentatitulo" class="px-3">Registro</div>
+                </div>
+                <div class="px-3">
+                  <div class="ff-JB">
+                    <span>Datos personales</span>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="email" name="email"
+                      formControlName="email" />
+                  </div>
+                  <div class="cj posrel">
+                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
+                      name="password" formControlName="password" />
+                    <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                        (click)="verpassword(false)"></i> </div>
+                    <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                        (click)="verpassword(true)"></i> </div>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
+                      formControlName="name" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname" name="surname"
+                      formControlName="surname" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo" name="prefijo"
+                      formControlName="prefijo" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
+                      formControlName="telefono" />
+                  </div>
+                  <div class="linefull my-2"></div>
+                  <div class="ff-JB">
+                    <span>Datos de facturacion</span>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="namefacturacion"
+                      name="namefacturacion" formControlName="namefacturacion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surnamefacturacion"
+                      name="surnamefacturacion" formControlName="surnamefacturacion" />
+                  </div>
+                  <div class="w-100">
+                    <select #tipoiden class="cjselect" id="tipoidentificacion" name="tipoidentificacion"
+                      formControlName="tipoidentificacion">
+                      <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
+                        {{li.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Numero identificacion " id="numeroidentificacion"
+                      name="numeroidentificacion" formControlName="numeroidentificacion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion" name="direccion"
+                      formControlName="direccion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Codigo postal " id="codigopostal"
+                      name="codigopostal" formControlName="codigopostal" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad" name="ciudad"
+                      formControlName="ciudad" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Pais " id="pais" name="pais"
+                      formControlName="pais" />
+                  </div>
+                  <div class="">
+
+                    <div class="col-6 p-0 m-0">
+                      <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
+                      <label class="mx-2" for="rb-1">Particular</label>
+                      <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">
+                      <label class="mx-2" for="rb-2">Empresa</label>
+                    </div>
+
+                  </div>
+
+                  <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                    <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button" (click)="registrar()">
+                      <span>Registrar</span>
+                    </button>
+                    <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
+                      <span>Registrar</span>
+                    </button>
+                  </div>
+
+                  <div id="iralogin">
+                    <span>Si tengo cuenta,</span><span class="colROJO3 cupo" (click)="vermodalusuario()"> ir a login
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="mh40"></div>
+        </div>
+      </div>
     </div>
 
-
-    <div class="container  " style="height: 0px; position: fixed; z-index: 9999;" *ngIf="menusticky">
-      <div class="posabsolmodalbannerbuscador" *ngIf="verbusca" >
+    <div class="container cajabu " *ngIf="verbusca">
+      <div class="posabsolmodalbannerbuscador">
 
         <div class="posrel">
           <div class="brdbot">
-            <input #cjbusqueda type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" [(ngModel)]="busqueda"
-              class="cajaquebuscas" />
-
+            <input #cjbusque id="cjbusque" type="text" placeholder="¿que buscas?" (keyup)="buscarprop()" maxlength="30"
+              [(ngModel)]="busqueda" class="cajaquebuscas" />
           </div>
 
           <div class="posabsolpropbuscador">
-            <div id="panelpropbuscador" *ngIf="busqueda.length > 0">
+            <div id="panelpropbuscador" *ngIf="busqueda.length > 0 && visitasprop.length > 0">
               <div id="listaprop" class="bordeli p-0 m-0">
                 <div class="p-0" *ngFor="let visita of visitasprop">
                   <div class="cartamodalprop d-flex ">
                     <div class="imgcartamodalprop">
                       <div class="pc pl-1">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
-                          <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}"
+                            data-srcset="{{visita.visit_image_url}}">
+                          <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
                       <div class="mvl">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.url_movil}}"
-                            data-srcset="{{visita.url_movil}}">
-                          <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
+                            data-srcset="{{visita.visit_image_url_movil}}">
+                          <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
                     </div>
 
-                    <div class="posrel infocartamodalprop cupo">
+                    <div class="posrel infocartamodalprop cupo" (click)="verdetalle(visita)">
                       <div id="textomodalprop">
-                        {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title }}
+                        {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
+                        visita.visit_lang_title }}
                       </div>
                     </div>
                   </div>
@@ -202,13 +460,13 @@
               </div>
 
               <div class="posrel d-flex">
-                <div id="vertodosprop" class="cupo" (click)="vertodos()">
+                <div id="vertodosprop" class="cupo" (click)="verbuscador()">
                   Ver todos los resultados para
                   <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
                     busqueda}}"</span>
                 </div>
                 <div>
-                  <i id="flechaprop" class="fa fa-arrow-right mr-4 mt-2 cupo" (click)="vertodos()"  ></i>
+                  <i id="flechaprop" class="fa fa-arrow-right mr-4 mt-2 px-2 cupo" (click)="verbuscador()"></i>
                 </div>
               </div>
             </div>
@@ -216,14 +474,15 @@
         </div>
       </div>
     </div>
-
   </div>
 
+  <!--pc-end---->
+
   <!--movil-->
-  <div class="mvl posfixedmenumvl ">
+  <div *ngIf="isrespon" id="mvlcabecera" class="mvl posfixedmenumvl ">
     <div class="d-flex posrel mt-3">
       <div class="cupo w-100 text-center mx-auto " routerLink="home">
-        <img src="../../assets/images/logo-madguides.svg" style="width:110px; height: auto;" draggable="false">
+        <img src="{{logoMenu.url}}" alt="{{logoMenu.name}}" style="width:110px; height: auto;" draggable="false">
       </div>
       <div>
         <i class="fas fa-bars fs-28 posabsol" style="left: 20px; top: 6px" title="abrir" menu (click)="menu()"></i>
@@ -238,190 +497,451 @@
   </div>
 
   <div class="menumvl mvl">
-    <nav id="sidebar" class="sbar" [ngClass]="ocultar">
-      <div class="posrel ">
 
-        <div id="abrirmicuenta" class="w-100 d-flex px-2 py-2" (click)="mostrarusuariob(true)">
-          <div class="pl-4">Mi cuenta</div>
-          <div class="cupo imperfil text-right pr-2 ml-auto mr-0 ">
+    <nav id="sidebar" class="sbar" [ngClass]="ocultar">
+      <div class="posrel">
+
+        <div id="abrirmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(true)">
+          <div class="px-4 py-2">Mi cuenta</div>
+          <div class="cupo imperfil posabsolRight px-1">
             <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
         </div>
-        <div id="abriridioma" class="d-flex px-2 py-2" style="bottom: 120px">
-          <div class="pl-4 m-0 ">Idioma</div>
-          <div class="cupo imperfil text-right pr-2 ml-auto mr-0 " (click)="mostraridiomas()">
-            {{idioma}}
-            <i class=" fa fa-angle-down fs-16"></i>
+
+        <div id="mvlidiomas" class="posabsolBot">
+          <div id="abriridioma" class="d-flex p-3">
+            <div class="px-3 ">Idioma</div>
+            <div class="cupo imperfil " (click)="mostraridiomas()">
+              <span>{{idioma}}</span>
+            </div>
+            <div>
+              <i class=" fa fa-angle-down fs-16 "></i>
+            </div>
+            <div class="">
+              <div class="modalidiomas animated fadeInDown" *ngIf="veridiomas">
+                <div *ngFor="let idiom of idiomas">
+                  <div class="cupo" (click)="cambiaridioma(idiom.iso)">{{idiom.name | capitalize}}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="panscrollM">
 
-          <div class="posrel limenu pl-4 m-0  ">
+        <div id="mvlenlaces" class="panscrollM">
+          <div class="posrel limenu px-3 m-0">
             <div class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
-              <span>{{message.menu.who}}</span>
+              <span>{{messageMenu.who}}</span>
             </div>
           </div>
-
-          <div class="posrel limenu pl-4 m-0  ">
-            <div class="cupo w-50  " routerLink="/blog" routerLinkActive="active" (click)="mostrar()">
-              <span>{{message.menu.blog}}</span>
-            </div>
-          </div>
-
-          <div class="posrel limenu pl-4 m-0  ">
+          <div class="posrel limenu px-3 m-0">
             <div class="cupo w-50  " routerLink="/contacto" routerLinkActive="active" (click)="mostrar()">
               <span>Contacto</span>
             </div>
           </div>
-
+          <div class="posrel limenu px-3 m-0">
+            <div class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
+              <span>{{messageMenu.help}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
-  </div>
 
-  <div class="container posrel mx-auto conta ">
+    <div class="container posrel mx-auto conta ">
 
-    <div id="modalcarritomovil" class="mvl  posabsolmodalcarritomovil" *ngIf="vercarrito">
-      <div id="panelcarritovaciomovil" *ngIf="carritovacio">
-        <div class="text-center py-3">
-          Tu carrito está vacío
-        </div>
-      </div>
-      <div id="panelcarritomovil" *ngIf="!carritovacio">
-        <div id="panelcarritocondatomovil">
-          <div class="text-xl-center text-left py-1 px-3">
-            Resumen del carrito
+      <div id="modalcarritomovil" class="posabsolmodalmovil" *ngIf="vercarrito && !isZonapago">
+        <div id="panelcarritovaciomovil" *ngIf="pedido.visitasPedido.length == 0">
+          <div class="text-center py-3">
+            Tu carrito está vacío
           </div>
         </div>
-        <div id="divcarritomovil">
-          <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
-            <div class="cartamodalcarrito d-flex ">
-              <div class="imgcartamoadalcarrito">
-                <div class="pc pl-1">
-                  <picture>
-                    <source media="(min-width: 0px)" srcset="{{visita.url}}" data-srcset="{{visita.url}}">
-                    <img src="{{visita.url}}" data-src="{{visita.url}}" alt=""
-                      class="imgcartamoadalcarrito lazyload ">
-                  </picture>
+        <div id="panelcarritomovil" *ngIf="!carritovacio">
+          <div id="panelcarritocondatomovil">
+            <div class="text-xl-center text-left py-1 px-3">
+              Resumen del carrito
+            </div>
+          </div>
+
+          <div id="divcarritomovil">
+            <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
+              <div class="cartamodalcarrito d-flex">
+                <div class="imgcartamoadalcarrito">
+                  <div class="pl-1">
+                    <picture>
+                      <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
+                        data-srcset="{{visita.visit_image_url_movil}}">
+                      <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
+                        class="imgcartamoadalcarrito lazyload ">
+                    </picture>
+                  </div>
                 </div>
-                <div class="mvl">
-                  <picture>
-                    <source media="(min-width: 0px)" srcset="{{visita.url_movil}}" data-srcset="{{visita.url_movil}}">
-                    <img src="{{visita.url_movil}}" data-src="{{visita.url_movil}}" alt=""
-                      class="imgcartamoadalcarrito lazyload ">
-                  </picture>
+                <div class="posrel infocartamodalcarrito">
+                  <div class="posabsol" style="right: 5px; top: 0">
+                    <span class="cupo" (click)="eliminarvisitacarrito(visita.visit_lang_uuid)">
+                      <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
+                    </span>
+                  </div>
+                  <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
+                    {{visita.precio}} €
+                  </div>
+                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)">
+                    {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
+                    visita.visit_lang_title}} }}
+                  </div>
+                  <div id="texto1modalcarrito">
+                    {{visita.visit_lang_description.length > 40 ? visita.visit_lang_description.substring(0,37)+"..." :
+                    visita.visit_lang_description }}
+                  </div>
+                  <div class="d-flex" id="texto2modalcarrito">
+                    <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
+                        style="margin-right: -3px; margin-top: -2px;"></i>
+                      {{visita.adultos}}</span>
+                    <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                        style="margin-right: -3px; margin-top: 0px;"></i>
+                      {{visita.ninos}}</span>
+                    <span><i class="fa fa-person fs-12" title="Menores" style="margin-right: -3px; margin-top: px;"></i>
+                      {{visita.menores}}</span>
+                  </div>
                 </div>
               </div>
-              <div class="posrel infocartamodalcarrito">
-                <div class="posabsol" style="right: 5px; top: 0">
-                  <span class="cupo" (click)="eliminarvisitacarrito(visita.id)">
-                    <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
+            </div>
+          </div>
+          <div class="bordeli p-1 w-100">
+            <div class="my-2 posrel">
+              <div class="fs-14 pl-2 colGRIS3">
+                {{actividades}} actividades
+              </div>
+              <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
+                {{ totalcarrito }} €
+              </div>
+            </div>
+          </div>
+          <div class="w-100">
+            <div class="my-3 mx-auto text-center">
+              <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
+                <span class="ff-JB">Finalizar reserva</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="modalmicuenta" class="posabsolmodalmovil" *ngIf="!loginok">
+
+        <div id="panelmicuenta" class="panelcuenta" *ngIf="verusuario">
+
+          <form class="validate-form" [formGroup]="formlogin">
+            <div id="divmicuenta">
+              <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+                  <i class="fa fa-angle-left fs-20"></i>
+                </div>
+                <div id="abrirmicuentatitulo" class="px-3">{{messageLogin.title}}</div>
+              </div>
+              <div class="px-3 mt-3">
+                <div id="accedemicuenta">
+                  {{messageLogin.subtitle}}
+                </div>
+                <div class="cj">
+                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                    name="email" formControlName="email" />
+                </div>
+                <div class="cj posrel">
+                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.password}}"
+                    id="password" name="password" formControlName="password" />
+                  <div class="posabsolRm5" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                      (click)="verpassword(false)"></i> </div>
+                  <div class="posabsolRm5" *ngIf="!verpass"> <i class="fa-solid fa-eye" (click)="verpassword(true)"></i>
+                  </div>
+                </div>
+                <div class="d-flex" id="recuerdamimicuenta">
+                  <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
+                    <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
+                    <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
+                  </div>
+                  <div class="mt-1 ml-2">{{messageLogin.remember}}</div>
+                </div>
+                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                  <button *ngIf="btactivado" class="btredondoRojomicuentamvl " type="button" (click)="iniciarsesion()">
+                    <span>{{ messageLogin.session }}</span>
+                  </button>
+                  <button *ngIf="!btactivado" class="btredondoApagadomicuentamvl " type="button">
+                    <span>{{ messageLogin.session }}</span>
+                  </button>
+                  <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
+                    {{messageLogin.forgot}}
+                  </div>
+                </div>
+                <div class="oaccedemicuenta">
+                  {{messageLogin.accede}}
+                </div>
+                <div class="w-100 p-0 ">
+                  <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button" (click)="loginfacebook()">
+                    <img src="assets/images/logofb.png" class="imredes" draggable="false">
+                    <span>Facebook</span>
+                  </button>
+                  <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                    <img src="assets/images/logog.png" class="imredes" draggable="false">
+                    <span>Google</span>
+                  </button>
+                </div>
+                <div id="notienesmicuenta">
+                  <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                    {{messageLogin.register}}
                   </span>
                 </div>
-                <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                  {{visita.price}} €
-                </div>
-                <div id="titulomodalcarrito">
-                  {{visita.title.length > 20 ? visita.title.substring(0,17)+"..." : visita.title}} }}
-                </div>
-                <div id="texto1modalcarrito">
-                  {{visita.description.length > 40 ? visita.description.substring(0,37)+"..." : visita.description }}
-                </div>
-                <div id="texto2modalcarrito">
-                  2 Adultos, 1 menor
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bordeli w-100">
-          <div class="py-2 posrel">
-            <div class="fs-14 pl-2 colGRIS3">
-              {{visitascarrito.length}} actividades
-            </div>
-            <div id="preciocarrito" class="posabsol colGRIS1 " style="right: 7px; bottom: 7px">
-              {{totalcarrito}} €
-            </div>
-          </div>
-        </div>
-        <div class="w-100 py-3">
-          <div class="mx-auto text-center">
-            <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']"   >
-              <span class="ff-JB">Finalizar reserva</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div id="modalmicuenta" class="posabsolmicuentamodal">
-      <div id="panelmicuenta" *ngIf="verusuario">
-        <div id="divmicuenta">
-          <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
-            <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
-              <i class="fa fa-angle-left fs-20"></i>
-            </div>
-            <div id="abrirmicuentatitulo" class="px-3">Mi cuenta</div>
-          </div>
-          <div class="px-3">
-            <div id="accedemicuenta">
-              Accede a tu área de usuario
-            </div>
-            <div class="cj">
-              <input type="text" class="colGRIS1 " placeholder=" Usuario o email" id="emailmicuanta"
-                name="emailmicuenta" />
-            </div>
-            <div class="cj posrel" >
-              <input type="text" class="colGRIS1 " placeholder=" Contraseña" id="passwordmicuenta"
-                name="passwordmicuenta" />
-              <div class="posabsol" style="top: 10px; right: 15px"> <i class="fa-solid fa-eye-slash"></i> </div>
-            </div>
-            <div class="d-flex" id="recuerdamimicuenta">
-              <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
-                <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
-                <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
-              </div>
-              <div class="mt-1 ml-2">Recordarme</div>
-            </div>
-            <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
-              <button class="btredondoRojomicuenta " type="button">
-                <span>Iniciar sesión</span>
-              </button>
-              <div class="heolvidadomicuenta">
-                He olvidado mi contraseña
               </div>
             </div>
-            <div class="oaccedemicuenta">
-              O accede con
-            </div>
-            <div class="w-100 p-0 ">
-              <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
-                <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
-                <span>Facebook</span>
-              </button>
-              <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
-                <img src="../../assets/images/logog.png" class="imredes" draggable="false">
-                <span>Google</span>
-              </button>
-            </div>
-            <div id="notienesmicuenta">
-              <span>¿No tienes cuenta?</span><span class="colROJO3"> Registrate aquí</span>
-            </div>
-          </div>
+            <div class="mh40"></div>
+          </form>
 
         </div>
+        <div id="panelforget" class="panelcuenta" *ngIf="verforget">
+
+          <form class="validate-form" [formGroup]="formforget">
+            <div id="divmicuenta">
+              <div id="titulomodalmicuenta" class="w-100 d-flex posrel">
+                <div class="cupo posabsol mvl" style="left: 12px; top: 10px" (click)="vermodalusuario()">
+                  <i class="fa fa-angle-left fs-20"></i>
+                </div>
+                <div id="abrirmicuentatitulo" class="px-3">Olvidé mi contraseña</div>
+              </div>
+              <div class="px-3 mt-3">
+                <div id="accedemicuenta">
+                  Enviar código de recuperación a mi correo
+                </div>
+                <div class="cj">
+                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                    name="email" formControlName="email" />
+                </div>
+
+                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                  <button *ngIf="btForgetactivado" class="btredondoRojomicuentamvl " type="button"
+                    (click)="renovarpassword()">
+                    <span>Enviar</span>
+                  </button>
+                  <button *ngIf="!btForgetactivado" class="btredondoApagadomicuentamvl " type="button">
+                    <span>Enviar</span>
+                  </button>
+                </div>
+                <div>
+                  <span></span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="mh40"></div>
+          </form>
+
+        </div>
+
+        <div id="panelmiregistro" class="panelcuenta" *ngIf="verregistrar">
+          <div class="scrld">
+            <form class="validate-form" [formGroup]="formregister">
+              <div id="divmicuenta">
+                <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                  <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
+                    <i class="fa fa-angle-left fs-20"></i>
+                  </div>
+                  <div id="abrirmicuentatitulo" class="px-3">Registro</div>
+                </div>
+                <div class="px-3 mt-3">
+                  <div class="ff-JB">
+                    <span>Datos personales</span>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="email" name="email"
+                      formControlName="email" />
+                  </div>
+                  <div class="cj posrel">
+                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
+                      name="password" formControlName="password" />
+                    <div class="posabsolRm5" *ngIf="verpass">
+                      <i class="fa-solid fa-eye-slash" (click)="verpassword(false)"></i>
+                    </div>
+                    <div class="posabsolRm5" *ngIf="!verpass">
+                      <i class="fa-solid fa-eye" (click)="verpassword(true)"></i>
+                    </div>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
+                      formControlName="name" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname" name="surname"
+                      formControlName="surname" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo" name="prefijo"
+                      formControlName="prefijo" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
+                      formControlName="telefono" />
+                  </div>
+                  <div class="linefull my-2"></div>
+                  <div class="ff-JB">
+                    <span>Datos de facturacion</span>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="namefacturacion"
+                      name="namefacturacion" formControlName="namefacturacion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surnamefacturacion"
+                      name="surnamefacturacion" formControlName="surnamefacturacion" />
+                  </div>
+                  <div class="w-100">
+                    <select #tipoiden class="cjselect" id="tipoidentificacion" name="tipoidentificacion"
+                      formControlName="tipoidentificacion">
+                      <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
+                        {{li.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Numero identificacion " id="numeroidentificacion"
+                      name="numeroidentificacion" formControlName="numeroidentificacion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion" name="direccion"
+                      formControlName="direccion" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Codigo postal " id="codigopostal"
+                      name="codigopostal" formControlName="codigopostal" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad" name="ciudad"
+                      formControlName="ciudad" />
+                  </div>
+                  <div class="cj">
+                    <input type="text" class="colGRIS1 " placeholder="Pais " id="pais" name="pais"
+                      formControlName="pais" />
+                  </div>
+                  <div class="col-6 p-0 m-0">
+                    <div class="d-flex">
+                      <div class="d-flex">
+                        <input class="mh16 mt-1" name="rb" id="rb-1" type="radio" (change)="selecparticular()">
+                        <label class="mx-1" for="rb-1">Particular</label>
+                      </div>
+                      <div class="mx-2 d-flex">
+                        <input class="mh16 mt-1" name="rb" id="rb-2" type="radio" (change)="selecempresa()">
+                        <label class="mx-1" for="rb-2">Empresa</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                    <button *ngIf="btactivadoreg" class="btredondoRojomicuentamvl " type="button" (click)="registrar()">
+                      <span>Registrar</span>
+                    </button>
+                    <button *ngIf="!btactivadoreg" class="btredondoApagadomicuentamvl" type="button">
+                      <span>Registrar</span>
+                    </button>
+                  </div>
+
+                  <div id="iralogin">
+                    <span>Si tengo cuenta,</span><span class="colROJO3 cupo" (click)="vermodalusuario()"> ir a login
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="mh40"></div>
+        </div>
       </div>
+
+
+        <div class="posabsolmodalmovil " *ngIf="verbusca" >
+          <div class="panelcuenta mh400" >
+
+        
+          <div id="titulomodalmicuenta" class="w-100 d-flex posrel" >
+            <div class="cupo posabsolRm5"  (click)="mostrarbusqueda()" >
+              <i class="fa fa-x fs-14 mt-2"></i>
+            </div>
+            <div id="abrirmicuentatitulo" class="px-3">¿Que quieres visitar?</div>
+          </div>
+  
+          <div class="p-4">
+            <div class="posrel" id="divcjbuscador">
+              <input #cjbusqueda id="cjbusqueda" type="text" maxlength="30"  class="colGRIS1 posabsolcjbuscador" 
+              [placeholder]="" 
+               (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda"  />
+              <button class="btredondoRojo posabsolbtbuscador" type="button" (click)="verbuscador()"  >
+                <span>Buscar</span>
+                <span><i class="fa fa-arrow-right "></i></span>
+              </button>
+              <div class="mh40"></div>
+              <div class="px-0 mt-3">
+                <div  *ngIf="busqueda.length > 0 && visitasprop.length > 0">
+                  <div id="listaprop2" >
+                    <div class="p-0" *ngFor="let visita of visitasprop">
+                      <div class="cartamodalprop2 d-flex ">
+                        <div class="imgcartamodalprop">
+                          <div>
+                            <picture>
+                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
+                                data-srcset="{{visita.visit_image_url_movil}}">
+                              <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
+                                class="imgcartamodalprop lazyload ">
+                            </picture>
+                          </div>
+                        </div>
+    
+                        <div class="posrel infocartamodalprop2 cupo" (click)="verdetalle(visita)">
+                          <div id="textomodalprop">
+                            {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
+                            visita.visit_lang_title }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="posrel d-flex">
+                    <div id="vertodosprop2" class="cupo" (click)="verbuscador()">
+                      Ver todos los resultados para
+                      <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
+                        busqueda}}"</span>
+                    </div>
+                    <div>
+                      <i id="flechaprop" class="fa fa-arrow-right mr-4 px-2 mt-1 cupo" (click)="verbuscador()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+  
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+
+
+
   </div>
+
+  <!--movil-end-->
+
 
 
   <!--content-->
 
   <div class="bgBLANCO page-content p-0 m-0">
 
-    <router-outlet (activate)="onActivate($event)"  ></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
 
   </div>
-
 
 </div>

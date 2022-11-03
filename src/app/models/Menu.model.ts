@@ -1,21 +1,20 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
-export class Menu1Model {
+export class MenuModel {
     
-    title: string;
+    
     who: string;
+    contact: string;
     blog: string;
     help: string;
-    covid: string;
 
     constructor(){
 
-        this.title = "";
-        this.who= "";
-        this.blog= "";
-        this.help= "";
-        this.covid= "";
+        this.who = "";
+        this.contact = "";
+        this.blog = "";
+        this.help = "";
     
 
     }

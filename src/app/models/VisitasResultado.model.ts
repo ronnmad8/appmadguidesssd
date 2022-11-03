@@ -2,6 +2,7 @@
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 import { FeaturesModel } from './Features.model';
 import { TagsModel } from './Tags.model';
+import { TimesModel } from './Times.model';
 
 
 export class VisitasResultadoModel{
@@ -45,17 +46,33 @@ export class VisitasResultadoModel{
     visit_time_iso: string;
     visit_time_max: number;
     visit_time_min: number;
-    visit_time_precio: number;
     visit_time_uuid: string;
     visit_uuid: string;
-    visit_precio: number;
+    visit_time_precio_mayores: number;
+    visit_time_precio_menores: number;
+    visit_time_precio_pequenos: number;
+    visit_time: TimesModel[] = [];
 
+    visit_encuentro: string;
+    iso_disponible: string[];
 
+    ///recomendadas
+    precio_mayores: number;
+    precio_menores: number;
+    precio_pequenos: number;
+    duration: number;
+    codigoreserva: string;
+    
+    
     ///R
+    fecha: string;
+    precio: number;
     adultos: number;
     ninos: number;
     menores: number;
     maximopersonas: number;
+    hora: string;
+    idioma: string;
     
     constructor(){
         this.id = 0;
@@ -96,16 +113,28 @@ export class VisitasResultadoModel{
         this.visit_time_iso = "";
         this.visit_time_max = 0;
         this.visit_time_min = 0;
-        this.visit_time_precio = 0;
         this.visit_time_uuid = "";
         this.visit_uuid = "";
-        this.visit_precio = 0;
-     
+        this.visit_time_precio_mayores = 0;
+        this.visit_time_precio_menores = 0;
+        this.visit_time_precio_pequenos = 0;
+        this.visit_time = [];
+        //en list
+        this.precio_mayores = 0;
+        this.precio_menores = 0;
+        this.precio_pequenos = 0;
+        this.duration = 0;
+        this.codigoreserva = "";
+        
         ///R
+        this.precio = 0;
         this.adultos = 0;
         this.ninos = 0;
         this.menores = 0;
         this.maximopersonas = 0;
+        this.fecha = "";
+        this.hora = "";
+        this.idioma = "";
 
 
     }

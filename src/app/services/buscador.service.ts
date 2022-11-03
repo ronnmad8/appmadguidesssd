@@ -4,12 +4,17 @@ import { ImagenesModel } from '../models/Imagenes.model';
 import { catchError, map} from 'rxjs/operators' ;
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { VisitasModel } from '../models/Visitas.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { FiltersModel } from '../models/Filters.model';
+import { TimesModel } from '../models/Times.model';
+import { TextorecomendadasModel } from '../models/Textorecomendadas.model';
+import { TextosearchModel } from '../models/Textosearch.model';
+
 
 
 @Injectable({
@@ -20,39 +25,19 @@ export class BuscadorService {
   idUsuario: string = "";
   url: string = "";
   apiurl: string;
+  clang: string = 'es';
 
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private globalService: GlobalService,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = "&language="+this.globalService.getLanguage();
   }
 
 
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  getDataBuscador()  {
-    
-    let endpoint = '/visit' ;
-    this.url = this.apiurl + endpoint;
-    return this.http.get( `${this.url}` )
-    .pipe(
-      map( res =>{
-        return res;
-      } ) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
-  }
-
-  
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   getResultadoBuscador( filters: FiltersModel, page: number )  
@@ -106,11 +91,20 @@ export class BuscadorService {
     ///filtro orden
     this.url += "&order=" + filters.ordenar + "&orderby="+ filters.orderasc ;
 
-    console.log("+++++++++++++++++++++++++++++++URL   ",this.url);
     return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
         var resultado: ResultadoModel  = resp as ResultadoModel; 
+        resultado.data.forEach((el: any, index: number) => {
+            if(el.visit_time_uuid != null && el.visit_time == null){
+                el = this.globalService.mapperVisitas(el);
+              
+                // el.visit_time[0].duration = el.duration ;
+                // el.visit_time[0].precio_mayores = el.precio_mayores ;
+                // el.visit_time[0].precio_menores = el.precio_menores ;
+                // el.visit_time[0].precio_pequenos = el.precio_pequenos ;
+            }
+          });
         return resultado;    
       } ) ,
       catchError((err) => {
@@ -120,22 +114,41 @@ export class BuscadorService {
     );
   }
 
-  
+
+  getImagenesbuscador()  {
+    let endpoint = '/assets/find?file=bannerbottom,banner-ficha-de-producto' ;
+    this.url = this.apiurl + endpoint;
+
+    return this.http.get( `${this.url}` )
+    .pipe(
+      map( resp =>{
+        let imagenes: ImagenesModel[] = resp as ImagenesModel[];
+        return imagenes;    
+      } ) ,
+      catchError((err) => {
+        console.error("Error  " , err.error);
+                return err.error;
+      })
+    );
+  }
 
 
+  getMessagesSearch()  {
+    let endpoint = '/assets/search?' ;
+    this.url = this.apiurl + endpoint + this.clang;
 
-
-
-
-  
-  
-
-
-  
-
-  
-
-  
+    return this.http.get( `${this.url}` )
+    .pipe(
+      map( resp =>{
+        var data = resp as TextosearchModel;  
+        return data;   
+      } ) ,
+      catchError((err) => {
+        console.error("Error  " , err.error);
+                return err.error;
+      })
+    );
+  }
 
 
 

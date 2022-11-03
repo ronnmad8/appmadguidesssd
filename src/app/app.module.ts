@@ -34,6 +34,23 @@ import { ZonacompraComponent } from './componentes/zonacompra/zonacompra.compone
 import { CapitalizePipeComponent } from './pipes/capitalize.component';
 import { VisitadetailComponent } from './pages/visitadetail/visitadetail.component';
 import { FnumberPipeComponent } from './pipes/fnumber.component';
+import { IdiomaisoPipeComponent } from './pipes/idiomaiso.component';
+import { FechalegPipeComponent } from './pipes/fechaleg.component';
+import { HoralegPipeComponent } from './pipes/horaleg.component';
+import { AdminclienteComponent } from './pages/admincliente/admincliente.component';
+import { ZonamicuentaComponent } from './componentes/zonamicuenta/zonamicuenta.component';
+import { QuienessomosComponent } from './pages/quienessomos/quienessomos.component';
+import { LaempresaComponent } from './componentes/laempresa/laempresa.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { AyudaComponent } from './pages/ayuda/ayuda.component';
+import { FaqsComponent } from './componentes/faqs/faqs.component';
+import { PoliticascookiesComponent } from './pages/politicascookies/politicascookies.component';
+import { PoliticasComponent } from './componentes/politicas/politicas.component';
+import { PoliticasprivacidadComponent } from './pages/politicasprivacidad/politicasprivacidad.component';
+import { PoliticascompraComponent } from './pages/politicascompra/politicascompra.component';
+import { AvisolegalComponent } from './pages/avisolegal/avisolegal.component';
+import { MedidascovidComponent } from './pages/medidascovid/medidascovid.component';
+import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login'; 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -82,8 +99,25 @@ const routes: Routes = [
     CompraComponent,
     ZonacompraComponent,
     CapitalizePipeComponent,
-    FnumberPipeComponent,
     VisitadetailComponent,
+    FnumberPipeComponent,
+    IdiomaisoPipeComponent,
+    FechalegPipeComponent,
+    HoralegPipeComponent,
+    AdminclienteComponent,
+    ZonamicuentaComponent,
+    QuienessomosComponent,
+    LaempresaComponent,
+    ContactoComponent,
+    AyudaComponent,
+    FaqsComponent,
+    PoliticasComponent,
+    PoliticascookiesComponent,
+    PoliticasprivacidadComponent,
+    PoliticascompraComponent,
+    AvisolegalComponent,
+    MedidascovidComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'madguides' }),
@@ -98,7 +132,8 @@ const routes: Routes = [
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    SocialLoginModule
     
     
   ],
@@ -106,7 +141,20 @@ const routes: Routes = [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
-    }
+    },
+    // {
+    //   provide: 'SocialAuthServiceConfig',
+    //   useValue: {
+    //     autoLogin: false,
+    //     providers: [
+    //       {
+    //         id: FacebookLoginProvider.PROVIDER_ID,
+    //         provider: new FacebookLoginProvider('869756637733587')
+
+    //       }
+    //     ]
+    //   } as SocialAuthServiceConfig,
+    // }
   ],
   bootstrap: [AppComponent]
 })

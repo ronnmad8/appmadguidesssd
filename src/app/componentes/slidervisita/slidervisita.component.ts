@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
   Renderer2,
+  AfterViewInit,
 } from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
@@ -15,6 +16,7 @@ import { VisitaService } from '../../services/visita.service';
 import { ProviderService } from '../../services/provider.service';
 import { ListasService } from '../../services/listas.service';
 import { GlobalService } from '../../services/global.service';
+import { CarritoService } from '../../services/carrito.service';
 import { Options } from '@angular-slider/ngx-slider';
 import {
   SwiperModule,
@@ -31,13 +33,14 @@ import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
+import { CartModel } from 'src/app/models/Cart.model';
+import { TimesModel } from 'src/app/models/Times.model';
 
 @Component({
   selector: 'app-slidervisita',
   templateUrl: './slidervisita.component.html',
 })
-export class SlidervisitaComponent implements OnInit {
-
+export class SlidervisitaComponent implements OnInit, AfterViewInit {
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
@@ -84,12 +87,15 @@ export class SlidervisitaComponent implements OnInit {
 
   listaidiomas: LanguagesModel[] = [];
   listaidiomasvisita: LanguagesModel[] = [];
-  
+
   isrespon: boolean = false;
   //imagenes
   listaImagenesVisita: ImagenesModel[] = [];
   listaImagenesVisitaLat: ImagenesModel[] = [];
-  
+
+  //times select
+  timesSel: TimesModel = new TimesModel();
+
   //calendario
   monthSelect: any[];
   dateSelect: any;
@@ -128,13 +134,13 @@ export class SlidervisitaComponent implements OnInit {
   preciomenorestotal: number = 0;
   preciototal: number = 0;
   privada: boolean = false;
-  precioadultosst: string = "0";
-  precioninosst: string = "0";
-  preciomenoresst: string = "0";
-  precioadultototalst: string = "0";
-  precioninostotalst: string = "0";
-  preciomenorestotalst: string = "0";
-  preciototalst: string = "0";
+  precioadultosst: string = '0';
+  precioninosst: string = '0';
+  preciomenoresst: string = '0';
+  precioadultototalst: string = '0';
+  precioninostotalst: string = '0';
+  preciomenorestotalst: string = '0';
+  preciototalst: string = '0';
   //validar
   calenovalid: boolean = false;
   horanovalid: boolean = false;
@@ -150,7 +156,6 @@ export class SlidervisitaComponent implements OnInit {
   idomasdisponibles: string = '';
   cancelaciones: string = '';
   puntodeencuentro: string = '';
-  googlemapsvisita: string = 'https://goo.gl/maps/stMedKZoKh7f1qGC9';
   //redes
   verredes: boolean = false;
   redes: any[] = [];
@@ -164,6 +169,7 @@ export class SlidervisitaComponent implements OnInit {
     private providerService: ProviderService,
     private listasService: ListasService,
     private globalService: GlobalService,
+    private carritoService: CarritoService,
     private renderer: Renderer2
   ) {
     this.wowService.init();
@@ -175,7 +181,7 @@ export class SlidervisitaComponent implements OnInit {
     this.months = this.globalService.months;
     this.redes = this.globalService.redes;
     this.listahoras = this.globalService.listahoras;
- 
+
     //español por defecto siempre
     let espa = new LanguagesModel();
     espa.id = 1;
@@ -186,11 +192,12 @@ export class SlidervisitaComponent implements OnInit {
 
     this.vcale = true;
     this.isresponsive();
-    let hoy = moment();
-    let estemes = hoy.format('MM');
-    let esteyear = hoy.format('YYYY');
-    this.getDaysFromDate(estemes, esteyear);
     this.getIdiomas();
+  }
+
+
+  ngAfterViewInit(){
+      ///
   }
 
   @HostListener('window:scroll')
@@ -201,12 +208,17 @@ export class SlidervisitaComponent implements OnInit {
 
     if (posactual <= posdetallevisita) {
       this.pegaj = 1;
+      this.fdetallecale.nativeElement.style.top = 'auto';
     } else if (posactual > posdetallevisita) {
       this.pegaj = 2;
+      
       let hdetallecale = this.detallecale.nativeElement.offsetHeight;
       let dif = posfinaldetalle - hdetallecale;
+ 
+      this.fdetallecale.nativeElement.style.top = 90+'px';
       if (posactual >= dif) {
         this.pegaj = 3;
+        this.fdetallecale.nativeElement.style.top = (dif - posdetallevisita - 40) +'px';
       }
     }
   }
@@ -218,17 +230,24 @@ export class SlidervisitaComponent implements OnInit {
     }
   }
 
-  listenProvider(){
-    this.providerService.getThrowVisita.subscribe((resp)=>{
+  listenProvider() {
+    this.providerService.getThrowVisita.subscribe((resp) => {
       var provVisita = resp as VisitasResultadoModel;
-      if(provVisita.visit_uuid != null){
+      
+      if (provVisita.visit_uuid != null) {
         this.getVisitaResultado(provVisita);
+
+        let hoy = moment();
+        let estemes = hoy.format('MM');
+        let esteyear = hoy.format('YYYY');
+        this.getDaysFromDate(estemes, esteyear);
+        this.getCherryDay();
       }
     });
 
-    this.providerService.getThrowMessagesVisita.subscribe((resp)=>{
+    this.providerService.getThrowMessagesVisita.subscribe((resp) => {
       var provVisitaMessage = resp as VisitaAssetsModel;
-      if(provVisitaMessage != null){
+      if (provVisitaMessage != null) {
         this.getMesageResultado(provVisitaMessage);
       }
     });
@@ -240,51 +259,104 @@ export class SlidervisitaComponent implements OnInit {
     });
   }
 
-  getMesageResultado(provVisitaMessage: VisitaAssetsModel){
+  getMesageResultado(provVisitaMessage: VisitaAssetsModel) {
     this.messages = provVisitaMessage;
-    console.log("assets++++ ",provVisitaMessage);
   }
-
 
   getVisitaResultado(visita: VisitasResultadoModel) {
     this.visitaresultado = visita;
-    //imagenes slider
-    this.listaImagenesVisita = this.getImagenesVisita();
+    console.log(
+      '€€€€€€€€€€€€€€€€€€€€€€€€€€€€ VISITA RESULTADO',
+      this.visitaresultado
+    );
+    this.listaImagenesVisita = []
+    this.listaImagenesVisitaLat = [];
+
+    ///get image first
+    let image1 = this.getImageFirst(this.visitaresultado);
+    this.listaImagenesVisita.push(image1);
+
+    ///get image fakes restantes
+    let images = this.getImagenesVisita();
+    this.listaImagenesVisita.push(...images);
+
     this.listaImagenesVisitaLat = this.listaImagenesVisita;
     this.listaImagenesVisitaLat[0].sel = true;
 
     //info
     this.descripcion = visita.visit_lang_description;
     this.descripcioncorta = this.descripcion.substring(0, 200);
-    this.maximopersonas = visita.visit_time_max; //*************************************************visita.visit_max_persons
-    this.sumapersonas = 0; ///aqui deberiamos saber disponibles en bbdd!!!!!!!!!!!!!!!!!!
-    let preciocalculado: number = Number( (((visita.visit_time_precio ?? 0) * 100)/100) * (((visita.visit_time_duration ?? 0) * 100)/100) ); 
-    let preciocalculadost = (this.globalService.getFormatNumber(preciocalculado)); 
-    
-    this.precioadultos =  preciocalculado;//*********************correccion cuando esten los precios por edades
-    this.precioninos = preciocalculado; //*************************correccion cuando esten los precios por edades
-    this.preciomenores =  0;
 
-    this.precioadultosst =  preciocalculadost;//correccion cuando esten los precios por edades
-    this.precioninosst = preciocalculadost; //correccion cuando esten los precios por edades
-    this.preciomenoresst =  "0";
-    
-    let iso= visita.visit_time_iso;
+    if (this.timesSel != null) {
+      this.timesSel = visita.visit_time[0];
+    }
+    this.maximopersonas = this.timesSel.max;
+    this.sumapersonas = 0; ///aqui deberiamos saber disponibles en bbdd!!!!!!!!!!!!!!!!!!
+
+    this.getCalculoPrecio();
+
+    let iso = this.timesSel.iso;
     this.listaidiomas.forEach((idioma) => {
-      if (idioma.iso == iso && this.listaidiomasvisita.map(x=>x.iso).indexOf(iso) == -1) {
+      if (
+        idioma.iso == iso &&
+        this.listaidiomasvisita.map((x) => x.iso).indexOf(iso) == -1
+      ) {
         this.listaidiomasvisita.push(idioma);
         this.idiomasdisponibles += idioma.name + ', ';
       }
     });
-    
+
     this.listahoras.forEach((hora) => {
-      let initsp = visita.visit_time_init.split(':'); 
-      let res = initsp[0] +":"+initsp[1];
-      if (hora.value == res ) {
+      let initsp = this.timesSel.init.split(':');
+      let res = initsp[0] + ':' + initsp[1];
+      if (hora.value == res) {
         this.listahorasvisita.push(hora);
+        this.horainfo = res;
+        this.horaSel = hora.key;
+      }
+    });
+    //buscar si hay mas horas mismo dia
+    this.visitaresultado.visit_time.forEach((v) => {
+      if (v.date == this.timesSel.date && v.init != this.timesSel.init) {
+        let initsp = v.init.split(':');
+        let res = initsp[0] + ':' + initsp[1];
+        this.listahorasvisita.push({ value: res, viewValue: res });
       }
     });
     
+  }
+
+
+  getImageFirst(visita: VisitasResultadoModel) {
+    var imagen1: ImagenesModel = new ImagenesModel();
+    imagen1.id = 1;
+    imagen1.title = visita.visit_image_title;
+    imagen1.description = visita.visit_image_description;
+    imagen1.alt = '';
+    imagen1.iso = visita.visit_image_iso;
+    imagen1.uuid = visita.visit_image_uuid;
+    imagen1.url = visita.visit_image_url;
+    imagen1.url_movil = visita.visit_image_url_movil;
+    imagen1.url_galleria = visita.visit_image_url_gallery;
+    imagen1.name = visita.visit_image_name;
+    return imagen1;
+  }
+
+
+
+  getCalculoPrecio() {
+    this.precioadultos = this.timesSel.precio_mayores;
+    this.precioninos = this.timesSel.precio_menores;
+    this.preciomenores = this.timesSel.precio_pequenos;
+    this.precioadultosst = this.globalService.getFormatNumber(
+      (Number(this.precioadultos) * 100) / 100
+    ); //correccion cuando esten los precios por edades
+    this.precioninosst = this.globalService.getFormatNumber(
+      (Number(this.precioninos) * 100) / 100
+    ); //correccion cuando esten los precios por edades
+    this.preciomenoresst = this.globalService.getFormatNumber(
+      (Number(this.preciomenores) * 100) / 100
+    );
   }
 
   getIndexSel() {
@@ -327,16 +399,16 @@ export class SlidervisitaComponent implements OnInit {
     this.vidiom = false;
   }
 
-  caleinfosel(v: string) {
-    this.caleinfo = v;
-    if (this.horaSel != null) {
-      this.horanovalid = false;
-    }
-  }
   horainfosel(v: string) {
     this.horainfo = v;
     if (this.horaSel != null) {
       this.horanovalid = false;
+    }
+    if (this.timesSel.init != this.horaSel) {
+      this.timesSel =
+        this.visitaresultado.visit_time.find((x) => x.init == this.horaSel) ??
+        this.timesSel;
+      this.getCalculoPrecio();
     }
   }
   idiomainfosel(v: string) {
@@ -352,48 +424,63 @@ export class SlidervisitaComponent implements OnInit {
     this.setPreciototal();
   }
   sumaradulto() {
-    if(this.sumapersonas < this.maximopersonas){
+    if (this.sumapersonas < this.maximopersonas) {
       this.adultoSel++;
       this.sumapersonas++;
       this.setPreciototal();
       this.persnovalid = false;
-    }    
+    }
   }
+
   restarninos() {
     this.ninosSel--;
     this.sumapersonas--;
     this.setPreciototal();
   }
   sumarninos() {
-    if(this.sumapersonas < this.maximopersonas){
+    if (this.sumapersonas < this.maximopersonas) {
       this.ninosSel++;
       this.sumapersonas++;
       this.setPreciototal();
       this.persnovalid = false;
     }
   }
+
   restarmenores() {
     this.menoresSel--;
     this.sumapersonas--;
     this.setPreciototal();
   }
   sumarmenores() {
-    if(this.sumapersonas < this.maximopersonas){
+    if (this.sumapersonas < this.maximopersonas) {
       this.menoresSel++;
       this.sumapersonas++;
       this.setPreciototal();
       this.persnovalid = false;
     }
   }
+
   setPreciototal() {
-    this.precioadultototal = this.adultoSel * (this.precioadultos * 100) / 100;
-    this.precioadultototalst = this.globalService.getFormatNumber(this.precioadultototal) ;
-    this.precioninostotal = this.ninosSel * (this.precioninos * 100) / 100;
-    this.precioninostotalst = this.globalService.getFormatNumber(this.precioninostotal) ;
-    this.preciomenorestotal = this.menoresSel * (this.preciomenores * 100) / 100;
-    this.preciomenorestotalst = this.globalService.getFormatNumber(this.preciomenorestotal) ;
-    this.preciototal = ((this.precioadultototal* 100) + (this.precioninostotal * 100) + (this.preciomenorestotal * 100)) / 100;
-    this.preciototalst = this.globalService.getFormatNumber(this.preciototal) ;
+    this.precioadultototal =
+      (this.adultoSel * (this.precioadultos * 100)) / 100;
+    this.precioadultototalst = this.globalService.getFormatNumber(
+      this.precioadultototal
+    );
+    this.precioninostotal = (this.ninosSel * (this.precioninos * 100)) / 100;
+    this.precioninostotalst = this.globalService.getFormatNumber(
+      this.precioninostotal
+    );
+    this.preciomenorestotal =
+      (this.menoresSel * (this.preciomenores * 100)) / 100;
+    this.preciomenorestotalst = this.globalService.getFormatNumber(
+      this.preciomenorestotal
+    );
+    this.preciototal =
+      (this.precioadultototal * 100 +
+        this.precioninostotal * 100 +
+        this.preciomenorestotal * 100) /
+      100;
+    this.preciototalst = this.globalService.getFormatNumber(this.preciototal);
   }
 
   cambiarprivada(priv: any) {
@@ -403,7 +490,8 @@ export class SlidervisitaComponent implements OnInit {
       this.sumapersonas = this.maximopersonas;
       this.ninosSel = 0;
       this.menoresSel = 0;
-      this.precioadultototal = (this.maximopersonas * (this.precioadultos * 100)) / 100;
+      this.precioadultototal =
+        (this.maximopersonas * (this.precioadultos * 100)) / 100;
       this.precioninostotal = 0;
       this.preciomenorestotal = 0;
       this.setPreciototal();
@@ -431,8 +519,21 @@ export class SlidervisitaComponent implements OnInit {
   }
 
   compartir(visita: VisitasResultadoModel, red: string) {
-    //comnpartir
-    alert('compartir en ' + red);
+    
+    let url = "";
+    if(red == 'facebook'){
+      url = "https://www.facebook.com/sharer/sharer.php?u=https://madguides.es/"+this.router.url;
+    }
+    else if(red == 'twitter'){
+      url = "https://twitter.com/intent/tweet?url=https://madguides.es/"+this.router.url+"&text="+this.visitaresultado.category_lang_title;
+    }
+    else if(red == 'instagram'){
+      url = "https://www.instagram.com/?url=https://madguides.es/"+this.router.url;
+    }
+
+    if(url != ""){
+      window.open(url, '_blank');
+    }
   }
 
   abrirvermas() {
@@ -440,6 +541,7 @@ export class SlidervisitaComponent implements OnInit {
   }
 
   getDaysFromDate(month: any, year: any) {
+    
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
@@ -461,19 +563,62 @@ export class SlidervisitaComponent implements OnInit {
     this.mSelect = this.months[this.dateSelect.format('M') - 1];
     this.ySelect = this.dateSelect.format('YYYY');
 
-    arrayDays.forEach((day: any) => {
-      if (
-        day.month == this.daySel.month &&
-        day.value == this.daySel.value &&
-        day.year == this.daySel.year
-      ) {
-        day.selected = true;
-      }
-      else{
+    if (this.daySel != null) {
+      arrayDays.forEach((day: any) => {
         day.selected = false;
+        if (
+          day.month == this.daySel.month &&
+          day.value == this.daySel.value &&
+          day.year == this.daySel.year
+        ) {
+          day.selected = true;
+        }
+      });
+    }
+    ///dias de la visita
+    let diasvisita: TimesModel[] = [];
+    this.visitaresultado.visit_time.forEach((dia: TimesModel) => {
+      diasvisita.push(dia);
+    });
+
+    ///marcar dias de la visita y seleccionado de ese mes
+    arrayDays.forEach((day: any) => {
+      let esafecha = day.year + '-' + day.month + '-' + day.value;
+      day.visitday = false;
+
+      if (diasvisita.find((x) => x.date == esafecha)) {
+        day.visitday = true;
+        if (esafecha == this.timesSel.date) {
+          day.selected = true;
+        }
       }
     });
+
+    
   }
+
+
+  getCherryDay(){
+    if (this.timesSel != null) {
+      let yea = this.timesSel.date.split('-')[0];
+      let mon = this.timesSel.date.split('-')[1];
+      let da = this.timesSel.date.split('-')[2];
+      const dayObject = moment(`${yea}-${mon}-${da}`);
+      let day: any = {
+        name: dayObject.format('dddd'),
+        value: da,
+        indexWeek: dayObject.isoWeekday(),
+        month: dayObject.format('MM'),
+        year: dayObject.format('YYYY'),
+      };
+      day.visitday = true;
+      this.daySel = day;
+      this.getDaysFromDate(this.daySel.month , this.daySel.year);
+      this.clickDay(day)
+      this.vcale = true;
+    }
+  }
+
 
   changeMonth(flag: any) {
     if (flag < 0) {
@@ -485,24 +630,38 @@ export class SlidervisitaComponent implements OnInit {
     }
   }
 
+
   clickDay(day: any) {
-    this.daySel = day;
-    const monthYear = this.dateSelect.format('YYYY-MM');
-    const parse = `${monthYear}-${day.value}`;
-    const objectDate = moment(parse);
-    this.dateValue = objectDate;
-    this.vcale = false;
-    this.caleinfo = objectDate.format('DD/MM/YYYY');
-    this.calenovalid = false;
-    this.getDaysFromDate(this.dateSelect.format('MM'), this.dateSelect.format('YYYY'));
+  
+    if (day.visitday) {
+      this.daySel = day;
+      const monthYear = this.dateSelect.format('YYYY-MM');
+      const parse = `${monthYear}-${day.value}`;
+      const objectDate = moment(parse);
+      this.dateValue = objectDate;
+      this.vcale = false;
+      this.caleinfo =  this.globalService.getFechaleg(objectDate.format('DD/MM/YYYY'));
+      this.calenovalid = false;
+
+      let coi = this.visitaresultado.visit_time.find(
+        (x) => x.date == day.year + '-' + day.month + '-' + day.value
+      );
+      if (coi != null) {
+        this.timesSel = coi;
+        this.getCalculoPrecio();
+      }
+      this.getDaysFromDate(
+        this.dateSelect.format('MM'),
+        this.dateSelect.format('YYYY')
+      );
+    }
   }
+
 
   getImagenesVisita() {
     // this.visitaService.getImagenesvisita().subscribe((resp)=>{
     //   this.visitaSel.imagenes = resp as ImagenesModel;
     // })
-
-
     return this.visitaService.getImagenesvisita();
   }
 
@@ -527,7 +686,27 @@ export class SlidervisitaComponent implements OnInit {
     }
 
     if (valido) {
-      alert('reservar');
+      //validado
+
+      let carrito: CartModel = new CartModel();
+      carrito = this.carritoService.getCart();
+      this.visitaresultado.adultos = this.adultoSel;
+      this.visitaresultado.ninos = this.ninosSel;
+      this.visitaresultado.menores = this.menoresSel;
+      this.visitaresultado.precio = this.preciototal;
+      this.visitaresultado.fecha = this.dateValue;
+      this.visitaresultado.hora = this.horainfo;
+      this.visitaresultado.idioma = this.idiominfo;
+      if (carrito.visitasPedido == null) {
+        carrito.visitasPedido = [];
+      }
+      carrito.visitasPedido.push(this.visitaresultado);
+      carrito.total = Number(this.globalService.getFormatNumber(carrito.total + this.preciototal));
+      carrito.totalfinal = Number(this.globalService.getFormatNumber(carrito.total * (1 + carrito.taxamt)));
+      this.carritoService.saveCart(carrito);
+      ///actualizar carrito menu
+      this.providerService.setThrowCarritoupdate(carrito);
+      this.router.navigate(['/buscador']);
     }
   }
 }

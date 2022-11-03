@@ -11,6 +11,7 @@ import { ComentariosModel } from 'src/app/models/Cometarios.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
+import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 
 
 
@@ -20,7 +21,7 @@ import { MessagesModel } from 'src/app/models/Messages.model';
 })
 export class SlidertestimoniosComponent implements OnInit {
  
-  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() messagesOpinionsData: TextoopinionsModel = new TextoopinionsModel();
   @Input() commentsData: ComentariosModel[] = [];
   @Input() logoData: ImagenesModel = new ImagenesModel;
   

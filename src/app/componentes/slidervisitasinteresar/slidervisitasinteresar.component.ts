@@ -11,7 +11,6 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
-import { RecomendadasModel } from 'src/app/models/Recomendadas.model';
 
 
 @Component({
@@ -48,6 +47,10 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
   vertodascategoria(){
     let category_uuid = this.relatedData[0].category_lang_uuid;
     this.router.navigate(['/buscador/category', category_uuid]);
+  }
+
+  verdetalle(visita: VisitasResultadoModel){
+    this.router.navigate(['/visita', visita.visit_lang_title , visita.visit_uuid]);
   }
   
   

@@ -1,13 +1,12 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
-import { TextofooterModel } from './Textofooter.model';
 import { TextoformModel } from './Textoform.model';
 import { TextoiconsModel } from './Textoicons.model';
 import { TextoimageModel } from './Textoimage.model';
 import { TextomenuModel } from './Textomenu.model';
 import { TextoopinionsModel } from './Textoopinions.model';
 import { TextotourModel } from './Textotour.model';
-import { TextovisitModel } from './Textovisit.model';
+import { TextorecomendadasModel } from './Textorecomendadas.model';
 
 
 export class TextosModel{
@@ -87,26 +86,22 @@ export class TextosModel{
     // }
 
     id: number;
-    menu: TextomenuModel;
     tour: TextotourModel;
     
     icons: TextoiconsModel ;
-    visit: TextovisitModel;
+    visit: TextorecomendadasModel;
     opinions: TextoopinionsModel;
     image: TextoimageModel;
     form: TextoformModel;
-    footer: TextofooterModel;
 
     constructor(){
         this.id = 0;
-        this.menu = new TextomenuModel();
         this.tour = new TextotourModel();
         this.icons = new TextoiconsModel();
-        this.visit = new TextovisitModel();
+        this.visit = new TextorecomendadasModel();
         this.opinions = new TextoopinionsModel();
         this.image = new TextoimageModel();
         this.form = new TextoformModel();
-        this.footer = new TextofooterModel();
         
     }
 

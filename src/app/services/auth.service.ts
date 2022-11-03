@@ -1,164 +1,202 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ClientesModel } from '../models/Clientes.model';
 import { UsuarioModel } from '../models/Usuario.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserModel } from '../models/User.model';
+import { LoginModel } from '../models/Login.model';
+import { RecordarmeModel } from '../models/Recordarme.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  url: string = "";
+  url: string = '';
   rolcliente: boolean = false;
   userToken: string;
   apiurl: string;
   cambiarMenu = new Subject<string>();
   cambiarMenuObservable = this.cambiarMenu.asObservable();
 
-
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  )
-  {
-      this.apiurl = environment.apiurl;
-      this.userToken = this.leerToken();
+  constructor(private http: HttpClient, private router: Router) {
+    this.apiurl = environment.apiurl;
+    this.userToken = this.leerToken();
   }
 
   logout() {
-    // localStorage.removeItem('token')
-    // localStorage.removeItem('idrol');
-    // localStorage.removeItem('nombre');
-    // localStorage.removeItem('saludo');
-    this.userToken = "";
-    this.router.navigateByUrl('/homecliente');
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('user');
+    localStorage.removeItem('saludo');
+    this.userToken = '';
+    this.router.navigateByUrl('/home');
   }
 
-
-  ///////////////////////homecliente
-  login(usuario: UsuarioModel) {
-    let endpoint = '/signin' ;
-    this.url = this.apiurl + endpoint;
-    
-    const authData = { email: usuario.email, passw: usuario.passw };
-    return this.http.post( `${this.url}`, authData
-    ).pipe(
-      map( resp => {
-           if(resp != null){
-             let token: any = resp;
-             this.guardarToken(token['token'], token['idrol'], token['id'], token['nombre']);
-             let idrol = token['idrol'];
-             this.cambiarMenu.next(idrol) ;
-
-             return resp;
-           }
-           return null
-    }) );
-    
+  private guardarToken(lo: LoginModel) {
+    localStorage.setItem('token', lo.token);
+    localStorage.setItem('rol', lo.user.rol);
+    localStorage.setItem('user', JSON.stringify(lo.user));
+    localStorage.setItem('saludo', '');
+    this.userToken = lo.token;
   }
-
-
-  /////////////////////registro
-  nuevoUsuario(cliente: ClientesModel) {
-      let endpoint =  '/regist'; 
-      this.url = this.apiurl + endpoint ;
-      
-      const authData = {
-        nombre: cliente.nombre,
-        telefono: cliente.telefono,
-        email: cliente.email,
-        passw: cliente.passw,
-
-      };
-      return this.http.post(`${this.url}`, authData);
-
-}
-
-
-  private guardarToken(idToken: string, idrol: string, id: string, nombre: string) {
-    // localStorage.setItem('token', idToken);
-    // localStorage.setItem('idrol', idrol);
-    // localStorage.setItem('nombre', nombre);
-    // localStorage.setItem('saludo', '');
-    this.userToken = idToken;
-  }
-
 
   leerToken() {
-    
-      // if (localStorage.getItem('token')) {
-      //     let token = localStorage.getItem('token');
-      //     this.userToken = "";
-      //     if(token != null ){
-      //       this.userToken = token;
-      //       if (this.noAuth()) 
-      //           this.router.navigateByUrl('/homecliente');
-      //       }
-      //     }  
-      return this.userToken  ;
+    if (localStorage.getItem('token')) {
+      let token = localStorage.getItem('token');
+      this.userToken = '';
+      if (token != null) {
+        this.userToken = token;
+        if (this.noAuth()) this.router.navigateByUrl('/home');
+      }
+    }
+    return this.userToken;
   }
 
-  leerIdUsuario() {
-    // if (localStorage.getItem('id')) {
-    //     return localStorage.getItem('id');
-    // }
-    // else {
-    //     return  '';
-    // }
+  getUser() {
+    let user: UserModel = new UserModel();
+    if (localStorage.getItem('user')) {
+      let res: string = localStorage.getItem('user') ?? '';
+      user = JSON.parse(res) as UserModel;
+    }
+    return user;
   }
-  
-  leerNombre() {
-    // if (localStorage.getItem('nombre')) {
-    //     var leerToken = localStorage.getItem('nombre');
-    //     return leerToken;
-    // }
-    // else {
-    //     return  '';
-    // }
-  }
+
 
   leerRol() {
-    // if (localStorage.getItem('idrol')) {
-    //     var leerToken = localStorage.getItem('idrol');
-    //     return leerToken;
-    // }
-    // else {
-    //     return  '';
-    // }
-  }
-
-  leerReordarme() {
-    if (localStorage.getItem('recordarme')) {
-        return localStorage.getItem('recordarme');
-    }
-    else {
-        return  '';
+    if (localStorage.getItem('rol')) {
+      var leerToken = localStorage.getItem('rol');
+      return leerToken;
+    } else {
+      return '';
     }
   }
 
 
-    noAuth(): boolean {
+  leerRecordarme() {
+    let recordarme: RecordarmeModel = new RecordarmeModel();
+    let rec = localStorage.getItem('recordarme') ;
+    if(rec != null){
+      recordarme =  JSON.parse(rec) as RecordarmeModel;
+    } 
+    return recordarme;
+  }
+
+
+  saveRecordarme(recordarme: RecordarmeModel) {
+    localStorage.setItem('recordarme', JSON.stringify(recordarme));
+  }
+
+
+  noAuth(): boolean {
     let noesta = true;
-    if( this.userToken.length > 2  && this.nocaduc(this.userToken) ) { noesta = false;  }
+    if (this.userToken == null){
+      noesta = false;
+    }
     return noesta;
-    }
-
-    nocaduc(tok: any) {
-      let endpoint = '/nocaduc' ;
-      this.url = this.apiurl + endpoint;
-      const authData = { token: tok };
-      return this.http.post( `${this.url}`, authData
-      ).pipe(map( (resp) => {
-          return resp;
-        })
-      );
-    }
+  }
 
 
+  registrarUser(user: UserModel) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json; charset=UTF-8',
+    });
 
+    let _datos = {
+      second: user.password,
+      name: user.name,
+      email: user.email,
+      surname: user.surname,
+      password: user.password,
+      prefijo: user.prefijo,
+      telefono: user.telefono,
+      privacity: true,
+    };
+    JSON.stringify(_datos);
+    let endpoint = '/register';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos, { headers }).pipe(
+      map((res) => {
+        let login = res as LoginModel;
+        return login;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  renovarPassword(user: UserModel) {
+    let _datos = {
+      email: user.email,
+    };
+    JSON.stringify(_datos);
+    let endpoint = '/forgotpassword';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        let respuesta = res;
+        return respuesta;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  loginUser(user: UserModel) {
+    let _datos = {
+      email: user.email,
+      password: user.password,
+    };
+    JSON.stringify(_datos);
+    let endpoint = '/login';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        let login = res as LoginModel;
+        this.guardarToken(login);
+        return login;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  updateUser(user: UserModel) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json; charset=UTF-8',
+      Authorization: 'Bearer ' + this.userToken,
+    });
+
+    let _datos = {
+      name: user.name,
+      email: user.email,
+      surname: user.surname,
+      prefijo: user.prefijo,
+      telefono: user.telefono,
+      privacity: true,
+    };
+    //JSON.stringify(_datos);
+    let endpoint = '/register';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos, { headers }).pipe(
+      map((res) => {
+        let user = res as UserModel;
+
+        return user;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
 }

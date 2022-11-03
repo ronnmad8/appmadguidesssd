@@ -1,0 +1,138 @@
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { NgwWowService } from 'ngx-wow';
+
+import { UsuarioModel } from 'src/app/models/Usuario.model';
+import { ClientesModel } from 'src/app/models/Clientes.model';
+import { ImagenesService } from '../../services/imagenes.service';
+import { TextosService } from '../../services/textos.service';
+import { AlertasService } from '../../services/alertas.service';
+import { AuthService } from '../../services/auth.service';
+import { BuscadorService } from '../../services/buscador.service';
+import { HomeService } from '../../services/home.service';
+import { AyudaService } from '../../services/ayuda.service';
+
+
+import { Meta, Title } from '@angular/platform-browser';
+import { ImagenesModel } from 'src/app/models/Imagenes.model';
+import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
+import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
+import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
+import { TextoayudaModel } from 'src/app/models/Textoayuda.model';
+import { ProviderService } from 'src/app/services/provider.service';
+
+
+
+@Component({
+  selector: 'app-ayuda',
+  templateUrl: './ayuda.component.html'
+
+})
+
+
+export class AyudaComponent implements OnInit {
+
+  @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
+  
+  
+  banner :ImagenesModel = new ImagenesModel();
+  bannerbottom :ImagenesModel = new ImagenesModel();
+  imagenempresa :ImagenesModel = new ImagenesModel();
+  messageForm: MessagesFormModel = new MessagesFormModel();
+  messageImage: MessagesImageModel = new MessagesImageModel();
+  messageFaqs: TextoayudaModel= new TextoayudaModel();
+  
+
+  constructor(
+      private acro : ActivatedRoute,
+      private router: Router,
+      private imagenesService: ImagenesService,
+      private textosService: TextosService,
+      private alertasService: AlertasService,
+      private homeService: HomeService,
+      private ayudaService: AyudaService,
+      private wowService: NgwWowService,
+      private auth: AuthService,
+      private meta: Meta,
+      private title: Title,
+      private providerService: ProviderService,
+
+  )
+  {
+    // this.title.setTitle( "▷ Madguides");
+    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+
+    
+  }
+  
+
+  ngOnInit() {
+    this.providerService.setThrowHiddModales(true);
+
+    this.getMessagesForm();
+    this.getMessagesImage();
+    this.getMessageFaqs();
+    this.getImagenes();
+    
+    
+  }
+
+
+  getImagenes(){
+    this.ayudaService.getImages().subscribe( (resp) => {
+      let imagenes =  resp as ImagenesModel[];
+      this.banner = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
+      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
+
+    } );
+  }
+
+
+  getMessagesForm(){
+    this.homeService.getMessagesForm().subscribe( (resp) => {
+      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
+      this.messageForm = respuesta;
+    } );
+  }
+
+
+  getMessagesImage(){
+    this.homeService.getMessagesImage().subscribe( (resp) => {
+      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
+      this.messageImage = respuesta;
+    } );
+  }
+
+
+  getMessageFaqs(){
+    this.ayudaService.getMessages().subscribe( (resp) => {
+      let respuesta: TextoayudaModel =  resp as TextoayudaModel; 
+      this.messageFaqs = respuesta;
+      
+    } );
+  }
+
+
+
+
+  
+
+  
+  
+
+
+ 
+   
+  
+
+
+  
+}
+
+    
+

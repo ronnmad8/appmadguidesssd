@@ -6,6 +6,7 @@ import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ListasService } from '../../services/listas.service';
 import { CarritoService } from '../../services/carrito.service';
+import { AuthService } from '../../services/auth.service';
 import { Options } from "@angular-slider/ngx-slider";
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { Router } from '@angular/router';
@@ -14,7 +15,10 @@ import * as moment from 'moment';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { VisitasPedidoModel } from 'src/app/models/VisitasPedido.model';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { CartModel } from 'src/app/models/Cart.model';
+import { UserModel } from 'src/app/models/User.model';
+
 
 @Component({
   selector: 'app-zonacompra',
@@ -31,10 +35,11 @@ export class ZonacompraComponent implements OnInit {
   @ViewChild('imagenlista') imagenlista: any;
 
   carritoId: number = 0;
-  pedido: VisitasPedidoModel = new VisitasPedidoModel();
-  tipos: string[] = [];
-  listaPedido: VisitasModel[] = [];
+  listaPedido: VisitasResultadoModel[] = [];
   isrespon: boolean = false;
+  pedidos: CartModel[] = [];
+  pedido: CartModel = new CartModel();
+  usuario: UserModel = new UserModel();
 
   sumatotal: number = 0;
 
@@ -46,16 +51,16 @@ export class ZonacompraComponent implements OnInit {
     private carritoService: CarritoService,
     private renderer: Renderer2,
     private modalService: NgbModal,
+    private auth: AuthService ,
   ) { 
     this.wowService.init(); 
   }
 
   ngOnInit(): void {
     
-   
-    this.getCompra();
+    this.usuario = this.auth.getUser();
     this.isresponsive();
-
+    this.getPedido();
 
   }
 
@@ -75,19 +80,20 @@ export class ZonacompraComponent implements OnInit {
   }
 
 
-  getCompra(){
-
-    this.pedido = this.carritoService.getCompraRealizada(this.carritoId); 
-    
-  }
-
   verMisReservas(){
-    this.router.navigate(['/misreservas']);
+    this.router.navigate(['/zonacliente']);
   }
 
 
+  getPedido() {
+    this.pedidos = this.carritoService.getPedidosguardados();
+    if(this.pedidos.length > 0){
+      this.pedidos = this.pedidos.filter(x => x.cliente.email == this.usuario.email);
+      this.pedido = this.pedidos[this.pedidos.length - 1]
+      this.listaPedido = this.pedido.visitasPedido;
+    }
+  }
 
- 
 
   openmodal(cont: any){
     this.modalService.open(cont, this.modalOptions);
