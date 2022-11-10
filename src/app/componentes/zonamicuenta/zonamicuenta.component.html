@@ -1,20 +1,17 @@
-<div class="container px-xl-0 px-1 ">
-
-
+<div class="container px-xl-0 px-2 ">
 
     <div id="contenidobusca" class="w-100 d-xl-flex ">
 
-        <div id="menulatclienteadmin">
+        <div id="menulatclienteadmin pc" *ngIf="!isrespon"  >
             <div class="h80"></div>
-            <div class="pb-4 posrel" [ngClass]="{ 'panscrollVH': isrespon }">
-
+            <div class="pb-4 posrel" >
                 <div id="selecenlace" class="menulateral pt-5 w-100">
                     <div class="p-2 fs-20 posfixedW280 ">
                         <div class="ff-JB py-0 m-0">
                             Hola
                         </div>
                         <div class="ff-JB colROJO1 pt-0 py-0 m-0">
-                            {{usuario.name}} nombre
+                            {{usuario.name}} 
                         </div>
                         <div class="linefull my-3"></div>
                         <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': vercuenta}"
@@ -31,7 +28,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -44,7 +40,7 @@
                         <div class="titmicuenta">
                             <span>Mi cuenta </span>
                         </div>
-                        <div class="posabsolR fs-16 p-4">
+                        <div class="posabsolR fs-14 p-xl-4 p-2">
                             <div>{{usuario.roles[0].name}}</div>
                             <div *ngIf="usuario.afiliado != ''" >
                                 <span>ID de Afiliado:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}} _</span>
@@ -82,21 +78,21 @@
                             <div class="infoMicuenta w-100 d-flex">
                                 <div class="row px-2">
 
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre "
                                                 name="name" id="name" formControlName="name" />
                                         </div>
                                         <div class="lblform" >Nombre</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
                                                 name="surname" id="surname" formControlName="surname" />
                                         </div>
                                         <div class="lblform" >Apellidos</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="email" class="w-100 colGRIS1"
                                                 placeholder=" Correo electrónico " name="email" id="email"
@@ -104,14 +100,14 @@
                                         </div>
                                         <div class="lblform" >Email</div>
                                     </div>
-                                    <div class="col-3 pl-2 pr-1 posrel">
+                                    <div class="col-xl-2 col-4 pl-2 pr-1 posrel">
                                         <div class="cj">
                                             <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo "
                                                 name="prefijo" id="prefijo" formControlName="prefijo" />
                                         </div>
                                         <div class="lblform" >Prefijo</div>
                                     </div>
-                                    <div class="col-3 pl-1 pr-2 posrel">
+                                    <div class="col-xl-4 col-8 pl-1 pr-2 posrel">
                                         <div class="cj">
                                             <input type="phone" class="w-100 colGRIS1" placeholder=" Teléfono movil "
                                                 name="telefono" id="telefono" formControlName="telefono" />
@@ -135,7 +131,7 @@
                             <div class="infoMicuenta w-100 d-flex">
                                 <div class="row px-2">
 
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Nombre"
                                                 id="namefacturacion" name="namefacturacion"
@@ -143,7 +139,7 @@
                                         </div>
                                         <div class="lblform" >Nombre</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Apellidos"
                                                 id="surnamefacturacion" name="surnamefacturacion"
@@ -151,7 +147,7 @@
                                         </div>
                                         <div class="lblform" >Apellidos</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                       
                                             <select #tipoiden class="cjselect w-100" id="tipoidentificacion"
                                                 name="tipoidentificacion" formControlName="tipoidentificacion">
@@ -161,7 +157,7 @@
                                             </select>
                                             <div class="lblform" >Tipo identificación</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Numero identificacion "
                                                 id="numeroidentificacion" name="numeroidentificacion"
@@ -169,36 +165,36 @@
                                         </div>
                                         <div class="lblform" >Número de identificación</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion"
                                                 name="direccion" formControlName="direccion" />
                                         </div>
                                         <div class="lblform" >Dirección</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Codigo postal "
                                                 id="codigopostal" name="codigopostal" formControlName="codigopostal" />
                                         </div>
                                         <div class="lblform" >Código postal</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad"
                                                 name="ciudad" formControlName="ciudad" />
                                         </div>
                                         <div class="lblform" >Ciudad</div>
                                     </div>
-                                    <div class="col-6 px-2 posrel">
+                                    <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Pais " id="pais"
                                                 name="pais" formControlName="pais" />
                                         </div>
                                         <div class="lblform" >País</div>
                                     </div>
-                                    <div class="col-6 px-2 ">
-                                        <div class="col-6 p-0 m-0">
+                                    <div class="col-xl-6 px-2 ">
+                                        <div class="p-0 m-0">
                                             <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
                                             <label class="mx-2" for="rb-1">Particular</label>
                                             <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">

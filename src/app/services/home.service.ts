@@ -33,6 +33,7 @@ export class HomeService {
   url: string = "";
   apiurl: string;
   dataresultado: any;
+  headers: any;
 
   constructor(
     private http: HttpClient,
@@ -41,15 +42,20 @@ export class HomeService {
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
-    this.clang = "&language="+this.globalService.getLanguage();
+    this.clang = this.globalService.getLanguage();
+    this.userToken = this.auth.leerToken();
+    
   }
 
 
 
   getRecomendadasHome()  {
+     
+      const headers = this.auth.headers;
+
       let endpoint = '/home?recommended' ;
-      this.url = this.apiurl + endpoint + this.clang;;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint ;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var recomendadas: VisitasResultadoModel[] = [];
@@ -60,13 +66,6 @@ export class HomeService {
           recomendadas.forEach((el: any, index: number) => {
             if(el.visit_time_uuid != null && el.visit_time == null){
               el = this.globalService.mapperVisitas(el);
-              
-
-              // el.duration = el.visit_time[0].duration;
-              // el.precio_mayores = el.visit_time[0].precio_mayores;
-              // el.precio_menores = el.visit_time[0].precio_menores;
-              // el.precio_pequenos = el.visit_time[0].precio_pequenos;
-
             }
           });
           return recomendadas;
@@ -80,9 +79,11 @@ export class HomeService {
     
   
     getCommentsHome()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/home?comments' ;
-      this.url = this.apiurl + endpoint + this.clang;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint ;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
     
@@ -127,10 +128,12 @@ export class HomeService {
 
 
     getImagenesHome()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/find?file=bannerbottom,bannertop,logo' ;
       this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           let data: ImagenesModel[] = resp as ImagenesModel[];
@@ -145,10 +148,12 @@ export class HomeService {
 
 
     getMessagesHome()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/home?messages' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var homeresp :HomerespModel = resp as HomerespModel;  
@@ -165,10 +170,12 @@ export class HomeService {
 
 
     getMessagesContacto()  {
-      let endpoint = '/assets/form?' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      const headers = this.auth.headers;
 
-      return this.http.get( `${this.url}` )
+      let endpoint = '/assets/form?' ;
+      this.url = this.apiurl + endpoint;
+
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as MessagesModel;  
@@ -183,10 +190,12 @@ export class HomeService {
 
 
     getMessagesTour()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/tour?' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as TextotourModel;  
@@ -201,10 +210,12 @@ export class HomeService {
 
 
     getMessagesIcons()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/tour/icons?' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as TextoiconsModel;  
@@ -219,10 +230,12 @@ export class HomeService {
 
 
     getMessagesOpinions()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/opinions?' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as TextotourModel;  
@@ -237,10 +250,12 @@ export class HomeService {
 
 
     getMessagesRecomendadas()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/visit?' ;
-      this.url = this.apiurl + endpoint + this.clang;
+      this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as TextorecomendadasModel;  
@@ -255,10 +270,12 @@ export class HomeService {
 
 
     getMessagesForm()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/form?' ;
       this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as MessagesFormModel;  
@@ -273,10 +290,12 @@ export class HomeService {
 
 
     getMessagesImage()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/home/image?' ;
-      this.url = this.apiurl + endpoint+ this.clang;
+      this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as MessagesImageModel; 
@@ -291,9 +310,11 @@ export class HomeService {
 
 
     getCajaBuscaHome(busqueda:string){
+      const headers = this.auth.headers;
+
       let endpoint = '/visit?title='+busqueda.trim()+'&per_page=5'; 
-      this.url = this.apiurl + endpoint+ this.clang;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           var data = resp as ResultadoModel;

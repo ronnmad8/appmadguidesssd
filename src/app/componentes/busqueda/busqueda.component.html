@@ -1,6 +1,6 @@
 <div id="busc" class="container px-xl-1 ">
     <div id="rdivtipoplan" class=" row w-100 posrel d-xl-flex px-3 my-0">
-        <div class="pc p-0 m-0">
+        <div class="pc p-0 m-0" *ngIf="!isrespon"  >
             <div id="divtipoplan">
                 <div id="buscadorpor">
                     Buscador por
@@ -9,24 +9,34 @@
                     Tipo de plan
                 </div>
             </div>
+            <div  class="p-2 mt-4 ovhidden" >
+                <swiper [config]="config">
+                    <div id="cate-{{cate.value}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
+                       <div class="brdcirclebusca " [ngClass]="{'selcate' : cate.selected  }"  >
+                        {{cate.title.length > 26 ? cate.title.substring(0,24)+'..' : cate.title }}
+                       </div> 
+                    </div>
+                </swiper>
+            </div>
+            <div class="posrel"  >
+                <i class="fa fa-angle-right fs-20 posabsolfr"  ></i>
+            </div>
         </div>
-        <div class="mvl p-0 m-0">
-            <div id="divtipoplanmovil"  >
+
+        <div class="mvl p-0 m-0 posrel d-flex" *ngIf="isrespon">
+            <div id="divtipoplanmovil" >
                 <div id="sugerencias">
                     Sugerencias
                 </div>
             </div>
-        </div>
-        <div class="horizontal-parent ">
-            <div class="horizontal-child">
-                <div  id="cate-{{cate.value}}" *ngFor="let cate of categoriasfiltro" class="slide cupo" (click)="setCategoriaFiltro($event)"  >
-                    <div class="brdcirclebusca mt-xl-4 mt-1 " [ngClass]="{'selcate' : cate.selected  }"  >{{cate.title.length > 30 ? cate.title.substring(0,27)+"..." : cate.title     }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="w-100" >
-            <div class="posabsolflechabusca">
-                <img src="../../assets/images/i-slider-galeria-derecha.svg" class="imicono3" draggable="false">
+            <div  class="p-2 mh40 "  >
+                <swiper [config]="config">
+                    <div id="cate-{{cate.value}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
+                       <div class="brdcirclebuscamvl " [ngClass]="{'selcate' : cate.selected  }"  >
+                        {{cate.title.length > 16 ? cate.title.substring(0,14)+'..' : cate.title }}
+                       </div> 
+                    </div>
+                </swiper>
             </div>
         </div>
     </div>
@@ -342,7 +352,8 @@
                                 <img class="imghorasvisitabuscador mr-1" src='assets/images/i-reloj.svg' alt="" onerror="this.src='assets/images/sinimagen.jpg' ">
                                 <span class="cantidadhorasvisitabuscador mx-1">{{visita.visit_time[0].duration}}h</span>
                             </div>
-                            <div class="idiomasvisitabuscador cupo "  (mouseenter)="onSelect(i)" (mouseleave)="deSelect()" >
+                            <div class="idiomasvisitabuscador cupo "  (mouseenter)="onSelect(i)" (mouseleave)="deSelect()" 
+                            (touch)="onSelect(i)" (touchend)="deSelect()"  >
                                 <img src="assets/images/i-idiomas.svg" class="imicono3" draggable="false" 
                                 onerror="this.error=null;this.src='assets/images/sinimagen.jpg' " >
                             </div> 

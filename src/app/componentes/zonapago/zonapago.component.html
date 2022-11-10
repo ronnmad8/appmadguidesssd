@@ -1,6 +1,6 @@
 <div class="w-100 d-flex p-0 m-0 bgROJO2">
-    <div class="container px-xl-1 colBLANCO fs-20" style="height: 70px ;">
-        <div class="row p-3 ">
+    <div class="container px-xl-1 colBLANCO fs-20 hpago">
+        <div class="row p-3 pc" *ngIf="!isrespon">
             <div id="paso1" class=" col-xl-4 text-center h40">
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 1">
                     <div class="circulopasos ">
@@ -44,82 +44,131 @@
                 </div>
             </div>
         </div>
+
+        <div class="mvl w-100" *ngIf="isrespon">
+            <div class="row mt-2 px-3 text-center">
+
+                <div id="paso1m" class="col-4 text-center h20">
+                    <div class="p-0 mx-auto d-flex" *ngIf="pasoactivo == 1">
+                        <div class="circulopasos ">
+                            1
+                        </div>
+                        <span class="descripcionpaso"> Pedido </span>
+                    </div>
+                    <div class="p-0 mx-auto d-flex" *ngIf="pasoactivo != 1">
+                        <div class="circulopasosapagado cupo" (click)="cambiarpaso(1)">
+                            1
+                        </div>
+                        <span class="descripcionpasoapagado"> Pedido </span>
+                    </div>
+                </div>
+                <div id="paso2m" class="col-4 text-center h20">
+                    <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 2">
+                        <div class="circulopasos ">
+                            2
+                        </div>
+                        <span class="descripcionpaso"> Datos </span>
+                    </div>
+                    <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
+                        <div class="circulopasosapagado cupo" (click)="cambiarpaso(2)">
+                            2
+                        </div>
+                        <span class="descripcionpasoapagado"> Datos </span>
+                    </div>
+                </div>
+                <div id="paso3m" class=" col-4 text-center h20">
+                    <div class="p-0 m-0 d-flex" *ngIf="pasoactivo == 3">
+                        <div class="circulopasos ">
+                            3
+                        </div>
+                        <span class="descripcionpaso"> Pago </span>
+                    </div>
+                    <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
+                        <div class="circulopasosapagado cupo" (click)="cambiarpaso(3)">
+                            3
+                        </div>
+                        <span class="descripcionpasoapagado"> Pago </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 
-<div id="containerpaso1" class="container p-0 "  [ngClass]="{ 'dnone': pasoactivo != 1 }"  >
+<div id="containerpaso1" class="container p-0 " [ngClass]="{ 'dnone': pasoactivo != 1 }">
 
     <div class="h60"></div>
 
-    <div #carrito id="carrito" class=" d-flex">
+    <div #carrito id="carrito" class=" d-xl-flex">
         <div class="p-0 m-0">
 
-            <div class="conteni d-flex">
-                <div>
-                    <div class="h-100 w-100 mr-2">
+            <div class="conteni d-xl-flex">
 
-                        <div class="panelVisitaCarrito" *ngFor="let visitapedido of pedido.visitasPedido">
+                <div class="h-100 w-100 mx-auto">
 
-                            <div style="width: 280px; height: 100%">
-                                <div #imageneslatid id="im-{{visitapedido.id}}" class="chimaglat cupo">
-                                    <picture>
-                                        <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
-                                            data-srcset="{{visitapedido.visit_image_url}}">
-                                        <img class="imglat" src="{{visitapedido.visit_image_url}}"
-                                            data-src="{{visitapedido.visit_image_url}}"
-                                            alt="{{visitapedido.visit_lang_title}}" style="height: 194px ;">
-                                    </picture>
-                                </div>
+                    <div class="panelVisitaCarrito" *ngFor="let visitapedido of pedido.visitasPedido">
+
+                        <div class="h-100">
+                            <div #imageneslatid id="im-{{visitapedido.id}}" class="chimaglat cupo">
+                                <picture>
+                                    <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
+                                        data-srcset="{{visitapedido.visit_image_url}}">
+                                    <img class="imglat" src="{{visitapedido.visit_image_url}}"
+                                        data-src="{{visitapedido.visit_image_url}}"
+                                        alt="{{visitapedido.visit_lang_title}}" style="height: 194px ;">
+                                </picture>
                             </div>
+                        </div>
 
-                            <div class="posrel h-100 w-100 p-4">
+                        <div class="posrel h-100 w-100 p-xl-4 p-2">
 
-                                <div class="posabsol d-flex" style="right: 15px; top: 20px">
+                            <div class="posabsolX d-flex" >
 
-                                    <!-- <div class="cupo " (click)="editarvisitapedido(visitapedido, calemodal)">
+                                <!-- <div class="cupo " (click)="editarvisitapedido(visitapedido, calemodal)">
                                         <img src="../../assets/images/i-editar.svg" class="imicono24 posrel"
                                             style="top: -5px" draggable="false">
                                     </div> -->
-                                    <div class="cupo" (click)="eliminarvisitapedido(visitapedido)">
-                                        <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
-                                    </div>
+                                <div class="cupo" (click)="eliminarvisitapedido(visitapedido)">
+                                    <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                                 </div>
+                            </div>
 
-                                <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
-                                    {{visitapedido.visit_lang_title}}
-                                </div>
-                                <div class="fs-18 p-0  my-1">
-                                    {{visitapedido.visit_lang_description}}
-                                </div>
-                                <div class="lh-1-2">
-                                    {{visitapedido.visit_time_date}}
-                                </div>
-                                <div class="lh-1-2">
-                                    Idioma: <span class="ml-1">{{visitapedido.idioma}}</span>
-                                </div>
-                                <div class="fs-14 lh-1-2 mt-2">
-                                    <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
-                                            style="margin-right: -3px; margin-top: -2px;"></i>
-                                        {{visitapedido.adultos}}</span>
-                                    <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
-                                            style="margin-right: -3px; margin-top: 0px;"></i>
-                                        {{visitapedido.ninos}}</span>
-                                    <span><i class="fa fa-person fs-12" title="Menores"
-                                            style="margin-right: -3px; margin-top: px;"></i>
-                                        {{visitapedido.menores}}</span>
-
-                                </div>
-                                <div class="posabsol fs-24 ff-JB colGRIS1" style="right: 15px; bottom: 15px; top: auto">
-                                    {{ visitapedido.precio }} €
-                                </div>
+                            <div id="titulopanelpedido">
+                                {{visitapedido.visit_lang_title}}
+                            </div>
+                            <div class="fs-18 p-0  mb-3 pc">
+                                {{visitapedido.visit_lang_description}}
+                            </div>
+                            <div class="lh-1-2">
+                                {{visitapedido.visit_time_date}}
+                            </div>
+                            <div class="lh-1-2">
+                                Tour en <span class="ml-1">{{visitapedido.idioma | capitalize}}</span>
+                            </div>
+                            <div class="fs-14 lh-1-2 mt-2">
+                                <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
+                                        style="margin-right: -3px; margin-top: -2px;"></i>
+                                    {{visitapedido.adultos}}</span>
+                                <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                                        style="margin-right: -3px; margin-top: 0px;"></i>
+                                    {{visitapedido.ninos}}</span>
+                                <span><i class="fa fa-person fs-12" title="Menores"
+                                        style="margin-right: -3px; margin-top: px;"></i>
+                                    {{visitapedido.menores}}</span>
 
                             </div>
+                            <div class="posabsolprecio " >
+                                {{ visitapedido.precio }} €
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="posrel ml-2">
-                    <div class="posabsol ">
+
+                <div class="h-100 w-100 mx-auto">
+                    <div class="posrel">
                         <div #preciototalpedido id="preciototalpedido"
                             [ngClass]="{ 'posfixed80': pegaj == 2, 'posrelinicio': pegaj == 1, 'posrelfinal': pegaj == 3  }">
 
@@ -148,7 +197,7 @@
 </div>
 
 
-<div id="containerpaso2" class="container p-0 "  [ngClass]="{ 'dnone': pasoactivo != 2 && pasoactivo != 3 }"  >
+<div id="containerpaso2" class="container p-0 " [ngClass]="{ 'dnone': pasoactivo != 2 && pasoactivo != 3 }">
 
     <div class="h60"></div>
 
@@ -156,7 +205,7 @@
 
         <form class="validate-form" [formGroup]="forma">
 
-            <div class="conteni d-flex">
+            <div class="conteni d-xl-flex">
                 <div id="resumen posrel">
                     <div class="panelResumen">
                         <div class=" posrel d-flex h50">
@@ -169,7 +218,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3" style="min-height:260px">
+                        <div class="mt-3 mh200" >
 
                             <div class="my-3" *ngFor="let visitapedido of pedido.visitasPedido">
 
@@ -204,13 +253,14 @@
                     </div>
                 </div>
 
-                <div id="registro" class="posrel ml-2 zonaregistro" [ngClass]="{ 'dnone': pasoactivo != 2 }"  >
+                <div id="registro" class="posrel ml-2 zonaregistro" 
+                [ngClass]="{ 'dnone': pasoactivo != 2 }">
                     <div class="h-100 w-100 mr-2">
-                        <div class="hazlogin" (click)="abrirRegistrar(loginmodal)">
-                            <div>Regístrate o <span class="colROJO2">Inicia sesión más rapido con tus redes
+                        <div class="hazlogin d-xl-flex" (click)="abrirRegistrar(loginmodal)">
+                            <div class="" >Regístrate o <span class="colROJO2">Inicia sesión más rapido con tus redes
                                     sociales</span>
                             </div>
-                            <div class="posabsol" style="right: 18px; top: 14px">
+                            <div class="posabsolRedes" >
                                 <span>Login con </span>
                                 <span class="mx-1"><img src="../../assets/images/i-facebookG.svg" class="imicono8l"
                                         draggable="false"></span>
@@ -223,31 +273,31 @@
                             <div class="row px-2">
                                 <div class="col-12 fs-20 ff-JB px-2">Registro: Datos de la reserva</div>
 
-                                <div class="col-6 px-2 ">
+                                <div class="col-xl-6  px-2 ">
                                     <div class="cj">
                                         <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre " name="name"
                                             id="name" formControlName="name" />
                                     </div>
                                 </div>
-                                <div class="col-6 px-2 ">
+                                <div class="col-xl-6 px-2 ">
                                     <div class="cj">
                                         <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
                                             name="surname" id="surname" formControlName="surname" />
                                     </div>
                                 </div>
-                                <div class="col-6 px-2 ">
+                                <div class="col-xl-6 px-2 ">
                                     <div class="cj">
                                         <input type="email" class="w-100 colGRIS1" placeholder=" Correo electrónico "
                                             name="email" id="email" formControlName="email" />
                                     </div>
                                 </div>
-                                <div class="col-3 pl-2 pr-1 ">
+                                <div class="col-xl-3 col-3 px-2 ">
                                     <div class="cj">
                                         <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo " name="prefijo"
                                             id="prefijo" formControlName="prefijo" />
                                     </div>
                                 </div>
-                                <div class="col-3 pl-1 pr-2 ">
+                                <div class="col-xl-3 col-9 px-2 ">
                                     <div class="cj">
                                         <input type="phone" class="w-100 colGRIS1" placeholder=" Teléfono movil "
                                             name="telefono" id="telefono" formControlName="telefono" />
@@ -259,8 +309,8 @@
                         <div class="aceptapoliticas">
                             <div class="d-flex w-100">
                                 <div>
-                                    <input #aceptacion  type="checkbox" name="aceptacion" id="aceptacion" [checked]="this.forma.value.aceptacion.isChecked" 
-                                        formControlName="aceptacion">
+                                    <input #aceptacion type="checkbox" name="aceptacion" id="aceptacion"
+                                        [checked]="this.forma.value.aceptacion.isChecked" formControlName="aceptacion">
                                 </div>
                                 <div class="fs-16 mx-2">
                                     Acepto <a routerlink="">la política de privacidad </a>y <a routerlink="">las
@@ -268,7 +318,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4 ml-auto mr-0 text-right">
+                        <div class="btcontdatosper ">
                             <button class="btredondoRojoContinuar " type="button" (click)="continuar()">
                                 <span class="ff-JB">Continuar</span>
                             </button>
@@ -277,7 +327,7 @@
                 </div>
 
 
-                <div id="metodopago" class="posrel ml-2 zonaregistro"  [ngClass]="{ 'dnone': pasoactivo != 3 }"   >
+                <div id="metodopago" class="posrel ml-2 zonaregistro" [ngClass]="{ 'dnone': pasoactivo != 3 }">
                     <div class="h-100 w-100 mr-2">
 
                         <div class="panelMetodopago">
@@ -716,10 +766,10 @@
                             <div class="cj posrel">
                                 <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
                                     name="password" formControlName="password" />
-                                <div class="posabsolRm10" *ngIf="verpass" > <i
-                                        class="fa-solid fa-eye-slash" (click)="verpassword(false)"></i> </div>
-                                <div class="posabsolRm10" *ngIf="!verpass" > <i
-                                        class="fa-solid fa-eye" (click)="verpassword(true)"></i> </div>
+                                <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                                        (click)="verpassword(false)"></i> </div>
+                                <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                                        (click)="verpassword(true)"></i> </div>
                             </div>
                             <div class="d-flex" id="recuerdamimicuenta">
                                 <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
@@ -785,10 +835,10 @@
                                     <div class="cj posrel">
                                         <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña"
                                             id="password" name="password" formControlName="password" />
-                                        <div class="posabsolRm10" *ngIf="verpass" > <i
-                                                class="fa-solid fa-eye-slash" (click)="verpassword(false)"></i> </div>
-                                        <div class="posabsolRm10" *ngIf="!verpass" > <i
-                                                class="fa-solid fa-eye" (click)="verpassword(true)"></i> </div>
+                                        <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                                                (click)="verpassword(false)"></i> </div>
+                                        <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                                                (click)="verpassword(true)"></i> </div>
                                     </div>
                                     <div class="cj">
                                         <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"

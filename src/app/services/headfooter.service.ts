@@ -41,14 +41,16 @@ export class HeadfooterService {
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
-    this.clang = "&language="+this.globalService.getLanguage();
+    this.clang = this.globalService.getLanguage();
   }
 
   
     getMessagesMenu()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/header/menu?' ;
-      this.url = this.apiurl + endpoint + this.clang;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint ;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
     
@@ -65,9 +67,11 @@ export class HeadfooterService {
 
 
     getMessagesLogin()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/login?' ;
-      this.url = this.apiurl + endpoint + this.clang;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
     
@@ -84,9 +88,11 @@ export class HeadfooterService {
 
 
     getMessagesFooter()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/footer?' ;
-      this.url = this.apiurl + endpoint + this.clang;
-      return this.http.get( `${this.url}` )
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
     
@@ -104,9 +110,11 @@ export class HeadfooterService {
 
 
     getLogoMenu()  {
+      const headers = this.auth.headers;
+
       let endpoint = '/assets/find?file=logo-madguides' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
           let imagenes:ImagenesModel[] = resp as ImagenesModel[]; ;
@@ -122,9 +130,11 @@ export class HeadfooterService {
     }
 
     getLogoFooter()  {
+      const headers = this.auth.headers;
+       
       let endpoint = '/assets/find?file=logo-madguides-vertical' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}` )
+      return this.http.get( `${this.url}`, {headers} )
       .pipe(
         map( resp =>{
     

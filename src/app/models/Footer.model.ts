@@ -20,6 +20,15 @@ class Menu1{
     blog: string;
     help: string;
     covid: string;
+    constructor(){
+        this.title = '';
+        this.who = '';
+        this.contact = '';
+        this.blog = '';
+        this.help = '';
+        this.covid = '';
+    
+    }
 
 }
 
@@ -29,4 +38,11 @@ class Menu2{
     notice: string;
     cookie: string;
     purchase: string;
+    constructor(){
+        this.title = '';
+        this.policy = '';
+        this.notice = '';
+        this.cookie = '';
+        this.purchase = '';
+    }
 }

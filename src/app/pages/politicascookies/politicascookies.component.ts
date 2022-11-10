@@ -4,14 +4,10 @@ import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router'
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { NgwWowService } from 'ngx-wow';
-
-import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { HomeService } from '../../services/home.service';
 import { PoliticasService } from '../../services/politicas.service';
-
-
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
@@ -42,7 +38,6 @@ export class PoliticascookiesComponent implements OnInit {
   constructor(
       private acro : ActivatedRoute,
       private router: Router,
-      private textosService: TextosService,
       private alertasService: AlertasService,
       private homeService: HomeService,
       private politicasService: PoliticasService,

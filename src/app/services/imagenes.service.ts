@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,16 @@ export class ImagenesService {
   idUsuario: string = "";
   url: string = "";
   apiurl: string;
+  clang: string = "";
 
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private globalService: GlobalService,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = this.globalService.getLanguage();
   }
 
 
@@ -51,7 +54,7 @@ export class ImagenesService {
   //   const headers = new HttpHeaders ({
   //     'Authorization': this.userToken
   //   });
-  //   return this.http.post( `${this.url}`, pData, {headers} )
+  //   return this.http.post( `${this.url}`, pData )
   //   .pipe(
   //     map( res => res as ImagenesModel) ,
   //     catchError((err) => {
@@ -64,6 +67,8 @@ export class ImagenesService {
 
 
   getListaImagenes() {
+    const headers = this.auth.headers;
+
     let endpoint =  '/imagenes';
     this.url = this.apiurl + endpoint ;
     return this.http.get( `${this.url}` )
@@ -79,7 +84,8 @@ export class ImagenesService {
 
 
   getImagenesFilt(idenlace :number, idtipo :number)  {
-    
+    const headers = this.auth.headers;
+
     let endpoint = '/imagenes/filt' ;
     this.url = this.apiurl + endpoint;
     const filtData = {
@@ -103,8 +109,8 @@ export class ImagenesService {
 
 
   getImagenesFiltAdmin(idenlace :number, idtipo: number, fechaini: string, fechafin: string)  {
+    const headers = this.auth.headers;
 
-    this.userToken = this.auth.leerToken();
     let endpoint = '/imagenes/filtadmin' ;
     this.url = this.apiurl + endpoint;
     const filtData = {
@@ -114,9 +120,7 @@ export class ImagenesService {
       fechafin: fechafin
       
     };
-    const headers = new HttpHeaders ({
-      'Authorization': this.userToken
-    });
+
     return this.http.post( `${this.url}`, filtData, { headers } )
     .pipe(
       map( res => res as ImagenesModel[]) ,
@@ -130,7 +134,8 @@ export class ImagenesService {
 
 
   getBanner(idenlace :number, idtipo :number)  {
-    
+    const headers = this.auth.headers;
+
     let endpoint = '/imagenes/bannershome' ;
     this.url = this.apiurl + endpoint;
     const filtData = {
@@ -153,7 +158,8 @@ export class ImagenesService {
 
 
   getColeccioneshome(idenlace :number, idtipo :number)  {
-    
+    const headers = this.auth.headers;
+
     let endpoint = '/imagenes/coleccioneshome' ;
     this.url = this.apiurl + endpoint;
     const filtData = {
@@ -175,7 +181,8 @@ export class ImagenesService {
 
 
   getImagenesFiltpos(idenlace :number, idtipo :number, posicion: number)  {
-    this.userToken = this.auth.leerToken();
+    const headers = this.auth.headers;
+
     let endpoint = '/imagenes/filtpos' ;
     this.url = this.apiurl + endpoint;
     const filtData = {
@@ -203,7 +210,8 @@ export class ImagenesService {
   
 
   uploadFile( id: string, filetoupload: File ) {
-    this.userToken = this.auth.leerToken();
+    const headers = this.auth.headers;
+
     let endpoint = '/imagenes/imagen/' ;
     this.url = this.apiurl +  endpoint ;
 
@@ -211,7 +219,6 @@ export class ImagenesService {
     formData.append('image', filetoupload, filetoupload.name);
     formData.append('id', id);
 
-    const headers = new HttpHeaders({ 'Authorization': this.userToken });
     return this.http.post( `${this.url}`, formData , { headers }  )
     .pipe(
       catchError(err => {

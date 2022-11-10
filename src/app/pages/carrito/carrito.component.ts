@@ -8,7 +8,6 @@ import { NgwWowService } from 'ngx-wow';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
 import { ImagenesService } from '../../services/imagenes.service';
-import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { CarritoService } from '../../services/carrito.service';
@@ -42,7 +41,6 @@ export class CarritoComponent implements OnInit{
   constructor(
       private router: Router,
       private imagenesService: ImagenesService,
-      private textosService: TextosService,
       private alertasService: AlertasService,
       private carritoService: CarritoService,
       private wowService: NgwWowService,

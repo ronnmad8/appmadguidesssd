@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PlatformService } from './services/platform.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,12 @@ export class AppComponent {
   title = 'madguides';
   footersinlinks: boolean = false;
 
-  constructor()
+  constructor(
+    private platformService: PlatformService
+  )
 {
-  this.mostrarenlacesenfooter()
+  this.mostrarenlacesenfooter();
+  this.getCurrentLanguage() ;
 }
 
   nomostrarenlacesenfooter(){
@@ -22,6 +26,20 @@ export class AppComponent {
   mostrarenlacesenfooter(){
      
      this.footersinlinks = false;
+  }
+
+  getCurrentLanguage() {
+    let cl = localStorage.getItem('currentLanguage');
+    let lang = "es";
+    if(this.platformService.plId == "browser") {
+      let sWindow = this.platformService.sWindow ;
+      if(sWindow != null){
+        lang = sWindow.navigator.language;
+      }
+    }
+    if(cl == null) {
+      localStorage.setItem('currentLanguage', lang);
+    }
   }
 
 

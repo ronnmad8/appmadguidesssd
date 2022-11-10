@@ -34,6 +34,8 @@ class Titdesc {
   description2: string;
   description3: string;
   link: string;
+  ///erratas
+  descripction: string;
   constructor() {
     this.title = '';
     this.description = '';
@@ -41,6 +43,8 @@ class Titdesc {
     this.description2 = '';
     this.description3 = '';
     this.link = '';
+    ///erratas
+    this.descripction = '';
   }
 }
 

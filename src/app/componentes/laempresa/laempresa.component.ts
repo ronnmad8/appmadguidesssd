@@ -17,6 +17,7 @@ import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextoquienessomosModel } from 'src/app/models/Textoquienessomos.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 
@@ -31,6 +32,7 @@ export class LaempresaComponent implements OnInit {
 
   @Input () imagenempresaData: ImagenesModel = new ImagenesModel();
   @Input () messageLaempresaData: TextoquienessomosModel = new  TextoquienessomosModel();
+  sWindow: any;
 
   modal: NgbModalRef;
   modalOptions: NgbModalOptions;
@@ -47,29 +49,24 @@ export class LaempresaComponent implements OnInit {
     private renderer: Renderer2,
     private modalService: NgbModal,
     private auth: AuthService ,
+    private platformService: PlatformService
   ) { 
     this.wowService.init(); 
+    this.sWindow = this.platformService.sWindow ;
   }
 
 
   ngOnInit(): void {
-    this.isresponsive();
+    this.isrespon = this.platformService.isrespon;
   }
 
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let posactual = window.pageYOffset ;
+    let posactual = this.sWindow.pageYOffset ;
   
   }
 
-
-  isresponsive(){
-    let scree = window.innerWidth;
-    if(scree < 1198){
-      this.isrespon = true;
-    }
-  }
 
 
 

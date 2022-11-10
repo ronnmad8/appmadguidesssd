@@ -20,6 +20,7 @@
       <div class="container posrel">
         <div class="panelcontactohome mx-auto">
           <form class="validate-form" [formGroup]="forma">
+
             <div id="intpanelcontactohome" class="p-0">
               <div class="w-100 text-left">
                 <div id="pontecontac">
@@ -33,61 +34,62 @@
                 </div>
               </div>
 
-              <div class="row d-flex p-0 posrel">
-                <div id="nombrecontact" class="col-6">
-                  <div class="cuad">
+              <div class="row ">
+                <div id="nombrecontact" class="col-xl-6">
+                  <div class="cuad posrel">
                     <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre"
                       formControlName="nombre">
-                    <div *ngIf="nombresel != '' " class="fieldpeq">
+                    <div *ngIf="nombresel != '' " class="fieldpeq3">
                       {{messageFormData.name}}
                     </div>
                   </div>
                 </div>
-                <div id="emailcontact" class="col-6">
-                  <div class="cuad">
+                <div id="emailcontact" class="col-xl-6">
+                  <div class="cuad posrel">
                     <input class="w-100" type="text" placeholder="Email" name="email" id="email"
                       formControlName="email">
-                    <div *ngIf="emailsel != '' " class="fieldpeq">
+                    <div *ngIf="emailsel != '' " class="fieldpeq3">
                       {{messageFormData.email}}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="row d-flex p-0 posrel">
-
+              <div class="row d-flex p-0 posrel mt-1">
                 <div id="mensajecontact " class="col-12">
-                  <div class="cuadG">
+                  <div class="cuadG posrel">
                     <textarea class="" type="text" placeholder="Mensaje" cols="4" name="mensaje" id="mensaje"
                       formControlName="mensaje">
                     </textarea>
-                    <div *ngIf="mensajesel != '' " class="fieldpeq2">
+                    <div *ngIf="mensajesel != '' " class="fieldpeq3">
                       {{messageFormData.message}}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="row d-xl-flex p-0">
+              <div class="row d-xl-flex ">
 
                 <div id="aceptocontact" class="col-xl-8 d-flex">
                     <div >
                     <input class="mt-2" type="checkbox" name="aceptarpoliticas" name="aceptacion" id="aceptacion"
                       formControlName="aceptacion">
                     </div>
-                    <div class="fs-16 mx-2 w-100">
-                      {{messageFormData.message}} <a routerlink="/politicaprivacidad">{{messageFormData.policy}}</a> <a
-                      routerlink="/politicaprivacidad">{{messageFormData.link}}</a>
+                    <div class="fs-16 mx-2 w-100 ">
+                      <span class="mx-1">{{messageFormData.policy}} </span>
+                      <a routerlink="/politicaprivacidad">{{messageFormData.link}}</a>
                     </div>
                 </div>
 
-                <div id="btcontact" class="col-xl-4 text-xl-right text-center">
+                <div id="btcontact" class="col-xl-4 col-12 text-xl-right text-center">
                   <button *ngIf="btactivadoT" type="button" class="btgris cupo">
                     {{messageFormData.button}}
                   </button>
                   <button *ngIf="!btactivadoT" type="button" class="btgris apagado">
                     {{messageFormData.button}}
                   </button>
+                  <div class="mh30">
+                  </div>
                 </div>
               </div>
             </div>

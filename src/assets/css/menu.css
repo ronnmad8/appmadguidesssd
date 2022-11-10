@@ -64,6 +64,24 @@
   position: absolute;
   top: 10px;
   left: calc(50% - 60px);
+  width: 90px;
+}
+
+.aviso-cookies-peq {
+  max-width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: auto;
+}
+
+.cookiepeq{
+  max-width: 40px !important;
+  height: 40px !;
+  width: auto;
+  border-radius: 50% !important;
+  padding: 10px;
 }
 
 .fondo-aviso-cookies {
@@ -155,9 +173,9 @@
 .posabsolbarlupa {
   position: absolute !important;
   bottom: 24px !important;
-  right: -150px;
-  left: 0;
-  z-index: 999;
+  right: -180px;
+  left: auto;
+  z-index: 1100;
 }
 
 .posabsolbaridiomas {
@@ -173,8 +191,17 @@
   height: 50px !important;
 }
 
-#enlace1 {
-  width: 137px !important;
+.enlaceM {
+  min-width: 60px !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  margin-top: 20px;
+}
+
+/* #enlace1 {
+  min-width: 130px !important;
   height: auto !important;
   padding: 0 !important;
   margin-right: 20px !important;
@@ -184,7 +211,7 @@
 
 #enlace2 {
   padding: 0 !important;
-  width: 65px !important;
+  min-width: 130px !important;
   height: auto !important;
   margin-left: 10px !important;
   margin-right: 20px !important;
@@ -193,12 +220,12 @@
 
 #enlace3 {
   padding: 0 !important;
-  width: 55px !important;
+  min-width: 130px !important;
   height: auto !important;
   margin-left: 20px !important;
   margin-right: 0px !important;
   margin-top: 20px;
-}
+} */
 
 .divlogo_pc {
   z-index: 10;
@@ -752,10 +779,6 @@
     height: 350;
   }
 
-  .aviso-cookies .galleta {
-    width: 90px;
-    height: auto;
-  }
 
   .mhcook {
     height: 300px !important;
@@ -799,7 +822,7 @@
     margin-right: auto !important;
   }
   
-  #abrirmicuenta{
+  #abrirmicuenta, #hola{
     color: #ffffff;
     background-color: var(--c_ROJO2);
     height: 42px;
@@ -867,7 +890,7 @@
   right: 0px !important;
   left: 0px !important;
   z-index: 901;
-  
+  max-width: 365px;
 }
 
 #panelcarritovaciomovil{
@@ -878,6 +901,7 @@
   color: var(--c_GRIS1);
   border: 0.5px solid #efefef;
 }
+
 #panelcarritocondatomovil{
   height: 30px;
   width: 100%;

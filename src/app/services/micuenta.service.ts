@@ -24,6 +24,7 @@ export class MicuentaService {
   idUsuario: string = '';
   url: string = '';
   apiurl: string;
+  clang: string = 'es';
 
   constructor(
     private http: HttpClient,
@@ -36,16 +37,18 @@ export class MicuentaService {
 
   
   getMessagesMicuenta() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/micuenta';
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, {headers}).pipe(
       map((resp) => {
         var messageData: VisitaAssetsModel = resp as VisitaAssetsModel;
         return messageData;
       }),
       catchError((err) => {
-        console.error('Error  ', err.error);
+        console.error('Error', err.error);
         return err.error;
       })
     );
@@ -53,12 +56,8 @@ export class MicuentaService {
 
 
   meUser(user: UserModel) {
+    const headers = this.auth.headers;
 
-    const headers = new HttpHeaders ({
-      "Content-type": "application/json; charset=UTF-8",
-      "Authorization": "Bearer "+this.userToken
-     });
-    
     let endpoint = '/me';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, {headers}).pipe(

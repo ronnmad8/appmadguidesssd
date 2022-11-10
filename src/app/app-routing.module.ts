@@ -22,10 +22,6 @@ const routes: Routes = [
   { path: 'ayuda' , component: AyudaComponent},
   { path: 'blog' , component: HomeComponent},
   { path: 'contacto' , component: ContactoComponent},
-  { path: 'buscador' , component: BuscadorComponent},
-  { path: 'buscador/category/:category_uuid?' , component: BuscadorComponent},
-  { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
-  { path: 'buscador/title/:title' , component: BuscadorComponent},
   { path: 'visita/:title/:uuid' , component: VisitadetailComponent},
   { path: 'visitatitulo/:title' , component: VisitadetailComponent},
   { path: 'carrito' , component: CarritoComponent},
@@ -37,7 +33,10 @@ const routes: Routes = [
   { path: 'medidascovid' , component: MedidascovidComponent},
   { path: 'zonacliente' , component: AdminclienteComponent},
   { path: 'zonacliente/:section' , component: AdminclienteComponent},
-
+  { path: 'buscador' , component: BuscadorComponent},
+  { path: 'buscador/category/:category_uuid?' , component: BuscadorComponent},
+  { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
+  { path: 'buscador/title/:title' , component: BuscadorComponent},
 
   //////////////////////////////////////////////default
   { path: '' , component: HomeComponent},

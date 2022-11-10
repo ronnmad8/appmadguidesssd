@@ -17,7 +17,6 @@ import { NgwWowService } from 'ngx-wow';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
 import { ImagenesService } from '../../services/imagenes.service';
-import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { BuscadorService } from '../../services/buscador.service';
@@ -77,7 +76,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       private acro : ActivatedRoute,
       private router: Router,
       private imagenesService: ImagenesService,
-      private textosService: TextosService,
       private alertasService: AlertasService,
       private buscadorService: BuscadorService,
       private homeService: HomeService,
@@ -102,7 +100,7 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
 
-   // this.getMessagesSearch();
+    this.getMessagesSearch();
     this.getMessagesForm();
     this.getMessagesSearch();
     this.getMessagesImage();
@@ -134,7 +132,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
         if(title != null){
           this.filtersrutatitle = title;
         }
-
         this.getVisitasBuscador();
       }
       );
@@ -155,30 +152,30 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     
     ///filters
     if(this.bu != null){
+    
       this.filters = this.bu.filters;
-    }
-    if(this.filtersrutatitle != ""){
-      this.filters.title = this.filtersrutatitle;
-
-    }
-    if(this.filtersrutacategorias != ""){
-      this.filters.categorias.push(this.filtersrutacategorias);
-    }
-
-    this.page = this.bu.page;
-    this.bu.loading = true;
-    this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
-
-      this.resultadoBuscador =  resp as ResultadoModel;
-      this.bu.getVisitasBuscador(this.resultadoBuscador);
-      this.numactividades = this.resultadoBuscador.total;
+      this.page = this.bu.page;
+      this.bu.loading = true;
+      if(this.filtersrutatitle != ""){
+        this.filters.title = this.filtersrutatitle;
+      }
+      if(this.filtersrutacategorias != ""){
+        this.filters.categorias.push(this.filtersrutacategorias);
+      }
+      
+      this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
+        
+        this.resultadoBuscador =  resp as ResultadoModel;
+        this.bu.getVisitasBuscador(this.resultadoBuscador);
+        this.numactividades = this.resultadoBuscador.total;
+        setTimeout(() => {
+          this.bu.loading = false;
+        }, 500);
+      } );
       setTimeout(() => {
         this.bu.loading = false;
-      }, 500);
-    } );
-    setTimeout(() => {
-      this.bu.loading = false;
-    }, 10000);
+      }, 10000);
+    }
   }
 
   getMessagesSearch(){

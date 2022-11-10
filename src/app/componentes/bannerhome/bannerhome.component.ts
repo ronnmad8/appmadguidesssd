@@ -4,7 +4,6 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { ImagenesService } from '../../services/imagenes.service';
-import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { ProviderService } from '../../services/provider.service';
@@ -41,7 +40,6 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
     private acro : ActivatedRoute,
     private router: Router,
     private imagenesService: ImagenesService,
-    private textosService: TextosService,
     private globalService: GlobalService,
     private providerService: ProviderService,
     private homeService: HomeService
@@ -70,7 +68,7 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
         let resultado = resp as ResultadoModel;
         this.visitasprop = resultado.data as VisitasResultadoModel[];
       }) ;
-    }, 1000);
+    }, 10);
 
   }
   

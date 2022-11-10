@@ -23,6 +23,7 @@ export class VisitaService {
   idUsuario: string = '';
   url: string = '';
   apiurl: string;
+  clang: string = 'es';
 
   constructor(
     private http: HttpClient,
@@ -31,14 +32,18 @@ export class VisitaService {
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = this.globalService.getLanguage();
+    this.userToken = this.auth.leerToken();
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   getVisita(uuid: string) {
+    const headers = this.auth.headers;
+
     let endpoint = '/visit?uuid=' + uuid;
     this.url = this.apiurl + endpoint;
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers } ).pipe(
       map((res) => {
         let visitas: VisitasResultadoModel[] = res as VisitasResultadoModel[];
         let visita = visitas[0];
@@ -55,9 +60,11 @@ export class VisitaService {
   }
 
   getVisitaTitle(title: string) {
+    const headers = this.auth.headers;
+
     let endpoint = '/visit?title=' + title;
     this.url = this.apiurl + endpoint;
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers } ).pipe(
       map((res) => {
         return res as VisitasResultadoModel[];
       }),
@@ -69,6 +76,8 @@ export class VisitaService {
   }
 
   getImagenesvisita() {
+    
+
     var imagenes: ImagenesModel[] = [];
 
     var imagen2: ImagenesModel = new ImagenesModel();
@@ -129,11 +138,12 @@ export class VisitaService {
   }
 
   getRelacionadas(category_uuid: string) {
+    const headers = this.auth.headers;
 
     let endpoint =
       '/visit?order=order-random&per_page=4&category_uuid=' + category_uuid;
     this.url = this.apiurl + endpoint;
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers } ).pipe(
       map((resp) => {
         var resultado: ResultadoModel =
           resp as ResultadoModel;
@@ -155,10 +165,12 @@ export class VisitaService {
 
 
   getCategoryUuid(uuid: string) {
+    const headers = this.auth.headers;
+
     let endpoint = '/visit?per_page=1&uuid=' + uuid;
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers }).pipe(
       map((resp) => {
         var visita: VisitasResultadoModel[] = resp as VisitasResultadoModel[];
         return visita[0];
@@ -171,10 +183,12 @@ export class VisitaService {
   }
 
   getCategoryTitle(title: string) {
+    const headers = this.auth.headers;
+
     let endpoint = '/visit?per_page=1&title=' + title;
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers }).pipe(
       map((resp) => {
         var visita: VisitasResultadoModel[] = resp as VisitasResultadoModel[];
         return visita[0];
@@ -187,10 +201,12 @@ export class VisitaService {
   }
 
   getMessagesVisita() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/visit';
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, { headers }).pipe(
       map((resp) => {
         var messageData: VisitaAssetsModel = resp as VisitaAssetsModel;
         return messageData;

@@ -25,6 +25,8 @@ import { CategoriasModel } from 'src/app/models/Categorias.model';
 import { OrdenModel } from 'src/app/models/Orden.model';
 import { CalendarModel } from 'src/app/models/calendar.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 @Component({
@@ -33,6 +35,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class BusquedaComponent implements OnInit {
   @Output() filtrarBusqueda = new EventEmitter();
+  sWindow: any;
 
   listaresultados: VisitasResultadoModel[] = [];
   resultado: ResultadoModel = new ResultadoModel();
@@ -106,13 +109,57 @@ export class BusquedaComponent implements OnInit {
   verordenar: boolean = false;
   ordfixed: boolean = false;
 
+
+  public config: SwiperConfigInterface = {
+    autoplay: false,
+    effect: 'slide',
+    a11y: true,
+    direction: 'horizontal',
+    slidesPerView: 4,
+    slideToClickedSlide: false,
+    speed: 1000,
+    mousewheel: true,
+    scrollbar: false,
+    watchSlidesProgress: true,
+    navigation: false,
+    keyboard: true,
+    pagination: false,
+    centeredSlides: false,
+    loop: true,
+    loopedSlides: 0,
+    initialSlide: 1,
+    loopFillGroupWithBlank: true,
+    roundLengths: false,
+    slidesOffsetBefore: 0,
+    slidesOffsetAfter: 0,
+    spaceBetween: 1,
+    breakpoints: {
+      1290: {
+        slidesPerView: 4
+      },
+      590: {
+        slidesPerView: 3
+      },
+      490: {
+        slidesPerView: 2
+      },
+      390: {
+        slidesPerView: 1
+      },
+
+    }
+
+  };
+
   constructor(
     private router: Router,
     private buscadorService: BuscadorService,
     private globalService: GlobalService,
-    private listasService: ListasService
+    private listasService: ListasService,
+    private platformService: PlatformService,
+    
   ) {
-    ///
+    this.sWindow = this.platformService.sWindow ;
   }
 
   ngOnInit(): void {
@@ -125,16 +172,18 @@ export class BusquedaComponent implements OnInit {
     this.getListaOrdenar();
 
     this.cambiarvalorfiltroprecio();
-    this.isresponsive();
+    this.iswinresponsive();
 
     this.getFechasHoy();
     this.verdisponibilidad();
+    this.isrespon = this.platformService.isrespon;
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    this.scrollPosition = window.pageYOffset;
-    console.log(this.scrollPosition);
+    
+    this.scrollPosition = this.sWindow.pageYOffset;
+    
     if(this.isrespon){
       if (this.scrollPosition > 206) {
         this.ordfixed = true;
@@ -144,14 +193,11 @@ export class BusquedaComponent implements OnInit {
     }
   }
 
-  isresponsive() {
-    let scree = window.innerWidth;
-    if (scree < 1198) {
-      this.isrespon = true;
+  iswinresponsive() {
+    this.isrespon = this.platformService.isrespon;
+    this.vfiltros = true;
+    if (this.isrespon) {
       this.vfiltros = false;
-    }else if(scree >= 1198){
-      this.isrespon = false;
-      this.vfiltros = true;
     }
   }
 
@@ -171,7 +217,8 @@ export class BusquedaComponent implements OnInit {
   getVisitasBuscador(result: ResultadoModel) {
     this.resultado = result as ResultadoModel;
     this.listaresultados = this.listaresultados.concat(this.resultado.data);
-    window.scrollTo({ top: this.scrollPosition + 10 });
+    let sWindow = this.platformService.sWindow ;
+    sWindow.scrollTo({ top: this.scrollPosition + 10 });
 
   }
 

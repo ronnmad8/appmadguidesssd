@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartModel } from 'src/app/models/Cart.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { LoginModel } from 'src/app/models/Login.model';
+import { PlatformService } from 'src/app/services/platform.service';
+import { ProviderService } from 'src/app/services/provider.service';
 
 @Component({
   selector: 'app-zonamicuenta',
@@ -25,6 +27,7 @@ export class ZonamicuentaComponent implements OnInit {
   @Output() updateDatos = new EventEmitter();
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
+  sWindow: any ;
 
   listatiposidentificacion: any[] = [];
   listaresultados: [] = [];
@@ -44,29 +47,33 @@ export class ZonamicuentaComponent implements OnInit {
     private micuentaService: MicuentaService,
     private alertasService: AlertasService,
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private platformService: PlatformService,
+    private providerService: ProviderService
   ) {
     this.crearFormulario();
     this.cambiosFormulario();
+    this.sWindow = this.platformService.sWindow;
   }
 
   ngOnInit(): void {
-    this.isresponsive();
+    this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacion = this.globalService.getlistatiposidentificacion();
+    this.providerService.setThrowPageadmin(true);
+    this.listenProvider();
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    this.scrollPosition = window.pageYOffset;
+    this.scrollPosition = this.sWindow.pageYOffset;
   }
 
-  isresponsive() {
-    let scree = window.innerWidth;
-    if (scree < 1198) {
-      this.isrespon = true;
-  
-    }
+  listenProvider(){
+    this.providerService.getThrowIsresize.subscribe((resp)=>{
+      this.isrespon = resp
+    });
   }
+
 
   crearFormulario() {
     this.forma = this.fb.group({

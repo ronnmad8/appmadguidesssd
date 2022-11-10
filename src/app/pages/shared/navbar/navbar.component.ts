@@ -32,6 +32,7 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
 import { RecordarmeModel } from 'src/app/models/Recordarme.model';
 import { SocialAuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
+import { PlatformService } from 'src/app/services/platform.service';
 
 @Component({
   selector: 'app-navbar',
@@ -47,7 +48,7 @@ export class NavbarComponent implements OnInit {
   @Output() simostrarenfooter: EventEmitter<any> = new EventEmitter();
   @ViewChild(RouterOutlet ) ro: RouterOutlet;
   @ViewChild('cjbusque' ) cjbusque: ElementRef;
-
+  sWindow: any;
   isrespon: boolean = false;
   
   listatiposidentificacion: any[] = [];
@@ -111,6 +112,8 @@ export class NavbarComponent implements OnInit {
   //socialUser: SocialUser;
   isLoginUser: boolean = false;
   enviar = "Enviar";
+  tresize: any;
+  pageadmin: boolean = false;
   
   constructor(
     private auth: AuthService,
@@ -127,6 +130,7 @@ export class NavbarComponent implements OnInit {
     private listasService: ListasService,
     private micuentaService: MicuentaService,
     private headfooterService: HeadfooterService,
+    private platformService: PlatformService,
     //private socialAuthService: SocialAuthService,
   ) 
   {
@@ -137,11 +141,11 @@ export class NavbarComponent implements OnInit {
     this.crearFormularioForget();    
     this.cambiosFormularioForget();
     this.pedido = new CartModel();
-    
+    this.sWindow = this.platformService.sWindow;
   }
   
   ngOnInit() {
-    this.isresponsive();
+    this.isrespon = this.platformService.isrespon;
 
     this.listatiposidentificacion = this.globalService.getlistatiposidentificacion();
     this.loginadmin();
@@ -164,7 +168,7 @@ export class NavbarComponent implements OnInit {
     this.logoB = false;
     
     this.simostrarenfooter.emit();
-    this.listenProvider()
+    this.listenProvider();
     this.verbusca = false;
 
     //this.listenloginfacebook();
@@ -173,13 +177,26 @@ export class NavbarComponent implements OnInit {
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let scrollPosition = window.pageYOffset ;
-     this.menusticky = false;
+    let scrollPosition = this.sWindow.pageYOffset ;
+    this.menusticky = false;
 
-     if(this.possc > scrollPosition){
-       this.menusticky = true;
+    if(this.possc > scrollPosition){
+      this.menusticky = true;
      }
-     this.possc = scrollPosition;
+    this.possc = scrollPosition;
+  }
+
+  @HostListener("window:resize")
+  onWindowResize() {
+    let wresize = this.sWindow.innerWidth * this.sWindow.innerHeight; 
+    if(this.tresize != 0 && this.tresize != wresize){
+      ///revisar menu movil o pc
+      this.platformService.isresponsive();
+      this.isrespon = this.platformService.isrespon;
+      this.providerService.setThrowIsresize(this.isrespon);
+      console.log("| ", this.isrespon);
+    }
+    this.tresize = wresize;
   }
 
 
@@ -201,19 +218,10 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  isresponsive() {
-    let scree = window.innerWidth;
-    if (scree < 1198) {
-      this.isrespon = true;
-    }else if(scree >= 1198){
-      this.isrespon = false;
-    }
-  }
-
-
   loginadmin() {
     let user = localStorage.getItem('user');
     this.loginok = false;
+    
     if(user != null){
       this.usuario = JSON.parse(user) as UserModel;
       this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name : this.usuario.rol = "";
@@ -235,6 +243,14 @@ export class NavbarComponent implements OnInit {
         this.resetmodales();
       }
     });
+
+    this.providerService.getThrowPageadmin.subscribe((resp)=>{
+      if(resp){
+        this.pageadmin = true;
+      }
+    });
+
+
 
   }
 
@@ -366,10 +382,9 @@ export class NavbarComponent implements OnInit {
       this.usuario.numeroidentificacion = this.formregister.get('numeroidentificacion')?.value;
       this.usuario.direccion = this.formregister.get('direccion')?.value;
       this.usuario.codigopostal = this.formregister.get('codigopostal')?.value;
-      this.usuario.ciudad = this.formregister.get('ciudad')?.value;
-      this.usuario.pais = this.formregister.get('pais')?.value;
-      //this.usuario.particular = this.formregister.get('particular')?.value;
-      //this.usuario.empresa = this.formregister.get('empresa')?.value;
+      this.usuario.ciudad = this.formregister.get('ciudad')?.value;      
+      this.usuario.particular = this.formregister.get('empresa')?.value ==  true ? false : true;
+
 
       this.btactivadoreg = false;
       if (this.formregister.status != "INVALID") {
@@ -381,6 +396,8 @@ export class NavbarComponent implements OnInit {
 
   menu() {
     this.ocultar == "" ? this.ocultar = "active" :  this.ocultar = "" ;
+    this.resetmodales()
+    this.mostrarusuariob(false);
   }
 
 
@@ -440,7 +457,8 @@ export class NavbarComponent implements OnInit {
   cambiaridioma(iso: string){
     localStorage.setItem('currentLanguage', iso);
     this.veridiomas = false;
-    window.location.reload();
+    this.auth.setHeaders();
+    
   }
 
 
@@ -452,6 +470,7 @@ export class NavbarComponent implements OnInit {
     this.veridiomas = false;
     this.verbusqueda = false;
     this.vercarrito = !this.vercarrito;
+    this.ocultado = false;
   }
 
 
@@ -475,7 +494,6 @@ export class NavbarComponent implements OnInit {
 
   mostrarusuariob(val: boolean){
     
-    this.loginok = false;
     this.mostrarmodalbuscador = false;
     this.vercarrito = false;
     this.verregistrar = false;
@@ -537,7 +555,7 @@ export class NavbarComponent implements OnInit {
         let resultado = resp as ResultadoModel;
         this.visitasprop = resultado.data as VisitasResultadoModel[];
       }) ;
-    }, 1000);
+    }, 10);
   }
 
 
@@ -669,6 +687,8 @@ export class NavbarComponent implements OnInit {
   logoutfacebook(){
     //this.socialAuthService.signOut();
   }
+
+
 
 
 

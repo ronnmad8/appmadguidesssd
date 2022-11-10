@@ -46,6 +46,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { LoginModel } from 'src/app/models/Login.model';
 import { UserModel } from 'src/app/models/User.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 @Component({
   selector: 'app-zonapago',
@@ -64,7 +65,7 @@ export class ZonapagoComponent implements OnInit {
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
-
+  sWindow: any ;
 
 
   usuarioform: UserModel = new UserModel();
@@ -168,7 +169,8 @@ export class ZonapagoComponent implements OnInit {
     private alertasService: AlertasService,
     private fb: FormBuilder,
     private fbl: FormBuilder,
-    private fbr: FormBuilder
+    private fbr: FormBuilder,
+    private platformService: PlatformService
   ) {
     this.wowService.init();
     
@@ -178,10 +180,11 @@ export class ZonapagoComponent implements OnInit {
     this.cambiosFormularioLogin();
     this.crearFormularioRegistro();    
     this.cambiosFormularioRegistro();
-    
+    this.sWindow = this.platformService.sWindow;
   }
 
   ngOnInit(): void {
+    this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacion = this.globalService.getlistatiposidentificacion();
     this.modalOptions = {
       backdrop: 'static',
@@ -194,7 +197,6 @@ export class ZonapagoComponent implements OnInit {
     this.vcale = true;
     this.getPedido();
     this.patchPedido();
-    this.isresponsive();
     let hoy = moment();
     let estemes = hoy.format('MM');
     let esteyear = hoy.format('YYYY');
@@ -215,7 +217,7 @@ export class ZonapagoComponent implements OnInit {
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    let posactual = window.pageYOffset;
+    let posactual = this.sWindow.pageYOffset;
     let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
     let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
 
@@ -231,12 +233,6 @@ export class ZonapagoComponent implements OnInit {
     }
   }
 
-  isresponsive() {
-    let scree = window.innerWidth;
-    if (scree < 1198) {
-      this.isrespon = true;
-    }
-  }
 
   patchPedido() {
     this.formlogin.patchValue({

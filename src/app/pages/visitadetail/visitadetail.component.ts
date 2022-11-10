@@ -8,7 +8,6 @@ import { NgwWowService } from 'ngx-wow';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
 import { ImagenesService } from '../../services/imagenes.service';
-import { TextosService } from '../../services/textos.service';
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { HomeService } from '../../services/home.service';
@@ -26,7 +25,6 @@ import { VisitaService } from 'src/app/services/visita.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
-import { SlidervisitamovilComponent } from 'src/app/componentes/slidervisitamovil/slidervisitamovil.component';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
@@ -59,7 +57,6 @@ export class VisitadetailComponent implements OnInit{
       private acro : ActivatedRoute,
       private router: Router,
       private imagenesService: ImagenesService,
-      private textosService: TextosService,
       private alertasService: AlertasService,
       private visitaService: VisitaService,
       private providerService: ProviderService,

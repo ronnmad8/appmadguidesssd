@@ -12,13 +12,14 @@ import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { TextoquienessomosModel } from '../models/Textoquienessomos.model';
 import { TextoayudaModel } from '../models/Textoayuda.model';
 import { TextopoliticasModel } from '../models/Textopoliticas.model';
+import { GlobalService } from './global.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoliticasService {
-  
+  clang: string = 'es';
   url: string = '';
   apiurl: string;
 
@@ -30,13 +31,16 @@ export class PoliticasService {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private globalService: GlobalService,
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = this.globalService.getLanguage();
   }
 
 
   getMessagesPoliticascookies() {
+    const headers = this.auth.headers;
     let endpoint = '/assets/politicascookies';
     this.url = this.apiurl + endpoint;
 
@@ -66,6 +70,8 @@ export class PoliticasService {
 
   
   getMessagesPoliticasprivacidad() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/politicasprivacidad';
     this.url = this.apiurl + endpoint;
 
@@ -93,6 +99,8 @@ export class PoliticasService {
 
 
   getMessagesPoliticascompra() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/politicascompra';
     this.url = this.apiurl + endpoint;
 
@@ -120,6 +128,8 @@ export class PoliticasService {
 
 
   getMessagesAvisolegal() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/avisolegal';
     this.url = this.apiurl + endpoint;
 
@@ -147,6 +157,8 @@ export class PoliticasService {
 
 
   getMessagesMedidascovid() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/medidascovid';
     this.url = this.apiurl + endpoint;
 
@@ -178,10 +190,12 @@ export class PoliticasService {
 
 
   getImages() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/find?file=banner-ficha-de-producto';
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
+    return this.http.get(`${this.url}`, {headers}).pipe(
       map((resp) => {
         var imageData: ImagenesModel[] = resp as ImagenesModel[];
         return imageData;

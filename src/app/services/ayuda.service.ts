@@ -4,6 +4,7 @@ import { ImagenesModel } from '../models/Imagenes.model';
 import { catchError, map} from 'rxjs/operators' ;
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -17,25 +18,31 @@ import { TextoayudaModel } from '../models/Textoayuda.model';
   providedIn: 'root'
 })
 export class AyudaService {
-  
+  userToken: string = "";
   url: string = '';
   apiurl: string;
+  clang: string;
  
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private globalService: GlobalService,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
+    this.clang = this.globalService.getLanguage();
+    this.userToken = this.auth.leerToken();
   }
 
 
   getMessages() {
+    const headers = this.auth.headers;
+    
     let endpoint = '/assets/ayuda';
 
-    this.url = this.apiurl + endpoint+ '?language=' + localStorage.getItem('language');
+    this.url = this.apiurl + endpoint;
 
-    // return this.http.get(`${this.url}`).pipe(
+    // return this.http.get(`${this.url}`, {headers}).pipe(
     //   map((resp) => {
     //     var messageData: VisitaAssetsModel[] = resp as VisitaAssetsModel[];
     //     return messageData;
@@ -79,6 +86,8 @@ export class AyudaService {
 
 
   getImages() {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/find?file=bannerbottom, banner-ficha-de-producto';
     this.url = this.apiurl + endpoint;
 

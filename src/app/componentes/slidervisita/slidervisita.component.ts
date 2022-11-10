@@ -35,17 +35,20 @@ import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { TimesModel } from 'src/app/models/Times.model';
+import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
+import { PlatformService } from 'src/app/services/platform.service';
 
 @Component({
   selector: 'app-slidervisita',
   templateUrl: './slidervisita.component.html',
 })
-export class SlidervisitaComponent implements OnInit, AfterViewInit {
+export class SlidervisitaComponent implements OnInit{
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
+  sWindow: any;
 
   visitaresultado: VisitasResultadoModel = new VisitasResultadoModel();
 
@@ -76,11 +79,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
       1290: {
         slidesPerView: 1,
       },
+      890: {
+        slidesPerView: 1.55,
+      },
       590: {
-        slidesPerView: 1.05,
+        slidesPerView: 1.25,
       },
       490: {
-        slidesPerView: 1.15,
+        slidesPerView: 1,
       },
     },
   };
@@ -162,6 +168,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
   messages: VisitaAssetsModel = new VisitaAssetsModel();
   idiomasdisponibles: string = '';
 
+
+  verZonePrecios: boolean = false;
+  verZoneDetalle: boolean = false;
+  verZoneCancelaciones: boolean = false;
+  verZonePuntodeencuentro: boolean = false;
+  verPanel: boolean = false;
+  secuencial: number = 1;
+
   constructor(
     private wowService: NgwWowService,
     private router: Router,
@@ -170,65 +184,56 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     private listasService: ListasService,
     private globalService: GlobalService,
     private carritoService: CarritoService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private platformService: PlatformService
+    
   ) {
     this.wowService.init();
+    this.sWindow = this.platformService.sWindow
   }
 
   ngOnInit(): void {
+   
     this.listenProvider();
     this.week = this.globalService.week;
     this.months = this.globalService.months;
     this.redes = this.globalService.redes;
     this.listahoras = this.globalService.listahoras;
 
-    //español por defecto siempre
-    let espa = new LanguagesModel();
-    espa.id = 1;
-    espa.name = 'Español';
-    espa.current_iso = 'es';
-    espa.iso = 'es';
-    this.listaidiomasvisita.push(espa);
-
     this.vcale = true;
-    this.isresponsive();
-    this.getIdiomas();
+    this.isrespon = this.platformService.isrespon;
   }
 
-
-  ngAfterViewInit(){
-      ///
-  }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    let posactual = window.pageYOffset;
-    let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
-    let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
+    let posactual = this.sWindow.pageYOffset;
+    if(!this.isrespon){
 
-    if (posactual <= posdetallevisita) {
-      this.pegaj = 1;
-      this.fdetallecale.nativeElement.style.top = 'auto';
-    } else if (posactual > posdetallevisita) {
-      this.pegaj = 2;
-      
-      let hdetallecale = this.detallecale.nativeElement.offsetHeight;
-      let dif = posfinaldetalle - hdetallecale;
- 
-      this.fdetallecale.nativeElement.style.top = 90+'px';
-      if (posactual >= dif) {
-        this.pegaj = 3;
-        this.fdetallecale.nativeElement.style.top = (dif - posdetallevisita - 40) +'px';
+      let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
+      let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
+  
+      if (posactual <= posdetallevisita) {
+        this.pegaj = 1;
+        this.fdetallecale.nativeElement.style.top = 'auto';
+      } else if (posactual > posdetallevisita) {
+        this.pegaj = 2;
+        
+        let hdetallecale = this.detallecale.nativeElement.offsetHeight;
+        let dif = posfinaldetalle - hdetallecale;
+   
+        this.fdetallecale.nativeElement.style.top = 90+'px';
+        if (posactual >= dif) {
+          this.pegaj = 3;
+          this.fdetallecale.nativeElement.style.top = (dif - posdetallevisita - 40) +'px';
+        }
       }
+
     }
+
   }
 
-  isresponsive() {
-    let scree = window.innerWidth;
-    if (scree < 1198) {
-      this.isrespon = true;
-    }
-  }
+
 
   listenProvider() {
     this.providerService.getThrowVisita.subscribe((resp) => {
@@ -253,20 +258,16 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getIdiomas() {
-    this.listasService.getIdiomas().subscribe((resp) => {
-      this.listaidiomas = resp as LanguagesModel[];
-    });
-  }
 
   getMesageResultado(provVisitaMessage: VisitaAssetsModel) {
     this.messages = provVisitaMessage;
+    console.log("resultado ",this.messages);
   }
 
   getVisitaResultado(visita: VisitasResultadoModel) {
     this.visitaresultado = visita;
     console.log(
-      '€€€€€€€€€€€€€€€€€€€€€€€€€€€€ VISITA RESULTADO',
+      '----VISITA RESULTADO',
       this.visitaresultado
     );
     this.listaImagenesVisita = []
@@ -295,16 +296,24 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
 
     this.getCalculoPrecio();
 
-    let iso = this.timesSel.iso;
-    this.listaidiomas.forEach((idioma) => {
-      if (
-        idioma.iso == iso &&
-        this.listaidiomasvisita.map((x) => x.iso).indexOf(iso) == -1
-      ) {
-        this.listaidiomasvisita.push(idioma);
-        this.idiomasdisponibles += idioma.name + ', ';
-      }
+    ///get idiomas
+    this.listasService.getIdiomas().subscribe((resp) => {
+      this.listaidiomas = resp as LanguagesModel[];
+
+      this.visitaresultado.iso_disponible.forEach((idiomaiso, index) => {
+        let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso) ?? new LanguagesModel();
+        idiom.id = index;
+        this.listaidiomasvisita.push(idiom);
+        let idiomasum = idiom.name.toLowerCase();
+        this.idiomasdisponibles += (  idiomasum ) + ', ';
+      })
+
     });
+
+
+    
+    
+    this.idiomaSel = this.visitaresultado.visit_time[0].iso ;
 
     this.listahoras.forEach((hora) => {
       let initsp = this.timesSel.init.split(':');
@@ -314,7 +323,10 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
         this.horainfo = res;
         this.horaSel = hora.key;
       }
+      
     });
+    
+    
     //buscar si hay mas horas mismo dia
     this.visitaresultado.visit_time.forEach((v) => {
       if (v.date == this.timesSel.date && v.init != this.timesSel.init) {
@@ -343,7 +355,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
   }
 
 
-
   getCalculoPrecio() {
     this.precioadultos = this.timesSel.precio_mayores;
     this.precioninos = this.timesSel.precio_menores;
@@ -359,6 +370,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     );
   }
 
+
   getIndexSel() {
     let imm = this.imagenlista.swiperSlides?.nativeElement.childNodes;
     imm.forEach((el: any) => {
@@ -373,6 +385,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 
   verHora() {
     this.vhora = !this.vhora;
@@ -401,6 +414,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
 
   horainfosel(v: string) {
     this.horainfo = v;
+    this.horaSel = this.listahoras.filter((x) => x.value == v)[0].key;
     if (this.horaSel != null) {
       this.horanovalid = false;
     }
@@ -410,12 +424,15 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
         this.timesSel;
       this.getCalculoPrecio();
     }
+    this.setSecuencial();
   }
   idiomainfosel(v: string) {
     this.idiominfo = v;
+    this.idiomaSel = this.listaidiomas.filter((x) => x.iso == v)[0].name;
     if (this.idiomaSel != null) {
       this.idiomanovalid = false;
     }
+    this.setSecuencial();
   }
 
   restaradulto() {
@@ -481,6 +498,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
         this.preciomenorestotal * 100) /
       100;
     this.preciototalst = this.globalService.getFormatNumber(this.preciototal);
+    this.setSecuencial();
   }
 
   cambiarprivada(priv: any) {
@@ -518,6 +536,30 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     this.verredes = !this.verredes;
   }
 
+  abrirVerZonePrecios() {
+    this.verZonePrecios = !this.verZonePrecios;
+  }
+
+  abrirVerZoneDetalle() {
+    this.verZoneDetalle = !this.verZoneDetalle;
+  }
+
+  abrirVerZoneCancelaciones() {
+    this.verZoneCancelaciones = !this.verZoneCancelaciones;
+  }
+
+  abrirVerZonePuntodeencuentro() {
+    this.verZonePuntodeencuentro = !this.verZonePuntodeencuentro;
+  }
+
+  abrirVerPanel() {
+    this.verPanel = true;
+  }
+
+  cerrarVerPanel() {
+    this.verPanel = false;
+  }
+
   compartir(visita: VisitasResultadoModel, red: string) {
     
     let url = "";
@@ -532,7 +574,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     }
 
     if(url != ""){
-      window.open(url, '_blank');
+      this.sWindow.open(url, '_blank');
     }
   }
 
@@ -593,7 +635,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
         }
       }
     });
-
     
   }
 
@@ -655,6 +696,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
         this.dateSelect.format('YYYY')
       );
     }
+    this.setSecuencial();
   }
 
 
@@ -664,6 +706,22 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     // })
     return this.visitaService.getImagenesvisita();
   }
+
+
+  setSecuencial() {
+    
+    this.secuencial = 0;
+    if (this.daySel == null) {
+      this.secuencial = 1;
+    } else if (this.horaSel == 0) {
+      this.secuencial = 2;
+    } else if (this.idiomaSel == "") {
+      this.secuencial = 3;
+    } else if (this.adultoSel == 0 && this.ninosSel == 0 && this.menoresSel == 0) {
+      this.secuencial = 4;
+    }
+  }
+
 
   reservarvisita() {
     //validar
@@ -686,8 +744,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit {
     }
 
     if (valido) {
-      //validado
-
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
       this.visitaresultado.adultos = this.adultoSel;

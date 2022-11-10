@@ -13,7 +13,10 @@ import 'localstorage-polyfill'
 export function app(): express.Express {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/madguides/browser');
-  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+ 
+  const indexHtml =  existsSync(join(distFolder, 'index.html')) ? 'index.html' : 'index';
+  
+  
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
@@ -34,6 +37,10 @@ export function app(): express.Express {
   server.get('*', (req, res) => {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
+  
+  console.log('processPath ',process.cwd())
+  console.log('distfolder ',distFolder);
+  console.log('indexhtml ',indexHtml);
 
   return server;
 }
@@ -67,3 +74,6 @@ global.navigator = mock.getNavigator();
 console.log(global.navigator);
 
 global['localStorage'] = localStorage;
+
+
+

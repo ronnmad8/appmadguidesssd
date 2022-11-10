@@ -12,6 +12,7 @@ import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
 import { TextoayudaModel } from 'src/app/models/Textoayuda.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 
@@ -25,6 +26,7 @@ export class FaqsComponent implements OnInit {
 
   @Input () imagenempresaData: ImagenesModel = new ImagenesModel();
   @Input () messageFaqsData: TextoayudaModel = new  TextoayudaModel();
+  sWindow: any;
 
   isrespon: boolean = false;
   verq1: boolean = false;
@@ -36,37 +38,32 @@ export class FaqsComponent implements OnInit {
   constructor(
     private wowService: NgwWowService,
     private router: Router,
-
     private renderer: Renderer2,
     private modalService: NgbModal,
     private auth: AuthService ,
+    private platformService: PlatformService
   ) { 
     this.wowService.init(); 
+    this.sWindow = this.platformService.sWindow ;
   }
 
 
   ngOnInit(): void {
-    this.isresponsive();
+    this.isrespon = this.platformService.isrespon;
   }
 
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let posactual = window.pageYOffset ;
+    let posactual = this.sWindow.pageYOffset ;
   
   }
 
 
-  isresponsive(){
-    let scree = window.innerWidth;
-    if(scree < 1198){
-      this.isrespon = true;
-    }
-  }
 
   mandarwhatsapp(){
     let url = 'https://api.whatsapp.com/send?phone=34656786524&text=Hola%20me%20gustaría%20saber%20más%20de%20la%20empresa';
-    window.open(url, '_blank');
+    this.sWindow.open(url, '_blank');
   }
 
 

@@ -34,14 +34,16 @@ export class BuscadorService {
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
-    this.clang = "&language="+this.globalService.getLanguage();
+    this.clang = this.globalService.getLanguage();
+    this.userToken = this.auth.leerToken();
   }
 
 
 
 
-  getResultadoBuscador( filters: FiltersModel, page: number )  
- {
+  getResultadoBuscador( filters: FiltersModel, page: number ) {
+    const headers = this.auth.headers;
+
     let endpoint = '/visit?' ;
     this.url = this.apiurl + endpoint;
     filters.precioFin = (filters.precioFin == 0 ? 1000000 : filters.precioFin );
@@ -91,18 +93,15 @@ export class BuscadorService {
     ///filtro orden
     this.url += "&order=" + filters.ordenar + "&orderby="+ filters.orderasc ;
 
-    return this.http.get( `${this.url}` )
+    return this.http.get( `${this.url}`, { headers } )
     .pipe(
       map( resp =>{
+        
         var resultado: ResultadoModel  = resp as ResultadoModel; 
         resultado.data.forEach((el: any, index: number) => {
             if(el.visit_time_uuid != null && el.visit_time == null){
                 el = this.globalService.mapperVisitas(el);
-              
-                // el.visit_time[0].duration = el.duration ;
-                // el.visit_time[0].precio_mayores = el.precio_mayores ;
-                // el.visit_time[0].precio_menores = el.precio_menores ;
-                // el.visit_time[0].precio_pequenos = el.precio_pequenos ;
+
             }
           });
         return resultado;    
@@ -116,10 +115,12 @@ export class BuscadorService {
 
 
   getImagenesbuscador()  {
+    const headers = this.auth.headers;
+
     let endpoint = '/assets/find?file=bannerbottom,banner-ficha-de-producto' ;
     this.url = this.apiurl + endpoint;
 
-    return this.http.get( `${this.url}` )
+    return this.http.get( `${this.url}`, { headers } )
     .pipe(
       map( resp =>{
         let imagenes: ImagenesModel[] = resp as ImagenesModel[];
@@ -134,10 +135,12 @@ export class BuscadorService {
 
 
   getMessagesSearch()  {
-    let endpoint = '/assets/search?' ;
-    this.url = this.apiurl + endpoint + this.clang;
+    const headers = this.auth.headers;
 
-    return this.http.get( `${this.url}` )
+    let endpoint = '/assets/search?' ;
+    this.url = this.apiurl + endpoint ;
+
+    return this.http.get( `${this.url}`, { headers } )
     .pipe(
       map( resp =>{
         var data = resp as TextosearchModel;  

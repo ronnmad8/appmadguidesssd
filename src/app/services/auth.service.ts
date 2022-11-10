@@ -11,6 +11,7 @@ import { UserModel } from '../models/User.model';
 import { LoginModel } from '../models/Login.model';
 import { RecordarmeModel } from '../models/Recordarme.model';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,11 +22,38 @@ export class AuthService {
   apiurl: string;
   cambiarMenu = new Subject<string>();
   cambiarMenuObservable = this.cambiarMenu.asObservable();
+  headers: HttpHeaders = new HttpHeaders();
+  clang: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient, 
+    private router: Router
+  ) {
     this.apiurl = environment.apiurl;
     this.userToken = this.leerToken();
+    this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+    this.headers =this.getHeaders(this.clang, this.userToken);
   }
+
+  getHeaders(clang: string, token: string) {
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json; charset=UTF-8',
+      Language: clang,
+      Authorization: 'Bearer ' + token,
+    });
+    return headers;
+  }
+
+  setHeaders() {
+    this.userToken = this.leerToken();
+    this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+    this.headers = new HttpHeaders({
+      'Content-type': 'application/json; charset=UTF-8',
+      Language: this.clang,
+      Authorization: 'Bearer ' + this.userToken,
+    });
+  }
+
 
   logout() {
     localStorage.removeItem('token');
@@ -33,6 +61,9 @@ export class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('saludo');
     this.userToken = '';
+    this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+    this.headers =this.getHeaders(this.clang, this.userToken);
+
     this.router.navigateByUrl('/home');
   }
 
@@ -50,7 +81,8 @@ export class AuthService {
       this.userToken = '';
       if (token != null) {
         this.userToken = token;
-        if (this.noAuth()) this.router.navigateByUrl('/home');
+        
+        //if (this.noAuth()) this.router.navigateByUrl('/home');
       }
     }
     return this.userToken;
@@ -114,12 +146,18 @@ export class AuthService {
       prefijo: user.prefijo,
       telefono: user.telefono,
       privacity: true,
+      particular: true,
     };
-    JSON.stringify(_datos);
+    let data = JSON.stringify(_datos);
+
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;
-    return this.http.post(`${this.url}`, _datos, { headers }).pipe(
+    return this.http.post(`${this.url}`, data, { headers }).pipe(
       map((res) => {
+        this.userToken = this.leerToken();
+        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+        this.headers =this.getHeaders(this.clang, this.userToken);
+
         let login = res as LoginModel;
         return login;
       }),
@@ -149,6 +187,7 @@ export class AuthService {
     );
   }
 
+
   loginUser(user: UserModel) {
     let _datos = {
       email: user.email,
@@ -161,6 +200,9 @@ export class AuthService {
       map((res) => {
         let login = res as LoginModel;
         this.guardarToken(login);
+        this.userToken = login.token;
+        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+        this.headers = this.getHeaders(this.clang, this.userToken);
         return login;
       }),
       catchError((err) => {
@@ -173,7 +215,7 @@ export class AuthService {
   updateUser(user: UserModel) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + this.userToken,
+      //Authorization: 'Bearer ' + this.userToken,
     });
 
     let _datos = {
@@ -184,6 +226,7 @@ export class AuthService {
       telefono: user.telefono,
       privacity: true,
     };
+    
     //JSON.stringify(_datos);
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;

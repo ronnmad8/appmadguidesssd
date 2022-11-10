@@ -32,6 +32,9 @@ export class ProviderService {
   private provider3 = new ReplaySubject<CartModel>()
   private provider4 = new ReplaySubject<boolean>()
   private provider5 = new ReplaySubject<boolean>()
+  private provider6 = new ReplaySubject<boolean>()
+  private provider7 = new ReplaySubject<boolean>()
+
   
 
   ///get/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +54,13 @@ export class ProviderService {
   public get getThrowHiddModales() {
     return this.provider5.asObservable();
   }
+  public get getThrowPageadmin() {
+    return this.provider6.asObservable();
+  }
+  public get getThrowIsresize() {
+    return this.provider7.asObservable();
+  }
+
 
 
 
@@ -71,6 +81,13 @@ export class ProviderService {
   public setThrowHiddModales(t: boolean) {
     this.provider5.next(t);
   }
+  public setThrowPageadmin(t: boolean) {
+    this.provider6.next(t);
+  }
+  public setThrowIsresize(t: boolean) {
+    this.provider7.next(t);
+  }
+
 
   //origen
   //this.providerService.setThrowVisita(true);

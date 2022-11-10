@@ -11,6 +11,7 @@ import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 
@@ -23,6 +24,7 @@ import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
 export class PoliticasComponent implements OnInit {
 
   @Input () messagePoliticasData: TextopoliticasModel = new  TextopoliticasModel();
+  sWindow: any;
 
   isrespon: boolean = false;
 
@@ -30,33 +32,27 @@ export class PoliticasComponent implements OnInit {
   constructor(
     private wowService: NgwWowService,
     private router: Router,
-
     private renderer: Renderer2,
     private modalService: NgbModal,
     private auth: AuthService ,
+    private platformService: PlatformService
   ) { 
     this.wowService.init(); 
+    this.sWindow = this.platformService.sWindow ;
   }
 
 
   ngOnInit(): void {
-    this.isresponsive();
+    this.isrespon = this.platformService.isrespon;
   }
 
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let posactual = window.pageYOffset ;
+    let posactual = this.sWindow.pageYOffset ;
   
   }
 
-
-  isresponsive(){
-    let scree = window.innerWidth;
-    if(scree < 1198){
-      this.isrespon = true;
-    }
-  }
 
 
 

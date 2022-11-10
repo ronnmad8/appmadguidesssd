@@ -4,13 +4,13 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { ImagenesService } from '../../services/imagenes.service';
-import { TextosService } from '../../services/textos.service';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { TextosearchModel } from 'src/app/models/Textosearch.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 
@@ -40,10 +40,10 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    private homeService: HomeService
-
+    private homeService: HomeService,
+    private platformService: PlatformService
   ) {
-    //this.bannerfichadeproductoData.url = "../../assets/images/sinimagen.jpg";
+   ///
   }
 
 
@@ -58,7 +58,8 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let scrollPosition = window.pageYOffset ;
+    let sWindow = this.platformService.sWindow ;
+    let scrollPosition = sWindow.pageYOffset ;
      this.menuvisto = false;
 
      if(this.possc > scrollPosition){

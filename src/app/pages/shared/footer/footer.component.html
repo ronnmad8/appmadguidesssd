@@ -5,7 +5,6 @@
             [ngClass]="{ 'footh300': !nomostrarenlacesfooter,'footh137' :  nomostrarenlacesfooter }">
 
             <div class="intfooter" class="row">
-
                 <div class="col-xl-3 " *ngIf="!nomostrarenlacesfooter">
                     <div class="mr-xl-auto ml-xl-0 mx-auto  cupo" routerLink="/home">
                         <img id="logofooter" src="{{logoFooter.url}}" draggable="false"
@@ -63,7 +62,7 @@
                 </div>
                 <div class="col-xl-3 " *ngIf="nomostrarenlacesfooter">
                     <div class="posrel colGRIS1">
-                        <div class="posabsol" style="left: 0; top: 50px" routerLink="/quienessomos">
+                        <div class="posabsol" style="left: 0; top: 50px" routerLink="/politicascompra">
                             <span>Política de compra y devolución</span>
                         </div>
                     </div>
@@ -81,11 +80,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+
         <div class="row mvl px-3">
-            <div class="col-12 my-2">
+            <div class="col-12 my-2" *ngIf="!nomostrarenlacesfooter">
                 <div class="mx-auto text-center cupo" routerLink="/home">
                     <img id="logofooter2" src="{{logoFooter.url}}" draggable="false">
                 </div>
@@ -101,13 +100,13 @@
                             </span>
                         </div>
                         <div class="posabsolRight mt-2">
-                            <i class="fa-solid fa-angle-down" *ngIf="!widg1show"  ></i>
-                            <i class="fa-solid fa-angle-up" *ngIf="widg1show" ></i>
+                            <i class="fa-solid fa-angle-down" *ngIf="!widg1show"></i>
+                            <i class="fa-solid fa-angle-up" *ngIf="widg1show"></i>
                         </div>
                     </div>
                     <div id="divwdg1" *ngIf="widg1show" class="animated fadeIn my-2">
                         <div class="enlacefoot" routerLink="/quienessomos">
-                            <span>{{messageFooter.menu1.who}} </span>
+                            <span>{{messageFooter.menu1.who }} </span>
                         </div>
                         <div class="enlacefoot" routerLink="/contacto">
                             <span>Contacto</span>
@@ -130,8 +129,8 @@
                             </span>
                         </div>
                         <div class="posabsolRight mt-2">
-                            <i class="fa-solid fa-angle-down" *ngIf="!widg2show"  ></i>
-                            <i class="fa-solid fa-angle-up" *ngIf="widg2show" ></i>
+                            <i class="fa-solid fa-angle-down" *ngIf="!widg2show"></i>
+                            <i class="fa-solid fa-angle-up" *ngIf="widg2show"></i>
                         </div>
                     </div>
                     <div id="divwidg2" *ngIf="widg2show" class="bordebot  animated fadeIn my-2">
@@ -151,13 +150,34 @@
                     <div class="h30"></div>
                 </div>
             </div>
+
+            <div class="col-12" *ngIf="nomostrarenlacesfooter">
+                <div class="posrel colGRIS1">
+                    <div class="w-100 text-center">
+                        <div>PAGO SEGURO</div>
+                    </div>
+                    <div class="w-100 d-flex">
+                        <div class="w-50 text-right">
+                            <img src="../../assets/images/i-mastercard.svg" class="imicono50" draggable="false">
+                        </div>
+                        <div class="w-50 text-left">
+                            <img src="../../assets/images/i-visa.svg" class="imicono50" draggable="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3" *ngIf="nomostrarenlacesfooter">
+                <div class="colGRIS1 text-center">
+                    <div routerLink="/politicascompra">
+                        <span>Política de compra y devolución</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mh60"></div>
         </div>
     </div>
 
-
-
     <div id="barrafooter">
-
         <div class="w-100 posrel d-flex">
 
             <div class="text-left my-3 mr-auto ml-0 ">
@@ -179,5 +199,182 @@
 
         </div>
     </div>
+
+    <div class="aviso-cookies bgBLANCO2 animated fadeInRight" style="animation-delay: 2s" id="aviso-cookies"
+        *ngIf="!cookiesconsent">
+        <div class="h60"></div>
+        <img src="assets/images/cookies.png" alt="Galleta" data-src="assets/images/cookies.png"
+            class="galleta lazyload " onerror="this.src='assets/images/sinimagen.jpg' ">
+        <h3>Cookies</h3>
+        <p>Utilizamos cookies propias y de terceros para mejorar nuestros servicios.</p>
+        <div>
+            <button class="btn bgROJO1 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="aceptarcookiestodas()">Aceptar
+                todas</button>
+        </div>
+        <div>
+            <button class="btn bgGRIS3 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="denegarcookies()">Denegar no
+                esenciales</button>
+        </div>
+        <div>
+            <button class="btn bgVERDE colBLANCO w-100 my-2" id="btn-aceptar-cookies"
+                (click)="openI(modalcookies)">Configurar</button>
+        </div>
+        <div class="cupo mt-2" routerLink="/politicascookies">
+            <p> Ver información sobre de Cookies</p>
+        </div>
+    </div>
+    <div class="aviso-cookies-peq bgBLANCO2 animated fadeIn" style="animation-delay: 2s" id="aviso-cookies-peq"
+        *ngIf="cookiesconsent">
+        <img src="assets/images/cookies.png" alt="Galleta" data-src="assets/images/cookies.png"
+         onerror="this.src='assets/images/sinimagen.jpg' "  class="cookiepeq"    >
+    </div>
+
+    <ng-template #modalcookies let-modal>
+        <div class="modal-header">
+            <div class="w-100 mx-auto text-center">
+                <p class="fs-22" id="modal-basic-title"><b>PREFERENCIA DE COOKIES</b></p>
+            </div>
+            <div class="close" aria-label="Close" (click)="cerrarmodalI()">
+                <span><i class="fa fa-circle-xmark fs-20"></i></span>
+            </div>
+        </div>
+
+        <form [formGroup]="formasetcookies" (ngSubmit)="gestionarcookies()">
+            <div class="modal-body mx-auto my-2 w-100 ">
+                <div class="row p-3">
+
+                    <div class="col-xl-8 px-2">
+                        <div class="mhcook p-0 m-0">
+                            <div class="mb-0" *ngIf="pestacookie == 1">
+                                <span class="fs-18"><b> Seguridad y privacidad </b></span><br>
+                                <span class="fs-16">
+                                    Las cookies son archivos que se almacenan en el navegador al visitar una web,
+                                    su uso va dirigido a mejorar la experiencia de usuario.
+                                </span><br>
+                                <span class="fs-16">
+                                    Desde este panel puedes gestionar tus preferencias de grupos de cookies,
+                                    pero recuerda que una cookie es para mejora de la navegación.
+                                </span>
+                            </div>
+                            <div class="mb-0" *ngIf="pestacookie == 2">
+                                <span class="fs-18"><b> Cookies esenciales obligatorias </b></span><br>
+                                <span class="fs-16">
+                                    Son aquellas cookies destinadas a dar el servicio especíico de la web y que permiten
+                                    hacer uso de sus
+                                    servicios.
+                                </span><br>
+                                <span class="fs-16">
+                                    No sería posible brindar la funciones de sesión de usuario, no entran dentro del
+                                    grupo de cookies
+                                    prescindibles.
+                                </span>
+                                <div class="mt-2">
+                                    <label class="switch">
+                                        <input type="checkbox" name="obligatorias" formControlName="obligatorias"
+                                            disabled>
+                                        <span class="sliderT round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-0" *ngIf="pestacookie == 3">
+                                <span class="fs-18"><b> Cookies de funcionalidad </b></span><br>
+                                <span class="fs-16">
+                                    Las cookies de funcionalidad registran la información de lo que elija el usuario
+                                    permitiendo
+                                    dar a la web un contenido relevante.
+                                </span><br>
+                                <span class="fs-16">
+                                    Permiten dar una experiencia individualizada y recordar
+                                    su configuración y opciones de accesibilidad.
+                                </span>
+                                <div class="mt-2">
+                                    <label class="switch">
+                                        <input type="checkbox" name="funcionalidad" formControlName="funcionalidad">
+                                        <span class="sliderT round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-0" *ngIf="pestacookie == 4">
+                                <span class="fs-18"><b> Cookies de rendimiento </b></span><br>
+                                <span class="fs-16">
+                                    En este caso las cookies ayudan a analizar las forma en que se usa el servicio qeu
+                                    ofrece la web.
+                                    La aportación de uso de cada usuario hace que la web este más optimizada a nivel de
+                                    experiencia de
+                                    usuario.
+                                </span><br>
+                                <span class="fs-16">
+                                    Se miden tráfico y como se accede al sitio web. todo contribuye a poder seguir
+                                    mejorando.
+                                    Se puede determinar asi la cantidad de usuario y los errores ayudando a un posteior
+                                    diagnóstico para
+                                    mejorar el producto.
+                                </span>
+                                <div class="mt-2">
+                                    <label class="switch">
+                                        <input type="checkbox" name="rendimiento" formControlName="rendimiento">
+                                        <span class="sliderT round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-0" *ngIf="pestacookie == 5">
+                                <span class="fs-18"><b> Cookies de seguimiento </b></span><br>
+                                <span class="fs-16">
+                                    Estas cookies se usan para publicidad segmentada, enseñan al visitante anuncios
+                                    interesantes para él.
+                                    Son de terceros proveedores de contenido y publicidad. Se recopila información
+                                    conjunta de variso sitios
+                                    web y las actividades del navegador del usuario.
+                                </span><br>
+                                <span class="fs-16">
+                                    El objetivo es poder mostrar anuncios enfocados a los intereses del usuario y no
+                                    otros más generales.
+                                    Sirve también para medir la efectividad de los anuncios y varios dispositivos.
+                                </span>
+                                <div class="mt-2">
+                                    <label class="switch">
+                                        <input type="checkbox" name="seguimiento" formControlName="seguimiento">
+                                        <span class="sliderT round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 mt-1 p-0 ">
+                        <div class="btcook" (click)="setpestanacookie(1)">
+                            <span class="fs-14">
+                                Seguridad y privacidad
+                            </span>
+                        </div>
+                        <div class="btcook " (click)="setpestanacookie(2)">
+                            <span class="fs-14">
+                                Cookies necesarias para esta web
+                            </span>
+                        </div>
+                        <div class="btcook " (click)="setpestanacookie(3)">
+                            <span class="fs-14">
+                                Cookies para funcionalidad
+                            </span>
+                        </div>
+                        <div class="btcook " (click)="setpestanacookie(4)">
+                            <span class="fs-14">
+                                Cookies para rendimiento
+                            </span>
+                        </div>
+                        <div class="btcook " (click)="setpestanacookie(5)">
+                            <span class="fs-14">
+                                Cookies para seguimiento
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success " type="submit"> GUARDAR </button>
+            </div>
+        </form>
+
+    </ng-template>
 
 </footer>

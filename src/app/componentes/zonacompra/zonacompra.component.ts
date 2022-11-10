@@ -18,6 +18,7 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { UserModel } from 'src/app/models/User.model';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class ZonacompraComponent implements OnInit {
   modalOptions: NgbModalOptions;
   @Input() visitaId: number = 0;
   @ViewChild('imagenlista') imagenlista: any;
+  sWindow: any;
 
   carritoId: number = 0;
   listaPedido: VisitasResultadoModel[] = [];
@@ -52,32 +54,27 @@ export class ZonacompraComponent implements OnInit {
     private renderer: Renderer2,
     private modalService: NgbModal,
     private auth: AuthService ,
+    private platformService: PlatformService
   ) { 
     this.wowService.init(); 
+    this.sWindow = this.platformService.sWindow;
   }
 
   ngOnInit(): void {
-    
+    this.isrespon = this.platformService.isrespon;
     this.usuario = this.auth.getUser();
-    this.isresponsive();
     this.getPedido();
 
   }
 
   @HostListener("window:scroll")
   onWindowScroll() {
-    let posactual = window.pageYOffset ;
+    let posactual = this.sWindow.pageYOffset ;
 
 
   
   }
 
-  isresponsive(){
-    let scree = window.innerWidth;
-    if(scree < 1198){
-      this.isrespon = true;
-    }
-  }
 
 
   verMisReservas(){

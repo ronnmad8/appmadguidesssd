@@ -26,7 +26,6 @@ import { SlidervisitaComponent } from './componentes/slidervisita/slidervisita.c
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SlidervisitasinteresarComponent } from './componentes/slidervisitasinteresar/slidervisitasinteresar.component';
-import { SlidervisitamovilComponent } from './componentes/slidervisitamovil/slidervisitamovil.component';
 import { ZonapagoComponent } from './componentes/zonapago/zonapago.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { CompraComponent } from './pages/compra/compra.component';
@@ -93,7 +92,6 @@ const routes: Routes = [
     BusquedaComponent,
     SlidervisitaComponent,
     SlidervisitasinteresarComponent,
-    SlidervisitamovilComponent,
     CarritoComponent,
     ZonapagoComponent,
     CompraComponent,
