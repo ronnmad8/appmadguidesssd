@@ -33,10 +33,6 @@ export class QuienessomosService {
 
 
   getMessages() {
-    const headers = new HttpHeaders ({
-      "Content-type": "application/json; charset=UTF-8",
-      "Language": this.clang
-     });
 
     let endpoint = '/assets/quienessomos';
     this.url = this.apiurl + endpoint;
@@ -72,7 +68,6 @@ export class QuienessomosService {
 
 
   getImages() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/find?file=bannerbottom, banner-ficha-de-producto';
     this.url = this.apiurl + endpoint;

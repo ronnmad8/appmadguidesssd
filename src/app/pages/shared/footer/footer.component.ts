@@ -130,7 +130,7 @@ export class FooterComponent implements OnInit {
 
   cookSeguimiento() {
     ///activarcookieseguimiento
-    debugger
+    
     if (this.platformService.plId == 'browser') {
       if (this.seguimientosel) {
         this.listacookiesseguimiento.forEach((element) => {
@@ -190,7 +190,7 @@ export class FooterComponent implements OnInit {
     }
   }
 
-  cerrarmodalI(content) {
+  cerrarmodalI() {
     this.resetear();
     this.modalI.dismiss();
   }
@@ -234,7 +234,7 @@ export class FooterComponent implements OnInit {
   ///manejar cookies
   resetCookie(name) {
     let thiscookie = this.getCookie(name);
-    debugger
+    
     let date = new Date();
     date.setTime(date.getTime() + (365*24*60*60*1000));
     let expires = "; expires=" + date.toUTCString();

@@ -32,6 +32,10 @@
                   <span>{{messagesTourData.button}}</span>
                   <span><i class="fa fa-arrow-right "></i></span>
                 </button>
+                <div class="spinner-container posrel" *ngIf="loading && busqueda.length > 0"  >
+                  <div class="spinner-border colGRIS8 posabsolbusc" role="status">
+                  </div>
+                </div>
               </div>
          
               <div class="posabsolprop">

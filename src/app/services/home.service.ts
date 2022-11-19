@@ -51,11 +51,9 @@ export class HomeService {
 
   getRecomendadasHome()  {
      
-      const headers = this.auth.headers;
-
       let endpoint = '/home?recommended' ;
       this.url = this.apiurl + endpoint ;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
           var recomendadas: VisitasResultadoModel[] = [];
@@ -79,11 +77,10 @@ export class HomeService {
     
   
     getCommentsHome()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/home?comments' ;
       this.url = this.apiurl + endpoint ;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
     
@@ -128,12 +125,11 @@ export class HomeService {
 
 
     getImagenesHome()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/find?file=bannerbottom,bannertop,logo' ;
       this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           let data: ImagenesModel[] = resp as ImagenesModel[];
@@ -148,12 +144,11 @@ export class HomeService {
 
 
     getMessagesHome()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/home?messages' ;
       this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var homeresp :HomerespModel = resp as HomerespModel;  
@@ -170,12 +165,11 @@ export class HomeService {
 
 
     getMessagesContacto()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/form?' ;
       this.url = this.apiurl + endpoint;
 
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as MessagesModel;  
@@ -190,12 +184,11 @@ export class HomeService {
 
 
     getMessagesTour()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/tour?' ;
       this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as TextotourModel;  
@@ -210,12 +203,11 @@ export class HomeService {
 
 
     getMessagesIcons()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/tour/icons?' ;
       this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
           var data = resp as TextoiconsModel;  
@@ -230,12 +222,11 @@ export class HomeService {
 
 
     getMessagesOpinions()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/opinions?' ;
       this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as TextotourModel;  
@@ -250,12 +241,11 @@ export class HomeService {
 
 
     getMessagesRecomendadas()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/visit?' ;
       this.url = this.apiurl + endpoint ;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
           var data = resp as TextorecomendadasModel;  
@@ -270,12 +260,11 @@ export class HomeService {
 
 
     getMessagesForm()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/form?' ;
       this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as MessagesFormModel;  
@@ -290,12 +279,11 @@ export class HomeService {
 
 
     getMessagesImage()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/home/image?' ;
       this.url = this.apiurl + endpoint;
   
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as MessagesImageModel; 
@@ -310,11 +298,10 @@ export class HomeService {
 
 
     getCajaBuscaHome(busqueda:string){
-      const headers = this.auth.headers;
 
       let endpoint = '/visit?title='+busqueda.trim()+'&per_page=5'; 
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}`)
       .pipe(
         map( resp =>{
           var data = resp as ResultadoModel;

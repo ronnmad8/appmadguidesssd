@@ -37,7 +37,7 @@
               <div class="row ">
                 <div id="nombrecontact" class="col-xl-6">
                   <div class="cuad posrel">
-                    <input class="w-100" type="text" placeholder="Nombre" name="nombre" id="nombre"
+                    <input class="w-100" type="text" placeholder="{{messageFormData.name}}" name="nombre" id="nombre"
                       formControlName="nombre">
                     <div *ngIf="nombresel != '' " class="fieldpeq3">
                       {{messageFormData.name}}
@@ -46,7 +46,7 @@
                 </div>
                 <div id="emailcontact" class="col-xl-6">
                   <div class="cuad posrel">
-                    <input class="w-100" type="text" placeholder="Email" name="email" id="email"
+                    <input class="w-100" type="text" placeholder="{{messageFormData.email}}" name="email" id="email"
                       formControlName="email">
                     <div *ngIf="emailsel != '' " class="fieldpeq3">
                       {{messageFormData.email}}
@@ -58,7 +58,7 @@
               <div class="row d-flex p-0 posrel mt-1">
                 <div id="mensajecontact " class="col-12">
                   <div class="cuadG posrel">
-                    <textarea class="" type="text" placeholder="Mensaje" cols="4" name="mensaje" id="mensaje"
+                    <textarea class="" type="text" placeholder="{{messageFormData.message}}" cols="4" name="mensaje" id="mensaje"
                       formControlName="mensaje">
                     </textarea>
                     <div *ngIf="mensajesel != '' " class="fieldpeq3">
@@ -82,7 +82,7 @@
                 </div>
 
                 <div id="btcontact" class="col-xl-4 col-12 text-xl-right text-center">
-                  <button *ngIf="btactivadoT" type="button" class="btgris cupo">
+                  <button *ngIf="btactivadoT" type="button" class="btgris cupo" (click)="enviarMail()"  >
                     {{messageFormData.button}}
                   </button>
                   <button *ngIf="!btactivadoT" type="button" class="btgris apagado">

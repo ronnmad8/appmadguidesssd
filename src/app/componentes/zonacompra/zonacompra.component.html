@@ -1,7 +1,7 @@
 <div class="container p-0 ">
 
     <div class="h60"></div>
-    <div #carrito id="compra" class="brdtest3">
+    <div #carrito id="compra">
         <div class="p-0 m-0 posrel">
             <div class="d-flex">
                 <div class="h-100 w-100 mr-2 posrel">
@@ -17,7 +17,7 @@
                             con el detalle de tu reserva.
                         </div>
                     </div>
-                    <div class="w-100 posrel d-xl-flex">
+                    <div class="w-100 posrel">
                         <div class="panelReservafirmada" *ngFor="let visitapedido of listaPedido ">
                             <div class="imgReservafirmada">
                                 <div #imageneslatid id="im-{{visitapedido.visit_uuid}}" class="cupo">
@@ -62,13 +62,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="posrel">
-                            <div class="posabsolverreservas">
-                                <button class="btredondoRojoVerReservas " type="button" (click)="verMisReservas()">
-                                    <span class="ff-JB">Ver mis reservas</span>
-                                </button>
-                            </div>
+
+                        <div class="posabsolverreservas">
+                            <button class="btredondoRojoVerReservas " type="button" (click)="verMisReservas()">
+                                <span class="ff-JB">Ver mis reservas</span>
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>

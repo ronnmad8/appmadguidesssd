@@ -398,6 +398,7 @@
       #titulovisitas{
         font-size: 20px !important;
         width: 100% !important;
+        display: block;
       }
       .visitastemporada{
         font-size: 10px !important;

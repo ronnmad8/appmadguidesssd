@@ -14,6 +14,7 @@ import { PoliticascookiesComponent } from './pages/politicascookies/politicascoo
 import { PoliticasprivacidadComponent } from './pages/politicasprivacidad/politicasprivacidad.component';
 import { QuienessomosComponent } from './pages/quienessomos/quienessomos.component';
 import { VisitadetailComponent } from './pages/visitadetail/visitadetail.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
 
@@ -31,12 +32,14 @@ const routes: Routes = [
   { path: 'avisolegal' , component: AvisolegalComponent},
   { path: 'politicascompra' , component: PoliticascompraComponent},
   { path: 'medidascovid' , component: MedidascovidComponent},
-  { path: 'zonacliente' , component: AdminclienteComponent},
-  { path: 'zonacliente/:section' , component: AdminclienteComponent},
   { path: 'buscador' , component: BuscadorComponent},
   { path: 'buscador/category/:category_uuid?' , component: BuscadorComponent},
   { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
   { path: 'buscador/title/:title' , component: BuscadorComponent},
+
+  { path: 'zonacliente' , component: AdminclienteComponent, canActivate: [AuthGuard] },
+  { path: 'zonacliente/:section' , component: AdminclienteComponent, canActivate: [AuthGuard] },
+
 
   //////////////////////////////////////////////default
   { path: '' , component: HomeComponent},

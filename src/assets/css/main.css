@@ -18,6 +18,7 @@
 /*  bootstrap write start   */
 
 
+
 /**test*sta**/
 
 .brdtest1 {
@@ -831,6 +832,18 @@ img {
 
 }
 
+.posabsolcerrar {
+  position: absolute !important;
+  right: 18px !important;
+  bottom: 12px !important;
+}
+
+.posabsolcerrarp {
+  position: absolute !important;
+  right: 5px !important;
+  bottom: 2px !important;
+}
+
 .posabsolNo {
   position: absolute !important;
   left: 274px !important;
@@ -875,7 +888,21 @@ img {
   position: absolute !important;
   left: 8px !important;
   bottom: 15px !important;
+}
 
+.posabsolbusc {
+  position: absolute !important;
+  left: 3px !important;
+  top: 16px !important;
+}
+
+.posabsolgratis {
+  position: absolute !important;
+  top: 1px !important;
+  left: -8px !important;
+  z-index: 10;
+  font-size: 11px;
+  background-color: var(--c_BLANCO2);
 }
 
 .cupo {
@@ -1324,6 +1351,7 @@ textarea {
   background-color: hsla(0, 0%, 50%, 0.15);
   cursor: default;
 }
+
 
 .spinner {
   position: fixed;
@@ -1774,7 +1802,8 @@ input:checked+.sliderT:before {
 .btredondoRojo {
   padding: 10px 10px;
   border-radius: 40px;
-  width: 169px;
+  min-width: 169px;
+  max-width: 199px;
   height: 51px;
   border: 1px solid var(--c_ROJO2);
   background-color: var(--c_ROJO2);
@@ -1790,6 +1819,18 @@ input:checked+.sliderT:before {
   font-family: Jost-Bold;
   margin-left: 12px;
   margin-right: 10px;
+}
+
+.btredondoRojoxl {
+  padding: 10px 30px;
+  border-radius: 40px;
+  min-width: 200px;
+  max-width: 90%;
+  height: 51px;
+  border: 1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
 }
 
 .posabsolprop {
@@ -1885,10 +1926,13 @@ input:checked+.sliderT:before {
 #titulovisitas {
   margin-left: auto;
   margin-right: auto;
-  width: 390px;
+  width: 100%;
   font-size: 36px;
   line-height: 1.0 !important;
   font-family: Jost-Bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .visitastemporada {
@@ -1923,7 +1967,8 @@ input:checked+.sliderT:before {
 }
 
 .titvisita {
-  min-height: 27px !important;
+  min-height: 80px !important;
+  height: 80px !important;
   font-size: 20px;
   font-family: Jost-Bold;
   color: var(--c_GRIS1);
@@ -1931,10 +1976,12 @@ input:checked+.sliderT:before {
   padding-right: 18px;
   padding-top: 16px;
   padding-bottom: 8px;
+  line-height: 1.0 !important;
 }
 
 .titvisita span {
   height: 27px !important;
+  
 }
 
 .textvisita {
@@ -2440,6 +2487,7 @@ input:checked+.sliderT:before {
 
 .brdcirclebusca {
   padding-right: 15px;
+  padding-top: 4px;
   border: 1px solid var(--c_GRIS10);
   color: var(--c_GRIS1);
   border-radius: 25px;
@@ -3634,7 +3682,7 @@ input:checked+.sliderT:before {
   margin-right: 20px !important;
   margin-left: 0px !important;
   overflow: hidden;
-  display: flex !important;
+  
 }
 
 .btredondoRojoVerReservas {
@@ -3662,6 +3710,7 @@ input:checked+.sliderT:before {
 .posabsolverreservas{
   position: absolute;
   left: auto;
+  right: 20px;
   margin-left: 100px;
   top: 20px;
 }
@@ -3978,3 +4027,14 @@ input:checked + .sliderT:before {
 
 
 /*******cookies*end***************/
+
+button.swal2-styled{
+  border: 1px solid  !important;
+  color: var(--c_BLANCO) !important;
+  font-size: 20px !important;
+  font-family: Jost-Bold !important;
+  border-radius: 40px !important;
+  padding: 5px !important;
+  width: 134px !important;
+  height: 40px !important;
+}

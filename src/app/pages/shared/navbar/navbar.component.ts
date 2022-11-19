@@ -33,6 +33,7 @@ import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
 import { RecordarmeModel } from 'src/app/models/Recordarme.model';
 import { SocialAuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 import { PlatformService } from 'src/app/services/platform.service';
+import { TextoCartModel } from 'src/app/models/TextoCart.model';
 
 @Component({
   selector: 'app-navbar',
@@ -55,7 +56,7 @@ export class NavbarComponent implements OnInit {
   pedido: CartModel;
   modalI: NgbModalRef ;
   modalOptions: NgbModalOptions;
-  idioma: string = "Español";
+  idioma: string = "";
   idiomas: LanguagesModel[] = [];
   visitascarrito: VisitasResultadoModel[] = [];
   totalcarrito: string = "0";
@@ -91,6 +92,7 @@ export class NavbarComponent implements OnInit {
   logoB :boolean = true ;
   messageMenu: MenuModel;
   messageLogin: TextoLoginModel;
+  messageCart: TextoCartModel;
   formlogin: FormGroup;
   formregister: FormGroup;
   formforget: FormGroup;
@@ -152,6 +154,7 @@ export class NavbarComponent implements OnInit {
     this.getCart();
     this.getMessageMenu();
     this.getMessageLogin();
+    this.getMessageCart();
     this.getLogoMenu();
     this.getIdiomas();
     ///prueba viajes carrito
@@ -235,7 +238,6 @@ export class NavbarComponent implements OnInit {
       this.pedido = resp as CartModel;
       this.vercarrito = true;
       this.getVisitascarrito();
-      this.alertasService.alertaOK("Producto agregado al carrito", "puede elegir otra visita");
     });
 
     this.providerService.getThrowHiddModales.subscribe((resp)=>{
@@ -280,6 +282,11 @@ export class NavbarComponent implements OnInit {
     } );
   }
 
+  getMessageCart(){
+    this.headfooterService.getMessagesCart().subscribe( (resp) => {
+      this.messageCart = resp as TextoCartModel;
+    } );
+  }
 
   getLogoMenu(){
     this.headfooterService.getLogoMenu().subscribe( (resp) => {
@@ -305,7 +312,7 @@ export class NavbarComponent implements OnInit {
     this.formlogin = this.fb.group(
       {
         email: [ '',[Validators.required, Validators.email]],
-        password: [ '',[Validators.required,Validators.minLength(6)]],
+        password: [ '',[Validators.required,Validators.minLength(1)]],
       }
     );
   }
@@ -349,19 +356,19 @@ export class NavbarComponent implements OnInit {
         email: [ '',[Validators.required, Validators.email]],
         name: [ '',[Validators.required,Validators.minLength(2)]],
         surname: [ '' ],
-        password: [ '',[Validators.required,Validators.minLength(6)]],
+        password: [ '',[Validators.required,Validators.minLength(1)]],
         prefijo: [ '' ],
         telefono: [ '',[Validators.required,Validators.minLength(2)]],
-        namefacturacion: ['',[Validators.required]],
-        surnamefacturacion: [''],
-        tipoidentificacion: [''],
-        numeroidentificacion: ['',[Validators.required]],
-        direccion: ['',[Validators.required]],
-        codigopostal: [''],
-        ciudad: [''],
-        pais: [''],
-        particular: [true],
-        empresa: [false],
+        // namefacturacion: ['',[Validators.required]],
+        // surnamefacturacion: [''],
+        // tipoidentificacion: [''],
+        // numeroidentificacion: ['',[Validators.required]],
+        // direccion: ['',[Validators.required]],
+        // codigopostal: [''],
+        // ciudad: [''],
+        // pais: [''],
+        // particular: [true],
+        // empresa: [false],
       }
     );
   }
@@ -376,14 +383,14 @@ export class NavbarComponent implements OnInit {
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
       this.usuario.telefono = this.formregister.get('telefono')?.value;
-      this.usuario.namefacturacion = this.formregister.get('namefacturacion')?.value;
-      this.usuario.namefacturacion = this.formregister.get('surnamefacturacion')?.value;
-      this.usuario.tipoidentificacion = this.formregister.get('tipoidentificacion')?.value;
-      this.usuario.numeroidentificacion = this.formregister.get('numeroidentificacion')?.value;
-      this.usuario.direccion = this.formregister.get('direccion')?.value;
-      this.usuario.codigopostal = this.formregister.get('codigopostal')?.value;
-      this.usuario.ciudad = this.formregister.get('ciudad')?.value;      
-      this.usuario.particular = this.formregister.get('empresa')?.value ==  true ? false : true;
+      // this.usuario.namefacturacion = this.formregister.get('namefacturacion')?.value;
+      // this.usuario.namefacturacion = this.formregister.get('surnamefacturacion')?.value;
+      // this.usuario.tipoidentificacion = this.formregister.get('tipoidentificacion')?.value;
+      // this.usuario.numeroidentificacion = this.formregister.get('numeroidentificacion')?.value;
+      // this.usuario.direccion = this.formregister.get('direccion')?.value;
+      // this.usuario.codigopostal = this.formregister.get('codigopostal')?.value;
+      // this.usuario.ciudad = this.formregister.get('ciudad')?.value;      
+      // this.usuario.particular = this.formregister.get('empresa')?.value ==  true ? false : true;
 
 
       this.btactivadoreg = false;
@@ -458,7 +465,8 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('currentLanguage', iso);
     this.veridiomas = false;
     this.auth.setHeaders();
-    
+    this.platformService.sWindow.location.reload();
+
   }
 
 
@@ -611,7 +619,7 @@ export class NavbarComponent implements OnInit {
     this.auth.renovarPassword(this.usuario).subscribe( (resp) => {
     let respuesta = resp;
       if(respuesta == "success"){
-        this.alertasService.alertaInfo("Madguides", "Se ha enviado un mail para renovaci'on de contraseña");
+        this.alertasService.alertaInfo("Madguides", "Se ha enviado un mail para renovación de contraseña");
       }
     })
   }
@@ -627,8 +635,12 @@ export class NavbarComponent implements OnInit {
 
   registrar(){
     this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-          let respuesta = resp ;
-          console.log("REIGISTRO HECHO --- ",respuesta);
+
+          let respuesta = resp as LoginModel ;
+          if(respuesta.status == "success"){
+             this.alertasService.alertaInfo("Madguides", respuesta.message);
+          }
+          
     });
   }
 

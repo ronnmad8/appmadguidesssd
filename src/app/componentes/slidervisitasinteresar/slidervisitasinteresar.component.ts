@@ -11,6 +11,7 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
+import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { MessagesModel } from 'src/app/models/Messages.model';
 })
 export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
  
-  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() messageData: VisitaAssetsModel = new  VisitaAssetsModel();
   @Input() relatedData: VisitasResultadoModel[] = [];
 
   public show: boolean = true;

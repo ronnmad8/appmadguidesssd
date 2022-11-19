@@ -31,8 +31,8 @@ export class AlertasService {
         '</p>',
       title: 'WEB MADGUIDES',
       showCancelButton: true,
-      confirmButtonColor: '#393935',
-      cancelButtonColor: '#6c757d',
+      confirmButtonColor: '#CD163F',
+      cancelButtonColor: '#584446',
       confirmButtonText: 'Si',
       cancelButtonText: 'No',
     });
@@ -47,12 +47,13 @@ export class AlertasService {
         "</p><p class=' fs-20'>" +
         submensaje +
         '</p>',
-      title: 'App',
+      title: 'WEB MADGUIDES',
       showCancelButton: true,
-      confirmButtonColor: '#065528',
-      cancelButtonColor: '#9A1914',
+      confirmButtonColor: '#CD163F',
+      cancelButtonColor: '#584446',
       confirmButtonText: 'Si',
       cancelButtonText: 'No',
+      
     }).then();
   }
 

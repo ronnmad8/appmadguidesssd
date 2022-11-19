@@ -32,12 +32,11 @@ export class ListasService {
 
 
   getCategorias() {
-    const headers = this.auth.headers;
      
     this.userToken = this.auth.leerToken();
     let endpoint = '/select/category/parent/child' ;
     this.url = this.apiurl + endpoint;
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(map( resp => {
         return  resp ;
     } ));
@@ -45,11 +44,10 @@ export class ListasService {
 
 
   getTags() {
-    const headers = this.auth.headers;
 
     let endpoint = '/select/tags' ;
     this.url = this.apiurl + endpoint;
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(map( (resp) => {
         let tags = resp as TagsModel[];
         return tags;
@@ -58,12 +56,11 @@ export class ListasService {
 
 
   getIdiomas() {
-    const headers = this.auth.headers;
 
     let endpoint = '/select/language' ;
     this.url = this.apiurl + endpoint;
     
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(map( (resp) => {
         let idiomas = resp as LanguagesModel[];
         return idiomas;

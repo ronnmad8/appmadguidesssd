@@ -102,7 +102,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
     this.getMessagesSearch();
     this.getMessagesForm();
-    this.getMessagesSearch();
     this.getMessagesImage();
     this.getMessages();
     this.getImagenesBuscador();
@@ -162,7 +161,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       if(this.filtersrutacategorias != ""){
         this.filters.categorias.push(this.filtersrutacategorias);
       }
-      
       this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
         
         this.resultadoBuscador =  resp as ResultadoModel;

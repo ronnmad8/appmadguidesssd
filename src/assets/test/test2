@@ -1,0 +1,411 @@
+{
+"current_page": 1,
+"data": [
+{
+"visit_uuid": "b1943f7b-96ab-4d85-894c-8aaedcabad97",
+"visit_refundable": false,
+"visit_privada": true,
+"visit_temporada": 1,
+"visit_accesibility": true,
+"visit_encuentro": "https://www.google.es/maps/@40.3899053,-3.6906771,16.25z",
+"iso_disponible": [
+"es",
+"en",
+"fr",
+"de",
+"it",
+"pl",
+"gr",
+"pt"
+],
+"visit_time": [
+{
+"min": 5,
+"max": 10,
+"uuid": "9bff9311-03a3-4265-a60c-c971635b5bfd",
+"init": "08:00:00",
+"end": "11:00:00",
+"date": "2023-04-12",
+"precio_mayores": "101.96",
+"precio_menores": "47.97",
+"precio_pequenos": "9.99",
+"iso": "es",
+"duration": 3
+},
+{
+"min": 3,
+"max": 7,
+"uuid": "f68a9e9f-6dff-468c-8a16-c2f9e51a6538",
+"init": "08:00:00",
+"end": "09:00:00",
+"date": "2023-03-25",
+"precio_mayores": "116.41",
+"precio_menores": "67.08",
+"precio_pequenos": "10.36",
+"iso": "es",
+"duration": 1
+},
+{
+"min": 3,
+"max": 10,
+"uuid": "6311ea07-591a-4a32-b6c8-e229c6136026",
+"init": "11:00:00",
+"end": "14:00:00",
+"date": "2023-03-20",
+"precio_mayores": "122.09",
+"precio_menores": "66.57",
+"precio_pequenos": "8.93",
+"iso": "es",
+"duration": 3
+},
+{
+"min": 3,
+"max": 8,
+"uuid": "1634afd7-af3f-4535-8b0d-7a79e818d921",
+"init": "15:00:00",
+"end": "17:00:00",
+"date": "2023-10-18",
+"precio_mayores": "144.20",
+"precio_menores": "62.80",
+"precio_pequenos": "5.35",
+"iso": "es",
+"duration": 2
+},
+{
+"min": 3,
+"max": 6,
+"uuid": "9d786322-3a1a-46b5-93f6-91882b74cf8f",
+"init": "16:00:00",
+"end": "18:00:00",
+"date": "2023-03-15",
+"precio_mayores": "115.93",
+"precio_menores": "81.36",
+"precio_pequenos": "9.47",
+"iso": "en",
+"duration": 2
+},
+{
+"min": 2,
+"max": 10,
+"uuid": "d61041b8-ee2b-4c4c-8298-20b73e4e494c",
+"init": "15:00:00",
+"end": "17:00:00",
+"date": "2023-07-22",
+"precio_mayores": "124.45",
+"precio_menores": "66.31",
+"precio_pequenos": "4.76",
+"iso": "en",
+"duration": 2
+},
+{
+"min": 3,
+"max": 9,
+"uuid": "fbaf2c4f-f060-4b43-9042-54f02b9731ad",
+"init": "10:00:00",
+"end": "11:00:00",
+"date": "2023-07-01",
+"precio_mayores": "120.63",
+"precio_menores": "82.61",
+"precio_pequenos": "9.08",
+"iso": "en",
+"duration": 1
+},
+{
+"min": 5,
+"max": 9,
+"uuid": "56cdfd1b-278d-449a-a77e-fda950226565",
+"init": "14:00:00",
+"end": "18:00:00",
+"date": "2022-12-14",
+"precio_mayores": "113.87",
+"precio_menores": "87.98",
+"precio_pequenos": "4.85",
+"iso": "en",
+"duration": 4
+},
+{
+"min": 4,
+"max": 6,
+"uuid": "51fef695-b3b3-405a-8791-ad3f07c8e7e0",
+"init": "08:00:00",
+"end": "12:00:00",
+"date": "2023-04-06",
+"precio_mayores": "106.85",
+"precio_menores": "29.08",
+"precio_pequenos": "15.30",
+"iso": "en",
+"duration": 4
+}
+],
+"visit_lang_language": [
+{
+"visit_lang_iso": "es",
+"visit_lang_title": "Si todos.",
+"visit_lang_description": "Jerwis le nombraba como los que realmente eran.",
+"visit_lang_uuid": "8edd3002-8b8e-4542-8896-11feb12490ed",
+"visit_lang_metadata": "Ana\", el \"Argonauta\", de 92, mandado por D. José."
+},
+{
+"visit_lang_iso": "en",
+"visit_lang_title": "She took.",
+"visit_lang_description": "Soup! Soup of the Nile On every golden scale!.",
+"visit_lang_uuid": "fdea35f2-6b24-41ba-8916-f7345eb2e143",
+"visit_lang_metadata": "Rabbit hastily interrupted. 'There's a great."
+}
+],
+"visit_image_uuid": "e96d960d-384e-4901-8a30-08ef2e59a33d",
+"visit_image_url": "https://turismo.endesys.com/storage/image/31.jpg",
+"visit_image_url_movil": "https://turismo.endesys.com/storage/image/movil/31.jpg",
+"visit_image_url_gallery": "https://turismo.endesys.com/storage/image/galeria/31.jpg",
+"visit_image_name": "31",
+"visit_image_language": [
+{
+"visit_image_iso": "es",
+"visit_image_title": "Ana\", mi.",
+"visit_image_description": "D. Alonso para darle cuenta de buena gana la empresa de servir una de las ocho, los treinta navíos ingleses. - ¡No!- dijo Medio-hombre enérgicamente y cerrando el siniestro, aunque en entrambos.",
+"visit_image_uuid": "e13abeaf-da17-4ad5-9624-f769d19d74f4"
+},
+{
+"visit_image_iso": "en",
+"visit_image_title": "King. 'I.",
+"visit_image_description": "I don't like them raw.' 'Well, be off, then!' said the March Hare. 'Yes, please do!' but the great puzzle!' And she opened the door between us. For instance, if you please! \"William the Conqueror.",
+"visit_image_uuid": "41f36a1a-dded-4527-ba64-c68522e59797"
+}
+],
+"visit_feature_include": [
+{
+"uuid": "b1e5b9df-564d-4638-8602-974f3597d0ba",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Sin colas.",
+"lang_description": "Con los primeros hacía yo viendo cómo acudían.",
+"lang_uuid": "19ce118a-6005-4b3d-bff9-3ef28139a365"
+},
+{
+"lang_iso": "en",
+"lang_title": "No queues.",
+"lang_description": "There ought to be no sort of a sea of green.",
+"lang_uuid": "33411e01-9294-47b0-ac7e-98a5b61ae4aa"
+}
+]
+},
+{
+"uuid": "cdb5e6bc-94f3-4831-b922-3acb228b5efe",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Accesible en sillas de ruedas.",
+"lang_description": "D. José María- dijo un oficial de artillería.",
+"lang_uuid": "f5798589-7f4d-43d5-9876-1f7d80ecd08f"
+},
+{
+"lang_iso": "en",
+"lang_title": "Wheelchair accessible",
+"lang_description": "Knave. The Knave of Hearts, and I never heard.",
+"lang_uuid": "137ebc3f-3360-427c-96bc-e36a207084e9"
+}
+]
+},
+{
+"uuid": "d3cb50df-b728-4101-81a5-ace4702fb605",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Grupo reducido.",
+"lang_description": "En el semblante de mi invención por medio del.",
+"lang_uuid": "1fe1f8f5-fbff-4861-9c79-d763544e6359"
+},
+{
+"lang_iso": "en",
+"lang_title": "Reduced group.",
+"lang_description": "Alice: 'I don't know what they're about!' 'Read.",
+"lang_uuid": "15f3fa5a-c806-4013-a9ed-2ff08367c088"
+}
+]
+},
+{
+"uuid": "7d96a566-3707-4bc1-867c-349a0daa8863",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Tour privado.",
+"lang_description": "No había tiempo que medió de uno a otro huevo.",
+"lang_uuid": "1eeefc1b-bcff-4a8c-8b0b-bcf63808b619"
+},
+{
+"lang_iso": "en",
+"lang_title": "Private tour.",
+"lang_description": "Seven flung down his cheeks, he went on to the.",
+"lang_uuid": "ea3d3fbc-7e7f-4bf5-aacb-03f49d56fe11"
+}
+]
+}
+],
+"visit_feature_exclude": [
+{
+"uuid": "41026676-910a-4f83-af5d-4b042550f9ee",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Cancelación gratis.",
+"lang_description": "Príncipe de la novena. «¡Qué viene!- exclamó.",
+"lang_uuid": "9683d620-709c-4e46-a617-646c1a3e9b8b"
+},
+{
+"lang_iso": "en",
+"lang_title": "Free cancellation.",
+"lang_description": "Gryphon. 'They can't have anything to put the.",
+"lang_uuid": "61804d8e-be87-4a46-843e-48f97a00e161"
+}
+]
+},
+{
+"uuid": "11bda5a4-5f0b-4ce4-b484-e87cbf5049b4",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Admite mascotas.",
+"lang_description": "Fernando, dice que haga algo más; aún puede ser.",
+"lang_uuid": "b66d18b9-35da-4e76-ba26-6781ca1ca45e"
+},
+{
+"lang_iso": "en",
+"lang_title": "Pets allowed.",
+"lang_description": "King, the Queen, who had got to grow to my boy.",
+"lang_uuid": "b46c4ebc-c397-4da3-8a17-5f784c96b711"
+}
+]
+},
+{
+"uuid": "2c2f8e2a-180d-4704-a14e-46347360b7f5",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Medidas sanitarias.",
+"lang_description": "Esta era tan poco tiempo, porque Marcial, cuya.",
+"lang_uuid": "d2a39e2f-9a78-4633-8226-095a08d30892"
+},
+{
+"lang_iso": "en",
+"lang_title": "Sanitary measures.",
+"lang_description": "She had quite forgotten the little door, so she.",
+"lang_uuid": "f958bf7e-46bd-4655-b262-da87a1e67bf2"
+}
+]
+}
+],
+"visit_tags": [
+{
+"uuid": "ac11a8ec-cd0d-4676-a445-055730ac591c",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Muy solicitado",
+"lang_description": "Francisca- , que la cosa va a pique, como sospecho». Al concluir su relación, y después de aquel abatimiento, y buscando alguna razón con que uno y otro costado, hundió su popa, y vi que se embarque.",
+"lang_uuid": "d7f5502e-0385-4852-81d6-cc6d29fc7882"
+},
+{
+"lang_iso": "en",
+"lang_title": "Highly sought after",
+"lang_description": "I was thinking I should think you can find it.' And she began nursing her child again, singing a sort of meaning in them, after all. \"--SAID I COULD NOT SWIM--\" you can't help that,' said Alice. 'It.",
+"lang_uuid": "3cdb7526-9c9d-4fa1-81cf-88274065f2c1"
+}
+]
+},
+{
+"uuid": "748fe8dc-0217-4411-aa99-f96a54bf7d87",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Madrid",
+"lang_description": "Uno se lo hubiera visto para que sea afortunado? Los marinos se forjan ilusiones, y quizás por demasiado cortesano carecía de aquella manera. Yo, turbado hasta lo sumo, le dije que quería confundir.",
+"lang_uuid": "c3ace9b4-c7d2-4fe8-bf2c-5f29740393fa"
+},
+{
+"lang_iso": "en",
+"lang_title": "Madrid",
+"lang_description": "March Hare said--' 'I didn't!' the March Hare and his friends shared their never-ending meal, and the fall was over. However, when they met in the last words out loud, and the roof of the deepest.",
+"lang_uuid": "3120ee93-3d15-4b59-8b06-914286c85af7"
+}
+]
+},
+{
+"uuid": "15d154f9-4f53-45fa-b60d-334c4255c179",
+"lang_language": [
+{
+"lang_iso": "es",
+"lang_title": "Exterior",
+"lang_description": "Siga el fuego\". »Su espíritu se aclaró un poco, determiné ir a la cámara. Entonces vi a Marcial, que se ahoga es muy buena: no te hubiese echado una calza como a unas diez o doce meses sin verle, y.",
+"lang_uuid": "2161c98b-6050-42ef-871b-bc3bd388d9bd"
+},
+{
+"lang_iso": "en",
+"lang_title": "Outside",
+"lang_description": "I had not the smallest idea how to begin.' He looked at Two. Two began in a long, low hall, which was sitting next to her. The Cat seemed to have lessons to learn! Oh, I shouldn't like THAT!' 'Oh.",
+"lang_uuid": "171fd9dc-8bca-4b14-9fe2-5ed176ebb31c"
+}
+]
+}
+],
+"recommended": true,
+"category_uuid": "e7c2565d-d254-4585-8402-a60f27651a17",
+"category_lang_language": [
+{
+"category_lang_iso": "es",
+"category_lang_title": "SANTIAGO BERNABEU",
+"category_lang_description": "Carlos\", que fue una sensación momentánea y.",
+"category_lang_uuid": "f9be249b-dd3d-46b1-80ba-d663a961eb55"
+},
+{
+"category_lang_iso": "en",
+"category_lang_title": "REAL MADRID STADIUM",
+"category_lang_description": "Lizard, who seemed to follow, except a tiny.",
+"category_lang_uuid": "df0b4cbc-b8a7-49c1-9f92-0531bacc0f71"
+}
+],
+"category_parent_uuid": "e2282df3-24ae-462e-94b9-800b37af5197",
+"category_parent_lang_language": [
+{
+"category_parent_lang_iso": "es",
+"category_parent_lang_title": "MUSEOS",
+"category_parent_lang_description": "Aquello produjo gran consternación en los.",
+"category_parent_lang_uuid": "39ee2a70-b68e-4b03-9ab3-ef9106d2f632"
+},
+{
+"category_parent_lang_iso": "en",
+"category_parent_lang_title": "MUSEUMS",
+"category_parent_lang_description": "So they couldn't see it?' So she began: 'O.",
+"category_parent_lang_uuid": "02314319-26b2-461c-8353-e676eb5bab99"
+}
+]
+}
+],
+"first_page_url": "https://turismo.endesys.com/api/visit?page=1",
+"from": 1,
+"last_page": 1,
+"last_page_url": "https://turismo.endesys.com/api/visit?page=1",
+"links": [
+{
+"url": null,
+"label": "&laquo; Anterior",
+"active": false
+},
+{
+"url": "https://turismo.endesys.com/api/visit?page=1",
+"label": "1",
+"active": true
+},
+{
+"url": null,
+"label": "Siguiente &raquo;",
+"active": false
+}
+],
+"next_page_url": null,
+"path": "https://turismo.endesys.com/api/visit",
+"per_page": 8,
+"prev_page_url": null,
+"to": 1,
+"total": 1
+}

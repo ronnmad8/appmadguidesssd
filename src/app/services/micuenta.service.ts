@@ -37,12 +37,11 @@ export class MicuentaService {
 
   
   getMessagesMicuenta() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/micuenta';
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`, {headers}).pipe(
+    return this.http.get(`${this.url}`).pipe(
       map((resp) => {
         var messageData: VisitaAssetsModel = resp as VisitaAssetsModel;
         return messageData;
@@ -56,11 +55,10 @@ export class MicuentaService {
 
 
   meUser(user: UserModel) {
-    const headers = this.auth.headers;
 
     let endpoint = '/me';
     this.url = this.apiurl + endpoint;
-    return this.http.post(`${this.url}`, {headers}).pipe(
+    return this.http.post(`${this.url}`, null).pipe(
       map((res) => {
         let respuesta = res;
 

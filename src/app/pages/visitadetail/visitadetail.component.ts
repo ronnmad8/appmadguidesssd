@@ -157,6 +157,7 @@ export class VisitadetailComponent implements OnInit{
       this.visitaService.getMessagesVisita().subscribe((resp)=>{
         this.messages = resp as VisitaAssetsModel;
         this.providerService.setThrowMessagesVisita(this.messages);
+        console.log("mes ",this.messages);
       })
   }
 
@@ -172,10 +173,11 @@ export class VisitadetailComponent implements OnInit{
   getMessagesHome(){
     this.homeService.getMessagesHome().subscribe( (resp) => {
       let respuesta: any =  resp ;
-
       this.messagesRelated = respuesta[0] ?? new MessagesModel();
+      
     } );
   }
+
 
 
   getMessagesForm(){

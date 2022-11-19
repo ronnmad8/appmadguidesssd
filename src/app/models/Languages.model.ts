@@ -10,6 +10,7 @@ export class LanguagesModel {
     name: string;
     current_iso: string;
     selected: boolean;
+    disabled: boolean;
     
     constructor(){
         
@@ -21,6 +22,7 @@ export class LanguagesModel {
         this.name= "";
         this.current_iso= "";
         this.selected= false;
+        this.disabled= false;
 
     }
 }

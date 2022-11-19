@@ -40,7 +40,6 @@ export class PoliticasService {
 
 
   getMessagesPoliticascookies() {
-    const headers = this.auth.headers;
     let endpoint = '/assets/politicascookies';
     this.url = this.apiurl + endpoint;
 
@@ -70,7 +69,6 @@ export class PoliticasService {
 
   
   getMessagesPoliticasprivacidad() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/politicasprivacidad';
     this.url = this.apiurl + endpoint;
@@ -99,7 +97,6 @@ export class PoliticasService {
 
 
   getMessagesPoliticascompra() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/politicascompra';
     this.url = this.apiurl + endpoint;
@@ -128,7 +125,6 @@ export class PoliticasService {
 
 
   getMessagesAvisolegal() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/avisolegal';
     this.url = this.apiurl + endpoint;
@@ -157,7 +153,6 @@ export class PoliticasService {
 
 
   getMessagesMedidascovid() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/medidascovid';
     this.url = this.apiurl + endpoint;
@@ -190,12 +185,11 @@ export class PoliticasService {
 
 
   getImages() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/find?file=banner-ficha-de-producto';
     this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`, {headers}).pipe(
+    return this.http.get(`${this.url}`).pipe(
       map((resp) => {
         var imageData: ImagenesModel[] = resp as ImagenesModel[];
         return imageData;

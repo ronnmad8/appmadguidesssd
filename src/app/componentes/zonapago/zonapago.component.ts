@@ -47,6 +47,7 @@ import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { LoginModel } from 'src/app/models/Login.model';
 import { UserModel } from 'src/app/models/User.model';
 import { PlatformService } from 'src/app/services/platform.service';
+import { ProviderService } from 'src/app/services/provider.service';
 
 @Component({
   selector: 'app-zonapago',
@@ -170,7 +171,9 @@ export class ZonapagoComponent implements OnInit {
     private fb: FormBuilder,
     private fbl: FormBuilder,
     private fbr: FormBuilder,
-    private platformService: PlatformService
+    private providerService: ProviderService,
+    private platformService: PlatformService,
+
   ) {
     this.wowService.init();
     
@@ -536,13 +539,26 @@ export class ZonapagoComponent implements OnInit {
     }
   }
 
+
   eliminarvisitapedido(visita: VisitasResultadoModel) {
-    this.pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
+    this.alertasService.alertaWarning("Va a eliminar una visita", "¿Seguro que desea eliminar?").then((result) => {
+      if (result.value) {
+        let pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
+        this.pedido.visitasPedido = pedido.visitasPedido;
+        this.pedido.total = pedido.total;
+        this.providerService.setThrowCarritoupdate(this.pedido);
+        this.preciototal = this.globalService.getFormatNumber(pedido.total);
+      }
+      
+    });
   }
+
+
+
 
   editarvisitapedido(visita: VisitasResultadoModel, content: any) {
     //this.visitaSel = visita;
-    this.daySel = '2022-10-02'; // this.visitaSel.time_date;
+    //this.daySel = '2022-10-02'; // this.visitaSel.time_date;
     // this.horaSel = this.visitaSel.time_init;
     // this.idiomaSel = this.visitaSel.iso;
     // this.adultoSel = this.visitaSel.adultos;

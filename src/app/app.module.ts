@@ -11,7 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './pages/shared/footer/footer.component';
 import { NavbarComponent } from './pages/shared/navbar/navbar.component';
 import { registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BannerComponent } from './componentes/banner/banner.component';
 import { BannerhomeComponent } from './componentes/bannerhome/bannerhome.component';
@@ -49,7 +49,10 @@ import { PoliticasprivacidadComponent } from './pages/politicasprivacidad/politi
 import { PoliticascompraComponent } from './pages/politicascompra/politicascompra.component';
 import { AvisolegalComponent } from './pages/avisolegal/avisolegal.component';
 import { MedidascovidComponent } from './pages/medidascovid/medidascovid.component';
-import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login'; 
+import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { SpinnerComponent } from './pages/shared/spinner/spinner.component'; 
+import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
+import { HeadersInterceptor } from './interceptors/headers.interceptor';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -74,6 +77,8 @@ const routes: Routes = [
     pathMatch: 'full'
   }
  ];
+
+ 
 
 @NgModule({
   declarations: [
@@ -115,6 +120,7 @@ const routes: Routes = [
     PoliticascompraComponent,
     AvisolegalComponent,
     MedidascovidComponent,
+    SpinnerComponent,
 
   ],
   imports: [
@@ -140,6 +146,16 @@ const routes: Routes = [
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
     },
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: SpinnerInterceptor, 
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: HeadersInterceptor , 
+      multi: true
+    }
     // {
     //   provide: 'SocialAuthServiceConfig',
     //   useValue: {

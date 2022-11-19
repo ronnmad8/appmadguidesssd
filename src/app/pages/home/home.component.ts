@@ -129,7 +129,6 @@ export class HomeComponent implements OnInit{
       this.bannerbottom = this.imageneshome.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
       this.logo = this.imageneshome.find(x => x.name == 'logo') ?? new ImagenesModel();
 
-
     } );
   }
 
@@ -158,7 +157,6 @@ export class HomeComponent implements OnInit{
   getMessagesRecomendadas(){
     this.homeService.getMessagesRecomendadas().subscribe( (resp) => {
       this.messagesRecomendadas = resp as TextorecomendadasModel;
-      console.log(this.messagesRecomendadas);
     } );
   }
 
@@ -166,7 +164,6 @@ export class HomeComponent implements OnInit{
   getMessagesForm(){
     this.homeService.getMessagesForm().subscribe( (resp) => {
       this.messagesForm =  resp  as MessagesFormModel;
-
     } );
   }
 

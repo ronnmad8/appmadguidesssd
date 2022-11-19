@@ -31,7 +31,7 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('cjbusqueda') cjbusqueda: ElementRef;
   
-
+  loading: boolean = false;
   visitasprop: VisitasResultadoModel[] = [];
   busqueda: string = "";
   timeout: any;
@@ -64,9 +64,11 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(()=> {
+      this.loading = true;
       this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
         let resultado = resp as ResultadoModel;
         this.visitasprop = resultado.data as VisitasResultadoModel[];
+        this.loading = false;
       }) ;
     }, 10);
 

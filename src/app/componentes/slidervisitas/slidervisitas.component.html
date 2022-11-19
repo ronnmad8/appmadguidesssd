@@ -3,8 +3,8 @@
   <div class="row p-0 m-0 ">
     <div class="col-12 p-0 text-center ">
         <div id="titulovisitas">
-          <span class="colGRIS1">Visitas </span>
-          <span class="colROJO3">mejor valoradas</span>
+          <div class="colGRIS1 mx-2">{{messagesRecomendadasData.message1}} </div>
+          <div class="colROJO3 mx-1">{{messagesRecomendadasData.message2}}</div>
         </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
           <div class="panelVisita posrel cupo"  (click)="verdetalle(visita)"  >
               <div class="visitastemporada" *ngIf="visita.visit_temporada == 1"  >
                 <div>
-                    Visita de temporada 
+                  Visita de temporada
                 </div>
               </div>
               <div class="imgvisita" >
@@ -30,12 +30,12 @@
                           alt="" class="mvl imgvisita lazyload bordeimagencard">
                   </picture>
               </div>
-              <div class="row p-0 m-0">
-                  <div class="titvisita">
-                      <span>{{visita.visit_lang_title}}</span>
+              <div class="w-100 p-0 m-0">
+                  <div class="titvisita" >
+                      <span>{{ visita.visit_lang_title.length > 50 ? visita.visit_lang_title.substring(0,47)+'...' : visita.visit_lang_title }}</span>
                   </div>
                   <div class="textvisita">
-                    <span>{{visita.visit_lang_description}}</span>
+                    <span>{{ visita.visit_lang_description.length > 70 ? visita.visit_lang_description.substring(0,67)+'...' : visita.visit_lang_description }}</span>
                   </div>
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
@@ -56,7 +56,7 @@
   <div class="row p-0 m-0">
     <div class="col-12 p-0 text-center">
         <button id="btvertodas" type="button" class="cupo" (click)="verrecomendadas()" >
-          <span>Ver todas las visitas</span>  
+          <span>{{messagesRecomendadasData.button}}</span>  
         </button>
     </div>
   </div>

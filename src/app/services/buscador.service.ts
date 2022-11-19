@@ -42,7 +42,6 @@ export class BuscadorService {
 
 
   getResultadoBuscador( filters: FiltersModel, page: number ) {
-    const headers = this.auth.headers;
 
     let endpoint = '/visit?' ;
     this.url = this.apiurl + endpoint;
@@ -93,7 +92,7 @@ export class BuscadorService {
     ///filtro orden
     this.url += "&order=" + filters.ordenar + "&orderby="+ filters.orderasc ;
 
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
         
@@ -115,12 +114,11 @@ export class BuscadorService {
 
 
   getImagenesbuscador()  {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/find?file=bannerbottom,banner-ficha-de-producto' ;
     this.url = this.apiurl + endpoint;
 
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
         let imagenes: ImagenesModel[] = resp as ImagenesModel[];
@@ -135,12 +133,11 @@ export class BuscadorService {
 
 
   getMessagesSearch()  {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/search?' ;
     this.url = this.apiurl + endpoint ;
 
-    return this.http.get( `${this.url}`, { headers } )
+    return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
         var data = resp as TextosearchModel;  

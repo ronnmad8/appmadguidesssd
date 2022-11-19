@@ -8,13 +8,16 @@ export class LoginModel {
     token: string;
     status: string
     user: UserModel;
-    
+    message: string;
+    email: string;
 
     constructor(){
             
         this.token = '';
         this.status = '';
         this.user = new UserModel();
+        this.message = '';
+        this.email = '';
 
         
 

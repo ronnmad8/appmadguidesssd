@@ -1,12 +1,13 @@
+<app-spinner></app-spinner>
 <div class="w-100 ">
 
     <div #sec1 class="" >
         <app-bannerbuscador [bannerfichadeproductoData]="bannerfichadeproducto"  
-        [numactividades]="numactividades" [busqueda]="filtersrutatitle"   ></app-bannerbuscador>
+        [numactividades]="numactividades" [busqueda]="filtersrutatitle"  [messageSearchData]="messageSearch"   ></app-bannerbuscador>
     </div>
 
     <div #sec2 class=" " >
-      <app-busqueda (filtrarBusqueda)="getVisitasBuscador()"   ></app-busqueda>
+      <app-busqueda (filtrarBusqueda)="getVisitasBuscador()" [messageSearchData]="messageSearch"  ></app-busqueda>
     </div>
 
     <section #sec3 class="my-3" >

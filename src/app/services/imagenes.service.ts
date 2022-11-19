@@ -67,7 +67,6 @@ export class ImagenesService {
 
 
   getListaImagenes() {
-    const headers = this.auth.headers;
 
     let endpoint =  '/imagenes';
     this.url = this.apiurl + endpoint ;
@@ -84,7 +83,6 @@ export class ImagenesService {
 
 
   getImagenesFilt(idenlace :number, idtipo :number)  {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/filt' ;
     this.url = this.apiurl + endpoint;
@@ -109,7 +107,6 @@ export class ImagenesService {
 
 
   getImagenesFiltAdmin(idenlace :number, idtipo: number, fechaini: string, fechafin: string)  {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/filtadmin' ;
     this.url = this.apiurl + endpoint;
@@ -121,7 +118,7 @@ export class ImagenesService {
       
     };
 
-    return this.http.post( `${this.url}`, filtData, { headers } )
+    return this.http.post( `${this.url}`, filtData )
     .pipe(
       map( res => res as ImagenesModel[]) ,
       catchError((err) => {
@@ -134,7 +131,6 @@ export class ImagenesService {
 
 
   getBanner(idenlace :number, idtipo :number)  {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/bannershome' ;
     this.url = this.apiurl + endpoint;
@@ -158,7 +154,6 @@ export class ImagenesService {
 
 
   getColeccioneshome(idenlace :number, idtipo :number)  {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/coleccioneshome' ;
     this.url = this.apiurl + endpoint;
@@ -181,7 +176,6 @@ export class ImagenesService {
 
 
   getImagenesFiltpos(idenlace :number, idtipo :number, posicion: number)  {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/filtpos' ;
     this.url = this.apiurl + endpoint;
@@ -210,7 +204,6 @@ export class ImagenesService {
   
 
   uploadFile( id: string, filetoupload: File ) {
-    const headers = this.auth.headers;
 
     let endpoint = '/imagenes/imagen/' ;
     this.url = this.apiurl +  endpoint ;
@@ -219,7 +212,7 @@ export class ImagenesService {
     formData.append('image', filetoupload, filetoupload.name);
     formData.append('id', id);
 
-    return this.http.post( `${this.url}`, formData , { headers }  )
+    return this.http.post( `${this.url}`, formData )
     .pipe(
       catchError(err => {
       console.error('Error  ' , err.error);

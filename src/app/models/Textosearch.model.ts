@@ -15,6 +15,7 @@ export class TextosearchModel {
   levels: Levels;
   more: string;
   view: string;
+
   
 
   constructor() {
@@ -28,7 +29,8 @@ export class TextosearchModel {
     this.levels = new Levels();
     this.more = '';
     this.view = '';
-   
+    
+    
   }
 }
 
@@ -36,9 +38,11 @@ class Date {
   0: string;
   title: string;
   placeholder: string;
+  availability: string;
   constructor() {
     this.title = '';
     this.placeholder = '';
+    this.availability = '';
   }
 }
 

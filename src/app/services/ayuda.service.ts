@@ -36,13 +36,12 @@ export class AyudaService {
 
 
   getMessages() {
-    const headers = this.auth.headers;
     
     let endpoint = '/assets/ayuda';
 
     this.url = this.apiurl + endpoint;
 
-    // return this.http.get(`${this.url}`, {headers}).pipe(
+    // return this.http.get(`${this.url}`).pipe(
     //   map((resp) => {
     //     var messageData: VisitaAssetsModel[] = resp as VisitaAssetsModel[];
     //     return messageData;
@@ -86,7 +85,6 @@ export class AyudaService {
 
 
   getImages() {
-    const headers = this.auth.headers;
 
     let endpoint = '/assets/find?file=bannerbottom, banner-ficha-de-producto';
     this.url = this.apiurl + endpoint;

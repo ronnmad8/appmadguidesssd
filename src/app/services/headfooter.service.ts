@@ -21,6 +21,7 @@ import { utf8Encode } from '@angular/compiler/src/util';
 import { MenuModel } from '../models/Menu.model';
 import { FooterModel } from '../models/Footer.model';
 import { TextoLoginModel } from '../models/TextoLogin.model';
+import { TextoCartModel } from '../models/TextoCart.model';
 
 
 
@@ -46,11 +47,10 @@ export class HeadfooterService {
 
   
     getMessagesMenu()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/header/menu?' ;
       this.url = this.apiurl + endpoint ;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
     
@@ -67,11 +67,10 @@ export class HeadfooterService {
 
 
     getMessagesLogin()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/login?' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
     
@@ -86,13 +85,31 @@ export class HeadfooterService {
       );
     }
 
+    getMessagesCart()  {
+
+      let endpoint = '/assets/messages?' ;
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( resp =>{
+    
+          let textocart : TextoCartModel = resp as TextoCartModel;
+          return textocart;
+
+        } ) ,
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+    }
+
 
     getMessagesFooter()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/footer?' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
     
@@ -110,11 +127,10 @@ export class HeadfooterService {
 
 
     getLogoMenu()  {
-      const headers = this.auth.headers;
 
       let endpoint = '/assets/find?file=logo-madguides' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
           let imagenes:ImagenesModel[] = resp as ImagenesModel[]; ;
@@ -130,11 +146,10 @@ export class HeadfooterService {
     }
 
     getLogoFooter()  {
-      const headers = this.auth.headers;
        
       let endpoint = '/assets/find?file=logo-madguides-vertical' ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}`, {headers} )
+      return this.http.get( `${this.url}` )
       .pipe(
         map( resp =>{
     

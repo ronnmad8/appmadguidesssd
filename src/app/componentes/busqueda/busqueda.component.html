@@ -3,10 +3,10 @@
         <div class="pc p-0 m-0" *ngIf="!isrespon"  >
             <div id="divtipoplan">
                 <div id="buscadorpor">
-                    Buscador por
+                    {{messageSearchData.search}}
                 </div>
                 <div id="tipoplan">
-                    Tipo de plan
+                    {{messageSearchData.plan}}
                 </div>
             </div>
             <div  class="p-2 mt-4 ovhidden" >
@@ -80,7 +80,7 @@
             <div class="pb-4" [ngClass]="{ 'panscrollVH': isrespon }">
                 <div id="introducefechas" class="posrel">
                     <div id="introducefechastexto">
-                        <span>Introduce tus fechas para encontrar actividades disponibles:</span>
+                        <span>{{messageSearchData.title}}:</span>
                     </div>
                     <div id="introducefechascal" class="d-flex cupo"  (click)="verFechas()" >
                         <img src="../../assets/images/i-calendario.svg" class="imicono2" draggable="false">
@@ -88,7 +88,7 @@
                         <span *ngIf="filtFechas != ''">{{filtFechas}}</span>
                     </div>
                     <div class="btredondoRojodisponibilidad" (click)="verdisponibilidad()">
-                        Ver disponibilidad
+                        {{messageSearchData.date.availability}}
                     </div>
 
 
@@ -152,27 +152,27 @@
                                 <img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false">
                             </span>
                         </div> -->
-                        <div #pastidelanguages class="posrel pastifiltro cupo "  *ngFor="let fl of filtLanguages" (click)="deleteFiltLanguage(fl)" >
+                        <div #pastidelanguages class="posrel pastifiltro cupo animated fadeIn slow"   *ngFor="let fl of filtLanguages" (click)="deleteFiltLanguage(fl)" >
                             <span class="mr-1 pr-4">{{fl}}</span>   
                             <span class="px-3"><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol" draggable="false"></span>
                         </div>
-                        <div #pastideprecios class="posrel pastifiltro cupo "   >
+                        <div #pastideprecios class="posrel pastifiltro cupo animated fadeIn slow"   >
                             <span class="mr-1 pr-4">{{filtPrecios}} €</span>   
                             <!-- <span><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false"></span> -->
                         </div>
-                        <div #pastidehoras class="posrel pastifiltro cupo "  *ngFor="let fd of filtDuracion" (click)="deleteFiltDuracion(fd)"  >
+                        <div #pastidehoras class="posrel pastifiltro cupo animated fadeIn slow"  *ngFor="let fd of filtDuracion" (click)="deleteFiltDuracion(fd)"  >
                             <span class="mr-1 pr-4">{{fd}} horas</span>   
                             <span class="px-3"><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false"></span>
                         </div>
-                        <div #pastidecaracteristicas class="posrel pastifiltro cupo "  *ngFor="let fc of filtCaracteristicas" (click)="deleteFiltCaracteristica(fc)"  >
+                        <div #pastidecaracteristicas class="posrel pastifiltro cupo animated fadeIn slow"  *ngFor="let fc of filtCaracteristicas" (click)="deleteFiltCaracteristica(fc)"  >
                             <span class="mr-1">{{fc}}</span>   
                             <span class="px-3" ><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false"></span>
                         </div>
-                        <div #pastidecfranjas class="posrel pastifiltro cupo "  *ngFor="let ff of filtFranja" (click)="deleteFiltFranja(ff)"  >
+                        <div #pastidecfranjas class="posrel pastifiltro cupo animated fadeIn slow"  *ngFor="let ff of filtFranja" (click)="deleteFiltFranja(ff)"  >
                             <span class="mr-1">{{ff}}</span>   
                             <span class="px-3" ><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false"></span>
                         </div>
-                        <div #pastidecategorias class="posrel pastifiltro cupo "  *ngFor="let fca of filtCategorias" (click)="deleteFiltCategoria(fca)"  >
+                        <div #pastidecategorias class="posrel pastifiltro cupo animated fadeIn slow"  *ngFor="let fca of filtCategorias" (click)="deleteFiltCategoria(fca)"  >
                             <span class="mr-1">{{fca}}</span>   
                             <span class="px-3" ><img src="../../assets/images/i-borrar.svg" class="imicono2 filtdel posabsol " draggable="false"></span>
                         </div>
@@ -186,7 +186,7 @@
     
                         <div id="zonafiltroidiomas" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit">
-                                Idiomas
+                                {{messageSearchData.titles.language}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosidiomas()">
                                 <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!veridiomas" >
@@ -194,14 +194,8 @@
                             </div>
                             <div class="p-0 m-0 animated fadeIn" *ngIf="veridiomas">
                                 <div class="listachecks" *ngFor="let li of idiomasfiltro; let i = index">
-                                    <div class="custom-control custom-checkbox " *ngIf="li.iso == 'es'"  >
-                                        <input type="checkbox" class="custom-control-input " disabled="disabled" checked="checked"
-                                        id="idioma-{{i}}" value="{{li.uuid}}"   >
-                                        <label for="idioma-{{i}}" class="custom-control-label checkfiltrotexto"> {{li.name | capitalize}}
-                                        </label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox " *ngIf="li.iso != 'es'"  >
-                                        <input type="checkbox" class="custom-control-input " 
+                                    <div class="custom-control custom-checkbox "   >
+                                        <input type="checkbox" class="custom-control-input " [disabled]="li.disabled"
                                         id="idioma-{{i}}" value="{{li.uuid}}"  [ngModel]="li.selected" (change)="checkLanguagesSelected($event)" >
                                         <label for="idioma-{{i}}" class="custom-control-label checkfiltrotexto"> {{li.name | capitalize}}
                                         </label>
@@ -212,7 +206,7 @@
     
                         <div id="zonafiltroduracion" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit ">
-                                Duración
+                                {{messageSearchData.titles.price}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosduracion()">
                                 <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verduracion" >
@@ -232,7 +226,7 @@
     
                         <div id="zonafiltrofranjas" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit ">
-                                Franja horaria
+                                {{messageSearchData.titles.hour}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosfranja()">
                                 <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verfranja" >
@@ -252,7 +246,7 @@
     
                         <div id="zonafiltroprecio" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit ">
-                                Precio
+                                {{messageSearchData.titles.price }}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosprecios()">
                                 <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false"  *ngIf="!verprecios" >
@@ -261,13 +255,16 @@
                             <div class="p-0 m-0 animated fadeIn " *ngIf="verprecios">
                                 <div class="posrel ">
                                     <ngx-slider (mouseup)="cambiarvalorfiltroprecio()" [(value)]="precioIni" [(highValue)]="precioFin" [options]="optionsPrecio"></ngx-slider>
+                                    <div class="posabsolgratis" *ngIf="precioIni == 0"  >
+                                        {{messageSearchData.titles.price }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
     
                         <div id="zonafiltrocaracteristicas" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit ">
-                                Características
+                                {{messageSearchData.titles.feaures}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltroscaracteristicas()">
                                 <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!vercaracteristicas" >
@@ -305,14 +302,19 @@
                     <select #ordenarsel class="custom-select custom-select-sm" name="ordenarporsel"
                         (change)="cambiarorden($event)"  >
                         <option value="{{li.id}}" *ngFor="let li of listaordenarfiltro">
-                            {{li.label}}
+                            <span *ngIf="li.id == 1" > Relevancia  </span>
+                            <span *ngIf="li.id == 2" > {{messageSearchData.titles.price}} - {{messageSearchData.levels.height.less}}  </span>
+                            <span *ngIf="li.id == 3" > {{messageSearchData.titles.price}} - {{messageSearchData.levels.height.more}}  </span>
+                            <span *ngIf="li.id == 4" > {{messageSearchData.titles.duration}} - {{messageSearchData.levels.duration.less}}  </span>
+                            <span *ngIf="li.id == 5" > {{messageSearchData.titles.duration}} - {{messageSearchData.levels.duration.more}}  </span>
+                            
                         </option>
                     </select>
                 </div>
             </div>
             
 
-            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of listaresultados; let i = index" [(ngModel)]="resultado" >
+            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of listaresultados; let i = index" [ngModel]="listaresultados" >
                 
                 <div *ngIf=" visita.visit_uuid != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita.visit_uuid, visita.visit_lang_title)"  >
                     <div class="visitastemporada" *ngIf="visita.visit_temporada == 1" >
@@ -367,24 +369,23 @@
                     </div>
                 </div>
             </div>
-            <div class="mh300" *ngIf="listaresultados.length == 0">
-                <div class="panelVisitaBuscador d-flex "  >
-                </div>
-                <div class="panelVisitaBuscador d-flex "  >
-                </div>
-                <div class="panelVisitaBuscador d-flex "  >
-                </div>
-                <div class="panelVisitaBuscador d-flex "  >
-                </div>
+            <div class="mh300" *ngIf="listaresultados.length == 0 && cargado">
+                <div class="panelVisitaBuscador d-flex " style="display: flex;
+                justify-content: center;
+                align-items: center;"  >
+                   SIN RESULTADO
+                </div> 
+
             </div>
             <div class="spinner-container mt-4 text-center w-100 mh100" *ngIf="loading"  >
                 <div class="spinner-border" role="status">
                 </div>
             </div>
             <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
-                <button class="btRedondoVerMasResultados animated fadeIn slow" type="button" (click)="vermasresultados()"
+                <button class="btRedondoVerMasResultados animated fadeIn slow" type="button" 
+                (click)="vermasresultados()" 
                 *ngIf="listaresultados.length < resultado.total && listaresultados.length != 0" >
-                    <span class="ff-JB" *ngIf="!loading">Ver más resultados</span>
+                    <span class="ff-JB" *ngIf="!loading">{{messageSearchData.view}} {{messageSearchData.more}}</span>
                 </button>               
             </div>
     

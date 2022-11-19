@@ -27,6 +27,7 @@ import { CalendarModel } from 'src/app/models/calendar.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { PlatformService } from 'src/app/services/platform.service';
+import { TextosearchModel } from 'src/app/models/Textosearch.model';
 
 
 @Component({
@@ -35,8 +36,11 @@ import { PlatformService } from 'src/app/services/platform.service';
 })
 export class BusquedaComponent implements OnInit {
   @Output() filtrarBusqueda = new EventEmitter();
-  sWindow: any;
+  @Input() cargado: boolean = false;
+  @Input() messageSearchData: TextosearchModel = new TextosearchModel();
 
+  sWindow: any;
+  maxvalueprecio = 300;
   listaresultados: VisitasResultadoModel[] = [];
   resultado: ResultadoModel = new ResultadoModel();
   loading: boolean = false;
@@ -108,6 +112,7 @@ export class BusquedaComponent implements OnInit {
   scrollPosition: number = 0;
   verordenar: boolean = false;
   ordfixed: boolean = false;
+  
 
 
   public config: SwiperConfigInterface = {
@@ -215,11 +220,12 @@ export class BusquedaComponent implements OnInit {
     
   }
   getVisitasBuscador(result: ResultadoModel) {
-    this.resultado = result as ResultadoModel;
-    this.listaresultados = this.listaresultados.concat(this.resultado.data);
+    
     let sWindow = this.platformService.sWindow ;
     sWindow.scrollTo({ top: this.scrollPosition + 10 });
-
+    this.resultado = result as ResultadoModel;
+    this.listaresultados = this.listaresultados.concat(this.resultado.data as VisitasResultadoModel[]);
+    console.log("resultados ++  ", this.listaresultados );
   }
 
   ///////////////filtrar end//////////////////////////////
@@ -406,6 +412,12 @@ export class BusquedaComponent implements OnInit {
   getIdiomasFiltro() {
     this.listasService.getIdiomas().subscribe((resp) => {
       this.idiomasfiltro = resp as LanguagesModel[];
+      this.idiomasfiltro.forEach((idioma) => {
+        if(idioma.iso == 'es'){
+           idioma.selected = true;
+           idioma.disabled = true;
+        }
+      })
     });
   }
 
@@ -464,8 +476,8 @@ export class BusquedaComponent implements OnInit {
   ///precio
   getPreciosFiltro() {
     this.precioFin = 0;
-    this.valormaximo = 2000;
-    this.valorfiltroprecio = 2000;
+    this.valormaximo = this.maxvalueprecio;
+    this.valorfiltroprecio = this.maxvalueprecio;
     this.precioFin = this.valormaximo;
     this.optionsPrecio = {
       floor: 0,
@@ -503,7 +515,7 @@ export class BusquedaComponent implements OnInit {
     o4.tipo = 'duration';
     o4.asc = 'asc';
     let o5: OrdenModel = new OrdenModel();
-    o5.id = 4;
+    o5.id = 5;
     o5.label = 'Duración - Mayor';
     o5.tipo = 'duration';
     o5.asc = 'desc';
@@ -523,6 +535,7 @@ export class BusquedaComponent implements OnInit {
     this.filtPrecios = this.precioIni + ' - ' + this.precioFin;
     this.filters.precioIni = this.precioIni;
     this.filters.precioFin = this.precioFin;
+    this.verdisponibilidad();
   }
 
   ///ordenar
@@ -582,7 +595,7 @@ export class BusquedaComponent implements OnInit {
     this.caracteristicasfiltro.forEach((x) => (x.selected = false));
     this.categoriasfiltro.forEach((x) => (x.selected = false));
     this.precioIni = 0;
-    this.precioFin = 2000;
+    this.precioFin = this.maxvalueprecio;
     
     this.filtPrecios = this.precioIni + ' - ' + this.precioFin;
     this.filtCategorias = [];
@@ -609,19 +622,33 @@ export class BusquedaComponent implements OnInit {
 
   /// sel idiomas
   checkLanguagesSelected(ev: any) {
+    
     let va = ev.target.value;
     this.idiomasfiltro.forEach((item) => {
+      item.disabled = false;
       if (item.uuid == va) {
         item.selected = ev.target.checked;
       }
     });
-    this.filtLanguages = this.idiomasfiltro
-      .filter((x) => x.selected)
+
+    let sels = this.idiomasfiltro
+    .filter((x) => x.selected);
+    if(sels.length==1){
+      this.idiomasfiltro.forEach((item) => {
+        if (item.uuid == sels[0].uuid) {
+          item.disabled = true;
+        }
+      });
+    }
+    this.filtLanguages = sels
       .map((x) => x.name);
-    this.filters.languages = this.idiomasfiltro
-      .filter((x) => x.selected)
+    this.filters.languages = sels
       .map((x) => x.iso);
+
+    this.verdisponibilidad();
   }
+
+
   deleteFiltLanguage(ff: string) {
     this.filtLanguages = this.filtLanguages.filter((x) => x != ff);
     this.idiomasfiltro.forEach((item) => {
@@ -629,6 +656,7 @@ export class BusquedaComponent implements OnInit {
         item.selected = false;
       }
     });
+    this.verdisponibilidad()
   }
 
   /// sel duraciones
@@ -648,6 +676,7 @@ export class BusquedaComponent implements OnInit {
       this.filtDuracion.push(item.valueMin + ' - ' + item.valueMax);
     });
     this.filters.duracion = this.duracionSel;
+    this.verdisponibilidad()
   }
   deleteFiltDuracion(f: any) {
     this.filtDuracion = this.filtDuracion.filter((x) => x != f);
@@ -658,6 +687,8 @@ export class BusquedaComponent implements OnInit {
       }
     });
     this.filters.duracion = this.duracionSel;
+
+    this.verdisponibilidad()
   }
 
   /// sel franjas
@@ -676,6 +707,7 @@ export class BusquedaComponent implements OnInit {
       this.filtFranja.push(item.label);
     });
     this.filters.franja = this.franjasSel;
+    this.verdisponibilidad()
   }
   deleteFiltFranja(ff: string) {
     this.filtFranja = this.filtFranja.filter((x) => x != ff);
@@ -686,6 +718,7 @@ export class BusquedaComponent implements OnInit {
       }
     });
     this.filters.franja = this.franjasSel;
+    this.verdisponibilidad()
   }
 
   /// sel caracteristicas
@@ -704,7 +737,10 @@ export class BusquedaComponent implements OnInit {
       this.filtCaracteristicas.push(item.title);
     });
     this.filters.caracteristicas = this.caracteristicasSel;
+    this.verdisponibilidad()
   }
+
+  
   deleteFiltCaracteristica(fc: string) {
     this.filtCaracteristicas = this.filtCaracteristicas.filter((x) => x != fc);
     this.caracteristicasSel = this.caracteristicasfiltro
@@ -716,6 +752,7 @@ export class BusquedaComponent implements OnInit {
       }
     });
     this.filters.caracteristicas = this.caracteristicasSel;
+    this.verdisponibilidad()
   }
 
   /// sel categiorias
@@ -734,7 +771,9 @@ export class BusquedaComponent implements OnInit {
       this.filtCategorias.push(item.title);
     });
     this.filters.categorias = this.categoriasSel;
+    this.verdisponibilidad()
   }
+
   deleteFiltCategoria(fc: string) {
     this.filtCategorias = this.filtCategorias.filter((x) => x != fc);
     this.categoriasSel = this.categoriasfiltro
@@ -746,5 +785,8 @@ export class BusquedaComponent implements OnInit {
       }
     });
     this.filters.categorias = this.categoriasSel;
+    this.verdisponibilidad()
   }
+
+
 }

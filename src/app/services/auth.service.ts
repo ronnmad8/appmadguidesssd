@@ -25,6 +25,8 @@ export class AuthService {
   headers: HttpHeaders = new HttpHeaders();
   clang: string = '';
 
+  islogin$ = new Subject<boolean>();
+
   constructor(
     private http: HttpClient, 
     private router: Router
@@ -34,6 +36,11 @@ export class AuthService {
     this.clang = localStorage.getItem('currentLanguage') ?? 'es';
     this.headers =this.getHeaders(this.clang, this.userToken);
   }
+
+  
+  
+
+
 
   getHeaders(clang: string, token: string) {
     const headers = new HttpHeaders({
@@ -123,9 +130,19 @@ export class AuthService {
   }
 
 
+  isAuth(): void{
+    if (this.leerToken() != null){
+      this.islogin$.next(true);
+    }
+    else{
+      this.islogin$.next(false);
+    }
+  }
+
   noAuth(): boolean {
     let noesta = true;
-    if (this.userToken == null){
+    let token = this.leerToken();
+    if (token != null){
       noesta = false;
     }
     return noesta;
@@ -133,9 +150,6 @@ export class AuthService {
 
 
   registrarUser(user: UserModel) {
-    const headers = new HttpHeaders({
-      'Content-type': 'application/json; charset=UTF-8',
-    });
 
     let _datos = {
       second: user.password,
@@ -148,16 +162,14 @@ export class AuthService {
       privacity: true,
       particular: true,
     };
-    let data = JSON.stringify(_datos);
 
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;
-    return this.http.post(`${this.url}`, data, { headers }).pipe(
+    return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        this.userToken = this.leerToken();
-        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-        this.headers =this.getHeaders(this.clang, this.userToken);
-
+        // this.userToken = this.leerToken();
+        // this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+        // this.headers =this.getHeaders(this.clang, this.userToken);
         let login = res as LoginModel;
         return login;
       }),
@@ -172,8 +184,8 @@ export class AuthService {
     let _datos = {
       email: user.email,
     };
-    JSON.stringify(_datos);
-    let endpoint = '/forgotpassword';
+
+    let endpoint = '/requirePass';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
@@ -193,7 +205,7 @@ export class AuthService {
       email: user.email,
       password: user.password,
     };
-    JSON.stringify(_datos);
+
     let endpoint = '/login';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
@@ -213,10 +225,6 @@ export class AuthService {
   }
 
   updateUser(user: UserModel) {
-    const headers = new HttpHeaders({
-      'Content-type': 'application/json; charset=UTF-8',
-      //Authorization: 'Bearer ' + this.userToken,
-    });
 
     let _datos = {
       name: user.name,
@@ -230,10 +238,9 @@ export class AuthService {
     //JSON.stringify(_datos);
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;
-    return this.http.post(`${this.url}`, _datos, { headers }).pipe(
+    return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
         let user = res as UserModel;
-
         return user;
       }),
       catchError((err) => {

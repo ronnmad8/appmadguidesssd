@@ -55,6 +55,11 @@
               <div *ngFor="let idiom of idiomas">
                 <div class="cupo" (click)="cambiaridioma(idiom.iso)">{{idiom.name | capitalize}}</div>
               </div>
+              <div class="posabsolcerrarp">
+                <span class="cupo" (click)="resetmodales()">
+                  <i class="fa-regular fa-circle-xmark fs-20"></i>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -110,7 +115,7 @@
       <div id="modalcarrito" class="posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
         <div id="panelcarritovacio" *ngIf="pedido.visitasPedido.length == 0">
           <div class="text-center py-3">
-            Tu carrito está vacío
+            {{messageCart.cart.vacio}}
           </div>
         </div>
 
@@ -167,7 +172,7 @@
           <div class="bordeli p-1 w-100">
             <div class="my-2 posrel">
               <div class="fs-14 pl-2 colGRIS3">
-                {{actividades}} actividades
+                {{actividades}} {{messageCart.cart.actividades}}
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
                 {{ totalcarrito }} €
@@ -178,11 +183,15 @@
           <div class="w-100">
             <div class="my-3 mx-auto text-center">
               <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
-                <span class="ff-JB">Finalizar reserva</span>
+                <span class="ff-JB">{{messageCart.cart.finalizar}}</span>
               </button>
             </div>
           </div>
-
+          <div class="posabsolcerrarp">
+            <span class="cupo" (click)="resetmodales()">
+              <i class="fa-regular fa-circle-xmark fs-20"></i>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -255,8 +264,13 @@
             </div>
             <div class="mh40"></div>
           </form>
-
+          <div class="posabsolcerrar">
+            <span class="cupo" (click)="resetmodales()">
+              <i class="fa-regular fa-circle-xmark fs-24"></i>
+            </span>
+          </div>
         </div>
+
         <div id="panelforget" class="panelcuenta" *ngIf="verforget"
           [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
 
@@ -295,6 +309,11 @@
             </div>
             <div class="mh40"></div>
           </form>
+          <div class="posabsolcerrar">
+            <span class="cupo" (click)="resetmodales()">
+              <i class="fa-regular fa-circle-xmark fs-24"></i>
+            </span>
+          </div>
 
         </div>
 
@@ -310,9 +329,7 @@
                   <div id="abrirmicuentatitulo" class="px-3">Registro</div>
                 </div>
                 <div class="px-3">
-                  <div class="ff-JB">
-                    <span>Datos personales</span>
-                  </div>
+
                   <div class="cj">
                     <input type="text" class="colGRIS1 " placeholder="Usuario email" id="email" name="email"
                       formControlName="email" />
@@ -341,7 +358,7 @@
                     <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
                       formControlName="telefono" />
                   </div>
-                  <div class="linefull my-2"></div>
+                  <!-- <div class="linefull my-2"></div>
                   <div class="ff-JB">
                     <span>Datos de facturacion</span>
                   </div>
@@ -390,7 +407,7 @@
                       <label class="mx-2" for="rb-2">Empresa</label>
                     </div>
 
-                  </div>
+                  </div> -->
 
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button" (click)="registrar()">
@@ -409,7 +426,11 @@
                 </div>
               </div>
             </form>
-
+            <div class="posabsolcerrar">
+              <span class="cupo" (click)="resetmodales()">
+                <i class="fa-regular fa-circle-xmark fs-24"></i>
+              </span>
+            </div>
           </div>
           <div class="mh40"></div>
         </div>
@@ -461,7 +482,7 @@
 
               <div class="posrel d-flex">
                 <div id="vertodosprop" class="cupo" (click)="verbuscador()">
-                  Ver todos los resultados para
+                  {{messageCart.search}}
                   <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
                     busqueda}}"</span>
                 </div>
@@ -595,7 +616,7 @@
       <div id="modalcarritomovil" class="posabsolmodalmovil" *ngIf="vercarrito && !isZonapago">
         <div id="panelcarritovaciomovil" *ngIf="pedido.visitasPedido.length == 0">
           <div class="text-center py-3">
-            Tu carrito está vacío
+            {{messageCart.cart.vacio}}
           </div>
         </div>
         <div id="panelcarritomovil" *ngIf="!carritovacio">
@@ -652,7 +673,7 @@
           <div class="bordeli p-1 w-100">
             <div class="my-2 posrel">
               <div class="fs-14 pl-2 colGRIS3">
-                {{actividades}} actividades
+                {{actividades}} {{messageCart.cart.actividades}}
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
                 {{ totalcarrito }} €
@@ -662,7 +683,7 @@
           <div class="w-100 pb-2">
             <div class="my-3 mx-auto text-center">
               <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
-                <span class="ff-JB">Finalizar reserva</span>
+                <span class="ff-JB">{{messageCart.cart.finalizar}}</span>
               </button>
             </div>
           </div>
@@ -720,11 +741,11 @@
                   {{messageLogin.accede}}
                 </div>
                 <div class="w-100 p-0 ">
-                  <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button" (click)="loginfacebook()">
+                  <button id="btfacebookmicuentamvl" class="btcuadmicuenta mx-1" type="button" (click)="loginfacebook()">
                     <img src="assets/images/logofb.png" class="imredes" draggable="false">
                     <span>Facebook</span>
                   </button>
-                  <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                  <button id="btgooglemicuentamvl" class="btcuadmicuenta mx-1" type="button">
                     <img src="assets/images/logog.png" class="imredes" draggable="false">
                     <span>Google</span>
                   </button>
@@ -781,7 +802,7 @@
         </div>
 
         <div id="panelmiregistro" class="panelcuenta" *ngIf="verregistrar">
-          <div class="scrld">
+          <div class="scrld posrel">
             <form class="validate-form" [formGroup]="formregister">
               <div id="divmicuenta">
                 <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
@@ -824,7 +845,7 @@
                     <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefonreg" name="telefonreg"
                       formControlName="telefono" />
                   </div>
-                  <div class="linefull my-2"></div>
+                  <!-- <div class="linefull my-2"></div>
                   <div class="ff-JB">
                     <span>Datos de facturacion</span>
                   </div>
@@ -876,7 +897,7 @@
                         <label class="mx-1" for="rb-2">Empresa</label>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuentamvl " type="button" (click)="registrar()">
                       <span>Registrar</span>
@@ -894,10 +915,9 @@
                 </div>
               </div>
             </form>
-
-          </div>
-          <div class="mh40"></div>
+          </div>          
         </div>
+
       </div>
 
 

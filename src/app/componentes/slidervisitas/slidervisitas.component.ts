@@ -9,6 +9,7 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 })
 export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
-  @Input() messageData: MessagesModel = new MessagesModel();
+  @Input() messagesRecomendadasData: TextorecomendadasModel = new TextorecomendadasModel();
   @Input() recommendedData: VisitasResultadoModel[] = [];
 
   public show: boolean = true;

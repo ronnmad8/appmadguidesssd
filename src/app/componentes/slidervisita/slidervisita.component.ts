@@ -37,6 +37,7 @@ import { CartModel } from 'src/app/models/Cart.model';
 import { TimesModel } from 'src/app/models/Times.model';
 import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
 import { PlatformService } from 'src/app/services/platform.service';
+import { AlertasService } from 'src/app/services/alertas.service';
 
 @Component({
   selector: 'app-slidervisita',
@@ -185,7 +186,8 @@ export class SlidervisitaComponent implements OnInit{
     private globalService: GlobalService,
     private carritoService: CarritoService,
     private renderer: Renderer2,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private alertasService: AlertasService
     
   ) {
     this.wowService.init();
@@ -299,7 +301,7 @@ export class SlidervisitaComponent implements OnInit{
     ///get idiomas
     this.listasService.getIdiomas().subscribe((resp) => {
       this.listaidiomas = resp as LanguagesModel[];
-
+      this.listaidiomasvisita = [];
       this.visitaresultado.iso_disponible.forEach((idiomaiso, index) => {
         let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso) ?? new LanguagesModel();
         idiom.id = index;
@@ -309,9 +311,6 @@ export class SlidervisitaComponent implements OnInit{
       })
 
     });
-
-
-    
     
     this.idiomaSel = this.visitaresultado.visit_time[0].iso ;
 
@@ -319,9 +318,10 @@ export class SlidervisitaComponent implements OnInit{
       let initsp = this.timesSel.init.split(':');
       let res = initsp[0] + ':' + initsp[1];
       if (hora.value == res) {
+ 
         this.listahorasvisita.push(hora);
-        this.horainfo = res;
-        this.horaSel = hora.key;
+        //this.horainfo = res;
+        //this.horaSel = hora.key;
       }
       
     });
@@ -427,8 +427,8 @@ export class SlidervisitaComponent implements OnInit{
     this.setSecuencial();
   }
   idiomainfosel(v: string) {
-    this.idiominfo = v;
     this.idiomaSel = this.listaidiomas.filter((x) => x.iso == v)[0].name;
+    this.idiominfo = this.idiomaSel;
     if (this.idiomaSel != null) {
       this.idiomanovalid = false;
     }
@@ -762,6 +762,7 @@ export class SlidervisitaComponent implements OnInit{
       this.carritoService.saveCart(carrito);
       ///actualizar carrito menu
       this.providerService.setThrowCarritoupdate(carrito);
+      this.alertasService.alertaPeq("Producto agregado al carrito");
       this.router.navigate(['/buscador']);
     }
   }
