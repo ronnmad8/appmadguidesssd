@@ -11,7 +11,6 @@ export class UsuarioModel{
 
     constructor(){
         this.id = 0;
-        this.email = "";
         this.nombre = "";
         this.email= "";
         this.telefono = "";

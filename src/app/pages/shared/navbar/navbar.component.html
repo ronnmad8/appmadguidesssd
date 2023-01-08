@@ -230,7 +230,7 @@
                   </div>
                   <div class="mt-1 ml-2">{{messageLogin.remember}}</div>
                 </div>
-                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center ">
                   <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button" (click)="iniciarsesion()">
                     <span>{{ messageLogin.session }}</span>
                   </button>
@@ -239,7 +239,14 @@
                   </button>
                   <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
                     {{messageLogin.forgot}}
+                    <div class="spinner-container text-center posrel" style="top: -70px; left: 10px"  *ngIf="loading"  >
+                      <div class="spinner-border colGRIS8 text-center "  role="status">
+                      </div>
+                    </div>
                   </div>
+
+                  
+
                 </div>
                 <div class="oaccedemicuenta">
                   {{messageLogin.accede}}
@@ -296,6 +303,10 @@
                   <button *ngIf="btForgetactivado" class="btredondoRojomicuenta " type="button"
                     (click)="renovarpassword()">
                     <span>Enviar</span>
+                    <div class="spinner-container posrel" style="top: -35px; left: 0px"  *ngIf="loading"  >
+                      <div class="spinner-border colGRIS8"  role="status">
+                      </div>
+                    </div>
                   </button>
                   <button *ngIf="!btForgetactivado" class="btredondoApagadomicuenta " type="button">
                     <span>Enviar</span>
@@ -331,12 +342,12 @@
                 <div class="px-3">
 
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="email" name="email"
+                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
                       formControlName="email" />
                   </div>
                   <div class="cj posrel d-flex">
-                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
-                      name="password" formControlName="password" />
+                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="passwordreg"
+                      name="passwordreg" formControlName="password" />
                     <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
                         (click)="verpassword(false)"></i> </div>
                     <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
@@ -412,6 +423,10 @@
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button" (click)="registrar()">
                       <span>Registrar</span>
+                      <div class="spinner-container posrel" style="top: -30px"  *ngIf="loading"  >
+                        <div class="spinner-border colGRIS8 text-center"  role="status">
+                        </div>
+                      </div>
                     </button>
                     <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
                       <span>Registrar</span>

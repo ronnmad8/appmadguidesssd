@@ -14,6 +14,10 @@ import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { TimesModel } from '../models/Times.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { UserModel } from '../models/User.model';
+import { StatesModel } from '../models/States.model';
+import { CountriesModel } from '../models/Countries.model';
+import { PrefixModel } from '../models/Prefix.model';
+import { CitiesModel } from '../models/Cities.model';
 
 
 @Injectable({
@@ -36,22 +40,22 @@ export class MicuentaService {
   }
 
   
-  getMessagesMicuenta() {
+  // getMessagesMicuenta() {
 
-    let endpoint = '/assets/micuenta';
-    this.url = this.apiurl + endpoint;
+  //   let endpoint = '/assets/micuenta';
+  //   this.url = this.apiurl + endpoint;
 
-    return this.http.get(`${this.url}`).pipe(
-      map((resp) => {
-        var messageData: VisitaAssetsModel = resp as VisitaAssetsModel;
-        return messageData;
-      }),
-      catchError((err) => {
-        console.error('Error', err.error);
-        return err.error;
-      })
-    );
-  }
+  //   return this.http.get(`${this.url}`).pipe(
+  //     map((resp) => {
+  //       var messageData: VisitaAssetsModel = resp as VisitaAssetsModel;
+  //       return messageData;
+  //     }),
+  //     catchError((err) => {
+  //       console.error('Error', err.error);
+  //       return err.error;
+  //     })
+  //   );
+  // }
 
 
   meUser(user: UserModel) {
@@ -62,7 +66,6 @@ export class MicuentaService {
       map((res) => {
         let respuesta = res;
 
-        
         return user;
       }),
       catchError((err) => {
@@ -72,6 +75,79 @@ export class MicuentaService {
     );
   }
 
+  getCountries() {
+
+    let endpoint = '/i18n/country?per_page=1000';
+    this.url = this.apiurl + endpoint;
+    let countries: CountriesModel[] = [];
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        if(res != null){
+          countries = res['data'] as CountriesModel[];
+        }
+        return countries;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
+
+  getStates(id: any) {
+
+    let endpoint = '/i18n/state?per_page=1000&country_id='+id;
+    this.url = this.apiurl + endpoint;
+    let states: StatesModel[] = [];
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        states = res['data'] as StatesModel[];
+        return states;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
+
+  getCities(id:string) {
+
+    let endpoint = '/i18n/city?per_page=1000&state_id='+id;
+    this.url = this.apiurl + endpoint;
+    let cities: CitiesModel[] = [];
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        if(res != null){
+          cities = res['data'] as CitiesModel[];
+        }
+        return cities;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
+
+  getPrefix() {
+
+    let endpoint = '/i18n/prefix?per_page=1000';
+    this.url = this.apiurl + endpoint;
+    let prefixs: PrefixModel[] = [];
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        if(res != null){
+          prefixs = res['data'] as PrefixModel[];
+        }
+        return prefixs;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
 
 
 

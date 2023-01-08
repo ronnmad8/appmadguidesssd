@@ -48,26 +48,31 @@ import { LoginModel } from 'src/app/models/Login.model';
 import { UserModel } from 'src/app/models/User.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextoCashModel } from 'src/app/models/TextoCash.model';
+import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
+import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
+import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
+import { UsuarioModel } from 'src/app/models/Usuario.model';
 
 @Component({
   selector: 'app-zonapago',
   templateUrl: './zonapago.component.html',
 })
-
-
-
 export class ZonapagoComponent implements OnInit {
   modal: NgbModalRef;
   modalOptions: NgbModalOptions;
   @Input() visitaId: number = 0;
+  @Input() messageCashData: TextoCashModel = new TextoCashModel();
+  @Input() messageVisitaData: VisitaAssetsModel = new VisitaAssetsModel();
+  @Input() messageLoginData: TextoLoginModel = new TextoLoginModel();
+  @Input() messagePerfilData: TextoPerfilModel = new TextoPerfilModel();
   @Output() solopaso1: EventEmitter<boolean> = new EventEmitter();
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
-  sWindow: any ;
-
+  sWindow: any;
 
   usuarioform: UserModel = new UserModel();
   visita: VisitasResultadoModel = new VisitasResultadoModel();
@@ -79,7 +84,7 @@ export class ZonapagoComponent implements OnInit {
   months: string[] = [];
   listahoras: any[] = [];
 
-  listaidiomas: any[] = []
+  listaidiomas: any[] = [];
   monthSelect: any[];
   dateSelect: any;
   dateValue: any;
@@ -150,12 +155,11 @@ export class ZonapagoComponent implements OnInit {
   pedidosguardados: any;
   usuario: UserModel = new UserModel();
   loginok: boolean = false;
-  verusuario: boolean = true;
-  verregistrar: boolean = false;
   recordarme: boolean = false;
-  tipopassword: string = "password";
+  tipopassword: string = 'password';
   verpass: boolean = false;
   listatiposidentificacion: any[] = [];
+  aceptacionlogin: boolean = false;
 
   constructor(
     private wowService: NgwWowService,
@@ -172,23 +176,26 @@ export class ZonapagoComponent implements OnInit {
     private fbl: FormBuilder,
     private fbr: FormBuilder,
     private providerService: ProviderService,
-    private platformService: PlatformService,
-
+    private platformService: PlatformService
   ) {
     this.wowService.init();
-    
-    this.crearFormulario();    
-    //this.cambiosFormulario();
-    this.crearFormularioLogin();    
+
+    this.crearFormularioLogin();
     this.cambiosFormularioLogin();
-    this.crearFormularioRegistro();    
+    this.crearFormularioRegistro();
     this.cambiosFormularioRegistro();
     this.sWindow = this.platformService.sWindow;
   }
 
   ngOnInit(): void {
+    this.loginok = !this.auth.noAuth();
+    if (this.loginok) {
+      this.usuario = this.auth.getUser();
+    }
+
     this.isrespon = this.platformService.isrespon;
-    this.listatiposidentificacion = this.globalService.getlistatiposidentificacion();
+    this.listatiposidentificacion =
+      this.globalService.getlistatiposidentificacion();
     this.modalOptions = {
       backdrop: 'static',
       backdropClass: 'customBackdrop',
@@ -196,22 +203,9 @@ export class ZonapagoComponent implements OnInit {
       size: 'xs',
     };
 
-    
     this.vcale = true;
     this.getPedido();
-    this.patchPedido();
-    let hoy = moment();
-    let estemes = hoy.format('MM');
-    let esteyear = hoy.format('YYYY');
-    this.getDaysFromDate(estemes, esteyear);
-    this.precioadultos = 0;
-    this.precioninos = 0;
-    this.preciomenores = 0;
-    this.maximopersonas = 0;
-
-    this.week = this.globalService.week;
-    this.months = this.globalService.week;
-    this.listahoras = this.globalService.listahoras;
+    //this.patchPedido();
   }
 
   ngAfeterViewInit() {
@@ -236,70 +230,26 @@ export class ZonapagoComponent implements OnInit {
     }
   }
 
-
-  patchPedido() {
-    this.formlogin.patchValue({
-      name: this.pedido.cliente.name,
-      surname: this.pedido.cliente,
-      email: this.pedido.cliente.email,
-      telefono: this.pedido.cliente.telefono,
-      prefijo: this.pedido.cliente.prefijo,
-    });
-  }
-
-  
-  comprobarLogin(){
+  comprobarLogin() {
     let login = this.auth.noAuth();
-    if(login){
+    if (login) {
       this.usuario = this.auth.getUser();
       this.forma.patchValue({
         email: this.usuario.email,
         name: this.usuario.name,
         surname: this.usuario.surname,
-        telefono: this.usuario.telefono,
+        telefono: this.usuario.phone,
         prefijo: this.usuario.prefijo,
-        aceptacion: true
+        aceptacion: true,
       });
-      
-      
     }
   }
 
-
-  crearFormulario() {
-    this.forma = this.fb.group(
-      {
-        email: [ '',[Validators.required, Validators.email]],
-        name: [ '',[Validators.required,Validators.minLength(2)]],
-        surname: [ '',[Validators.required]],
-        prefijo: [ '' ],
-        telefono: [ '',[Validators.required,Validators.minLength(2)]],
-        aceptacion: [ '',[Validators.requiredTrue]],
-      }
-    );
-  }
-
-  cambiosFormulario() {
-    this.formlogin.valueChanges.subscribe((value) => {
-      this.usuarioform.email = this.formlogin.get('email')?.value;
-      this.usuarioform.name = this.formlogin.get('name')?.value;
-      this.usuarioform.surname = this.formlogin.get('surname')?.value;
-      this.usuarioform.prefijo = this.formlogin.get('prefijo')?.value;
-      this.usuarioform.telefono = this.formlogin.get('telefono')?.value;
-      this.btactivado = false;
-      if (this.formlogin.status != "INVALID") {
-        this.btactivado = true;
-      }
-    });
-  }
-
   crearFormularioLogin() {
-    this.formlogin = this.fb.group(
-      {
-        email: [ '',[Validators.required, Validators.email]],
-        password: [ '',[Validators.required,Validators.minLength(6)]],
-      }
-    );
+    this.formlogin = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(1)]],
+    });
   }
 
   cambiosFormularioLogin() {
@@ -307,60 +257,35 @@ export class ZonapagoComponent implements OnInit {
       this.usuario.email = this.formlogin.get('email')?.value;
       this.usuario.password = this.formlogin.get('password')?.value;
       this.btactivado = false;
-      if (this.formlogin.status != "INVALID") {
+      if (this.formlogin.status != 'INVALID') {
         this.btactivado = true;
       }
     });
   }
 
   crearFormularioRegistro() {
-    this.formregister = this.fbr.group(
-      {
-        email: [ '',[Validators.required, Validators.email]],
-        name: [ '',[Validators.required,Validators.minLength(2)]],
-        surname: [ '' ],
-        password: [ '',[Validators.required,Validators.minLength(6)]],
-        prefijo: [ '' ],
-        telefono: [ '',[Validators.required,Validators.minLength(2)]],
-        namefacturacion: ['',[Validators.required]],
-        surnamefacturacion: [''],
-        tipoidentificacion: [''],
-        numeroidentificacion: ['',[Validators.required]],
-        direccion: ['',[Validators.required]],
-        codigopostal: [''],
-        ciudad: [''],
-        pais: [''],
-        particular: [true],
-        empresa: [false],
-      }
-    );
+    this.formregister = this.fbr.group({
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      surname: [''],
+      password: ['', [Validators.required, Validators.minLength(1)]],
+      prefijo: [''],
+      phone: ['', [Validators.required, Validators.minLength(2)]],
+    });
   }
 
   cambiosFormularioRegistro() {
     this.formregister.valueChanges.subscribe((value) => {
-
       this.usuario.email = this.formregister.get('email')?.value;
       this.usuario.password = this.formregister.get('password')?.value;
       this.usuario.name = this.formregister.get('name')?.value;
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
-      this.usuario.telefono = this.formregister.get('telefono')?.value;
-      this.usuario.namefacturacion = this.formregister.get('namefacturacion')?.value;
-      this.usuario.namefacturacion = this.formregister.get('surnamefacturacion')?.value;
-      this.usuario.tipoidentificacion = this.formregister.get('tipoidentificacion')?.value;
-      this.usuario.numeroidentificacion = this.formregister.get('numeroidentificacion')?.value;
-      this.usuario.direccion = this.formregister.get('direccion')?.value;
-      this.usuario.codigopostal = this.formregister.get('codigopostal')?.value;
-      this.usuario.ciudad = this.formregister.get('ciudad')?.value;
-      this.usuario.pais = this.formregister.get('pais')?.value;
-      //this.usuario.particular = this.formregister.get('particular')?.value;
-      //this.usuario.empresa = this.formregister.get('empresa')?.value;
-
+      this.usuario.phone = this.formregister.get('phone')?.value;
       this.btactivadoreg = false;
 
-      if (this.formregister.status != "INVALID") {
+      if (this.formregister.status != 'INVALID') {
         this.btactivadoreg = true;
-
       }
     });
   }
@@ -369,207 +294,86 @@ export class ZonapagoComponent implements OnInit {
     this.preciototal = this.globalService.getFormatNumber(this.pedido.total);
   }
 
-  verHora() {
-    this.vhora = !this.vhora;
-    this.vcale = false;
-    this.vpers = false;
-    this.vidiom = false;
-  }
-  verIdioma() {
-    this.vhora = false;
-    this.vcale = false;
-    this.vpers = false;
-    this.vidiom = !this.vidiom;
-  }
-  verPersona() {
-    this.vhora = false;
-    this.vcale = false;
-    this.vpers = !this.vpers;
-    this.vidiom = false;
-  }
-  verCale() {
-    this.vhora = false;
-    this.vcale = !this.vcale;
-    this.vpers = false;
-    this.vidiom = false;
-  }
-
-  caleinfosel(v: string) {
-    this.caleinfo = v;
-    if (this.horaSel != null) {
-      this.horanovalid = false;
-    }
-  }
-  horainfosel(v: string) {
-    this.horainfo = v;
-    if (this.horaSel != null) {
-      this.horanovalid = false;
-    }
-  }
-  idiomainfosel(v: string) {
-    this.idiominfo = v;
-    if (this.idiomaSel != null) {
-      this.idiomanovalid = false;
-    }
-  }
-
-  restaradulto() {
-    this.adultoSel--;
-    this.precioadultototal = this.adultoSel * this.precioadultos;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-  }
-  sumaradulto() {
-    this.adultoSel++;
-    this.precioadultototal = this.adultoSel * this.precioadultos;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
-  }
-  restarninos() {
-    this.ninosSel--;
-    this.precioninostotal = this.ninosSel * this.precioninos;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-  }
-  sumarninos() {
-    this.ninosSel++;
-    this.precioninostotal = this.ninosSel * this.precioninos;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
-  }
-  restarmenores() {
-    this.menoresSel--;
-    this.preciomenorestotal = this.menoresSel * this.preciomenores;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-  }
-  sumarmenores() {
-    this.menoresSel++;
-    this.preciomenorestotal = this.menoresSel * this.preciomenores;
-    this.sumatotal =
-      this.precioadultototal + this.precioninostotal + this.preciomenorestotal;
-    this.persnovalid = false;
-  }
-
-  cambiarprivada(priv: any) {
-    this.privada = priv.checked;
-    if (this.privada) {
-      this.adultoSel = this.maximopersonas;
-      this.ninosSel = 0;
-      this.menoresSel = 0;
-      this.precioadultototal = this.maximopersonas * this.precioadultos;
-      this.precioninostotal = 0;
-      this.preciomenorestotal = 0;
-      this.sumatotal = this.precioadultototal;
-      this.persnovalid = false;
-    } else {
-      this.adultoSel = 0;
-      this.precioadultototal = 0;
-      this.sumatotal = 0;
-    }
-  }
-
-  getDaysFromDate(month: any, year: any) {
-    const startDate = moment.utc(`${year}/${month}/01`);
-    const endDate = startDate.clone().endOf('month');
-    this.dateSelect = startDate;
-    const diffDays = endDate.diff(startDate, 'days', true);
-    const numberDays = Math.round(diffDays);
-    const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
-      a = parseInt(a) + 1;
-      const dayObject = moment(`${year}-${month}-${a}`);
-      return {
-        name: dayObject.format('dddd'),
-        value: a,
-        indexWeek: dayObject.isoWeekday(),
-      };
-    });
-
-    this.monthSelect = arrayDays;
-    this.mSelect = this.months[this.dateSelect.format('M') - 1];
-    this.ySelect = this.dateSelect.format('YYYY');
-  }
-
-  changeMonth(flag: any) {
-    if (flag < 0) {
-      const prevDate = this.dateSelect.clone().subtract(1, 'month');
-      this.getDaysFromDate(prevDate.format('MM'), prevDate.format('YYYY'));
-    } else {
-      const nextDate = this.dateSelect.clone().add(1, 'month');
-      this.getDaysFromDate(nextDate.format('MM'), nextDate.format('YYYY'));
-    }
-  }
-
-  clickDay(day: any) {
-    this.daySel = day;
-
-    const monthYear = this.dateSelect.format('YYYY-MM');
-    const parse = `${monthYear}-${day.value}`;
-    const objectDate = moment(parse);
-    this.dateValue = objectDate;
-    this.vcale = false;
-    this.caleinfo = objectDate.format('DD/MM/YYYY');
-    this.calenovalid = false;
-  }
-
   reservarvisita() {
-    ///guardar campos cliente
-    this.pedido.cliente.name = this.forma.value.nombre;
-    this.pedido.cliente.surname = this.forma.value.surname;
-    this.pedido.cliente.email = this.forma.value.email;
-    this.pedido.cliente.telefono = this.forma.value.telefono;
-    this.pedido.cliente.prefijo = this.forma.value.prefijo;
-    this.pedido.codigoreserva = new Date().getTime().toString();
-  
-    this.carritoService.saveCart(this.pedido);
-
-    if (this.forma.status == 'INVALID' && this.pasoactivo != 2) {
-      this.forma.markAllAsTouched();
-      this.cambiosFormulario();
-      this.pasoactivo = 2;
-      this.comprobarLogin();
+    if (this.pedido.visitasPedido.length == 0) {
+      this.router.navigate(['/buscador']);
     } else {
-          
-          this.pedidosguardados = this.carritoService.getPedidosguardados();
-          this.pedidosguardados.push(this.pedido);
-          this.carritoService.savePedidosguardados(this.pedidosguardados);
-          this.router.navigate(['/compra']);
+      ///guardar campos cliente
+      if (!this.loginok) {
+        this.pedido.cliente.name = this.forma.value.nombre;
+        this.pedido.cliente.surname = this.forma.value.surname;
+        this.pedido.cliente.email = this.forma.value.email;
+        this.pedido.cliente.phone = this.forma.value.telefono;
+        this.pedido.cliente.prefijo = this.forma.value.prefijo;
+        if (this.forma.status == 'INVALID') {
+          this.forma.markAllAsTouched();
+          this.cambiosFormularioRegistro();
+          this.pasoactivo = 2;
+        } else {
+          ///registrarusuario
+          this.registrarusuario(this.usuario, this.pedido);
+        }
+      } else if (this.aceptacionlogin) {
+        this.pedido.cliente.name = this.usuario.name;
+        this.pedido.cliente.surname = this.usuario.surname;
+        this.pedido.cliente.email = this.usuario.email;
+        this.pedido.cliente.phone = this.usuario.phone;
+        this.pedido.cliente.prefijo = this.usuario.prefijo;
+
+        this.registrarpedido(this.pedido);
+      } else {
+        this.alertasService.alertaKO(
+          'Madguides',
+          'Debe aceptar las condiciones de uso'
+        );
+        this.pasoactivo = 2;
+      }
     }
   }
 
+  registrarpedido(pedido) {
+    this.pedido.codigoreserva = new Date().getTime().toString();
+    this.carritoService.saveCart(pedido);
+    this.pedidosguardados = this.carritoService.getPedidosguardados();
+    this.pedidosguardados.push(pedido);
+    this.carritoService.savePedidosguardados(this.pedidosguardados);
+    ///vaciar carrito en menu y vista
+    this.carritoService.clearCart();
+    this.providerService.setThrowCarritoupdate(new CartModel());
+
+    this.router.navigate(['/compra']);
+  }
+
+  aceptarlogin(aceptacionlogin: any) {
+    this.aceptacionlogin = aceptacionlogin.currentTarget.checked;
+  }
 
   eliminarvisitapedido(visita: VisitasResultadoModel) {
-    this.alertasService.alertaWarning("Va a eliminar una visita", "¿Seguro que desea eliminar?").then((result) => {
-      if (result.value) {
-        let pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
-        this.pedido.visitasPedido = pedido.visitasPedido;
-        this.pedido.total = pedido.total;
-        this.providerService.setThrowCarritoupdate(this.pedido);
-        this.preciototal = this.globalService.getFormatNumber(pedido.total);
-      }
-      
-    });
+    
+    let mensajeconfirmacion = 'Va a eliminar una visita';
+
+    if (this.pedido.visitasPedido.length <= 1) {
+      mensajeconfirmacion = 'Va a eliminar la última visita del pedido';
+    }
+
+    this.alertasService
+      .alertaWarning(mensajeconfirmacion, '¿Seguro que desea eliminar?')
+      .then((result) => {
+        if (result.value) {
+          let pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
+          this.pedido.visitasPedido = pedido.visitasPedido;
+          this.pedido.total = pedido.total;
+          this.providerService.setThrowCarritoupdate(this.pedido);
+          this.preciototal = this.globalService.getFormatNumber(pedido.total);
+          if (this.pedido.visitasPedido.length == 0) {
+            this.router.navigate(['/buscador']);
+          }
+        }
+      });
   }
 
-
-
-
-  editarvisitapedido(visita: VisitasResultadoModel, content: any) {
-    //this.visitaSel = visita;
-    //this.daySel = '2022-10-02'; // this.visitaSel.time_date;
-    // this.horaSel = this.visitaSel.time_init;
-    // this.idiomaSel = this.visitaSel.iso;
-    // this.adultoSel = this.visitaSel.adultos;
-    // this.ninosSel = this.visitaSel.ninos;
-    // this.menoresSel = this.visitaSel.menores;
-    // this.maximopersonas = this.visitaSel.maximopersonas;
-    //this.horainfo = this.visitaSel.time_date;
-    //this.caleinfo = this.daySel.format("DD/MM/YYYY");
-    //this.idiominfo = this.listaidiomas.find(x => x.value == visita.time_init).name;
-    //this.sumaSel = visita.suma;
-    this.modal = this.modalService.open(content, this.modalOptions);
+  abrirLogin(vmodal: any) {
+    this.openmodal(vmodal);
   }
 
   openmodal(cont: any) {
@@ -608,10 +412,6 @@ export class ZonapagoComponent implements OnInit {
     this.solopaso1.emit(true);
   }
 
-  abrirRegistrar(vmodal: any) {
-    this.openmodal(vmodal);
-  }
-
   recordarmemicuentaalregistrar() {
     this.recordarmealregistrar = !this.recordarmealregistrar;
     if (this.recordarmealregistrar) {
@@ -625,57 +425,38 @@ export class ZonapagoComponent implements OnInit {
     this.pasoactivo = n;
   }
 
-  iniciarsesion(){
-    this.auth.loginUser(this.usuario ).subscribe( (resp) => {
-
-    let login = resp as LoginModel;
-    this.usuario = login.user as UserModel;
-    this.alertasService.alertaInfo("Madguides", "Bienvenido " + login.user.name+" Te has logueado correctamente");
-    this.loginok = false;
-        if(login.status == "success" && login.token != null ){
-          this.loginok = true;
-        
-        }
+  iniciarsesion() {
+    this.auth.loginUser(this.usuario).subscribe((resp) => {
+      let login = resp as LoginModel | any;
+      this.usuario = login.user as UserModel;
+      this.alertasService.alertaInfo(
+        'Madguides',
+        'Bienvenido ' + login.user.name + ' Te has logueado correctamente'
+      );
+      this.loginok = false;
+      if (login.status == 'success' && login.token != null) {
+        this.loginok = true;
+      }
     });
   }
 
-  vermodalregistrar(){
-    this.verregistrar = true;
-    this.verusuario = false;
-  }
-
-  vermodalusuario(){
-    this.verusuario = true;
-    this.verregistrar = false;
-  }
-
-  recordarmemicuenta(){
+  recordarmemicuenta() {
     this.recordarme = !this.recordarme;
   }
 
-  verpassword(ver: boolean){
+  verpassword(ver: boolean) {
     this.verpass = !this.verpass;
-    this.tipopassword = "password";
-    if(this.verpass){
-      this.tipopassword = "text";
+    this.tipopassword = 'password';
+    if (this.verpass) {
+      this.tipopassword = 'text';
     }
   }
-  
-  registrar(){
-    this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-          let respuesta = resp ;
-          console.log("REIGISTRO HECHO --- ",respuesta);
+
+  registrarusuario(usuario: UserModel, pedido: CartModel) {
+    this.auth.registrarUser(usuario).subscribe((resp) => {
+      let respuesta = resp;
+      this.registrarpedido(pedido);
+      return respuesta;
     });
   }
-
-  selecparticular(){
-    this.formregister.get('particular')?.setValue(true);
-    this.formregister.get('empresa')?.setValue(false);
-  }
-  
-  selecempresa(){
-     this.formregister.get('empresa')?.setValue(true);
-     this.formregister.get('particular')?.setValue(false);
-  }
-
 }

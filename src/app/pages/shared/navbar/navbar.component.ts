@@ -34,6 +34,7 @@ import { RecordarmeModel } from 'src/app/models/Recordarme.model';
 import { SocialAuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextoCartModel } from 'src/app/models/TextoCart.model';
+import { UsuarioModel } from 'src/app/models/Usuario.model';
 
 @Component({
   selector: 'app-navbar',
@@ -51,7 +52,7 @@ export class NavbarComponent implements OnInit {
   @ViewChild('cjbusque' ) cjbusque: ElementRef;
   sWindow: any;
   isrespon: boolean = false;
-  
+  loading: boolean = false;
   listatiposidentificacion: any[] = [];
   pedido: CartModel;
   modalI: NgbModalRef ;
@@ -224,12 +225,13 @@ export class NavbarComponent implements OnInit {
   loginadmin() {
     let user = localStorage.getItem('user');
     this.loginok = false;
-    
-    if(user != null){
+
+    if(user != "undefined" && user != null ){
       this.usuario = JSON.parse(user) as UserModel;
       this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name : this.usuario.rol = "";
       this.loginok = true;
     }
+    
   }
 
 
@@ -251,8 +253,6 @@ export class NavbarComponent implements OnInit {
         this.pageadmin = true;
       }
     });
-
-
 
   }
 
@@ -323,6 +323,7 @@ export class NavbarComponent implements OnInit {
       this.usuario.email = this.formlogin.get('email')?.value;
       this.usuario.password = this.formlogin.get('password')?.value;
       this.btactivado = false;
+      
       if (this.formlogin.status != "INVALID") {
         this.btactivado = true;
       }
@@ -359,16 +360,7 @@ export class NavbarComponent implements OnInit {
         password: [ '',[Validators.required,Validators.minLength(1)]],
         prefijo: [ '' ],
         telefono: [ '',[Validators.required,Validators.minLength(2)]],
-        // namefacturacion: ['',[Validators.required]],
-        // surnamefacturacion: [''],
-        // tipoidentificacion: [''],
-        // numeroidentificacion: ['',[Validators.required]],
-        // direccion: ['',[Validators.required]],
-        // codigopostal: [''],
-        // ciudad: [''],
-        // pais: [''],
-        // particular: [true],
-        // empresa: [false],
+
       }
     );
   }
@@ -382,15 +374,7 @@ export class NavbarComponent implements OnInit {
       this.usuario.name = this.formregister.get('name')?.value;
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
-      this.usuario.telefono = this.formregister.get('telefono')?.value;
-      // this.usuario.namefacturacion = this.formregister.get('namefacturacion')?.value;
-      // this.usuario.namefacturacion = this.formregister.get('surnamefacturacion')?.value;
-      // this.usuario.tipoidentificacion = this.formregister.get('tipoidentificacion')?.value;
-      // this.usuario.numeroidentificacion = this.formregister.get('numeroidentificacion')?.value;
-      // this.usuario.direccion = this.formregister.get('direccion')?.value;
-      // this.usuario.codigopostal = this.formregister.get('codigopostal')?.value;
-      // this.usuario.ciudad = this.formregister.get('ciudad')?.value;      
-      // this.usuario.particular = this.formregister.get('empresa')?.value ==  true ? false : true;
+      this.usuario.phone = this.formregister.get('phone')?.value;
 
 
       this.btactivadoreg = false;
@@ -559,9 +543,11 @@ export class NavbarComponent implements OnInit {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(()=> {
+      this.loading = true;
       this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
         let resultado = resp as ResultadoModel;
         this.visitasprop = resultado.data as VisitasResultadoModel[];
+        this.loading = false;
       }) ;
     }, 10);
   }
@@ -601,26 +587,34 @@ export class NavbarComponent implements OnInit {
 
   
   iniciarsesion(){
+    this.loading = true;
     this.auth.loginUser(this.usuario ).subscribe( (resp) => {
 
-    let login = resp as LoginModel;
-    this.usuario = login.user as UserModel;
-    this.alertasService.alertaInfo("Madguides", "Bienvenido " + login.user.name+" Te has logueado correctamente");
     this.loginok = false;
-        if(login.status == "success" && login.token != null ){
-          this.loginok = true;
-          this.verusuario = false;
-        }
+    if(resp == "success"){
+      this.auth.getMe().subscribe( res=> {
+        console.log("me ",res);
+        this.alertasService.alertaInfo("Madguides", "Bienvenido,Te has logueado correctamente");   
+        this.loginok = true;
+        this.verusuario = false;
+        })
+      }
+      this.loading = false;
     });
+    setTimeout(() => {
+      this.loading = false;
+    }, 4000);
   }
 
 
   renovarpassword(){
+    this.loading = true;
     this.auth.renovarPassword(this.usuario).subscribe( (resp) => {
-    let respuesta = resp;
+      let respuesta = resp;
       if(respuesta == "success"){
         this.alertasService.alertaInfo("Madguides", "Se ha enviado un mail para renovación de contraseña");
       }
+      this.loading = false;
     })
   }
 
@@ -634,14 +628,23 @@ export class NavbarComponent implements OnInit {
 
 
   registrar(){
+    this.loading = true;
     this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
 
           let respuesta = resp as LoginModel ;
           if(respuesta.status == "success"){
              this.alertasService.alertaInfo("Madguides", respuesta.message);
+             this.formregister.reset();
+             this.mostrarusuario();
           }
-          
+          else{
+            this.alertasService.alertaInfo("Madguides", respuesta.message);
+          }
+          this.loading = false;
     });
+    setTimeout(() => {
+      this.loading = false;
+    }, 4000);
   }
 
 
@@ -699,8 +702,6 @@ export class NavbarComponent implements OnInit {
   logoutfacebook(){
     //this.socialAuthService.signOut();
   }
-
-
 
 
 

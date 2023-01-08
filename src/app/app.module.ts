@@ -53,6 +53,8 @@ import { FacebookLoginProvider, SocialLoginModule, SocialAuthServiceConfig } fro
 import { SpinnerComponent } from './pages/shared/spinner/spinner.component'; 
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
+import { ErrorsInterceptor } from './interceptors/errors.interceptor';
+import { ZonareservasComponent } from './componentes/zonareservas/zonareservas.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -121,6 +123,7 @@ const routes: Routes = [
     AvisolegalComponent,
     MedidascovidComponent,
     SpinnerComponent,
+    ZonareservasComponent,
 
   ],
   imports: [
@@ -154,6 +157,11 @@ const routes: Routes = [
     {
       provide: HTTP_INTERCEPTORS, 
       useClass: HeadersInterceptor , 
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: ErrorsInterceptor , 
       multi: true
     }
     // {

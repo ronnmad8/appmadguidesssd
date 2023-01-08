@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { UserModel } from '../models/User.model';
 import { LoginModel } from '../models/Login.model';
 import { RecordarmeModel } from '../models/Recordarme.model';
+import { CountriesModel } from '../models/Countries.model';
+import { StatesModel } from '../models/States.model';
 
 
 @Injectable({
@@ -37,11 +39,6 @@ export class AuthService {
     this.headers =this.getHeaders(this.clang, this.userToken);
   }
 
-  
-  
-
-
-
   getHeaders(clang: string, token: string) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json; charset=UTF-8',
@@ -61,7 +58,6 @@ export class AuthService {
     });
   }
 
-
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('rol');
@@ -76,11 +72,11 @@ export class AuthService {
 
   private guardarToken(lo: LoginModel) {
     localStorage.setItem('token', lo.token);
-    localStorage.setItem('rol', lo.user.rol);
-    localStorage.setItem('user', JSON.stringify(lo.user));
-    localStorage.setItem('saludo', '');
+    localStorage.setItem('rol', lo.rol[0]);
+    localStorage.setItem('saludo', 'hola');
     this.userToken = lo.token;
   }
+
 
   leerToken() {
     if (localStorage.getItem('token')) {
@@ -104,7 +100,6 @@ export class AuthService {
     return user;
   }
 
-
   leerRol() {
     if (localStorage.getItem('rol')) {
       var leerToken = localStorage.getItem('rol');
@@ -114,7 +109,6 @@ export class AuthService {
     }
   }
 
-
   leerRecordarme() {
     let recordarme: RecordarmeModel = new RecordarmeModel();
     let rec = localStorage.getItem('recordarme') ;
@@ -123,7 +117,6 @@ export class AuthService {
     } 
     return recordarme;
   }
-
 
   saveRecordarme(recordarme: RecordarmeModel) {
     localStorage.setItem('recordarme', JSON.stringify(recordarme));
@@ -158,18 +151,17 @@ export class AuthService {
       surname: user.surname,
       password: user.password,
       prefijo: user.prefijo,
-      telefono: user.telefono,
+      phone: user.phone,
       privacity: true,
       particular: true,
+      type_doc: user.type_doc,
+      telefono: user.phone
     };
 
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        // this.userToken = this.leerToken();
-        // this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-        // this.headers =this.getHeaders(this.clang, this.userToken);
         let login = res as LoginModel;
         return login;
       }),
@@ -210,12 +202,12 @@ export class AuthService {
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
+        
         let login = res as LoginModel;
-        this.guardarToken(login);
-        this.userToken = login.token;
-        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-        this.headers = this.getHeaders(this.clang, this.userToken);
-        return login;
+        if(login.status == "success"){
+          this.guardarToken(login);
+        }
+        return login.status;
       }),
       catchError((err) => {
         console.error('Error  ', err.error);
@@ -224,19 +216,72 @@ export class AuthService {
     );
   }
 
-  updateUser(user: UserModel) {
+  getMe() {
+
+    let endpoint = '/me';
+    this.url = this.apiurl + endpoint;
+    let user: ClientesModel = new ClientesModel();
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        if(res != null){
+      
+          user = res["user"] as ClientesModel;
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+        return user;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
+
+  
+
+  updateUserData(user: UserModel) {
 
     let _datos = {
+      
       name: user.name,
-      email: user.email,
       surname: user.surname,
       prefijo: user.prefijo,
-      telefono: user.telefono,
-      privacity: true,
+      email: user.email,
+      phone: user.phone,
+      type_doc: user.type_doc,
+      document: user.document,
+      particular: true
     };
     
-    //JSON.stringify(_datos);
-    let endpoint = '/register';
+    let endpoint = '/changeData';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        let user = res as UserModel;
+        return user;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+
+  updateUserAddress(user: UserModel) {
+
+    let _datos = {
+      uuid: user.uuid,
+      street: user.street,
+      number: user.number,
+      postal: user.postal,
+      city: user.city,
+      state: user.state,
+      country: user.country
+      
+    };
+    
+    let endpoint = '/changeAdrress';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {

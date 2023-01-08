@@ -3,7 +3,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';

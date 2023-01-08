@@ -27,38 +27,42 @@ export class ProviderService {
    /// 
   }
 
-  private provider1 = new ReplaySubject<VisitasResultadoModel>()
-  private provider2 = new ReplaySubject<VisitaAssetsModel>()
-  private provider3 = new ReplaySubject<CartModel>()
-  private provider4 = new ReplaySubject<boolean>()
-  private provider5 = new ReplaySubject<boolean>()
-  private provider6 = new ReplaySubject<boolean>()
-  private provider7 = new ReplaySubject<boolean>()
+  private provider1$ = new ReplaySubject<VisitasResultadoModel>()
+  private provider2$ = new ReplaySubject<VisitaAssetsModel>()
+  private provider3$ = new ReplaySubject<CartModel>()
+  private provider4$ = new ReplaySubject<boolean>()
+  private provider5$ = new ReplaySubject<boolean>()
+  private provider6$ = new ReplaySubject<boolean>()
+  private provider7$ = new ReplaySubject<boolean>()
+  private provider8$ = new ReplaySubject<boolean>()
 
   
 
   ///get/////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   public get getThrowVisita() {
-    return this.provider1.asObservable();
+    return this.provider1$.asObservable();
   }
   public get getThrowMessagesVisita() {
-    return this.provider2.asObservable();
+    return this.provider2$.asObservable();
   }
   public get getThrowCarritoupdate() {
-    return this.provider3.asObservable();
+    return this.provider3$.asObservable();
   }
   public get getThrowFococaja() {
-    return this.provider4.asObservable();
+    return this.provider4$.asObservable();
   }
   public get getThrowHiddModales() {
-    return this.provider5.asObservable();
+    return this.provider5$.asObservable();
   }
   public get getThrowPageadmin() {
-    return this.provider6.asObservable();
+    return this.provider6$.asObservable();
   }
   public get getThrowIsresize() {
-    return this.provider7.asObservable();
+    return this.provider7$.asObservable();
+  }
+  public get getThrowFooterpol() {
+    return this.provider8$.asObservable();
   }
 
 
@@ -67,25 +71,28 @@ export class ProviderService {
 
   ////set//////////////////////////////////////////////////////////////////////////////////////////////////////
   public setThrowVisita(t: VisitasResultadoModel) {
-    this.provider1.next(t);
+    this.provider1$.next(t);
   }
   public setThrowMessagesVisita(t: VisitaAssetsModel) {
-    this.provider2.next(t);
+    this.provider2$.next(t);
   }
   public setThrowCarritoupdate(t: CartModel ) {
-    this.provider3.next(t);
+    this.provider3$.next(t);
   }
   public setThrowFococaja(t: boolean) {
-    this.provider4.next(t);
+    this.provider4$.next(t);
   }
   public setThrowHiddModales(t: boolean) {
-    this.provider5.next(t);
+    this.provider5$.next(t);
   }
   public setThrowPageadmin(t: boolean) {
-    this.provider6.next(t);
+    this.provider6$.next(t);
   }
   public setThrowIsresize(t: boolean) {
-    this.provider7.next(t);
+    this.provider7$.next(t);
+  }
+  public setThrowFooterpol(t: boolean) {
+    this.provider8$.next(t);
   }
 
 

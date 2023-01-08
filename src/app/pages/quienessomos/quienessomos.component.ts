@@ -7,7 +7,7 @@ import { NgwWowService } from 'ngx-wow';
 
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { BuscadorService } from '../../services/buscador.service';
@@ -60,7 +60,7 @@ export class QuienessomosComponent implements OnInit {
   constructor(
       private acro : ActivatedRoute,
       private router: Router,
-      private imagenesService: ImagenesService,
+        
       private alertasService: AlertasService,
       private buscadorService: BuscadorService,
       private homeService: HomeService,
@@ -85,6 +85,8 @@ export class QuienessomosComponent implements OnInit {
 
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
+    this.providerService.setThrowFooterpol(true);
+
 
     this.getMessagesForm();
     this.getMessagesImage();

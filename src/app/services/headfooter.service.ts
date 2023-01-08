@@ -22,6 +22,7 @@ import { MenuModel } from '../models/Menu.model';
 import { FooterModel } from '../models/Footer.model';
 import { TextoLoginModel } from '../models/TextoLogin.model';
 import { TextoCartModel } from '../models/TextoCart.model';
+import { TextoPerfilModel } from '../models/TextoPerfil.model';
 
 
 
@@ -76,6 +77,25 @@ export class HeadfooterService {
     
           let textologin : TextoLoginModel = resp as TextoLoginModel;
           return textologin;
+
+        } ) ,
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+    }
+
+    getMessagesPerfil()  {
+
+      let endpoint = '/assets/perfil?' ;
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( resp =>{
+    
+          let textoperfil : TextoPerfilModel = resp as TextoPerfilModel;
+          return textoperfil;
 
         } ) ,
         catchError((err) => {

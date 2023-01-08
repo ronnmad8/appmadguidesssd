@@ -11,11 +11,17 @@ import { VisitasModel } from '../models/Visitas.model';
 import { TimesModel } from '../models/Times.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { PlatformService } from './platform.service';
+import { TextoPerfilModel } from '../models/TextoPerfil.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
+
+  textoPerfil: TextoPerfilModel = new TextoPerfilModel();
+
+
+
   userToken: string = '';
   idUsuario: string = '';
   url: string = '';
@@ -36,6 +42,7 @@ export class GlobalService {
   ) {
     this.apiurl = environment.apiurl;
     this.getListas();
+    
   }
 
   getListas() {
@@ -131,7 +138,7 @@ export class GlobalService {
   }
 
   getFormatNumber(n: number) {
-    if (n != 0) {
+    if (n != 0 && !Number.isNaN(n)) {
       let num = n.toFixed(2);
       let numsp = num.split('.');
       if (numsp[1].length == 1) {
@@ -146,24 +153,24 @@ export class GlobalService {
     }
   }
 
-  getImagenesFilt(idenlace: number, idtipo: number) {
-    let endpoint = '/imagenes/filt';
-    this.url = this.apiurl + endpoint;
-    const filtData = {
-      enlaces_id: idenlace,
-      tipos_id: idtipo,
-    };
-    return this.http.post(`${this.url}`, filtData).pipe(
-      map((res) => res as ImagenesModel[]),
-      catchError((err) => {
-        console.error('Error  ', err.error);
-        // if(err.includes("Unauthorized")){
-        //   this.router.navigateByUrl("/homecliente");
-        // }
-        return err.error;
-      })
-    );
-  }
+  // getImagenesFilt(idenlace: number, idtipo: number) {
+  //   let endpoint = '/imagenes/filt';
+  //   this.url = this.apiurl + endpoint;
+  //   const filtData = {
+  //     enlaces_id: idenlace,
+  //     tipos_id: idtipo,
+  //   };
+  //   return this.http.post(`${this.url}`, filtData).pipe(
+  //     map((res) => res as ImagenesModel[]),
+  //     catchError((err) => {
+  //       console.error('Error  ', err.error);
+  //       // if(err.includes("Unauthorized")){
+  //       //   this.router.navigateByUrl("/homecliente");
+  //       // }
+  //       return err.error;
+  //     })
+  //   );
+  // }
 
   getIdiomabyIso(iso: string) {
     let idioma = this.idiomasIsos.find((x) => x.key == iso);
@@ -253,4 +260,29 @@ export class GlobalService {
     }
     this.platformService.sWindow.open(url);
   }
+
+
+
+  ///get Texto mi cuenta
+  getTextoPerfil() {
+      let endpoint = '/assets/perfil?' ;
+      this.url = this.apiurl + endpoint;
+      return this.http.get( `${this.url}` )
+      .pipe(
+        map( 
+          (resp) =>{
+          return resp;
+        }),
+        catchError((err) => {
+          console.error("Error  " , err.error);
+                  return err.error;
+        })
+      );
+  }
+  
+ 
+
+
+
+
 }

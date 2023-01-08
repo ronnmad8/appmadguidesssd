@@ -3392,6 +3392,10 @@ input:checked+.sliderT:before {
   color: var(--c_GRIS2);
 }
 
+.divPanelVisitaCarrito{
+  min-width: 780px !important;
+}
+
 .panelVisitaCarrito {
   box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
   width: 780px;
@@ -3485,7 +3489,8 @@ input:checked+.sliderT:before {
 .panelDatosReserva {
   box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
   width: 780px;
-  height: 194px;
+  height: 340px;
+  min-height: 340px;
   padding: 20px;
   border-radius: 19px;
   margin-top: 0 !important;
@@ -3507,7 +3512,6 @@ input:checked+.sliderT:before {
   width: 100%;
   font-size: 18px;
   padding: 15px;
-  cursor: pointer;
 }
 
 .aceptapoliticas {

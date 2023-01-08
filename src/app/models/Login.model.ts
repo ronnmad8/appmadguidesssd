@@ -10,6 +10,7 @@ export class LoginModel {
     user: UserModel;
     message: string;
     email: string;
+    rol: string[];
 
     constructor(){
             
@@ -18,6 +19,7 @@ export class LoginModel {
         this.user = new UserModel();
         this.message = '';
         this.email = '';
+        this.rol = [];
 
         
 

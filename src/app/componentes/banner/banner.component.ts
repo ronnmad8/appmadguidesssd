@@ -3,7 +3,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 
 
 
@@ -19,7 +19,7 @@ export class BannerComponent implements OnInit, AfterViewInit {
   
 
   constructor(
-    private imagenesService: ImagenesService,
+      
 
   ) {
 

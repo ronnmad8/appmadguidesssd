@@ -11,6 +11,10 @@ import { VisitasModel } from '../models/Visitas.model';
 
 import { CartModel } from '../models/Cart.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
+import { GlobalService } from './global.service';
+import { TextoCashModel } from '../models/TextoCash.model';
+import { VisitaAssetsModel } from '../models/VisitaAssets.model';
+import { VisitaService } from './visita.service';
 
 
 
@@ -18,6 +22,19 @@ import { VisitasResultadoModel } from '../models/VisitasResultado.model';
   providedIn: 'root'
 })
 export class CarritoService {
+  apiurl: string;
+  url: string;
+
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private globalService: GlobalService,
+    private visitaService: VisitaService,
+    private router: Router
+  ) {
+    this.apiurl = environment.apiurl;
+
+  }
   
   
   /////////////////////////////////////localstorage
@@ -70,8 +87,13 @@ export class CarritoService {
     return cart;
   }
 
+  clearCart(){
+    localStorage.removeItem('cart');
+  }
+
 
   getPedidosguardados(){
+
     let carts : CartModel[] = [];
     if (localStorage.getItem('pedidosguardados')) {
       let res: string = localStorage.getItem('pedidosguardados') ?? "";
@@ -79,12 +101,33 @@ export class CarritoService {
     }
     return carts;
   }
+  
   savePedidosguardados(carts: CartModel[]){
     //create update localstorage
     let c = JSON.stringify(carts);
     localStorage.setItem('pedidosguardados', c);
    
   }
+
+
+  getMessagesCash()  {
+    let endpoint = '/assets/cash?' ;
+    this.url = this.apiurl + endpoint;
+    return this.http.get( `${this.url}` )
+    .pipe(
+      map( resp =>{
+  
+        let textocash : TextoCashModel = resp as TextoCashModel;
+        return textocash;
+
+      } ) ,
+      catchError((err) => {
+        console.error("Error  " , err.error);
+                return err.error;
+      })
+    );
+  }
+
 
 
 

@@ -1623,6 +1623,10 @@
   font-size: 14px;
 }
 
+.divPanelVisitaCarrito{
+  min-width: none !important;
+}
+
 .panelVisitaCarrito {
   box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
   width: 95% !important;

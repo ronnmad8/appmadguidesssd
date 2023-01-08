@@ -7,7 +7,7 @@ import { NgwWowService } from 'ngx-wow';
 
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { HomeService } from '../../services/home.service';
@@ -56,7 +56,7 @@ export class VisitadetailComponent implements OnInit{
   constructor(
       private acro : ActivatedRoute,
       private router: Router,
-      private imagenesService: ImagenesService,
+        
       private alertasService: AlertasService,
       private visitaService: VisitaService,
       private providerService: ProviderService,
@@ -78,6 +78,8 @@ export class VisitadetailComponent implements OnInit{
   ngOnInit() {
     
     this.providerService.setThrowHiddModales(true);
+    this.providerService.setThrowFooterpol(true);
+
     
     //parametro uuid 
     this.acro.params.subscribe(
@@ -129,6 +131,7 @@ export class VisitadetailComponent implements OnInit{
         let resul = resp as VisitasResultadoModel;
         ///get first de lista de api
         this.visitaSel = resul ?? new VisitasResultadoModel();
+  
         this.providerService.setThrowVisita(this.visitaSel);
         this.setMetas();
         
@@ -157,7 +160,6 @@ export class VisitadetailComponent implements OnInit{
       this.visitaService.getMessagesVisita().subscribe((resp)=>{
         this.messages = resp as VisitaAssetsModel;
         this.providerService.setThrowMessagesVisita(this.messages);
-        console.log("mes ",this.messages);
       })
   }
 

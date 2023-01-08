@@ -1,7 +1,52 @@
 <div class="w-100 ">
 
     <div #sec1 >
-      <app-zonamicuenta [usuario]="usuario"  [pedidos]="pedidos"  (updateDatos)="guardarcambios($event)"  ></app-zonamicuenta>
+
+      <div class="container px-xl-0 px-2 ">
+
+        <div id="contenidobusca" class="w-100 d-xl-flex ">
+    
+            <div id="menulatclienteadmin pc" *ngIf="!isrespon">
+                <div class="h80"></div>
+                <div class="pb-4 posrel">
+                    <div id="selecenlace" class="menulateral pt-5 w-100">
+                        <div class="p-2 fs-20 posfixedW280 ">
+                            <div class="ff-JB py-0 m-0">
+                                Hola
+                            </div>
+                            <div class="ff-JB colROJO1 pt-0 py-0 m-0">
+                                {{usuario?.name}}
+                            </div>
+                            <div class="linefull my-3"></div>
+                            <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': vercuenta}"
+                            [routerLink]="['/zonacliente/micuenta']" routerLinkActive="router-link-active" >
+                                {{messagePerfil?.menu?.account}}
+                            </div>
+                            <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': verreservas}"
+                                [routerLink]="['/zonacliente/reservas']" routerLinkActive="router-link-active"   >
+                                {{messagePerfil?.menu?.reservation}}
+                            </div>
+                            <div class="menulatenlace py-1 m-0 cupo" [routerLink]="['/ayuda']"
+                                routerLinkActive="router-link-active">
+                                {{messagePerfil?.menu?.help}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+      <!-- <app-zonamicuenta [usuario]="usuario"  [pedidos]="pedidos"  [messagePerfilData]="messagePerfilData"
+      (updateDatosData)="guardarcambiosData($event)" 
+      (updateDatosAddress)="guardarcambiosAddress($event)"
+      ></app-zonamicuenta>
+
+      <app-zonareservas [usuario]="usuario"  [pedidos]="pedidos"  [messagePerfilData]="messagePerfilData">
+      </app-zonareservas> -->
+
+      <router-outlet></router-outlet>
+      
+
+      
     </div>
     
 </div>

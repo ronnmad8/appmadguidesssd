@@ -224,156 +224,156 @@
         </div>
     </div>
     <div class="aviso-cookies-peq bgBLANCO2 animated fadeIn" style="animation-delay: 2s" id="aviso-cookies-peq"
-        *ngIf="cookiesconsent">
+        *ngIf="cookiesconsent" (click)="abrireditarcookies(modalcookies)"  >
         <img src="assets/images/cookies.png" alt="Galleta" data-src="assets/images/cookies.png"
          onerror="this.src='assets/images/sinimagen.jpg' "  class="cookiepeq"    >
     </div>
 
-    <ng-template #modalcookies let-modal>
-        <div class="modal-header">
-            <div class="w-100 mx-auto text-center">
-                <p class="fs-22" id="modal-basic-title"><b>PREFERENCIA DE COOKIES</b></p>
-            </div>
-            <div class="close" aria-label="Close" (click)="cerrarmodalI()">
-                <span><i class="fa fa-circle-xmark fs-20"></i></span>
-            </div>
+    
+</footer>
+<ng-template #modalcookies let-modal class="brdtest3" >
+    <div class="modal-header">
+        <div class="w-100 mx-auto text-center">
+            <p class="fs-22" id="modal-basic-title"><b>PREFERENCIA DE COOKIES</b></p>
         </div>
+        <div class="close" aria-label="Close" (click)="cerrarmodalI()">
+            <span><i class="fa fa-circle-xmark fs-20"></i></span>
+        </div>
+    </div>
 
-        <form [formGroup]="formasetcookies" (ngSubmit)="gestionarcookies()">
-            <div class="modal-body mx-auto my-2 w-100 ">
-                <div class="row p-3">
+    <form [formGroup]="formasetcookies" (ngSubmit)="gestionarcookies()">
+        <div class="modal-body mx-auto my-2 w-100 ">
+            <div class="row p-3">
 
-                    <div class="col-xl-8 px-2">
-                        <div class="mhcook p-0 m-0">
-                            <div class="mb-0" *ngIf="pestacookie == 1">
-                                <span class="fs-18"><b> Seguridad y privacidad </b></span><br>
-                                <span class="fs-16">
-                                    Las cookies son archivos que se almacenan en el navegador al visitar una web,
-                                    su uso va dirigido a mejorar la experiencia de usuario.
-                                </span><br>
-                                <span class="fs-16">
-                                    Desde este panel puedes gestionar tus preferencias de grupos de cookies,
-                                    pero recuerda que una cookie es para mejora de la navegación.
-                                </span>
-                            </div>
-                            <div class="mb-0" *ngIf="pestacookie == 2">
-                                <span class="fs-18"><b> Cookies esenciales obligatorias </b></span><br>
-                                <span class="fs-16">
-                                    Son aquellas cookies destinadas a dar el servicio especíico de la web y que permiten
-                                    hacer uso de sus
-                                    servicios.
-                                </span><br>
-                                <span class="fs-16">
-                                    No sería posible brindar la funciones de sesión de usuario, no entran dentro del
-                                    grupo de cookies
-                                    prescindibles.
-                                </span>
-                                <div class="mt-2">
-                                    <label class="switch">
-                                        <input type="checkbox" name="obligatorias" formControlName="obligatorias" readonly >
-                                        <span class="sliderT round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-0" *ngIf="pestacookie == 3">
-                                <span class="fs-18"><b> Cookies de funcionalidad </b></span><br>
-                                <span class="fs-16">
-                                    Las cookies de funcionalidad registran la información de lo que elija el usuario
-                                    permitiendo
-                                    dar a la web un contenido relevante.
-                                </span><br>
-                                <span class="fs-16">
-                                    Permiten dar una experiencia individualizada y recordar
-                                    su configuración y opciones de accesibilidad.
-                                </span>
-                                <div class="mt-2">
-                                    <label class="switch">
-                                        <input type="checkbox" name="funcionalidad" formControlName="funcionalidad">
-                                        <span class="sliderT round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-0" *ngIf="pestacookie == 4">
-                                <span class="fs-18"><b> Cookies de rendimiento </b></span><br>
-                                <span class="fs-16">
-                                    En este caso las cookies ayudan a analizar las forma en que se usa el servicio qeu
-                                    ofrece la web.
-                                    La aportación de uso de cada usuario hace que la web este más optimizada a nivel de
-                                    experiencia de
-                                    usuario.
-                                </span><br>
-                                <span class="fs-16">
-                                    Se miden tráfico y como se accede al sitio web. todo contribuye a poder seguir
-                                    mejorando.
-                                    Se puede determinar asi la cantidad de usuario y los errores ayudando a un posteior
-                                    diagnóstico para
-                                    mejorar el producto.
-                                </span>
-                                <div class="mt-2">
-                                    <label class="switch">
-                                        <input type="checkbox" name="rendimiento" formControlName="rendimiento">
-                                        <span class="sliderT round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="mb-0" *ngIf="pestacookie == 5">
-                                <span class="fs-18"><b> Cookies de seguimiento </b></span><br>
-                                <span class="fs-16">
-                                    Estas cookies se usan para publicidad segmentada, enseñan al visitante anuncios
-                                    interesantes para él.
-                                    Son de terceros proveedores de contenido y publicidad. Se recopila información
-                                    conjunta de variso sitios
-                                    web y las actividades del navegador del usuario.
-                                </span><br>
-                                <span class="fs-16">
-                                    El objetivo es poder mostrar anuncios enfocados a los intereses del usuario y no
-                                    otros más generales.
-                                    Sirve también para medir la efectividad de los anuncios y varios dispositivos.
-                                </span>
-                                <div class="mt-2">
-                                    <label class="switch">
-                                        <input type="checkbox" name="seguimiento" formControlName="seguimiento">
-                                        <span class="sliderT round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 mt-1 p-0 ">
-                        <div class="btcook" (click)="setpestanacookie(1)">
-                            <span class="fs-14">
-                                Seguridad y privacidad
+                <div class="col-xl-8 px-2">
+                    <div class="mhcook p-0 m-0">
+                        <div class="mb-0" *ngIf="pestacookie == 1">
+                            <span class="fs-18"><b> Seguridad y privacidad </b></span><br>
+                            <span class="fs-16">
+                                Las cookies son archivos que se almacenan en el navegador al visitar una web,
+                                su uso va dirigido a mejorar la experiencia de usuario.
+                            </span><br>
+                            <span class="fs-16">
+                                Desde este panel puedes gestionar tus preferencias de grupos de cookies,
+                                pero recuerda que una cookie es para mejora de la navegación.
                             </span>
                         </div>
-                        <div class="btcook " (click)="setpestanacookie(2)">
-                            <span class="fs-14">
-                                Cookies necesarias para esta web
+                        <div class="mb-0" *ngIf="pestacookie == 2">
+                            <span class="fs-18"><b> Cookies esenciales obligatorias </b></span><br>
+                            <span class="fs-16">
+                                Son aquellas cookies destinadas a dar el servicio especíico de la web y que permiten
+                                hacer uso de sus
+                                servicios.
+                            </span><br>
+                            <span class="fs-16">
+                                No sería posible brindar la funciones de sesión de usuario, no entran dentro del
+                                grupo de cookies
+                                prescindibles.
                             </span>
+                            <div class="mt-2">
+                                <label class="switch">
+                                    <input type="checkbox" name="obligatorias" formControlName="obligatorias" readonly >
+                                    <span class="sliderT round"></span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="btcook " (click)="setpestanacookie(3)">
-                            <span class="fs-14">
-                                Cookies para funcionalidad
+                        <div class="mb-0" *ngIf="pestacookie == 3">
+                            <span class="fs-18"><b> Cookies de funcionalidad </b></span><br>
+                            <span class="fs-16">
+                                Las cookies de funcionalidad registran la información de lo que elija el usuario
+                                permitiendo
+                                dar a la web un contenido relevante.
+                            </span><br>
+                            <span class="fs-16">
+                                Permiten dar una experiencia individualizada y recordar
+                                su configuración y opciones de accesibilidad.
                             </span>
+                            <div class="mt-2">
+                                <label class="switch">
+                                    <input type="checkbox" name="funcionalidad" formControlName="funcionalidad">
+                                    <span class="sliderT round"></span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="btcook " (click)="setpestanacookie(4)">
-                            <span class="fs-14">
-                                Cookies para rendimiento
+                        <div class="mb-0" *ngIf="pestacookie == 4">
+                            <span class="fs-18"><b> Cookies de rendimiento </b></span><br>
+                            <span class="fs-16">
+                                En este caso las cookies ayudan a analizar las forma en que se usa el servicio qeu
+                                ofrece la web.
+                                La aportación de uso de cada usuario hace que la web este más optimizada a nivel de
+                                experiencia de
+                                usuario.
+                            </span><br>
+                            <span class="fs-16">
+                                Se miden tráfico y como se accede al sitio web. todo contribuye a poder seguir
+                                mejorando.
+                                Se puede determinar asi la cantidad de usuario y los errores ayudando a un posteior
+                                diagnóstico para
+                                mejorar el producto.
                             </span>
+                            <div class="mt-2">
+                                <label class="switch">
+                                    <input type="checkbox" name="rendimiento" formControlName="rendimiento">
+                                    <span class="sliderT round"></span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="btcook " (click)="setpestanacookie(5)">
-                            <span class="fs-14">
-                                Cookies para seguimiento
+                        <div class="mb-0" *ngIf="pestacookie == 5">
+                            <span class="fs-18"><b> Cookies de seguimiento </b></span><br>
+                            <span class="fs-16">
+                                Estas cookies se usan para publicidad segmentada, enseñan al visitante anuncios
+                                interesantes para él.
+                                Son de terceros proveedores de contenido y publicidad. Se recopila información
+                                conjunta de variso sitios
+                                web y las actividades del navegador del usuario.
+                            </span><br>
+                            <span class="fs-16">
+                                El objetivo es poder mostrar anuncios enfocados a los intereses del usuario y no
+                                otros más generales.
+                                Sirve también para medir la efectividad de los anuncios y varios dispositivos.
                             </span>
+                            <div class="mt-2">
+                                <label class="switch">
+                                    <input type="checkbox" name="seguimiento" formControlName="seguimiento">
+                                    <span class="sliderT round"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success " type="submit"> GUARDAR </button>
-            </div>
-        </form>
 
-    </ng-template>
+                <div class="col-xl-4 mt-1 p-0 ">
+                    <div class="btcook" (click)="setpestanacookie(1)">
+                        <span class="fs-14">
+                            Seguridad y privacidad
+                        </span>
+                    </div>
+                    <div class="btcook " (click)="setpestanacookie(2)">
+                        <span class="fs-14">
+                            Cookies necesarias para esta web
+                        </span>
+                    </div>
+                    <div class="btcook " (click)="setpestanacookie(3)">
+                        <span class="fs-14">
+                            Cookies para funcionalidad
+                        </span>
+                    </div>
+                    <div class="btcook " (click)="setpestanacookie(4)">
+                        <span class="fs-14">
+                            Cookies para rendimiento
+                        </span>
+                    </div>
+                    <div class="btcook " (click)="setpestanacookie(5)">
+                        <span class="fs-14">
+                            Cookies para seguimiento
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btredondoRojo" type="submit"> GUARDAR </button>
+        </div>
+    </form>
 
-</footer>
+</ng-template>

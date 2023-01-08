@@ -67,7 +67,7 @@ export class AlertasService {
         submensaje +
         '</p>',
       title: 'WEB MADGUIDES',
-      timer: 2500,
+      timer: 3500,
       showCancelButton: false,
       showConfirmButton: false,
     });
@@ -83,7 +83,7 @@ export class AlertasService {
         submensaje +
         '</p>',
       title: 'App',
-      timer: 3000,
+      timer: 3500,
       showCancelButton: false,
       showConfirmButton: false,
     }).then();
@@ -117,7 +117,7 @@ export class AlertasService {
         submensaje +
         '</p>',
       title: 'WEB MADGUIDES',
-      timer: 1500,
+      timer: 3500,
       showCancelButton: false,
       showConfirmButton: false,
     });

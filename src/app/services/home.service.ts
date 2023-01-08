@@ -299,7 +299,7 @@ export class HomeService {
 
     getCajaBuscaHome(busqueda:string){
 
-      let endpoint = '/visit?title='+busqueda.trim()+'&per_page=5'; 
+      let endpoint = '/visit?per_page=5&title='+busqueda.trim() ; 
       this.url = this.apiurl + endpoint;
       return this.http.get( `${this.url}`)
       .pipe(

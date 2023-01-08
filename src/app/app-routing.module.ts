@@ -15,6 +15,8 @@ import { PoliticasprivacidadComponent } from './pages/politicasprivacidad/politi
 import { QuienessomosComponent } from './pages/quienessomos/quienessomos.component';
 import { VisitadetailComponent } from './pages/visitadetail/visitadetail.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ZonamicuentaComponent } from './componentes/zonamicuenta/zonamicuenta.component';
+import { ZonareservasComponent } from './componentes/zonareservas/zonareservas.component';
 
 const routes: Routes = [
 
@@ -37,8 +39,16 @@ const routes: Routes = [
   { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
   { path: 'buscador/title/:title' , component: BuscadorComponent},
 
-  { path: 'zonacliente' , component: AdminclienteComponent, canActivate: [AuthGuard] },
-  { path: 'zonacliente/:section' , component: AdminclienteComponent, canActivate: [AuthGuard] },
+  { path: 'zonacliente' , component: AdminclienteComponent,
+  children: [
+    { path: 'micuenta' , component: ZonamicuentaComponent},
+    { path: 'reservas' , component: ZonareservasComponent},
+    { path: '**' ,  redirectTo: 'micuenta' }
+  ]
+  , canActivate: [AuthGuard] },
+
+
+  //{ path: 'zonacliente/:section' , component: AdminclienteComponent, canActivate: [AuthGuard] },
 
 
   //////////////////////////////////////////////default

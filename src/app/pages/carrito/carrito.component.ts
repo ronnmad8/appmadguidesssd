@@ -7,10 +7,11 @@ import { NgwWowService } from 'ngx-wow';
 
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { CarritoService } from '../../services/carrito.service';
+import { VisitaService } from '../../services/visita.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
@@ -20,6 +21,12 @@ import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisit
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
 import { CartModel } from 'src/app/models/Cart.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextoCashModel } from 'src/app/models/TextoCash.model';
+import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
+import { HomeService } from 'src/app/services/home.service';
+import { HeadfooterService } from 'src/app/services/headfooter.service';
+import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
+import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
 
 
 @Component({
@@ -35,12 +42,16 @@ export class CarritoComponent implements OnInit{
   @Output() zonapago: EventEmitter<any> = new EventEmitter();
   @Input() solopaso1  : boolean = false;
   
+  messageCash: TextoCashModel;
+  messageVisita: VisitaAssetsModel;
+  messageLogin: TextoLoginModel;
+  messagePerfil: TextoPerfilModel;
   pedido : CartModel = new CartModel();
   carritoId: number = 0;
 
   constructor(
       private router: Router,
-      private imagenesService: ImagenesService,
+        
       private alertasService: AlertasService,
       private carritoService: CarritoService,
       private wowService: NgwWowService,
@@ -49,6 +60,9 @@ export class CarritoComponent implements OnInit{
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
+      private visitaService: VisitaService,
+      private homeService: HomeService,
+      private headfooterService: HeadfooterService,
 
   )
   {
@@ -65,10 +79,40 @@ export class CarritoComponent implements OnInit{
 
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
-
+    this.providerService.setThrowFooterpol(false);
+    this.getMessagesCash();
+    this.getMessagesVisita();
+    this.getMessagesLogin();
+    this.getMessagesPerfil();
     this.getPedido();
 
   }
+
+  getMessagesCash(){
+    this.carritoService.getMessagesCash().subscribe( (resp) => {
+      this.messageCash = resp as TextoCashModel;
+    } );
+  }
+
+  getMessagesVisita(){
+    this.visitaService.getMessagesVisita().subscribe( (resp) => {
+      this.messageVisita = resp as VisitaAssetsModel;
+      
+    } );
+  }
+
+  getMessagesLogin(){
+    this.headfooterService.getMessagesLogin().subscribe( (resp) => {
+      this.messageLogin = resp as TextoLoginModel;
+    } );
+  }
+
+  getMessagesPerfil(){
+    this.headfooterService.getMessagesPerfil().subscribe( (resp) => {
+      this.messagePerfil = resp as TextoPerfilModel;
+    } );
+  }
+
 
   getPedido() {
     this.pedido = this.carritoService.getCart();

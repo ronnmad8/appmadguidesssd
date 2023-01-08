@@ -6,13 +6,13 @@
                     <div class="circulopasos ">
                         1
                     </div>
-                    <span class="descripcionpaso"> Revisa tu pedido </span>
+                    <span class="descripcionpaso"> {{messageCashData.step.step1}} </span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 1">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(1)">
                         1
                     </div>
-                    <span class="descripcionpasoapagado"> Revisa tu pedido </span>
+                    <span class="descripcionpasoapagado"> {{messageCashData.step.step1}} </span>
                 </div>
             </div>
             <div id="paso2" class="col-xl-4 text-center h40">
@@ -20,13 +20,13 @@
                     <div class="circulopasos ">
                         2
                     </div>
-                    <span class="descripcionpaso"> Datos personales </span>
+                    <span class="descripcionpaso"> {{messageCashData.step.step2}} </span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(2)">
                         2
                     </div>
-                    <span class="descripcionpasoapagado"> Datos personales </span>
+                    <span class="descripcionpasoapagado"> {{messageCashData.step.step2}} </span>
                 </div>
             </div>
             <div id="paso3" class=" col-xl-4 text-center h40">
@@ -34,13 +34,13 @@
                     <div class="circulopasos ">
                         3
                     </div>
-                    <span class="descripcionpaso"> Método de pago </span>
+                    <span class="descripcionpaso"> {{messageCashData.step.step3}}</span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(3)">
                         3
                     </div>
-                    <span class="descripcionpasoapagado"> Método de pago </span>
+                    <span class="descripcionpasoapagado"> {{messageCashData.step.step3}} </span>
                 </div>
             </div>
         </div>
@@ -90,25 +90,19 @@
                         <span class="descripcionpasoapagado"> Pago </span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
-<div id="containerpaso1" class="container p-0 " [ngClass]="{ 'dnone': pasoactivo != 1 }">
+<div id="containerpaso1" class="container p-0 " *ngIf=" pasoactivo == 1">
 
     <div class="h60"></div>
-
     <div #carrito id="carrito" class=" d-xl-flex">
         <div class="p-0 m-0">
-
             <div class="conteni d-xl-flex">
-
-                <div class="h-100 w-100 mx-auto">
-
+                <div class="h-100 w-100 mx-auto divPanelVisitaCarrito ">
                     <div class="panelVisitaCarrito" *ngFor="let visitapedido of pedido.visitasPedido">
-
                         <div class="h-100">
                             <div #imageneslatid id="im-{{visitapedido.id}}" class="chimaglat cupo">
                                 <picture>
@@ -120,31 +114,33 @@
                                 </picture>
                             </div>
                         </div>
-
                         <div class="posrel h-100 w-100 p-xl-4 p-2">
-
-                            <div class="posabsolX d-flex" >
+                            <div class="posabsolX d-flex">
 
                                 <!-- <div class="cupo " (click)="editarvisitapedido(visitapedido, calemodal)">
                                         <img src="../../assets/images/i-editar.svg" class="imicono24 posrel"
                                             style="top: -5px" draggable="false">
                                     </div> -->
+                                    
                                 <div class="cupo" (click)="eliminarvisitapedido(visitapedido)">
                                     <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                                 </div>
                             </div>
-
                             <div id="titulopanelpedido">
-                                {{visitapedido.visit_lang_title}}
+                                {{visitapedido.visit_lang_title.length > 30 ? visitapedido.visit_lang_title.substring(0,
+                                47)+"..." : visitapedido.visit_lang_title }}
                             </div>
-                            <div class="fs-18 p-0  mb-3 pc">
-                                {{visitapedido.visit_lang_description}}
+                            <div class="fs-18 p-0  mb-2 pc">
+                                {{visitapedido.visit_lang_description.length > 50 ?
+                                visitapedido.visit_lang_description.substring(0, 47)+"..." :
+                                visitapedido.visit_lang_description }}
                             </div>
                             <div class="lh-1-2">
                                 {{visitapedido.visit_time_date}}
                             </div>
                             <div class="lh-1-2">
-                                Tour en <span class="ml-1">{{visitapedido.idioma | capitalize}}</span>
+                                {{messageVisitaData.details.language.description}} <span
+                                    class="ml-1">{{visitapedido.idioma | capitalize}}</span>
                             </div>
                             <div class="fs-14 lh-1-2 mt-2">
                                 <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
@@ -156,117 +152,110 @@
                                 <span><i class="fa fa-person fs-12" title="Menores"
                                         style="margin-right: -3px; margin-top: px;"></i>
                                     {{visitapedido.menores}}</span>
-
                             </div>
-                            <div class="posabsolprecio " >
+                            <div class="posabsolprecio ">
                                 {{ visitapedido.precio }} €
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-
                 <div class="h-100 w-100 mx-auto">
                     <div class="posrel">
-                        <div #preciototalpedido id="preciototalpedido"
-                            [ngClass]="{ 'posfixed80': pegaj == 2, 'posrelinicio': pegaj == 1, 'posrelfinal': pegaj == 3  }">
-
+                        <div #preciototalpedido id="preciototalpedido">
                             <div class="panelPreciototal">
                                 <div class="precioAmarillo posrel">
-                                    <div>Precio total</div>
+                                    <div>{{messageCashData.price}}</div>
                                     <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{ preciototal }} €</div>
-
                                 </div>
                                 <div class="mt-3 mx-auto text-center">
-                                    <button class="btredondoRojoxl " type="button" routerLink="/buscador"  >
+                                    <button class="btredondoRojoxl " type="button" routerLink="/buscador">
                                         <span class="ff-JB">Reservar más visitas</span>
                                     </button>
                                 </div>
                                 <div class="mt-2 mx-auto text-center">
                                     <button class="btredondoRojoPreciototal " type="button" (click)="continuar()">
-                                        <span class="ff-JB">Continuar</span>
+                                        <span class="ff-JB">{{messageCashData.button}}</span>
                                     </button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div #finaldetalle id="finaldetalle" class="h100"></div>
 
 </div>
 
 
-<div id="containerpaso2" class="container p-0 " [ngClass]="{ 'dnone': pasoactivo != 2 && pasoactivo != 3 }">
+<div id="containerpaso2" class="container p-0 " *ngIf="( pasoactivo == 2 || pasoactivo == 3 )">
 
     <div class="h60"></div>
-
     <div class="p-0 m-0">
-
-        <form class="validate-form" [formGroup]="forma">
-
-            <div class="conteni d-xl-flex">
-                <div id="resumen posrel">
-                    <div class="panelResumen">
-                        <div class=" posrel d-flex h50">
-                            <div class="fs-20 ff-JB">Resumen</div>
-                            <div class="posabsolRight">
-                                <div class="btline127" (click)="modificarCarrito()">
-                                    <div>Modificar</div>
-                                    <div class="linefull"></div>
-                                    <div>carrito</div>
-                                </div>
+        <div class="conteni d-xl-flex">
+            <div id="resumen posrel">
+                <div class="panelResumen">
+                    <div class=" posrel d-flex h50">
+                        <div class="fs-20 ff-JB" style="max-width: 210px">{{messageCashData.thank}}</div>
+                        <div class="posabsolRight">
+                            <div class="btline127 " (click)="modificarCarrito()">
+                                <div>{{messageCashData.cart}}</div>
+                                <div class="linefull posrel" style="top: -30px"></div>
+                                <div></div>
                             </div>
-                        </div>
-                        <div class="mt-3 mh200" >
-
-                            <div class="my-3" *ngFor="let visitapedido of pedido.visitasPedido">
-
-                                <div class="fs-16 lh-1-4 mb-1 d-flex">
-                                    <div style="width: 268px">
-                                        {{visitapedido.visit_lang_title}}
-                                    </div>
-                                    <div class="text-right" style="width: 68px">
-                                        {{visitapedido.precio}} €
-                                    </div>
-                                </div>
-                                <div class="fs-14 lh-1-4">
-                                    {{visitapedido.visit_time_date}}
-                                </div>
-                                <div class="fs-14 lh-1-4">
-                                    Idioma: <span class="ml-1">{{visitapedido.visit_lang_iso}}</span>
-                                </div>
-                                <div class="fs-14 lh-1-4">
-                                    <span>Adultos {{visitapedido.adultos}} </span>
-                                    <span>Niños {{visitapedido.ninos}} </span>
-                                    <span>Menores {{visitapedido.menores}} </span>
-                                </div>
-                                <div class="fs-14 lh-1-4 colVERDE" *ngIf="visitapedido.visit_refundable">
-                                    Cancelaciones hasta 24 horas antes de la visita
-                                </div>
-                            </div>
-                        </div>
-                        <div class="precioAmarillo posrel mt-4">
-                            <div>Precio total</div>
-                            <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{preciototal}} €</div>
                         </div>
                     </div>
-                </div>
-
-                <div id="registro" class="posrel ml-2 zonaregistro" 
-                [ngClass]="{ 'dnone': pasoactivo != 2 }">
-                    <div class="h-100 w-100 mr-2">
-                        <div class="hazlogin d-xl-flex" (click)="abrirRegistrar(loginmodal)" *ngIf="!loginok"  >
-                            <div class="" >Regístrate o <span class="colROJO2">Inicia sesión más rapido con tus redes
-                                    sociales</span>
+                    <div class="mt-3 mh200">
+                        <div class="my-3" *ngFor="let visitapedido of pedido.visitasPedido">
+                            <div class="fs-16 lh-1-4 mb-1 d-flex">
+                                <div style="width: 268px">
+                                    {{visitapedido.visit_lang_title}}
+                                </div>
+                                <div class="text-right" style="width: 68px">
+                                    {{visitapedido.precio}} €
+                                </div>
                             </div>
-                            <div class="posabsolRedes" >
-                                <span>Login con </span>
+                            <div class="fs-14 lh-1-4">
+                                {{visitapedido.visit_time_date}}
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                {{messageVisitaData.data.language}}: <span
+                                    class="ml-1">{{visitapedido.visit_lang_iso}}</span>
+                            </div>
+                            <div class="fs-14 lh-1-4">
+                                <span>{{messageVisitaData.price.adults}}</span> <span
+                                    class="mx-1">{{visitapedido.adultos}} </span>
+                                <span>{{messageVisitaData.price.children}}</span> <span class="mx-1">
+                                    {{visitapedido.ninos}} </span>
+                                <span>{{messageVisitaData.price.minor}}</span> <span class="mx-1">
+                                    {{visitapedido.menores}} </span>
+                            </div>
+                            <div class="fs-14 lh-1-4 colVERDE" *ngIf="visitapedido.visit_refundable">
+                                Cancelaciones hasta 24 horas antes de la visita
+                            </div>
+                        </div>
+                    </div>
+                    <div class="precioAmarillo posrel mt-4">
+                        <div>{{messageCashData.process}}</div>
+                        <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{preciototal}} €</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="posrel ml-2 zonaregistro" [ngClass]="{ 'dnone' : pasoactivo == 3 } " >
+
+                <div id="registro" class="h-100 w-100 mr-2" *ngIf="!loginok">
+                    <form class="validate-form" [formGroup]="formregister">
+                        <div class="hazlogin d-xl-flex">
+                            <div>
+                                <span> {{messageCashData.register}} </span>
+                                <span class="colROJO2 cupo" (click)="abrirLogin(loginmodal)">
+                                    {{messageCashData.social}}</span>
+                            </div>
+                            <div class="posabsolRedes cupo" (click)="abrirLogin(loginmodal)">
+                                <span>{{messageCashData.login}} </span>
                                 <span class="mx-1"><img src="../../assets/images/i-facebookG.svg" class="imicono8l"
                                         draggable="false"></span>
                                 <span class="mx-1"><img src="../../assets/images/i-google+G.svg" class="imicono8l"
@@ -275,160 +264,288 @@
                         </div>
 
                         <div class="panelDatosReserva">
+
                             <div class="row px-2">
-                                <div class="col-12 fs-20 ff-JB px-2">Registro: Datos de la reserva</div>
+                                <div class="col-12 fs-20 ff-JB px-2 mb-2">{{messageCashData.data}}</div>
 
                                 <div class="col-xl-6  px-2 ">
                                     <div class="cj posrel">
                                         <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre " name="name"
                                             id="name" formControlName="name" />
-                                            <div *ngIf="forma.value.name != '' " class="fieldpeq3">
-                                                Nombre
-                                            </div>
+                                        <div *ngIf="formregister.value.name != '' " class="fieldpeq3">
+                                            {{messageCashData.placeholder.name}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
                                     <div class="cj posrel">
                                         <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
-                                            name="surname" id="surname" formControlName="surname" />
-                                            <div *ngIf="forma.value.surname != '' " class="fieldpeq3">
-                                                Apellidos
-                                            </div>
+                                            name="surname" id="surname"
+                                            formControlName="{{messageCashData.placeholder.surname}}" />
+                                        <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
+                                            {{messageCashData.placeholder.surname}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
                                     <div class="cj posrel">
-                                        <input type="email" class="w-100 colGRIS1" placeholder=" Correo electrónico "
-                                            name="email" id="email" formControlName="email" />
+                                        <input type="email" class="w-100 colGRIS1"
+                                            placeholder="{{messageCashData.placeholder.email}}" name="email" id="email"
+                                            formControlName="email" />
+                                        <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
+                                            {{messageCashData.placeholder.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 px-2 ">
+                                    <div class="cj posrel">
+                                        <input type="password" class="w-100 colGRIS1" placeholder="Password"
+                                            name="password" id="password" formControlName="password" />
+                                        <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
+                                            Password
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-3 col-3 px-2 ">
                                     <div class="cj posrel">
                                         <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo " name="prefijo"
                                             id="prefijo" formControlName="prefijo" />
-                                            <div *ngIf="forma.value.prefijo != '' " class="fieldpeq3">
-                                                Prefijo
-                                            </div>
+                                        <div *ngIf="formregister.value.prefijo != '' " class="fieldpeq3">
+                                            Prefijo
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-3 col-9 px-2 ">
                                     <div class="cj posrel">
-                                        <input type="phone" class="w-100 colGRIS1" placeholder=" Teléfono movil "
-                                            name="telefono" id="telefono" formControlName="telefono" />
-                                            <div *ngIf="forma.value.telefono != '' " class="fieldpeq3">
-                                                Telefono
-                                            </div>
+                                        <input type="phone" class="w-100 colGRIS1"
+                                            placeholder="{{messageCashData.placeholder.phone}}" name="telefono"
+                                            id="telefono" formControlName="telefono" />
+                                        <div *ngIf="formregister.value.telefono != '' " class="fieldpeq3">
+                                            {{messageCashData.placeholder.phone}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="aceptapoliticas col-12">
+                                    <div class="d-flex w-100">
+                                        <div>
+                                            <input #aceptacion type="checkbox" name="aceptacion" id="aceptacion"
+                                                formControlName="aceptacion">
+                                        </div>
+                                        <div class="fs-16 mx-2">
+                                            {{messageCashData.policy.message1}}
+                                            <a routerlink="">{{messageCashData.policy.message2}}
+                                            </a>{{messageCashData.policy.message3}}<a routerlink="">
+                                                {{messageCashData.policy.message4}}</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="aceptapoliticas">
-                            <div class="d-flex w-100">
-                                <div>
-                                    <input #aceptacion type="checkbox" name="aceptacion" id="aceptacion"
-                                        [checked]="this.forma.value.aceptacion.isChecked" formControlName="aceptacion">
-                                </div>
-                                <div class="fs-16 mx-2">
-                                    Acepto <a routerlink="">la política de privacidad </a>y <a routerlink="">las
-                                        condiciones generales</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btcontdatosper ">
-                            <button class="btredondoRojoContinuar " type="button" (click)="continuar()">
-                                <span class="ff-JB">Continuar</span>
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
+                <div id="datoscliente" class="h-100 w-100 mr-2" *ngIf="loginok">
 
-                <div id="metodopago" class="posrel ml-2 zonaregistro" [ngClass]="{ 'dnone': pasoactivo != 3 }">
-                    <div class="h-100 w-100 mr-2">
 
-                        <div class="panelMetodopago">
-                            <div class="row px-2">
-                                <div class="col-12 fs-20 ff-JB px-2 my-4">Metodo de pago</div>
-                                <div class="col-12 px-2 d-flex">
-                                    <div class="mx-2">
-                                        <i class="fa fa-check colROJO2 fs-24"></i>
-                                    </div>
-                                    <div class="mx-2 fs-20">Tarjeta</div>
-                                    <div class="mx-2">
-                                        <img src="../../assets/images/i-mastercard.svg" class="imicono3"
-                                            draggable="false">
-                                    </div>
-                                    <div class="mx-2">
-                                        <img src="../../assets/images/i-visa.svg" class="imicono3" draggable="false">
+                    <div class="panelDatosReserva">
+                        <div class="row px-2">
+                            <div class="col-12 fs-20 ff-JB px-2 mb-2">{{messageCashData.data}}</div>
+
+                            <div class="col-xl-6  px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 scolGRIS1" name="namelogin" id="namelogin"
+                                        [value]="usuario.name" disabled />
+                                    <div class="fieldpeq3">
+                                        {{messageCashData.placeholder.name}}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xl-6 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 colGRIS1" name="surnamelogin" id="surnamelogin"
+                                        [value]="usuario.surname" disabled />
+                                    <div class="fieldpeq3">
+                                        {{messageCashData.placeholder.surname}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 colGRIS1" 
+                                    name="emaillogin" id="emaillogin"
+                                        [value]="usuario.email" disabled />
+                                    <div class="fieldpeq3">
+                                        {{messageCashData.placeholder.email}}
+                                    </div>
+                                </div>
+                            </div>
 
-                                <!-- <div class="col-12 px-2 ">
-                                    <div class="cj posrel">
-                                        <input type="text" class="w-100 scolGRIS1" placeholder=" Número tarjeta "
-                                            id="numerotarjeta" name="numerotarjeta" />
-                                        <div class="crediticono">
-                                            <img src="../../assets/images/i-creditcard.svg" class="imicono3"
-                                                draggable="false">
-                                        </div>
+                            <div class="col-xl-2 col-3 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 colGRIS1" 
+                                    name="prefijologin" id="prefijologin"
+                                       [value]="usuario.prefix_phone_id" disabled />
+                                    <div class="fieldpeq3">
+                                        Prefijo
                                     </div>
                                 </div>
-                                <div class="col-6 px-2 ">
-                                    <div class="cj">
-                                        <input type="text" class="w-100 colGRIS1" placeholder=" Fecha de expiración "
-                                            id="expiraciontarjeta" name="expiraciontarjeta" />
+                            </div>
+                            <div class="col-xl-4 col-9 px-2 ">
+                                <div class="cj posrel">
+                                    <input type="text" class="w-100 colGRIS1" 
+                                    name="telefonologin" id="telefonologin"
+                                        [ngModel]="usuario.phone" disabled="" />
+                                    <div *ngIf="formregister.value.telefono != '' " class="fieldpeq3">
+                                        {{messageCashData.placeholder.phone ?? "123456"}}
                                     </div>
-                                </div>
-                                <div class="col-6 px-2 ">
-                                    <div class="cj posrel">
-                                        <input type="text" class="w-100 colGRIS1" placeholder=" CVC/CVV "
-                                            id="cvctarjeta" name="cvctarjeta" />
-                                        <div class="crediticono">
-                                            <img src="../../assets/images/i-creditcardCVC.svg" class="imicono3"
-                                                draggable="false">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-8 pl-2 pr-1 ">
-                                    <div class="cj">
-                                        <input type="text" class="w-100 colGRIS1" placeholder=" Titular tarjeta "
-                                            id="titulartarjeta" name="titulartarjeta" />
-                                    </div>
-                                </div> -->
-                                <div class="col-xl-8"></div>
-                                <div class="col-xl-4 text-right">
-                                    <button class="btredondoRojoPagar " type="button" (click)="reservarvisita()">
-                                        <span class="ff-JB">Pagar</span>
-                                    </button>
-
                                 </div>
                             </div>
                         </div>
 
                     </div>
+
+                    <div class="aceptapoliticas">
+                        <div class="d-flex w-100">
+                            <div>
+                                <input #aceptacionlogin type="checkbox" name="aceptacionlogin" id="aceptacionlogin" (click)="aceptarlogin($event)"
+                                    [value]="aceptacionlogin">
+                            </div>
+                            <div class="fs-16 mx-2">
+                                {{messageCashData.policy.message1}} <a routerlink="">{{messageCashData.policy.message2}}
+                                </a>{{messageCashData.policy.message3}}<a routerlink="">
+                                    {{messageCashData.policy.message4}}</a>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="btcontdatosper ">
+                    <button class="btredondoRojoContinuar " type="button" (click)="continuar()">
+                        <span class="ff-JB">{{messageCashData.button}}</span>
+                    </button>
                 </div>
             </div>
 
-        </form>
+            <div id="metodopago" class="posrel ml-2 zonaregistro" [ngClass]="{ 'dnone' : pasoactivo == 2 } " >
+                <div class="h-100 w-100 mr-2">
 
+                    <div class="panelMetodopago">
+                        <div class="row px-2">
+                            <div class="col-12 fs-20 ff-JB px-2 my-4">{{messageCashData.process}}</div>
+                            <div class="col-12 px-2 d-flex">
+                                <div class="mx-2">
+                                    <i class="fa fa-check colROJO2 fs-24"></i>
+                                </div>
+                                <div class="mx-2 fs-20">{{messageCashData.cart}}</div>
+                                <div class="mx-2">
+                                    <img src="../../assets/images/i-mastercard.svg" class="imicono3" draggable="false">
+                                </div>
+                                <div class="mx-2">
+                                    <img src="../../assets/images/i-visa.svg" class="imicono3" draggable="false">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-8"></div>
+                            <div class="col-xl-4 text-right">
+                                <button class="btredondoRojoPagar " type="button" (click)="reservarvisita()">
+                                    <span class="ff-JB">Pagar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div #finaldetalle id="finaldetalle" class="h100"></div>
+
+<ng-template #loginmodal let-modal>
+
+    <div class="mx-auto w-100 p-0">
+        <div class="modal-body">
+
+            <div id="divmicuenta">
+                <form class="validate-form" [formGroup]="formlogin">
+                    <div class="w-100 d-flex posrel">
+                        <div class="px-3 ff-JB fs-24 ">{{messagePerfilData.account}}</div>
+                        <div class="posabsol" style="right: -24px">
+                            <div class="cupo" (click)="modal.dismiss()">
+                                <i class="fa fa-x"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-3">
+                        <div class="my-3 fs-18">
+                            {{messageLoginData.session}}
+                        </div>
+                        <div class="cj">
+                            <input type="text" class="colGRIS1 " placeholder=" Usuario email" id="" name="email"
+                                formControlName="email" />
+                        </div>
+                        <div class="cj posrel">
+                            <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
+                                name="password" formControlName="password" />
+                            <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                                    (click)="verpassword(false)"></i> </div>
+                            <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                                    (click)="verpassword(true)"></i> </div>
+                        </div>
+                        <div class="d-flex" id="recuerdamimicuenta">
+                            <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
+                                <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
+                                <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
+                            </div>
+                            <div class="mt-1 ml-2"> {{messageLoginData.remember}}</div>
+                        </div>
+                        <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
+                            <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button"
+                                (click)="iniciarsesion()">
+                                <span> {{messageLoginData.session}}</span>
+                            </button>
+                            <button *ngIf="!btactivado" class="btredondoApagadomicuenta " type="button">
+                                <span> {{messageLoginData.session}}</span>
+                            </button>
+
+                        </div>
+                        <div class="oaccedemicuenta">
+                            {{messageLoginData.accede}}
+                        </div>
+                        <div class="w-100 p-0 ">
+                            <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
+                                <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
+                                <span>Facebook</span>
+                            </button>
+                            <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
+                                <img src="../../assets/images/logog.png" class="imredes" draggable="false">
+                                <span>Google</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div #finaldetalle id="finaldetalle" class="h100"></div>
+</ng-template>
 
 
 
-    <ng-template #calemodal let-modal>
+
+
+<!-- <ng-template #calemodal let-modal>
 
         <div class="mx-auto w-100 p-0">
-
             <div class="modal-header posrel">
                 <div class="w-100 mx-auto text-center">
                     <h4 class="modal-title" id="modal-basic-title ml-4">
                         <span class="ff-JB">{{visitaSel.title}}</span>
                     </h4>
                 </div>
-
             </div>
             <div class="modal-body mx-auto text-center ">
                 <div #detallecale id="detallecale" class="m-0 p-4 divcalendarmodal ">
@@ -477,7 +594,7 @@
                             <div class="w-100 d-flex cupo" (click)="verHora()">
                                 <div class="fs-20 ml-0 mr-auto">
                                     <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
-                                        Hora
+                                        {{messageVisitaData.data.hour}}
                                     </span>
                                     <span class="ml-1 colGRIS1">
                                         {{horainfo}}
@@ -505,7 +622,7 @@
                             <div class="w-100 d-flex cupo" (click)="verIdioma()">
                                 <div class="fs-20 ml-0 mr-auto">
                                     <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
-                                        Idioma
+                                        {{messageVisitaData.data.language}}
                                     </span>
                                     <span class="ml-1 colGRIS1">
                                         {{idiominfo}}
@@ -534,20 +651,19 @@
                                 <div class="fs-20 text-left d-flex">
                                     <span class="colGRIS1 ff-JB"
                                         *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
-                                        Personas
+                                        {{messageVisitaData.data.people}}
                                     </span>
                                     <div class="posrel fs-18" style="top: 0px"
                                         *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
                                         <div class="w-100 d-flex">
-
                                             <div class=" colGRIS1" style="min-width: 100px">
-                                                Adultos {{adultoSel}}
+                                                {{messageVisitaData.price.adults}} {{adultoSel}}
                                             </div>
                                             <div class=" colGRIS1 " style="min-width: 90px">
-                                                Niños {{ninosSel}}
+                                                {{messageVisitaData.price.children}} {{ninosSel}}
                                             </div>
                                             <div class=" colGRIS1 " style="min-width: 100px">
-                                                Menores {{menoresSel}}
+                                                {{messageVisitaData.price.minor}} {{menoresSel}}
                                             </div>
                                         </div>
                                     </div>
@@ -562,7 +678,7 @@
                             <div class="px-3 pt-2 m-0 animated fadeIn" [hidden]="!vpers">
                                 <div #adulto class="row my-2">
                                     <div class="col-4 text-left posrel">
-                                        <div class="fs-8 posabsol" style="top: -6px">Adulto</div>
+                                        <div class="fs-8 posabsol" style="top: -6px">{{messageVisitaData.price.adults}}</div>
                                         <div class="fs-16">{{precioadultos}} €</div>
                                     </div>
                                     <div class="col-4">
@@ -595,7 +711,7 @@
 
                                 <div #ninos class="row my-2">
                                     <div class="col-4 text-left posrel">
-                                        <div class="fs-8 posabsol" style="top: -6px">ninos</div>
+                                        <div class="fs-8 posabsol" style="top: -6px">{{messageVisitaData.price.children}}</div>
                                         <div class="fs-16">{{precioninos}} €</div>
                                     </div>
                                     <div class="col-4">
@@ -628,7 +744,7 @@
 
                                 <div #menores class="row my-2">
                                     <div class="col-4 text-left posrel">
-                                        <div class="fs-8 posabsol" style="top: -6px">menores</div>
+                                        <div class="fs-8 posabsol" style="top: -6px">{{messageVisitaData.price.minor}}</div>
                                         <div class="fs-16">{{preciomenores}} €</div>
                                     </div>
                                     <div class="col-4">
@@ -660,14 +776,14 @@
                                 </div>
 
                                 <div #total class="my-3 d-flex posrel">
-                                    <div class="fs-16 ">Precio total</div>
+                                    <div class="fs-16 ">{{messageCashData.process}}</div>
                                     <div class="fs-16 ff-JB posabsol" style="right: 0">
                                         <div> {{sumaSel}} €</div>
                                     </div>
                                 </div>
                                 <div #maximo class="d-flex w-100 posrel my-3">
                                     <div class="ml-0 mr-auto ">
-                                        <div class="fs-12">*Máximas personas visita <span
+                                        <div class="fs-12">*{{messageVisitaData.private.max}} <span
                                                 class="ff-JB">{{maximopersonas}}</span>
                                         </div>
                                     </div>
@@ -681,16 +797,13 @@
                                     </div>
                                     <div class="mr-0 ml-auto">
                                         <div class="fs-16 ">
-                                            Contratar visita privada.
+                                            {{messageVisitaData.private.contract}}
                                         </div>
                                         <div class="fs-12 ffita colGRIS2">
-                                            *Implica asumir el precio al coste máximo de la visita independientemente
-                                            del número
-                                            total de asistentes.
+                                            *{{messageVisitaData.private.implicit}}
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -699,7 +812,7 @@
                                 <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
                             </div>
                             <div>
-                                <div class="fs-16 colROJO1">Elige la <span class="ff-JB">fecha</span> de la visita</div>
+                                <div class="fs-16 colROJO1">{{messageVisitaData.errors.date}}</div>
                             </div>
                         </div>
                         <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
@@ -707,7 +820,7 @@
                                 <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
                             </div>
                             <div>
-                                <div class="fs-16 colROJO1">Selecciona la <span class="ff-JB">hora</span> para la visita
+                                <div class="fs-16 colROJO1">{{messageVisitaData.errors.hour}}
                                 </div>
                             </div>
                         </div>
@@ -716,7 +829,7 @@
                                 <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
                             </div>
                             <div>
-                                <div class="fs-16 colROJO1">Selecciona <span class="ff-JB">idioma</span> para la visita
+                                <div class="fs-16 colROJO1">{{messageVisitaData.errors.language}}
                                 </div>
                             </div>
                         </div>
@@ -725,11 +838,10 @@
                                 <img src="../../assets/images/i-validacion.svg" class="imicono8" draggable="false">
                             </div>
                             <div>
-                                <div class="fs-16 colROJO1">Selecciona <span class="ff-JB">número de personas</span>
+                                <div class="fs-16 colROJO1">{{messageVisitaData.errors.people}}
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="p-0 m-0">
@@ -744,7 +856,7 @@
                             <div class="w-50">
                                 <div class="my-0 mx-auto text-center">
                                     <button class="btredondoRojoActualizar " type="button" (click)="reservarvisita()">
-                                        <span class="ff-JB">Reservar</span>
+                                        <span class="ff-JB">{{messageVisitaData.button}}</span>
                                     </button>
                                 </div>
                             </div>
@@ -754,213 +866,4 @@
             </div>
         </div>
 
-    </ng-template>
-
-    <ng-template #loginmodal let-modal>
-
-        <div class="mx-auto w-100 p-0">
-            <div class="modal-body">
-
-                <div id="divmicuenta" *ngIf="verusuario">
-                    <form class="validate-form" [formGroup]="formlogin">
-                        <div class="w-100 d-flex posrel">
-                            <div class="px-3 ff-JB fs-24 ">Mi cuenta</div>
-                            <div class="posabsol" style="right: -24px">
-                                <div class="cupo" (click)="modal.dismiss()">
-                                    <i class="fa fa-x"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="px-3">
-                            <div class="my-3 fs-18">
-                                Iniciar sesión para pagar más rápido
-                            </div>
-                            <div class="cj">
-                                <input type="text" class="colGRIS1 " placeholder=" Usuario email" id="" name="email"
-                                    formControlName="email" />
-                            </div>
-                            <div class="cj posrel">
-                                <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="password"
-                                    name="password" formControlName="password" />
-                                <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
-                                        (click)="verpassword(false)"></i> </div>
-                                <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
-                                        (click)="verpassword(true)"></i> </div>
-                            </div>
-                            <div class="d-flex" id="recuerdamimicuenta">
-                                <div class="mx-1 pt-1" (click)="recordarmemicuenta()">
-                                    <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
-                                    <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
-                                </div>
-                                <div class="mt-1 ml-2">Recordarme</div>
-                            </div>
-                            <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
-                                <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button"
-                                    (click)="iniciarsesion()">
-                                    <span>Iniciar sesión</span>
-                                </button>
-                                <button *ngIf="!btactivado" class="btredondoApagadomicuenta " type="button">
-                                    <span>Iniciar sesión</span>
-                                </button>
-                                <div class="heolvidadomicuenta">
-                                    He olvidado mi contraseña
-                                </div>
-                            </div>
-                            <div class="oaccedemicuenta">
-                                O accede con
-                            </div>
-                            <div class="w-100 p-0 ">
-                                <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
-                                    <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
-                                    <span>Facebook</span>
-                                </button>
-                                <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
-                                    <img src="../../assets/images/logog.png" class="imredes" draggable="false">
-                                    <span>Google</span>
-                                </button>
-                            </div>
-                            <div id="notienesmicuenta">
-                                <span>¿No tienes cuenta?</span><span class="colROJO3 cupo"
-                                    (click)="vermodalregistrar()"> Registrate
-                                    aquí</span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="divregistrar" *ngIf="verregistrar">
-                    <div class="scrld">
-                        <form class="validate-form" [formGroup]="formregister">
-                            <div id="divmicuenta">
-                                <div class="w-100 d-flex posrel">
-                                    <div class="px-3 ff-JB fs-24 ">Registro</div>
-                                    <div class="posabsol" style="right: -24px">
-                                        <div class="cupo" (click)="modal.dismiss()">
-                                            <i class="fa fa-x"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-3">
-                                    <div class="ff-JB">
-                                        <span>Datos personales</span>
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Usuario email" id="email"
-                                            name="email" formControlName="email" />
-                                    </div>
-                                    <div class="cj posrel">
-                                        <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña"
-                                            id="password" name="password" formControlName="password" />
-                                        <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
-                                                (click)="verpassword(false)"></i> </div>
-                                        <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
-                                                (click)="verpassword(true)"></i> </div>
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
-                                            formControlName="name" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname"
-                                            name="surname" formControlName="surname" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo"
-                                            name="prefijo" formControlName="prefijo" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon"
-                                            name="telefon" formControlName="telefono" />
-                                    </div>
-                                    <div class="linefull my-2"></div>
-                                    <div class="ff-JB">
-                                        <span>Datos de facturacion</span>
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Nombre" id="namefacturacion"
-                                            name="namefacturacion" formControlName="namefacturacion" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Apellidos"
-                                            id="surnamefacturacion" name="surnamefacturacion"
-                                            formControlName="surnamefacturacion" />
-                                    </div>
-                                    <div class="w-100">
-                                        <select #tipoiden class="cjselect" id="tipoidentificacion"
-                                            name="tipoidentificacion" formControlName="tipoidentificacion">
-                                            <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
-                                                {{li.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Numero identificacion "
-                                            id="numeroidentificacion" name="numeroidentificacion"
-                                            formControlName="numeroidentificacion" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion"
-                                            name="direccion" formControlName="direccion" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Codigo postal "
-                                            id="codigopostal" name="codigopostal" formControlName="codigopostal" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad"
-                                            name="ciudad" formControlName="ciudad" />
-                                    </div>
-                                    <div class="cj">
-                                        <input type="text" class="colGRIS1 " placeholder="Pais " id="pais" name="pais"
-                                            formControlName="pais" />
-                                    </div>
-                                    <div class="">
-
-                                        <div class="col-6 p-0 m-0">
-                                            <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
-                                            <label class="mx-2" for="rb-1">Particular</label>
-                                            <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">
-                                            <label class="mx-2" for="rb-2">Empresa</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
-                                        <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button"
-                                            (click)="registrar()">
-                                            <span>Registrar</span>
-                                        </button>
-                                        <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
-                                            <span>Registrar</span>
-                                        </button>
-                                    </div>
-
-                                    <div id="iralogin">
-                                        <span>Si tengo cuenta,</span><span class="colROJO3 cupo"
-                                            (click)="vermodalusuario()"> ir a login
-                                        </span>
-                                    </div>
-
-                                    <div class="mh40"></div>
-                                </div>
-                            </div>
-                        </form>
-                        <div hidden="true"
-                            style="width: 200px; height: auto; font-size: 12px; font-weight: 600 ; position: fixed; z-index: 9999; right: 5px; top: 5px; background-color: rgba(250,250,250,0.9); padding: 5px;">
-                            <pre>
-                           Valid:  {{formregister.valid}}  
-                        <br>
-                           Status: {{formregister.status}}
-                        <br>
-                           Valores:  {{formregister.value | json}}  
-                        </pre>
-                        </div>
-                    </div>
-                    <div class="mh40"></div>
-                </div>
-
-            </div>
-        </div>
-
-    </ng-template>
+    </ng-template> -->

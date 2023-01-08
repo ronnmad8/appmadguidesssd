@@ -16,6 +16,8 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlatformService } from 'src/app/services/platform.service';
+import { ProviderService } from 'src/app/services/provider.service';
+import * as e from 'express';
 
 @Component({
   selector: 'app-footer',
@@ -43,6 +45,7 @@ export class FooterComponent implements OnInit {
   listacookiesrendimiento: any[] = [];
   listacookiesseguimiento: any[] = [];
   listacookiesfuncionalidad: any[] = [];
+  editarcookies: boolean = false;
 
 
   constructor(
@@ -51,6 +54,7 @@ export class FooterComponent implements OnInit {
     private homeService: HomeService,
     private headfooterService: HeadfooterService,
     private platformService: PlatformService,
+    private providerService: ProviderService,
     private router: Router,
     private fb: FormBuilder,
     private modalService: NgbModal
@@ -67,6 +71,18 @@ export class FooterComponent implements OnInit {
     this.getMessageFooter();
     this.getLogoFooter();
     this.getListaCookies();
+    this.listenProvider();
+  }
+
+  listenProvider(){
+    this.providerService.getThrowFooterpol.subscribe((resp)=>{
+      if(resp){
+        this.nomostrarenlacesfooter = false;
+      }
+      else{
+        this.nomostrarenlacesfooter = true;
+      }
+    });
   }
 
   getMessageFooter() {
@@ -268,5 +284,11 @@ export class FooterComponent implements OnInit {
       '_ga',
     ];
   }
+
+  abrireditarcookies(modal: any){
+    this.openI(modal);
+    this.editarcookies = true;
+  }
+
   
 }

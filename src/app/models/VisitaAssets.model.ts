@@ -16,6 +16,7 @@ export class VisitaAssetsModel {
   price: Price;
   details: Details;
   errors: Errors;
+  private: Private;
   constructor() {
     this.messages = new Messages();
     this.data = new Data();
@@ -139,6 +140,18 @@ class Errors {
     this.hour = '';
     this.language = '';
     this.people = '';
+  }
+}
+
+class Private {
+  max: string;
+  contract: string;
+  implicit: string;
+
+  constructor() {
+    this.max = '';
+    this.contract = '';
+    this.implicit = '';
   }
 }
 

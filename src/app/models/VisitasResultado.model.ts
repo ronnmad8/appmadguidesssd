@@ -3,6 +3,7 @@ import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 import { FeaturesModel } from './Features.model';
 import { TagsModel } from './Tags.model';
 import { TimesModel } from './Times.model';
+import { List_priceModel } from './List_price.model';
 
 
 export class VisitasResultadoModel{

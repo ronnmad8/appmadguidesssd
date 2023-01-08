@@ -4,24 +4,28 @@ import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router'
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { NgwWowService } from 'ngx-wow';
+import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
+import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
+import { ZonamicuentaComponent } from 'src/app/componentes/zonamicuenta/zonamicuenta.component';
+import { Meta, Title } from '@angular/platform-browser';
 
+///models
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
-import { ImagenesService } from '../../services/imagenes.service';
-import { AlertasService } from '../../services/alertas.service';
-import { AuthService } from '../../services/auth.service';
 import { CarritoService } from '../../services/carrito.service';
-import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-
-import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
-import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
 import { CartModel } from 'src/app/models/Cart.model';
-import { ZonamicuentaComponent } from 'src/app/componentes/zonamicuenta/zonamicuenta.component';
 import { UserModel } from 'src/app/models/User.model';
-
+import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
+///services
+import { GlobalService } from '../../services/global.service';
+import { AuthService } from '../../services/auth.service';
+ 
+import { AlertasService } from '../../services/alertas.service';
+import { HeadfooterService } from 'src/app/services/headfooter.service';
+import { PlatformService } from 'src/app/services/platform.service';
 
 
 @Component({
@@ -40,14 +44,21 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
   pedido :CartModel = new CartModel();
   usuario: UserModel = new UserModel();
   pedidos: CartModel[] = [];
+  messagePerfil: TextoPerfilModel = new TextoPerfilModel();
+  isrespon: boolean = false;
+  vercuenta: boolean = false;
+  verreservas: boolean = false;
 
   constructor(
       private acro: ActivatedRoute,
       private router: Router,
-      private imagenesService: ImagenesService,
+        
       private alertasService: AlertasService,
+      private globalService: GlobalService,
       private carritoService: CarritoService,
+      private headfooterService: HeadfooterService,
       private wowService: NgwWowService,
+      private platformService: PlatformService,
       private auth: AuthService,
       private meta: Meta,
       private title: Title
@@ -59,65 +70,63 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
     // this.meta.updateTag({ name: 'author', content: 'madguides carritos guiadas en Madrid' });
     // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ carritos guiadas en Madrid' });
 
-  
-    this.menuPublic.emit(0);
-    this.zonanopago.emit();
+    this.getMessagesPerfil();
   }
   
-
+  
   ngOnInit() {
+    this.isrespon = this.platformService.isrespon;
+    this.zonanopago.emit();
     this.loginadmin();
-    this.getPedidos();
+    
+    
   }
 
 
   ngAfterViewInit() {
-    this.acro.params.subscribe(
-      (params: Params) => {
+    // this.acro.params.subscribe(
+    //   (params: Params) => {
 
-        let section = params.section;
-        if(section != null && section == "reservas"){
-          this.zm.getReservas();
-          this.zm.vermisreservas();
-        }
-        else if(section != null && section == "micuenta"){
-          this.zm.patchUser();
-          this.zm.vermicuenta();
-        }
-    });
+    //     let section = params.section;
+    //     if(section != null && section == "reservas"){
+    //       //this.zm.getReservas();
+    //       this.zm.vermisreservas();
+    //     }
+    //     else if(section != null && section == "micuenta"){
+          
+    //       this.zm.vermicuenta();
+    //       //this.zm.patchUser();
+          
+    //     }
+    // });
+
   }
+
 
 
   loginadmin() {
     
     let user = localStorage.getItem('user');
+    
     if(user != null){
       this.usuario = JSON.parse(user) as UserModel;
       this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
     }
   }
 
-  
-  guardarcambios(user: UserModel)  {
-    this.auth.updateUser(user).subscribe((resp) => {
-      this.usuario = resp as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
-      this.zm.vermicuenta();
-      this.zm.patchUser();
-      this.alertasService.alertaInfo('Madguides','Datos cambiados correctamente');
-    });
-  }
 
 
-  getPedidos() {
-    let pedidosguardados = this.carritoService.getPedidosguardados();
+  getMessagesPerfil() {
     
-    pedidosguardados.forEach((pedido) => {
-      if(pedido.cliente.uuid == this.usuario.uuid){
-        this.pedidos.push(pedido);
-      }
+    this.headfooterService.getMessagesPerfil().subscribe((resp)=>{
+      this.messagePerfil = resp as TextoPerfilModel;
+      console.log(this.messagePerfil);
+      
     });
+
   }
+
+
 
 
 

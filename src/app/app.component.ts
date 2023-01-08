@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TextoPerfilModel } from './models/TextoPerfil.model';
+import { GlobalService } from './services/global.service';
 import { PlatformService } from './services/platform.service';
 
 @Component({
@@ -11,22 +13,15 @@ export class AppComponent {
   footersinlinks: boolean = false;
 
   constructor(
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private globalService: GlobalService,
+
   )
 {
-  this.mostrarenlacesenfooter();
   this.getCurrentLanguage() ;
+  
 }
 
-  nomostrarenlacesenfooter(){
-     
-     this.footersinlinks = true;
-  }
-  
-  mostrarenlacesenfooter(){
-     
-     this.footersinlinks = false;
-  }
 
   getCurrentLanguage() {
     let cl = localStorage.getItem('currentLanguage');

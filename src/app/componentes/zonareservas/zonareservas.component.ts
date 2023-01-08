@@ -21,16 +21,15 @@ import { StatesModel } from 'src/app/models/States.model';
 import { CitiesModel } from 'src/app/models/Cities.model';
 import { PrefixModel } from 'src/app/models/Prefix.model';
 import { Observable } from 'rxjs';
-import { CarritoService } from 'src/app/services/carrito.service';
 
 @Component({
-  selector: 'app-zonamicuenta',
-  templateUrl: './zonamicuenta.component.html'
+  selector: 'app-zonareservas',
+  templateUrl: './zonareservas.component.html'
   
 })
 
 
-export class ZonamicuentaComponent implements OnInit {
+export class ZonareservasComponent implements OnInit {
 
   @Output() updateDatosData = new EventEmitter();
   @Output() updateDatosAddress = new EventEmitter();
@@ -38,7 +37,7 @@ export class ZonamicuentaComponent implements OnInit {
   @Input() pedidos: CartModel[] = [];
   @Input() messagePerfilData: TextoPerfilModel ;
 
-  sWindow: any;
+  sWindow: any ;
 
   listatest = [];
 
@@ -60,12 +59,13 @@ export class ZonamicuentaComponent implements OnInit {
 
   textoperfil: TextoPerfilModel;
 
+  
+
   constructor(
     private router: Router,
     private globalService: GlobalService,
     private micuentaService: MicuentaService,
     private alertasService: AlertasService,
-    private carritoService: CarritoService,
     private auth: AuthService,
     private fb: FormBuilder,
     private platformService: PlatformService,
@@ -80,14 +80,13 @@ export class ZonamicuentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMessagesPerfil();
-    this.getUser();
     this.getCountries();
     this.getPrefijos();
     this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacions = this.globalService.getlistatiposidentificacion();
     this.providerService.setThrowPageadmin(true);
     this.listenProvider();
+    this.getReservas();
     
   }
 
@@ -113,20 +112,20 @@ export class ZonamicuentaComponent implements OnInit {
       prefijo: [''],
       type_doc: [''],
       document: [''],
-      street : [''],
-      number : [''],
+      address : [''],
       postal: [''],
       city: [''],
       country: [''],
       state: [''],
       particular: [true],
+      
       empresa: [false],
-
+      // namefacturacion: [''],
+      // surnamefacturacion: [''],
     });
   }
 
   cambiosFormulario() {
-
     this.forma.valueChanges.subscribe((value) => {
       this.usuario.name = this.forma.get('nombre')?.value;
       this.usuario.surname = this.forma.get('apellidos')?.value;
@@ -135,13 +134,16 @@ export class ZonamicuentaComponent implements OnInit {
       this.usuario.phone = this.forma.get('phone')?.value;
       this.usuario.type_doc = this.forma.get('type_doc')?.value;
       this.usuario.document = this.forma.get('document')?.value;
-      this.usuario.street = this.forma.get('street')?.value;
-      this.usuario.number = this.forma.get('number')?.value;
+      this.usuario.address = this.forma.get('address')?.value;
       this.usuario.postal = this.forma.get('postal')?.value;
       this.usuario.city = this.forma.get('city')?.value;
       this.usuario.country = this.forma.get('country')?.value;
       this.usuario.state = this.forma.get('state')?.value;
       this.usuario.particular = this.forma.get('particular')?.value;
+
+      //this.usuario.empresa = this.forma.get('empresa')?.value;
+      // this.usuario.namefacturacion = this.forma.get('nombrefacturacion')?.value;
+      // this.usuario.surnamefacturacion = this.forma.get('apellidosfacturacion')?.value;
 
       if (this.forma.status != 'INVALID' ) {
         this.btactivo = true;
@@ -151,7 +153,7 @@ export class ZonamicuentaComponent implements OnInit {
 
 
   patchUser() {
-
+    console.log()
     this.forma.patchValue({
       name: this.usuario.name,
       surname: this.usuario.surname,
@@ -160,74 +162,49 @@ export class ZonamicuentaComponent implements OnInit {
       prefijo: this.usuario.prefijo,
       type_doc: this.usuario.type_doc,
       numeroidentificacion: this.usuario.document,
-      postal: this.usuario.postal,
-      city: this.usuario.city,
-      country: this.usuario.country,
+      codigopostal: this.usuario.postal,
+      ciudad: this.usuario.city,
+      pais: this.usuario.country,
       state: this.usuario.state,
       particular: this.usuario.particular,
-      street : this.usuario.street,
-      number: this.usuario.number,
+
+      
+      address : this.usuario.address,
       namefacturacion: this.usuario.namefacturacion,
       surnamefacturacion: this.usuario.surnamefacturacion,
 
     });
-
-    if(this.forma.value.country != '' ){
-      this.getStates(this.forma.value.country);
-    }
- 
   }
 
-
-  getUser() {
-    
-    let user = localStorage.getItem('user');
-
-    if(user != null){
-      this.usuario = JSON.parse(user) as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
-      this.usuario.address.length > 1 ? this.usuario.address = this.usuario.address[0]['address']  : this.usuario.address = this.usuario.address;
-      this.usuario.street = this.usuario.address[0].street;
-      this.usuario.number = this.usuario.address[0].number;
-      this.usuario.postal = this.usuario.address[0].cp?.toString();
-      this.usuario.country = this.usuario.address[0].country_id?.toString();
-      this.usuario.city = this.usuario.address[0].city_id?.toString();
-      this.usuario.state = this.usuario.address[0].state_id?.toString();
-      this.usuario.prefijo = this.usuario.prefix_phone_id?.toString();
-      this.usuario.phone = this.usuario.phone;
-      
-      this.patchUser();
-    }
-  }
-
-  
-  modificarDatosData()  {
-    let user: UserModel = this.usuario;
-    this.auth.updateUserData(user).subscribe((resp) => {
-      this.usuario = resp as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
-      this.alertasService.alertaInfo('Madguides','Datos cambiados correctamente');
+  getReservas() {
+    this.pedidos.forEach((pedido) => {
+       if(pedido.visitasPedido.length > 0){
+          this.reservas.push(...pedido.visitasPedido);
+       }
     });
   }
 
-  modificarDatosAddress()  {
-
-    let user: UserModel = this.usuario;
-    this.auth.updateUserAddress(user).subscribe((resp) => {
-      this.usuario = resp as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
-      this.alertasService.alertaInfo('Madguides','Datos cambiados correctamente');
-    });
-  }
-
-  getMessagesPerfil() {
-    
-    this.headfooterService.getMessagesPerfil().subscribe((resp)=>{
-      this.messagePerfilData = resp as TextoPerfilModel;
-      
-    });
+  modificarDatosData() {
+    this.listaresultados = [];
+    this.updateDatosData.emit(this.usuario);
   }
   
+  modificarDatosAddress() {
+    this.listaresultados = [];
+    this.updateDatosAddress.emit(this.usuario);
+  }
+  
+
+  vermisreservas(){
+    this.verreservas = true;
+    this.vercuenta = false;
+  }
+
+  vermicuenta(){
+    this.vercuenta = true;
+    this.verreservas = false;
+    this.patchUser();
+  }
 
   selecparticular(){
     this.forma.get('particular')?.setValue(true);
@@ -252,33 +229,28 @@ export class ZonamicuentaComponent implements OnInit {
   getCountries(){
     this.micuentaService.getCountries().subscribe((resp)=>{
       this.listacountries = resp as CountriesModel[];
+      console.log("paises ", this.listacountries)
     });
   }
 
   getPrefijos(){
     this.micuentaService.getPrefix().subscribe((resp)=>{
       this.listaprefix = resp as PrefixModel[];
+      console.log("prefijos ",this.listaprefix)
     });
   }
 
   getCities(stateId: string){
     this.micuentaService.getCities(stateId).subscribe((resp)=>{
       this.listacities = resp as CitiesModel[];
-      if(this.usuario.city != ''){
-        this.forma.get('city')?.setValue(this.usuario.city);
-      }
+      console.log("cities ",this.listacities)
     });
   }
 
   getStates(countryId: string){
     this.micuentaService.getStates(countryId).subscribe((resp)=>{
       this.listastates = resp as StatesModel[];
-      
-      if(this.usuario.state != ''){
-        this.forma.get('state')?.setValue(this.usuario.state);
-        this.getCities(this.usuario.state);
-      }
-
+      console.log("states ",this.listastates)
     });
   }
   

@@ -356,18 +356,17 @@ export class SlidervisitaComponent implements OnInit{
 
 
   getCalculoPrecio() {
-    this.precioadultos = this.timesSel.precio_mayores;
-    this.precioninos = this.timesSel.precio_menores;
-    this.preciomenores = this.timesSel.precio_pequenos;
+    
+    this.precioadultos = this.timesSel.list_price.price;
+    this.precioninos = this.timesSel.list_price.second;
+    this.preciomenores = 0;
     this.precioadultosst = this.globalService.getFormatNumber(
       (Number(this.precioadultos) * 100) / 100
     ); //correccion cuando esten los precios por edades
     this.precioninosst = this.globalService.getFormatNumber(
       (Number(this.precioninos) * 100) / 100
     ); //correccion cuando esten los precios por edades
-    this.preciomenoresst = this.globalService.getFormatNumber(
-      (Number(this.preciomenores) * 100) / 100
-    );
+    this.preciomenoresst = this.preciomenores.toString();
   }
 
 
@@ -426,6 +425,7 @@ export class SlidervisitaComponent implements OnInit{
     }
     this.setSecuencial();
   }
+
   idiomainfosel(v: string) {
     this.idiomaSel = this.listaidiomas.filter((x) => x.iso == v)[0].name;
     this.idiominfo = this.idiomaSel;
@@ -454,6 +454,7 @@ export class SlidervisitaComponent implements OnInit{
     this.sumapersonas--;
     this.setPreciototal();
   }
+
   sumarninos() {
     if (this.sumapersonas < this.maximopersonas) {
       this.ninosSel++;
@@ -699,13 +700,14 @@ export class SlidervisitaComponent implements OnInit{
     this.setSecuencial();
   }
 
-
+ ////////cuando se envien varias imagenes///////////////////////////////////////////////////////////////////
   getImagenesVisita() {
     // this.visitaService.getImagenesvisita().subscribe((resp)=>{
     //   this.visitaSel.imagenes = resp as ImagenesModel;
     // })
     return this.visitaService.getImagenesvisita();
   }
+  ///////////////////////////////////////////////////////////////////////////
 
 
   setSecuencial() {

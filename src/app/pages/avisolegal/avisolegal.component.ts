@@ -61,6 +61,7 @@ export class AvisolegalComponent implements OnInit {
 
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
+    this.providerService.setThrowFooterpol(true);
 
     this.getMessagesForm();
     this.getMessagesImage();

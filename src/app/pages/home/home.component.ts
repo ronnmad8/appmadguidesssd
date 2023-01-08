@@ -16,7 +16,7 @@ import { NgwWowService } from 'ngx-wow';
 
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
-import { ImagenesService } from '../../services/imagenes.service';
+ 
 import { AlertasService } from '../../services/alertas.service';
 import { AuthService } from '../../services/auth.service';
 import { HomeService } from '../../services/home.service';
@@ -106,6 +106,8 @@ export class HomeComponent implements OnInit{
 
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
+    this.providerService.setThrowFooterpol(true);
+
     
     this.getRecommended();
     this.getComments();
