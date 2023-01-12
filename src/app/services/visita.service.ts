@@ -14,6 +14,7 @@ import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { TimesModel } from '../models/Times.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { TextorecomendadasModel } from '../models/Textorecomendadas.model';
+import { ImagenesVisitaModel } from '../models/ImagenesVisita.model';
 
 
 @Injectable({
@@ -48,7 +49,7 @@ export class VisitaService {
         let visitas: VisitasResultadoModel[] = res as VisitasResultadoModel[];
         let visita = visitas[0];
         if (visita.visit_time_uuid != null && visita.visit_time == null) {
-          visita = this.globalService.mapperVisitas(visita)
+          visita = this.globalService.mapperVisitas(visita);
         }
         return visita;
       }),
@@ -73,6 +74,28 @@ export class VisitaService {
       })
     );
   }
+
+
+  getVisitaImagenes(uuid: string){
+    let endpoint = '/visit?uuid=' + uuid + '&images=true';
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((res) => {
+        let visitas: VisitasResultadoModel[] = res as VisitasResultadoModel[];
+        let visita = visitas[0];
+        var imagenes: ImagenesVisitaModel[] = [];
+        if(visita.visit_image != null ){
+          imagenes = visita.visit_image;
+        }
+        return imagenes;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
 
   getImagenesvisita() {
     

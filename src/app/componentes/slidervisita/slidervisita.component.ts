@@ -38,6 +38,7 @@ import { TimesModel } from 'src/app/models/Times.model';
 import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
 import { PlatformService } from 'src/app/services/platform.service';
 import { AlertasService } from 'src/app/services/alertas.service';
+import { ImagenesVisitaModel } from 'src/app/models/ImagenesVisita.model';
 
 @Component({
   selector: 'app-slidervisita',
@@ -97,8 +98,8 @@ export class SlidervisitaComponent implements OnInit{
 
   isrespon: boolean = false;
   //imagenes
-  listaImagenesVisita: ImagenesModel[] = [];
-  listaImagenesVisitaLat: ImagenesModel[] = [];
+  listaImagenesVisita: ImagenesVisitaModel[] = [];
+  listaImagenesVisitaLat: ImagenesVisitaModel[] = [];
 
   //times select
   timesSel: TimesModel = new TimesModel();
@@ -230,9 +231,7 @@ export class SlidervisitaComponent implements OnInit{
           this.fdetallecale.nativeElement.style.top = (dif - posdetallevisita - 40) +'px';
         }
       }
-
     }
-
   }
 
 
@@ -274,17 +273,8 @@ export class SlidervisitaComponent implements OnInit{
     );
     this.listaImagenesVisita = []
     this.listaImagenesVisitaLat = [];
+    this.getImagenesVisita();
 
-    ///get image first
-    let image1 = this.getImageFirst(this.visitaresultado);
-    this.listaImagenesVisita.push(image1);
-
-    ///get image fakes restantes
-    let images = this.getImagenesVisita();
-    this.listaImagenesVisita.push(...images);
-
-    this.listaImagenesVisitaLat = this.listaImagenesVisita;
-    this.listaImagenesVisitaLat[0].sel = true;
 
     //info
     this.descripcion = visita.visit_lang_description;
@@ -318,15 +308,11 @@ export class SlidervisitaComponent implements OnInit{
       let initsp = this.timesSel.init.split(':');
       let res = initsp[0] + ':' + initsp[1];
       if (hora.value == res) {
- 
         this.listahorasvisita.push(hora);
-        //this.horainfo = res;
-        //this.horaSel = hora.key;
       }
       
     });
-    
-    
+  
     //buscar si hay mas horas mismo dia
     this.visitaresultado.visit_time.forEach((v) => {
       if (v.date == this.timesSel.date && v.init != this.timesSel.init) {
@@ -372,17 +358,19 @@ export class SlidervisitaComponent implements OnInit{
 
   getIndexSel() {
     let imm = this.imagenlista.swiperSlides?.nativeElement.childNodes;
-    imm.forEach((el: any) => {
-      if (el.classList.contains('swiper-slide-active')) {
-        this.listaImagenesVisitaLat.forEach((lt: any) => {
-          lt.sel = false;
-          let idd = el.id.replace('im-', '');
-          if (lt.id == idd) {
-            lt.sel = true;
-          }
-        });
-      }
-    });
+    if(imm != null){
+      imm.forEach((el: any) => {
+        if (el.classList?.contains('swiper-slide-active')) {
+          this.listaImagenesVisitaLat.forEach((lt: any) => {
+            lt.sel = false;
+            let idd = el.id.replace('im-', '');
+            if (lt.id == idd) {
+              lt.sel = true;
+            }
+          });
+        }
+      });
+    }
   }
 
 
@@ -700,14 +688,17 @@ export class SlidervisitaComponent implements OnInit{
     this.setSecuencial();
   }
 
- ////////cuando se envien varias imagenes///////////////////////////////////////////////////////////////////
   getImagenesVisita() {
-    // this.visitaService.getImagenesvisita().subscribe((resp)=>{
-    //   this.visitaSel.imagenes = resp as ImagenesModel;
-    // })
-    return this.visitaService.getImagenesvisita();
+    this.visitaService.getVisitaImagenes(this.visitaresultado.visit_uuid).subscribe((resp)=>{
+      this.visitaresultado.visit_image = resp as ImagenesVisitaModel[];
+      this.listaImagenesVisita = this.visitaresultado.visit_image;
+      this.listaImagenesVisitaLat = this.visitaresultado.visit_image;
+      this.listaImagenesVisitaLat[0].sel = true;
+      
+    })
+    
   }
-  ///////////////////////////////////////////////////////////////////////////
+
 
 
   setSecuencial() {

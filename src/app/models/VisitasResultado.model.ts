@@ -4,6 +4,8 @@ import { FeaturesModel } from './Features.model';
 import { TagsModel } from './Tags.model';
 import { TimesModel } from './Times.model';
 import { List_priceModel } from './List_price.model';
+import { ImagenesModel } from './Imagenes.model';
+import { ImagenesVisitaModel } from './ImagenesVisita.model';
 
 
 export class VisitasResultadoModel{
@@ -57,6 +59,7 @@ export class VisitasResultadoModel{
     visit_encuentro: string;
     iso_disponible: string[];
 
+    
     ///recomendadas
     precio_mayores: number;
     precio_menores: number;
@@ -64,6 +67,7 @@ export class VisitasResultadoModel{
     duration: number;
     codigoreserva: string;
     
+    visit_image: ImagenesVisitaModel[];
     
     ///R
     fecha: string;
@@ -126,6 +130,7 @@ export class VisitasResultadoModel{
         this.precio_pequenos = 0;
         this.duration = 0;
         this.codigoreserva = "";
+        this.visit_image = [];
         
         ///R
         this.precio = 0;

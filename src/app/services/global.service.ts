@@ -209,6 +209,7 @@ export class GlobalService {
     vi.init = visita.visit_time_init;
     vi.end = visita.visit_time_end;
     vi.date = visita.visit_time_date;
+    
     vi.precio_mayores = visita.visit_time_precio_mayores;
     vi.precio_menores = visita.visit_time_precio_menores;
     vi.precio_pequenos = visita.visit_time_precio_pequenos;
