@@ -210,24 +210,14 @@ export class GlobalService {
     vi.end = visita.visit_time_end;
     vi.date = visita.visit_time_date;
     
-    vi.precio_mayores = visita.visit_time_precio_mayores;
-    vi.precio_menores = visita.visit_time_precio_menores;
-    vi.precio_pequenos = visita.visit_time_precio_pequenos;
+
     vi.iso = visita.visit_time_iso;
     vi.duration = visita.visit_time_duration;
 
     if (visita.duration != null) {
       vi.duration = visita.duration;
     }
-    if (visita.precio_mayores != null) {
-      vi.precio_mayores = visita.precio_mayores;
-    }
-    if (visita.precio_menores != null) {
-      vi.precio_menores = visita.precio_menores;
-    }
-    if (visita.precio_pequenos != null) {
-      vi.precio_pequenos = visita.precio_pequenos;
-    }
+  
 
     visita.visit_time = [];
     visita.visit_time.push(vi);

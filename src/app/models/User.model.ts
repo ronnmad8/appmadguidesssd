@@ -14,8 +14,7 @@ export class UserModel {
     password: string;
     roles: Roles[];
     rol: string;
-
-    type_doc: Identificacion;
+    type: string;
     document: string;
     address: AddressModel[];
     street: string;
@@ -25,14 +24,13 @@ export class UserModel {
     country: string;
     state: string;
     particular: boolean;
-
     social_login: string;
     social_name: string;
-    type: number;
-    
     afiliado: string;
     namefacturacion: string;
     surnamefacturacion: string;
+    old: number;
+
     constructor(){
             
         this.uuid = '';
@@ -45,7 +43,7 @@ export class UserModel {
         this.password = '';
         this.roles = [];
         this.rol = '';
-        this.type_doc = new Identificacion();
+        this.type = "";
         this.document = '';
         this.address = [];
         this.street = '';
@@ -58,11 +56,12 @@ export class UserModel {
         
         this.social_login = '';
         this.social_name = '';
-        this.type = 0;
+
         
         this.afiliado = '0'; 
         this.namefacturacion = '';
         this.surnamefacturacion = '';
+        this.old = 0;
 
 
     }

@@ -40,7 +40,7 @@
 
           <div class="bar posrel ml-auto mr-0">
             <div class="cupo posabsolbarlupa py-2 " (click)="mostrarbusqueda()">
-              <img src="../../assets/images/i-lupa.svg" class="cupo im50"  draggable="false">
+              <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
             </div>
           </div>
 
@@ -103,7 +103,7 @@
           <div class="posabsol d-flex" style="top: 24px; right: 15px">
             <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px"
               draggable="false">
-            <div class="fs-24 ml-2">Pago seguro</div>
+            <div class="fs-24 ml-2">_Pago seguro_</div>
           </div>
         </div>
 
@@ -182,7 +182,7 @@
 
           <div class="w-100">
             <div class="my-3 mx-auto text-center">
-              <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
+              <button class="btredondoRojoCarrito" type="button" (click)="gotocarrito()"  >
                 <span class="ff-JB">{{messageCart.cart.finalizar}}</span>
               </button>
             </div>
@@ -239,16 +239,15 @@
                   </button>
                   <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
                     {{messageLogin.forgot}}
-                    <div class="spinner-container text-center posrel" style="top: -70px; left: 10px"  *ngIf="loading"  >
-                      <div class="spinner-border colGRIS8 text-center "  role="status">
+                    <div class="spinner-container text-center posrel" style="top: -70px; left: 10px" *ngIf="loading">
+                      <div class="spinner-border colGRIS8 text-center " role="status">
                       </div>
                     </div>
                   </div>
-
-                  
-
                 </div>
-                <div class="oaccedemicuenta">
+
+
+                <!-- <div class="oaccedemicuenta">
                   {{messageLogin.accede}}
                 </div>
                 <div class="w-100 p-0 ">
@@ -260,7 +259,9 @@
                     <img src="assets/images/logog.png" class="imredes" draggable="false">
                     <span>Google</span>
                   </button>
-                </div>
+                </div> -->
+
+
                 <div id="notienesmicuenta">
                   <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
                     {{messageLogin.register}}
@@ -292,7 +293,7 @@
               </div>
               <div class="px-3">
                 <div id="accedemicuenta">
-                  Enviar código de recuperación a mi correo
+                  {{messageMenu.recovery}}
                 </div>
                 <div class="cj">
                   <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
@@ -303,8 +304,8 @@
                   <button *ngIf="btForgetactivado" class="btredondoRojomicuenta " type="button"
                     (click)="renovarpassword()">
                     <span>Enviar</span>
-                    <div class="spinner-container posrel" style="top: -35px; left: 0px"  *ngIf="loading"  >
-                      <div class="spinner-border colGRIS8"  role="status">
+                    <div class="spinner-container posrel" style="top: -35px; left: 0px" *ngIf="loading">
+                      <div class="spinner-border colGRIS8" role="status">
                       </div>
                     </div>
                   </button>
@@ -331,6 +332,7 @@
         <div id="panelmiregistro" class="panelcuenta" *ngIf="verregistrar"
           [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
           <div class="scrld">
+
             <form class="validate-form" [formGroup]="formregister">
               <div id="divmicuenta">
                 <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
@@ -339,102 +341,114 @@
                   </div>
                   <div id="abrirmicuentatitulo" class="px-3">Registro</div>
                 </div>
-                <div class="px-3">
+                <div class="px-3 row">
 
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
-                      formControlName="email" />
+                  <div class="col-12 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
+                        formControlName="email" />
+                    </div>
+                    <div class="lblform">_email_</div>
                   </div>
-                  <div class="cj posrel d-flex">
-                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="passwordreg"
-                      name="passwordreg" formControlName="password" />
-                    <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
-                        (click)="verpassword(false)"></i> </div>
-                    <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
-                        (click)="verpassword(true)"></i> </div>
+                  <div class="col-12 posrel">
+                    <div class="cj posrel d-flex">
+                      <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="passwordreg"
+                        name="passwordreg" formControlName="password" />
+                      <div class="posabsolRm10" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
+                          (click)="verpassword(false)"></i> </div>
+                      <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
+                          (click)="verpassword(true)"></i> </div>
+                    </div>
+                    <div class="lblform">_password_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
-                      formControlName="name" />
+                  <div class="col-12 posrel ">
+                    <div class="cj">
+                      <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
+                        formControlName="name" />
+                    </div>
+                    <div class="lblform">_nombre_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname" name="surname"
-                      formControlName="surname" />
+                  <div class="col-12 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname" name="surname"
+                        formControlName="surname" />
+                    </div>
+                    <div class="lblform">_apellidos_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo" name="prefijo"
-                      formControlName="prefijo" />
+                  <div class="col-xl-4 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo" name="prefijo"
+                        formControlName="prefijo" />
+                    </div>
+                    <div class="lblform">prefijo</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
-                      formControlName="telefono" />
+                  <div class="col-xl-8 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
+                        formControlName="telefono" />
+                    </div>
+                    <div class="lblform">teléfono</div>
                   </div>
-                  <!-- <div class="linefull my-2"></div>
-                  <div class="ff-JB">
-                    <span>Datos de facturacion</span>
+                  <div class="col-xl-8 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="Calle " id="street" name="street"
+                        formControlName="street" />
+                    </div>
+                    <div class="lblform">address </div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="namefacturacion"
-                      name="namefacturacion" formControlName="namefacturacion" />
+                  <div class="col-xl-4 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="Número " id="number" name="number"
+                        formControlName="number" />
+                    </div>
+                    <div class="lblform">_número_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surnamefacturacion"
-                      name="surnamefacturacion" formControlName="surnamefacturacion" />
-                  </div>
-                  <div class="w-100">
-                    <select #tipoiden class="cjselect" id="tipoidentificacion" name="tipoidentificacion"
-                      formControlName="tipoidentificacion">
-                      <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
+
+                  <div class="col-xl-12 posrel">
+                    <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
+                      name="country" formControlName="country">
+                      <option value="{{li.id}}" *ngFor="let li of listacountries">
                         {{li.name}}
                       </option>
                     </select>
+                    <div class="lblform">country</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Numero identificacion " id="numeroidentificacion"
-                      name="numeroidentificacion" formControlName="numeroidentificacion" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccion" name="direccion"
-                      formControlName="direccion" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Codigo postal " id="codigopostal"
-                      name="codigopostal" formControlName="codigopostal" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudad" name="ciudad"
-                      formControlName="ciudad" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Pais " id="pais" name="pais"
-                      formControlName="pais" />
-                  </div>
-                  <div class="">
 
-                    <div class="col-6 p-0 m-0">
-                      <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
-                      <label class="mx-2" for="rb-1">Particular</label>
-                      <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">
-                      <label class="mx-2" for="rb-2">Empresa</label>
-                    </div>
-
-                  </div> -->
+                  <div class="col-xl-12 posrel">
+                    <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)" name="state"
+                      formControlName="state">
+                      <option value="{{li.id}}" *ngFor="let li of listastates">
+                        {{li.name}}
+                      </option>
+                    </select>
+                    <div class="lblform">provincia</div>
+                  </div>
+                  
+                  <div class="col-xl-12 posrel">
+                    <select #cities class="cjselect w-100" id="city" name="city" formControlName="city">
+                      <option value="{{li.id}}" *ngFor="let li of listacities">
+                        {{li.name}}
+                      </option>
+                    </select>
+                    <div class="lblform">city</div>
+                  </div>
 
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button" (click)="registrar()">
-                      <span>Registrar</span>
-                      <div class="spinner-container posrel" style="top: -30px"  *ngIf="loading"  >
-                        <div class="spinner-border colGRIS8 text-center"  role="status">
+                      <span>{{messageMenu.register}}</span>
+                      <div class="spinner-container posrel" style="top: -30px" *ngIf="loading">
+                        <div class="spinner-border colGRIS8 text-center" role="status">
                         </div>
                       </div>
                     </button>
                     <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
-                      <span>Registrar</span>
+                      <span>{{messageMenu.register}}</span>
                     </button>
                   </div>
 
                   <div id="iralogin">
-                    <span>Si tengo cuenta,</span><span class="colROJO3 cupo" (click)="vermodalusuario()"> ir a login
+                    <span>{{messageMenu.count}},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
+                      {{messageMenu.login}}
                     </span>
                   </div>
 
@@ -538,7 +552,7 @@
         <div>
           <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px" draggable="false">
         </div>
-        <div class="fs-24 mx-1 d-flex" style="min-width: 140px ;">Pago seguro</div>
+        <div class="fs-24 mx-1 d-flex" style="min-width: 140px ;">_Pago seguro_</div>
       </div>
 
     </div>
@@ -549,15 +563,15 @@
     <nav id="sidebar" class="sbar" [ngClass]="ocultar">
       <div class="posrel">
 
-        <div id="abrirmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(true)"  *ngIf="!loginok"  >
+        <div id="abrirmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(true)" *ngIf="!loginok">
           <div class="px-4 py-2">Mi cuenta</div>
           <div class="cupo imperfil posabsolRight px-1">
             <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
         </div>
 
-        <div id="hola" class="w-100 d-flex posrel"  *ngIf="loginok"  >
-          <div class="px-4 py-2">Hola  <span class="mx-1">{{usuario?.name}}</span> </div>
+        <div id="hola" class="w-100 d-flex posrel" *ngIf="loginok">
+          <div class="px-4 py-2">Hola <span class="mx-1">{{usuario?.name}}</span> </div>
           <div class="cupo imperfil posabsolRight px-1">
             <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
@@ -599,9 +613,9 @@
             </a>
           </div>
 
-          
-          <div *ngIf="loginok" >
-            <div class="linecell" ></div>
+
+          <div *ngIf="loginok">
+            <div class="linecell"></div>
             <div class="posrel limenu px-3 m-0">
               <a class="cupo w-50  " routerLink="/zonacliente/micuenta" routerLinkActive="active" (click)="mostrar()">
                 <span>Ver mi cuenta</span>
@@ -618,11 +632,7 @@
               </a>
             </div>
           </div>
-
-
-
         </div>
-
       </div>
     </nav>
 
@@ -637,7 +647,7 @@
         <div id="panelcarritomovil" *ngIf="!carritovacio">
           <div id="panelcarritocondatomovil">
             <div class="text-xl-center text-left py-1 px-3">
-              Resumen del carrito
+              {{messageMenu.cart}}
             </div>
           </div>
 
@@ -755,7 +765,10 @@
                 <div class="oaccedemicuenta">
                   {{messageLogin.accede}}
                 </div>
-                <div class="w-100 p-0 ">
+
+
+
+                <!-- <div class="w-100 p-0 ">
                   <button id="btfacebookmicuentamvl" class="btcuadmicuenta mx-1" type="button" (click)="loginfacebook()">
                     <img src="assets/images/logofb.png" class="imredes" draggable="false">
                     <span>Facebook</span>
@@ -764,7 +777,10 @@
                     <img src="assets/images/logog.png" class="imredes" draggable="false">
                     <span>Google</span>
                   </button>
-                </div>
+                </div> -->
+
+
+
                 <div id="notienesmicuenta">
                   <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
                     {{messageLogin.register}}
@@ -785,11 +801,11 @@
                 <div class="cupo posabsol mvl" style="left: 12px; top: 10px" (click)="vermodalusuario()">
                   <i class="fa fa-angle-left fs-20"></i>
                 </div>
-                <div id="abrirmicuentatitulo" class="px-3">Olvidé mi contraseña</div>
+                <div id="abrirmicuentatitulo" class="px-3">_Olvidé mi contraseña_</div>
               </div>
               <div class="px-3 mt-3">
                 <div id="accedemicuenta">
-                  Enviar código de recuperación a mi correo
+                  {{messageMenu.recovery}}
                 </div>
                 <div class="cj">
                   <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id="emailrec"
@@ -799,10 +815,10 @@
                 <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                   <button *ngIf="btForgetactivado" class="btredondoRojomicuentamvl " type="button"
                     (click)="renovarpassword()">
-                    <span>Enviar</span>
+                    <span>_Enviar_</span>
                   </button>
                   <button *ngIf="!btForgetactivado" class="btredondoApagadomicuentamvl " type="button">
-                    <span>Enviar</span>
+                    <span>_Enviar_</span>
                   </button>
                 </div>
                 <div>
@@ -824,11 +840,11 @@
                   <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                     <i class="fa fa-angle-left fs-20"></i>
                   </div>
-                  <div id="abrirmicuentatitulo" class="px-3">Registro</div>
+                  <div id="abrirmicuentatitulo" class="px-3">_Registro_</div>
                 </div>
                 <div class="px-3 mt-3">
                   <div class="ff-JB">
-                    <span>Datos personales</span>
+                    <span>_Datos personales_</span>
                   </div>
                   <div class="cj">
                     <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
@@ -860,77 +876,68 @@
                     <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefonreg" name="telefonreg"
                       formControlName="telefono" />
                   </div>
-                  <!-- <div class="linefull my-2"></div>
-                  <div class="ff-JB">
-                    <span>Datos de facturacion</span>
+
+                  <div class="col-xl-6 px-2 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="Calle " id="street" name="street"
+                        formControlName="street" />
+                    </div>
+                    <div class="lblform"> _direccion_ </div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="namefacturacion"
-                      name="namefacturacion" formControlName="namefacturacion" />
+                  <div class="col-xl-6 px-2 posrel">
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="Número " id="number" name="number"
+                        formControlName="number" />
+                    </div>
+                    <div class="lblform">_número_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surnamefacturacion"
-                      name="surnamefacturacion" formControlName="surnamefacturacion" />
-                  </div>
-                  <div class="w-100">
-                    <select #tipoiden class="cjselect" id="tipoidentificacion" name="tipoidentificacion"
-                      formControlName="tipoidentificacion">
-                      <option value="{{li.id}}" *ngFor="let li of listatiposidentificacion">
+
+                  <div class="col-xl-6 px-2 posrel">
+                    <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
+                      name="country" formControlName="country">
+                      <option value="{{li.id}}" *ngFor="let li of listacountries">
                         {{li.name}}
                       </option>
                     </select>
+                    <div class="lblform">_pais_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Numero identificacion " id="numeroidentificacion"
-                      name="numeroidentificacion" formControlName="numeroidentificacion" />
+                  <div class="col-xl-6 px-2 posrel">
+                    <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)" name="state"
+                      formControlName="state">
+                      <option value="{{li.id}}" *ngFor="let li of listastates">
+                        {{li.name}}
+                      </option>
+                    </select>
+                    <div class="lblform">_provincia_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Direccion " id="direccionreg" name="direccionreg"
-                      formControlName="direccion" />
+                  <div class="col-xl-6 px-2 posrel">
+                    <select #cities class="cjselect w-100" id="city" name="city" formControlName="city">
+                      <option value="{{li.id}}" *ngFor="let li of listacities">
+                        {{li.name}}
+                      </option>
+                    </select>
+                    <div class="lblform">_ciudad_</div>
                   </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Codigo postal " id="codigopostalreg"
-                      name="codigopostalreg" formControlName="codigopostal" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Ciudad " id="ciudadreg" name="ciudadreg"
-                      formControlName="ciudad" />
-                  </div>
-                  <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Pais " id="paisreg" name="paisreg"
-                      formControlName="pais" />
-                  </div>
-                  <div class="col-6 p-0 m-0">
-                    <div class="d-flex">
-                      <div class="d-flex">
-                        <input class="mh16 mt-1" name="rb" id="rb-1" type="radio" (change)="selecparticular()"
-                          checked="checked">
-                        <label class="mx-1" for="rb-1">Particular</label>
-                      </div>
-                      <div class="mx-2 d-flex">
-                        <input class="mh16 mt-1" name="rb" id="rb-2" type="radio" (change)="selecempresa()">
-                        <label class="mx-1" for="rb-2">Empresa</label>
-                      </div>
-                    </div>
-                  </div> -->
+
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuentamvl " type="button" (click)="registrar()">
-                      <span>Registrar</span>
+                      <span>{{messageMenu.register}}</span>
                     </button>
                     <button *ngIf="!btactivadoreg" class="btredondoApagadomicuentamvl" type="button">
-                      <span>Registrar</span>
+                      <span>{{messageMenu.register}}</span>
                     </button>
                   </div>
 
                   <div id="iralogin">
-                    <span>Si tengo cuenta,</span><span class="colROJO3 cupo" (click)="vermodalusuario()"> ir a login
+                    <span>{{messageMenu.count}},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
+                      {{messageMenu.login}}
                     </span>
                   </div>
 
                 </div>
               </div>
             </form>
-          </div>          
+          </div>
         </div>
 
       </div>
@@ -944,7 +951,7 @@
             <div class="cupo posabsolRm5" (click)="mostrarbusqueda()">
               <i class="fa fa-x fs-14 mt-2"></i>
             </div>
-            <div id="abrirmicuentatitulo" class="px-3">¿Que quieres visitar?</div>
+            <div id="abrirmicuentatitulo" class="px-3">_¿Que quieres visitar?_</div>
           </div>
 
           <div class="p-4">
@@ -984,7 +991,7 @@
 
                   <div class="posrel d-flex">
                     <div id="vertodosprop2" class="cupo" (click)="verbuscador()">
-                      Ver todos los resultados para
+                      _Ver todos los resultados para_
                       <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
                         busqueda}}"</span>
                     </div>

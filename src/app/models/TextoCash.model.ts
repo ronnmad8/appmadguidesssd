@@ -28,6 +28,20 @@ export class TextoCashModel {
   confirm  : string;
   view  : string;
   id  : string;
+  cancel: string;
+  password: string;
+  reg: string;
+  cancel24: string;
+  init: string;
+  order: string;
+  dataSimple: string;
+  pay: string;
+  reserve: string;
+  paying: string;
+  string
+  language: string;
+
+
 
   constructor(){
     this.process = "Proceso de compra";

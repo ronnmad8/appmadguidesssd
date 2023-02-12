@@ -15,6 +15,10 @@ import { GlobalService } from './global.service';
 import { TextoCashModel } from '../models/TextoCash.model';
 import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { VisitaService } from './visita.service';
+import { CompanionsModel } from '../models/Companions.model';
+import { UserModel } from '../models/User.model';
+import { CompanionsPedidoModel } from '../models/CompanionsPedido.model';
+import { ContractModel } from '../models/Contract.model';
 
 
 
@@ -101,12 +105,54 @@ export class CarritoService {
     }
     return carts;
   }
+
+  getPedidosCompra(){
+    let endpoint = '/reservation' ;
+    this.url = this.apiurl + endpoint;
+    return this.http.get( `${this.url}` )
+    .pipe(
+      map( resp =>{
+        let respuesta = resp as any;
+        return respuesta;
+
+      } ) ,
+      catchError((err) => {
+        console.error("Error  " , err.error);
+        return err.error;
+      })
+    );
+  }
+
   
-  savePedidosguardados(carts: CartModel[]){
-    //create update localstorage
-    let c = JSON.stringify(carts);
-    localStorage.setItem('pedidosguardados', c);
-   
+  savePedidosguardados(pedido: ContractModel){
+  
+      let _datos = {
+      
+        users: pedido.users,
+        private: pedido.private,
+        paymentMethod: 'redsys',
+        uuid: pedido.uuid,
+        token: pedido.token,
+        address: pedido.address
+
+      };
+      
+      let endpoint = '/operation/buy';
+      this.url = this.apiurl + endpoint;
+      return this.http.post(`${this.url}`, _datos).pipe(
+        map((res) => {
+          let result = Object.values(res);
+          return res;
+        }),
+        catchError((err) => {
+          console.error('Error  ', err.error);
+          if(err.status == 200){
+            this.router.navigate(['/compra']);
+          }
+          return err;
+        })
+      );
+
   }
 
 

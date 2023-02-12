@@ -16,6 +16,7 @@ export class AddressModel {
     state: StatesModel;
     state_id: number;
     street: string;
+
     
     constructor(){
             
@@ -29,6 +30,7 @@ export class AddressModel {
         this.state = new StatesModel();
         this.state_id = 0;
         this.street = '';
+   
 
     }
 

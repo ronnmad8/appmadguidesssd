@@ -35,6 +35,9 @@ import { SocialAuthService, FacebookLoginProvider, SocialUser } from 'angularx-s
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextoCartModel } from 'src/app/models/TextoCart.model';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
+import { CountriesModel } from 'src/app/models/Countries.model';
+import { CitiesModel } from 'src/app/models/Cities.model';
+import { StatesModel } from 'src/app/models/States.model';
 
 @Component({
   selector: 'app-navbar',
@@ -117,6 +120,10 @@ export class NavbarComponent implements OnInit {
   enviar = "Enviar";
   tresize: any;
   pageadmin: boolean = false;
+
+  listacountries: CountriesModel[] = [];
+  listastates: StatesModel[] = [];
+  listacities: CitiesModel[] = [];
   
   constructor(
     private auth: AuthService,
@@ -160,6 +167,7 @@ export class NavbarComponent implements OnInit {
     this.getIdiomas();
     ///prueba viajes carrito
     this.getVisitascarrito();
+    this.getCountries();
 
     this.modalOptions = {
       backdrop: "static",
@@ -174,6 +182,7 @@ export class NavbarComponent implements OnInit {
     this.simostrarenfooter.emit();
     this.listenProvider();
     this.verbusca = false;
+    
 
     //this.listenloginfacebook();
   }
@@ -360,7 +369,11 @@ export class NavbarComponent implements OnInit {
         password: [ '',[Validators.required,Validators.minLength(1)]],
         prefijo: [ '' ],
         telefono: [ '',[Validators.required,Validators.minLength(2)]],
-
+        street: [ '',[Validators.required,Validators.minLength(2)]],
+        country: [ '',[Validators.required,Validators.minLength(2)]],
+        city: [ '',[Validators.required,Validators.minLength(2)]],
+        number: [ '',[Validators.required]],
+        state: [ '',[Validators.required,Validators.minLength(2)]],
       }
     );
   }
@@ -375,10 +388,16 @@ export class NavbarComponent implements OnInit {
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
       this.usuario.phone = this.formregister.get('phone')?.value;
+      this.usuario.street = this.formregister.get('street')?.value;
+      this.usuario.number = this.formregister.get('number')?.value;
+      this.usuario.country = this.formregister.get('country')?.value;
+      this.usuario.state = this.formregister.get('state')?.value;
+      this.usuario.city = this.formregister.get('city')?.value;
 
 
       this.btactivadoreg = false;
       if (this.formregister.status != "INVALID") {
+        
         this.btactivadoreg = true;
       }
     });
@@ -630,12 +649,13 @@ export class NavbarComponent implements OnInit {
   registrar(){
     this.loading = true;
     this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-
           let respuesta = resp as LoginModel ;
           if(respuesta.status == "success"){
              this.alertasService.alertaInfo("Madguides", respuesta.message);
+             let user = this.usuario; 
              this.formregister.reset();
              this.mostrarusuario();
+            
           }
           else{
             this.alertasService.alertaInfo("Madguides", respuesta.message);
@@ -703,6 +723,53 @@ export class NavbarComponent implements OnInit {
     //this.socialAuthService.signOut();
   }
 
+
+  getCities(stateId: string){
+    this.micuentaService.getCities(stateId).subscribe((resp)=>{
+      this.listacities = resp as CitiesModel[];
+      if(this.usuario.city != '' && this.formregister != null ){
+        this.formregister.patchValue({
+          city: this.usuario.city
+        });
+      }
+    })
+  }
+
+  getStates(countryId: string){
+    this.micuentaService.getStates(countryId).subscribe((resp)=>{
+      this.listastates = resp as StatesModel[];
+      if(this.usuario.state != '' && this.formregister != null ){
+        this.formregister.patchValue({
+          state: this.usuario.state
+        });
+        this.getCities(this.usuario.state);
+      }
+    });
+  }
+
+  seleccountry(e: any){
+    this.formregister.get('country')?.setValue(e.value);
+    this.getStates(e.value);
+  }
+
+  selecstate(e: any){
+    this.formregister.get('state')?.setValue(e.value);
+    this.getCities(e.value);
+  }
+
+  getCountries(){
+    this.micuentaService.getCountries().subscribe((resp)=>{
+      this.listacountries = resp as CountriesModel[];
+    });
+  }
+
+  gotocarrito(){
+    let nologin = this.auth.noAuth();
+    if(nologin){
+      this.alertasService.alertaInfo("Madguides", "Debes estar resgistrado para realizar el pago");
+    }
+    this.router.navigate(['/carrito']);
+  }
 
 
 }

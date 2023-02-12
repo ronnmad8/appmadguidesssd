@@ -16,7 +16,9 @@ export class ImagenesModel{
     alt: string;
     iso: string;
     sel: boolean;
-    temporada: boolean
+    temporada: boolean;
+
+    image: ImagenesModel;
     
     constructor(){
         this.id = 0;

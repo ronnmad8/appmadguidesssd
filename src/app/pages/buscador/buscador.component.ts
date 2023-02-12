@@ -39,6 +39,8 @@ import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { dateTime } from 'date-fns/locale/af';
+import { getTime } from 'date-fns';
 
 
 
@@ -162,8 +164,9 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       if(this.filtersrutacategorias != ""){
         this.filters.categorias.push(this.filtersrutacategorias);
       }
+      console.log("start=> ",getTime.toString())
       this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
-        
+        console.log("end=> ",getTime.toString())
         this.resultadoBuscador =  resp as ResultadoModel;
         this.bu.getVisitasBuscador(this.resultadoBuscador);
         this.numactividades = this.resultadoBuscador.total;
@@ -181,7 +184,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     this.buscadorService.getMessagesSearch().subscribe( (resp) => {
       let respuesta: TextosearchModel =  resp as TextosearchModel; ;
       this.messageSearch = respuesta;
-      
     } );
   }
 

@@ -36,6 +36,7 @@ export class MailService {
         email: email,
         message: message
       };
+      
       let endpoint = '/contact' ;
       this.url = this.apiurl + endpoint ;
       return this.http.post( `${this.url}`, _datos ).pipe(

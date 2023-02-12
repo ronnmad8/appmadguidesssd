@@ -15,8 +15,23 @@ export class TextosearchModel {
   levels: Levels;
   more: string;
   view: string;
+  orderby: string;
+  viewTemp: string;
+  suggestion: string;
+  delete: string;
+  apply: string;
+  free: string;
+  available: string;
+  noResult: string;
+  relevance: string;
+  today: string;
+  tomorrow: string;
+  filter: string;
+  activityView: string;
+  order: string;
+  add: string;
 
-  
+
 
   constructor() {
     this.title = '';
@@ -29,6 +44,25 @@ export class TextosearchModel {
     this.levels = new Levels();
     this.more = '';
     this.view = '';
+    this.orderby = '';
+    this.viewTemp = '';
+    this.suggestion = '';
+    this.delete = '';
+    this.apply = '';
+    this.free = '';
+    this.available = '';
+    this.noResult = '';
+    this.relevance = '';
+    this.today = '';
+    this.tomorrow = '';
+    this.filter = '';
+    this.activityView = '';
+    this.order = '';
+    this.add = '';
+
+
+
+
     
     
   }

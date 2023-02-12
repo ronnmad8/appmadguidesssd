@@ -17,7 +17,7 @@ export class TextoPerfilModel {
     pendiente: string;
     now: string;
     cancel: Cancel;
-
+    
 
 }
 

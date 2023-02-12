@@ -70,7 +70,7 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
         this.visitasprop = resultado.data as VisitasResultadoModel[];
         this.loading = false;
       }) ;
-    }, 10);
+    }, 10); 
 
   }
   

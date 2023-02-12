@@ -13,14 +13,14 @@
                         </div>
                         <div class="pl-2 fs-18 my-3">
                             Hemos enviado un email a
-                            <span classs="ff-JB"> tuemail@gmail.com </span>
+                            <span classs="ff-JB"> {{ usuario.email }} </span>
                             con el detalle de tu reserva.
                         </div>
                     </div>
                     <div class="w-100 posrel">
                         <div class="panelReservafirmada" *ngFor="let visitapedido of listaPedido ">
                             <div class="imgReservafirmada">
-                                <div #imageneslatid id="im-{{visitapedido.visit_uuid}}" class="cupo">
+                                <div #imageneslatid id="im-{{visitapedido.visit_uuid}}" >
                                     <picture>
                                         <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
                                             data-srcset="{{visitapedido.visit_image_url}}">
@@ -32,7 +32,7 @@
                             </div>
                             <div class="panelinfoReservafirmada">
                                 <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
-                                    {{visitapedido.visit_lang_title}}
+                                    {{visitapedido.visit_lang_title}} _
                                 </div>
                                 <div class="lh-1-4">
                                     <span>{{visitapedido.visit_time[0].date | fechaleg }}</span>
@@ -49,9 +49,9 @@
                                     <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                                             style="margin-right: -3px; margin-top: 0px;"></i>
                                         {{visitapedido.ninos}}</span>
-                                    <span><i class="fa fa-person fs-12" title="Menores"
+                                    <!-- <span><i class="fa fa-person fs-12" title="Menores"
                                             style="margin-right: -3px; margin-top: px;"></i>
-                                        {{visitapedido.menores}}</span>
+                                        {{visitapedido.menores}}</span> -->
                                 </div>
                                 <div class="fs-14 lh-1-4" *ngIf="visitapedido.visit_privada">
                                     *Visita privada

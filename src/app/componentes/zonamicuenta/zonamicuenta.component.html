@@ -11,7 +11,7 @@
                                 <span>{{messagePerfilData?.account}} </span>
                             </div>
                             <div class="posabsolR fs-14 p-xl-4 p-2">
-                                <div>{{usuario.roles[0].name}}</div>
+                                <div>{{usuario.roles[0]?.name}}</div>
                                 <div *ngIf="usuario.afiliado != ''">
                                     <span>ID de Afiliado:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}}
                                         _</span>
@@ -73,7 +73,7 @@
                                     <div class="col-xl-2 col-4 pl-2 pr-1 posrel">
                                         <select #prefix class="cjselect w-100" id="prefijo"
                                             name="prefijo" formControlName="prefijo">
-                                            <option value="{{li.uuid}}" *ngFor="let li of listaprefix">
+                                            <option value="{{li.id}}" *ngFor="let li of listaprefix">
                                                 {{li.code}}
                                             </option>
                                         </select>
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <select #typedoc class="cjselect w-100" id="tipoidentificacion"
-                                            name="tipoidentificacion" formControlName="type_doc">
+                                            name="tipoidentificacion" formControlName="type">
                                             <option value="{{li.name}}" *ngFor="let li of listatiposidentificacions">
                                                 {{li.name}}
                                             </option>
@@ -104,9 +104,9 @@
                                     </div>
                                     <div class="col-xl-6 px-2 ">
                                         <div class="p-0 m-0">
-                                            <input name="rb" id="rb-1" type="radio" (change)="selecparticular()">
+                                            <input name="rb" id="rb-1" type="radio" (change)="selecparticular()" formControlName="particular"  >
                                             <label class="mx-2" for="rb-1">{{messagePerfilData?.invoice?.options?.option1}}</label>
-                                            <input name="rb" id="rb-2" type="radio" (change)="selecempresa()">
+                                            <input name="rb" id="rb-2" type="radio" (change)="selecempresa()"  formControlName="particular" >
                                             <label class="mx-2" for="rb-2">{{messagePerfilData?.invoice?.options?.option2}}</label>
                                         </div>
                                     </div>
@@ -127,30 +127,12 @@
                             <div class="infoMicuenta w-100 d-flex">
                                 <div class="row px-2">
 
-                                    <!-- <div class="col-xl-6 px-2 posrel">
-                                        <div class="cj">
-                                            <input type="text" class="colGRIS1 " placeholder="Nombre"
-                                                id="namefacturacion" name="namefacturacion"
-                                                formControlName="namefacturacion" />
-                                        </div>
-                                        <div class="lblform" >Nombre</div>
-                                    </div>
-                                    <div class="col-xl-6 px-2 posrel">
-                                        <div class="cj">
-                                            <input type="text" class="colGRIS1 " placeholder="Apellidos"
-                                                id="surnamefacturacion" name="surnamefacturacion"
-                                                formControlName="surnamefacturacion" />
-                                        </div>
-                                        <div class="lblform" >Apellidos</div>
-                                    </div> -->
-
-
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGamRIS1 " placeholder="Calle " id="street"
                                                 name="street" formControlName="street" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.address}}</div>
+                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.address}}  </div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">

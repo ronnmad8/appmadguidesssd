@@ -35,11 +35,12 @@
                       <span>{{ visita.visit_lang_title.length > 50 ? visita.visit_lang_title.substring(0,47)+'...' : visita.visit_lang_title }}</span>
                   </div>
                   <div class="textvisita">
-                    <span>{{ visita.visit_lang_description.length > 70 ? visita.visit_lang_description.substring(0,67)+'...' : visita.visit_lang_description }}</span>
+                    <span [innerHTML]=" visita.visit_lang_description.length > 70 ? visita.visit_lang_description.substring(0,67)+'...' : visita.visit_lang_description " >
+                    </span>
                   </div>
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
-                        <span class="preciovisitaeuro">{{visita.precio_mayores}}€ </span>
+                        <span class="preciovisitaeuro">{{visita.price}}€ </span>
                         <span class="porpersona">por persona</span> 
                       </div>
                       <div class="horasvisita"> 

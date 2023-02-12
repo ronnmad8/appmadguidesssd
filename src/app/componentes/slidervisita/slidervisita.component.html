@@ -67,11 +67,6 @@
                             <div id="im-{{imagenes.visit_image_uuid}}" class="p-0 m-0 imagenescent"
                                 *ngFor="let imagenes of listaImagenesVisita">
                                 <div class="posrel">
-                                    <!-- <div class="visitastemporada" >
-                                    <div>
-                                        {{messages.messages.season}} 
-                                    </div>
-                                </div> -->
                                     <div class="posrel w-100">
                                         <picture>
                                             <source media="(min-width: 0px)" srcset="{{imagenes.visit_image_url}}"
@@ -206,7 +201,7 @@
                                                             {{messages.price.adults}} {{adultoSel}}
                                                         </span>
                                                         <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
-                                                            {{messages.price.children}} {{ninosSel}}
+                                                            {{messages.price.children}} (3-11)  {{ninosSel}} 
                                                         </span>
                                                         <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
                                                             Menores {{menoresSel}}
@@ -258,7 +253,7 @@
                                                 <div #ninos class="row my-2">
                                                     <div class="col-4 text-left posrel">
                                                         <div class="fs-8 posabsol" style="top: -6px">
-                                                            {{messages.price.children}}
+                                                            {{messages.price.children}} (3-11)
                                                         </div>
                                                         <div class="fs-16">{{precioninosst}} €</div>
                                                     </div>
@@ -291,42 +286,6 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- <div #menores class="row my-2">
-                                                    <div class="col-4 text-left posrel">
-                                                        <div class="fs-8 posabsol" style="top: -6px">
-                                                            menores
-                                                        </div>
-                                                        <div class="fs-16">{{preciomenoresst}} €</div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="w-100 d-flex mw100">
-                                                            <div class="posrelbtm5">
-                                                                <div *ngIf="menoresSel == 0">
-                                                                    <img src="../../assets/images/i-restarapagado.svg"
-                                                                        class="imicono4" draggable="false">
-                                                                </div>
-                                                                <div class="cupo" *ngIf="menoresSel > 0"
-                                                                    (click)="restarmenores()">
-                                                                    <img src="../../assets/images/i-restar.svg"
-                                                                        class="imicono4" draggable="false">
-                                                                </div>
-                                                            </div>
-                                                            <div class="fs-16 text-center w50">
-                                                                {{menoresSel}}
-                                                            </div>
-                                                            <div class="posrelbtm5">
-                                                                <div class="cupo" (click)="sumarmenores()">
-                                                                    <img src="../../assets/images/i-sumar.svg"
-                                                                        class="imicono4" draggable="false">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4 text-right">
-                                                        <div class="fs-16">{{preciomenorestotalst}} €</div>
-                                                    </div>
-                                                </div> -->
-
                                                 <div #total class="d-flex w-100 posrel my-3">
                                                     <div class="ml-0 mr-auto ">
                                                         <div class="fs-16">Total</div>
@@ -337,9 +296,9 @@
                                                 </div>
                                                 <div #maximo class="d-flex w-100 posrel my-3">
                                                     <div class="d-flex posrel w-100">
-                                                        <div class="fs-12">*Máximas personas visita
+                                                        <div class="fs-12">_vendidas_  / _*Máximas personas visita_
                                                         </div>
-                                                        <div class="posabsolR ff-JB">{{maximopersonas}}</div>
+                                                        <div class="posabsolR ff-JB"> {{vendidas}} / {{maximopersonas}}</div>
                                                     </div>
                                                 </div>
                                                 <div #checkprivada class="d-flex w-100 posrel my-3"
@@ -352,12 +311,12 @@
                                                     </div>
                                                     <div class="mr-0 ml-auto">
                                                         <div class="fs-16 mx-1">
-                                                            Contratar visita privada.
+                                                            _Contratar visita privada._
                                                         </div>
                                                         <div class="fs-12 ffita colGRIS2">
-                                                            *Implica asumir el precio al coste máximo de la visita
+                                                            _*Implica asumir el precio al coste máximo de la visita
                                                             independientemente del número
-                                                            total de asistentes.
+                                                            total de asistentes._
                                                         </div>
                                                     </div>
                                                 </div>
@@ -485,18 +444,18 @@
                                     <td class="tdprecios text-right">{{precioadultosst}} €</td>
                                 </tr>
                                 <tr class="bgBLANCO trprecios">
-                                    <td class="tdprecios">{{messages.price.children}} <span
+                                    <td class="tdprecios">{{messages.price.children}} (3-11)<span
                                             class="fs-12 ml-1">{{messages.price.range}}</span></td>
                                     <td class="tdprecios text-right">{{precioninosst}} €</td>
                                 </tr>
-                                <tr class="bgBLANCO2 trprecios">
+                                <!-- <tr class="bgBLANCO2 trprecios">
                                     <td class="tdprecios">{{messages.price.children}} <span
                                             class="fs-12 ml-1">{{messages.price.minor}}</span></td>
                                     <td class="tdprecios text-right">
                                         <span *ngIf="preciomenores > 0">{{preciomenoresst}} €</span>
                                         <span *ngIf="preciomenores == 0">{{messages.price.free}}</span>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
 
@@ -505,7 +464,7 @@
                 </div>
                 <div class="conteni ">
                     <div #zoneDetalles class="scroll-with-offset mb-4">
-                        <div class="fs-20 my-3 ff-JB colGRIS1">
+                        <div class="fs-20 my-3 ff-JB colGRIS1"  >
                             {{messages.tabs.description | capitalize}}
                         </div>
                         <div class="row fs-18 my-2">
@@ -652,7 +611,7 @@
             <div class="p-2 d-flex ml-auto mr-0 posrel">
 
                 <div>
-                    <span class="preciovisitaeuro fs-14">{{timesSel.precio_mayores}}€ </span>
+                    <span class="preciovisitaeuro fs-14">{{timesSel.price}}€ </span>
                     <span class="colGRIS1 mr-2 fs-12">por persona</span>
                 </div>
                 <div class="linvertical mx-2"></div>
@@ -999,9 +958,9 @@
                                                 <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
                                                     {{messages.price.children}} {{ninosSel}}
                                                 </span>
-                                                <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
+                                                <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
                                                     Menores {{menoresSel}}
-                                                </span>
+                                                </span> -->
                                             </div>
                                         </div>
                                         <div class="posabsolRight">
@@ -1049,7 +1008,7 @@
                                         <div #ninos class="row my-2">
                                             <div class="col-4 text-left posrel">
                                                 <div class="fs-8 posabsol" style="top: -6px">
-                                                    {{messages.price.children}}
+                                                    {{messages.price.children}} (3-11)
                                                 </div>
                                                 <div class="fs-16">{{precioninosst}} €</div>
                                             </div>

@@ -32,10 +32,20 @@ export class ErrorsInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => event), 
       catchError((error: HttpErrorResponse) => {
-        
-          if (error && error.status == 401){
-            console.log("intercept error", error);
-            this.alertasService.alertaKO('Madguides', 'Error, revise los campos');
+
+          if(error.status == 200){
+            this.alertasService.alertaOK('Madguides', 'Proceso realizado correctamente');
+            return throwError(error);
+          }
+          else if (error && error.status == 401){
+            debugger
+            if(error.error.message.includes('verificar')){
+              this.alertasService.alertaKO('Madguides', 'debe revisar verficiacion de email');
+            }
+            else{
+              this.auth.logout();
+              this.alertasService.alertaKO('Madguides', 'Error, revise los campos');
+            }
           }
           else{
             this.alertasService.alertaKO('Madguides', 'Error, Algo fue mal durante el proceso');

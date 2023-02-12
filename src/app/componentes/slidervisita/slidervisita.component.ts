@@ -133,6 +133,8 @@ export class SlidervisitaComponent implements OnInit{
   caleinfo: string = '';
   idiominfo: string = '';
   maximopersonas: number = 0;
+  vendidas: number = 0;
+  disponibles: number = 0;
   sumapersonas: number = 0;
   precioadultos: number = 0;
   precioninos: number = 0;
@@ -283,9 +285,11 @@ export class SlidervisitaComponent implements OnInit{
     if (this.timesSel != null) {
       this.timesSel = visita.visit_time[0];
     }
-    this.maximopersonas = this.timesSel.max;
-    this.sumapersonas = 0; ///aqui deberiamos saber disponibles en bbdd!!!!!!!!!!!!!!!!!!
-
+    
+    this.maximopersonas = this.timesSel.available;
+    this.vendidas = this.timesSel.buy;
+    this.disponibles = this.maximopersonas - this.vendidas;
+   
     this.getCalculoPrecio();
 
     ///get idiomas
@@ -429,11 +433,14 @@ export class SlidervisitaComponent implements OnInit{
     this.setPreciototal();
   }
   sumaradulto() {
-    if (this.sumapersonas < this.maximopersonas) {
+    if (this.sumapersonas < this.disponibles) {
       this.adultoSel++;
       this.sumapersonas++;
       this.setPreciototal();
       this.persnovalid = false;
+    }
+    else{
+      this.alertasService.alertaInfo("Madguides", "no puede seleccionar más de las disponibles")
     }
   }
 
@@ -444,11 +451,14 @@ export class SlidervisitaComponent implements OnInit{
   }
 
   sumarninos() {
-    if (this.sumapersonas < this.maximopersonas) {
+    if (this.sumapersonas < this.disponibles) {
       this.ninosSel++;
       this.sumapersonas++;
       this.setPreciototal();
       this.persnovalid = false;
+    }
+    else{
+      this.alertasService.alertaInfo("Madguides", "no puede seleccionar más de las disponibles")
     }
   }
 
@@ -745,6 +755,7 @@ export class SlidervisitaComponent implements OnInit{
       this.visitaresultado.precio = this.preciototal;
       this.visitaresultado.fecha = this.dateValue;
       this.visitaresultado.hora = this.horainfo;
+      this.visitaresultado.horario_uuid = this.timesSel.uuid ;
       this.visitaresultado.idioma = this.idiominfo;
       if (carrito.visitasPedido == null) {
         carrito.visitasPedido = [];

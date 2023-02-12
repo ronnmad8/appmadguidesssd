@@ -1,74 +1,80 @@
+<div>
+    <div class="h100"></div>
 
+    <div class=" m-4 animated fadeIn slow ">
+        <div class="w-100 posrel  mx-auto">
 
-        <div>
-            <div class="h100"></div>
+            <div class="panelReservafirmada" *ngFor="let reserva of reservas ">
 
-            <div class="p-0 m-0 animated fadeIn slow " >
-                <div class="w-100 posrel">
+                <div class="h-100">
+                    <div #imageneslatid id="im-{{reserva.visit_uuid}}" class="chimaglat cupo">
+                        <picture>
+                            <source media="(min-width: 0px)" srcset="{{reserva.visit_image_url}}"
+                                data-srcset="{{reserva.visit_image_url}}">
+                            <img class="imglat" src="{{reserva.visit_image_url}}" data-src="{{reserva.visit_image_url}}"
+                                alt="{{reserva.visit_image_url}}" style="height: 194px;min-width: 232px ;">
+                        </picture>
+                    </div>
+                </div>
+                <div class="w-100">
 
-                    <div class="panelReservafirmada" *ngFor="let visitapedido of reservas ">
+                    <div class="posrel w-100  px-xl-4 px-2 ">
 
-                        <div style="width: 280px; height: 100%">
-                            <div #imageneslatid id="im-{{visitapedido?.visit_uuid}}" class="cupo">
-                                <picture>
-                                    <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
-                                        data-srcset="{{visitapedido?.visit_image_url}}">
-                                    <img class="imglat" src="{{visitapedido.visit_image_url}}"
-                                        data-src="{{visitapedido?.visit_image_url}}"
-                                        alt="{{visitapedido?.visit_lang_title}}" style="height: 194px ;">
-                                </picture>
+                        <div class="posabsolX">
+                            <div class="cupo" (click)="cancelarVisita(reserva)">
+                                <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                             </div>
                         </div>
-
-                        <div class="posrel h-100  p-4">
-
-                            <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
-                                {{visitapedido.visit_lang_title}}
-                            </div>
-                            <div class="lh-1-4">
-                                <span>{{visitapedido.visit_time[0].date | fechaleg }}</span>
-                                <span class="mx-1"> a las {{visitapedido?.visit_time[0].init | horaleg }} </span>
-                            </div>
-                            <div class="lh-1-4">
-                                Idioma: <span class="ml-1">{{visitapedido?.visit_time[0].iso | idiomaiso |
-                                    capitalize}}</span>
-                            </div>
-                            <div class="fs-14 lh-1-4 ff-JB">
-                                <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
-                                        style="margin-right: -3px; margin-top: -2px;"></i>
-                                    {{visitapedido?.adultos}}</span>
-                                <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
-                                        style="margin-right: -3px; margin-top: 0px;"></i>
-                                    {{visitapedido?.ninos}}</span>
-                                <span><i class="fa fa-person fs-12" title="Menores"
-                                        style="margin-right: -3px; margin-top: px;"></i>
-                                    {{visitapedido?.menores}}</span>
-                            </div>
-                            <div class="fs-14 lh-1-4" *ngIf="visitapedido.visit_privada">
-                                *Visita privada
-                            </div>
-                            <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2">
-                                Código de Reserva:
-                                <span class="colROJO2">{{visitapedido?.codigoreserva}}</span>
-                            </div>
-
+    
+                        <div id="titulopanelpedido">
+                            {{reserva.visit_lang_title.length > 30 ? reserva.visit_lang_title.substring(0,
+                            47)+"..." : reserva.visit_lang_title }}
                         </div>
-
+    
+                    </div>
+                    <div class="posrel h-100 w-100  p-xl-4 p-2 infopanelreserva ">
+    
+                        <div class="fs-18 p-0  mb-2 pc">
+                            {{ reserva.visit_lang_description.length > 50 ?
+                            reserva.visit_lang_description.substring(0, 47)+"..." :
+                            reserva.visit_lang_description }}
+                        </div>
+    
+    
+                        <div class="lh-1-4">
+                            <span>{{reserva.visit_time_date | fechaleg }}</span>
+                            <span class="mx-1"> a las {{reserva.visit_time_init | horaleg }} </span>
+                        </div>
+    
+                        <div class="fs-14 lh-1-4 ff-JB">
+    
+                            <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
+                                    style="margin-right: -3px; margin-top: -2px;"></i>
+                                {{reserva.adultos}}</span>
+                            <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                                    style="margin-right: -3px; margin-top: 0px;"></i>
+                                {{reserva.ninos}}</span>
+    
+                        </div>
+                        <div class="fs-14 lh-1-4" *ngIf="reserva.visit_privada">
+                            _*Visita privada_
+                        </div>
+                        <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2" *ngIf="reserva.codigoreserva">
+                            _Código de Reserva:_
+                            <span class="colROJO2">{{reserva.codigoreserva}}</span>
+                        </div>
+    
+                        <!-- <div class="lh-1-4">
+                            Idioma: 
+                            <span class="ml-1">{{reserva.visit_time_iso | idiomaiso | capitalize}}</span>
+                        </div> -->
+    
                     </div>
 
-                    <!-- <div class="posabsolR">
-                        <div class="posrel">
-                            <div class="posabsol " style="right: 0 ; top: 10px">
-                                <div class="mt-4 mx-auto text-center">
-                                    <button class="btredondoRojoVerReservas " type="button"
-                                        (click)="verMisReservas()">
-                                        <span class="ff-JB">Ver mis reservas</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
                 </div>
+                
             </div>
         </div>
+    </div>
+</div>

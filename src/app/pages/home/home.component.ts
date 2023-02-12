@@ -181,6 +181,7 @@ export class HomeComponent implements OnInit{
   getRecommended(){
     this.homeService.getRecomendadasHome().subscribe( (resp) => {
       this.recommended = resp as VisitasResultadoModel[];
+      
     });
   }
 

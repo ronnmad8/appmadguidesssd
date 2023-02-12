@@ -50,12 +50,15 @@ export class QuienessomosService {
 
     var messageData: TextoquienessomosModel = new TextoquienessomosModel();
     messageData.title1 = "Quienes Somos";
-    messageData.message1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries." ;
+    messageData.message1 = "Cooperativa formada sólo por guías oficiales de turismo. A bordo treinta socios y socias" ;
 
     messageData.title2a = "El equipo ";
     messageData.title2b = "Madguides";
-    messageData.message2 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries." ;
-    messageData.message3 = "“unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.”" ;
+    messageData.message2 = "Somos apasionadas de nuestra ciudad, su historia, su cultura y la vida de sus calle son nuestra herramienta de trabajo. Contamos sus leyendas, mitos y secretos." ;
+    messageData.message3 = "Hablamos de Madrid en ocho idiomas español inglés, francés, portugués, italiano, alemán, griego y polaco."
+    + "Calidad, profesionalidad y grupos reducidos.";
+    messageData.message4 = "Despertamos tu curiosidad no sólo por los museos sino también por la gran oferta culinaria y de ocio de los madriles."
+    messageData.message5 = "Elige bien quién te guía" ;
     
     ///fake api
     var SubscribeObservable = new Observable((observer) => {

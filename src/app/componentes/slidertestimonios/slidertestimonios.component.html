@@ -47,7 +47,8 @@
               </div>
               <div class="texttestim " >
                 <div>
-                  {{comentario.lang_description.length > 190 ? comentario.lang_description.substring(0, 187)+"..." : comentario.lang_description }}
+                  <span [innerHtml]=" comentario.lang_description.length > 400 ? comentario.lang_description.substring(0, 397)+'...' : comentario.lang_description  " >
+                  </span>
                 </div>
               </div> 
               <div class="titulotestim">

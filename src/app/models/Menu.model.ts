@@ -8,6 +8,14 @@ export class MenuModel {
     contact: string;
     blog: string;
     help: string;
+    hello: string;
+    recovery: string;
+    register: string;
+    login: string;
+    count: string;
+    cart: string;
+
+
 
     constructor(){
 
@@ -15,6 +23,12 @@ export class MenuModel {
         this.contact = "";
         this.blog = "";
         this.help = "";
+        this.hello = "";
+        this.recovery = "";
+        this.register = "";
+        this.login = "";
+        this.count = "";
+        this.cart = "";
     
 
     }

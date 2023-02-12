@@ -77,8 +77,10 @@ export class ZonacontactoComponent implements OnInit {
   }
 
   enviarMail(){
-    let mailenviado =  this.mailService.sendMail(this.nombresel, this.emailsel, this.mensajesel);
-    
+    this.mailService.sendMail(this.nombresel, this.emailsel, this.mensajesel).subscribe((resp)=>{
+      console.log(resp);
+    });
+    this.forma.reset();
   }
 
 

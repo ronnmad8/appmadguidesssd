@@ -18,6 +18,8 @@ import { StatesModel } from '../models/States.model';
 import { CountriesModel } from '../models/Countries.model';
 import { PrefixModel } from '../models/Prefix.model';
 import { CitiesModel } from '../models/Cities.model';
+import { ReservationModel } from '../models/Reservations.model';
+import { RespuestaModel } from '../models/Respuesta.model';
 
 
 @Injectable({
@@ -150,7 +152,45 @@ export class MicuentaService {
   }
 
 
+  getReservation() {
 
+    let endpoint = '/reservation';
+    this.url = this.apiurl + endpoint;
+    let visitas: any[] = [];
+    return this.http.get(`${this.url}`).pipe(
+      map((res) => {
+        if(res != null){
+          visitas = res as ReservationModel[];
+        }
+        return visitas;
+      }),
+      catchError((err) => {
+        console.log(err);
+        throw err;
+      })
+    );
+  }
+
+
+  deleteReservation(uuid){
+    let _datos = {
+      uuid
+    };
+    
+    let endpoint = 'reservation/cancel';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        
+        let user = res as RespuestaModel;
+        return user;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
 
 
 

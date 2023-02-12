@@ -12,6 +12,8 @@ import { LoginModel } from '../models/Login.model';
 import { RecordarmeModel } from '../models/Recordarme.model';
 import { CountriesModel } from '../models/Countries.model';
 import { StatesModel } from '../models/States.model';
+import { ResultadoModel } from '../models/Resultado.model';
+import { RespuestaModel } from '../models/Respuesta.model';
 
 
 @Injectable({
@@ -154,15 +156,21 @@ export class AuthService {
       phone: user.phone,
       privacity: true,
       particular: true,
-      type_doc: user.type_doc,
-      telefono: user.phone
+      type: user.type,
+      telefono: user.phone,
+      street: user.street,
+      country: user.country  ,
+      state: user.state,
+      city: user.city,
+      number: user.number,
+      direction: true,
     };
 
     let endpoint = '/register';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        let login = res as LoginModel;
+        let login = res as UserModel;
         return login;
       }),
       catchError((err) => {
@@ -202,7 +210,14 @@ export class AuthService {
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        
+        localStorage.removeItem('token');
+        localStorage.removeItem('rol');
+        localStorage.removeItem('user');
+        localStorage.removeItem('saludo');
+        this.userToken = '';
+        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
+        this.headers =this.getHeaders(this.clang, this.userToken);
+
         let login = res as LoginModel;
         if(login.status == "success"){
           this.guardarToken(login);
@@ -216,17 +231,31 @@ export class AuthService {
     );
   }
 
+  resetlogin() {
+    
+    let user = this.getUser();
+
+    if(user != null){
+      this.loginUser(user);
+    }
+    else{
+      this.logout();
+    }
+    
+  }
+
   getMe() {
 
     let endpoint = '/me';
     this.url = this.apiurl + endpoint;
-    let user: ClientesModel = new ClientesModel();
+    let user: UserModel = new UserModel();
     return this.http.get(`${this.url}`).pipe(
-      map((res) => {
-        if(res != null){
+      map((res: ResultadoModel) => {
+        if(res != null && res.status == "success"){
       
-          user = res["user"] as ClientesModel;
+          user = res.user as UserModel;
           localStorage.setItem('user', JSON.stringify(user));
+
         }
         return user;
       }),
@@ -246,9 +275,8 @@ export class AuthService {
       name: user.name,
       surname: user.surname,
       prefijo: user.prefijo,
-      email: user.email,
-      phone: user.phone,
-      type_doc: user.type_doc,
+      telefono: user.phone,
+      type_doc: user.type,
       document: user.document,
       particular: true
     };
@@ -257,7 +285,7 @@ export class AuthService {
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        let user = res as UserModel;
+        let user = res as RespuestaModel;
         return user;
       }),
       catchError((err) => {
@@ -266,32 +294,67 @@ export class AuthService {
       })
     );
   }
+
 
 
   updateUserAddress(user: UserModel) {
-
-    let _datos = {
-      uuid: user.uuid,
-      street: user.street,
-      number: user.number,
-      postal: user.postal,
-      city: user.city,
-      state: user.state,
-      country: user.country
-      
-    };
+   
     
-    let endpoint = '/changeAdrress';
-    this.url = this.apiurl + endpoint;
-    return this.http.post(`${this.url}`, _datos).pipe(
-      map((res) => {
-        let user = res as UserModel;
-        return user;
-      }),
-      catchError((err) => {
-        console.error('Error  ', err.error);
-        return err.error;
-      })
-    );
+    let addressid = "";
+    if(user.address.length > 0){
+      addressid = user.address[0]["address"].uuid;
+    }
+    if(addressid == ""){
+      let _datos = {
+        street: user.street,
+        number: user.number,
+        postal: user.postal,
+        city: user.city,
+        state: user.state,
+        country: user.country
+      };
+      
+      let endpoint = '/direction';
+      this.url = this.apiurl + endpoint;
+      return this.http.post(`${this.url}`, _datos).pipe(
+        map((res) => {
+          let user = res as UserModel;
+          return user;
+        }),
+        catchError((err) => {
+          console.error('Error  ', err.error);
+          return err.error;
+        })
+      );
+    }
+
+    else{
+      let _datos = {
+        uuid:  addressid,
+        street: user.street,
+        number: user.number,
+        postal: user.postal,
+        city: user.city,
+        state: user.state,
+        country: user.country
+        
+      };
+      
+      let endpoint = '/changeAddress';
+      this.url = this.apiurl + endpoint;
+      return this.http.post(`${this.url}`, _datos).pipe(
+        map((res) => {
+          let user = res as UserModel;
+          return user;
+        }),
+        catchError((err) => {
+          console.error('Error  ', err.error);
+          return err.error;
+        })
+      );
+    }
+    
   }
+
+
 }

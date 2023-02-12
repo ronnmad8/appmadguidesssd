@@ -3,6 +3,7 @@ import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 import { FeaturesModel } from './Features.model';
 import { ImagenesModel } from './Imagenes.model';
 import { TagsModel } from './Tags.model';
+import { LanguagesModel } from './Languages.model';
 
 
 export class VisitasModel{
@@ -48,6 +49,17 @@ export class VisitasModel{
     menores: number;
     maximopersonas: number;
     imagenes: ImagenesModel[];
+
+    temporada: number;
+    encuentro: string;
+    accesibility: boolean;
+    recommended: boolean;
+    publish: boolean;
+    iso_disponible: [];
+    animals: boolean;
+    language: LanguagesModel;
+
+
     
     constructor(){
         this.id = 0;

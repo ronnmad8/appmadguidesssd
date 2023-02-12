@@ -70,7 +70,7 @@ export class AyudaService {
     messageData.noencuentras = "¿No encuentras lo que buscas?";
     messageData.whatsapp = "Escríbenos un WhatsApp (656786524)";
     messageData.telefono = "Llámanos al 91 7896745";
-    messageData.escribenos = "Escríbenos a info@madguides.es";
+    messageData.escribenos = "Escríbenos a info@madguidestour.com";
     messageData.formulario = "o a traves de nuestro formulario web";
     
     

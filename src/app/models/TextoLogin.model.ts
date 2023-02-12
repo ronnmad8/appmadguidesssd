@@ -12,6 +12,8 @@ export class TextoLoginModel {
     accede: string;
     cuenta: string;
     register: string;
+    have: string;
+    login: string;
 
     constructor(){
         this.title = "";
@@ -23,6 +25,8 @@ export class TextoLoginModel {
         this.accede = "";
         this.cuenta = "";
         this.register = "";
+        this.have = "";
+        this.login = "";
 
 
     }

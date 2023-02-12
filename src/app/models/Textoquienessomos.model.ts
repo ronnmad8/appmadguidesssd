@@ -8,6 +8,8 @@ export class TextoquienessomosModel {
     title2b: string;
     message2: string;
     message3: string;
+    message4: string;
+    message5: string;
 
     constructor(){
 
@@ -17,6 +19,8 @@ export class TextoquienessomosModel {
         this.title2b = "";
         this.message2 = "";
         this.message3 = "";
+        this.message4 = "";
+        this.message5 = "";
 
 
     }

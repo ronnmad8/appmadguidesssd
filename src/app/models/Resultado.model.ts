@@ -4,6 +4,7 @@ import { LinksModel } from './Links.model';
 
 import { VisitasModel } from './Visitas.model';
 import { VisitasResultadoModel } from './VisitasResultado.model';
+import { UserModel } from './User.model';
 
 export class ResultadoModel {
 
@@ -20,6 +21,8 @@ export class ResultadoModel {
     prev_page_url: string;
     to: number;
     total: number;
+    status: string;
+    user: UserModel;
  
 
     constructor(){
@@ -36,6 +39,8 @@ export class ResultadoModel {
         this.prev_page_url = "";
         this.to = 0;
         this.total = 0;
+        this.status = "";
+        this.user = new UserModel();
         
         
     }

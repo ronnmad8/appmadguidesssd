@@ -42,7 +42,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { CartModel } from 'src/app/models/Cart.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { LoginModel } from 'src/app/models/Login.model';
 import { UserModel } from 'src/app/models/User.model';
@@ -53,6 +53,13 @@ import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
 import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
+import { CompanionsModel } from 'src/app/models/Companions.model';
+import { CompanionsPedidoModel } from 'src/app/models/CompanionsPedido.model';
+import { ContractModel } from 'src/app/models/Contract.model';
+import { CitiesModel } from 'src/app/models/Cities.model';
+import { StatesModel } from 'src/app/models/States.model';
+import { CountriesModel } from 'src/app/models/Countries.model';
+import { MicuentaService } from 'src/app/services/micuenta.service';
 
 @Component({
   selector: 'app-zonapago',
@@ -136,7 +143,6 @@ export class ZonapagoComponent implements OnInit {
   googlemapsvisita: string = 'https://goo.gl/maps/';
   verredes: boolean = false;
 
-  aceptopoliticas: boolean = false;
   politicasnovalid: boolean = false;
   nomnovalid: boolean = false;
   emailnovalid: boolean = false;
@@ -159,7 +165,24 @@ export class ZonapagoComponent implements OnInit {
   tipopassword: string = 'password';
   verpass: boolean = false;
   listatiposidentificacion: any[] = [];
-  aceptacionlogin: boolean = false;
+  aceptacionpoliticas: boolean = false;
+
+  formafa: FormGroup;
+  companions: [] = [];
+  companionsComplet: boolean = false;
+  maxold: number = 1000;
+  maxoldchildren: number = 13;
+
+  listacountries: CountriesModel[] = [];
+  listastates: StatesModel[] = [];
+  listacities: CitiesModel[] = [];
+
+  registrado: boolean = false;
+
+  mensaje1 = "Debe registrarse para continuar";
+  mensaje2 = "Debe aceptar las condiciones de uso";
+  mensaje3 = "Debe aceptar políticas de privacidad";
+  mensaje4 = "Debe validar mail de registro para poder continuar";
 
   constructor(
     private wowService: NgwWowService,
@@ -172,9 +195,11 @@ export class ZonapagoComponent implements OnInit {
     private globalService: GlobalService,
     private auth: AuthService,
     private alertasService: AlertasService,
+    private micuentaService: MicuentaService,
     private fb: FormBuilder,
     private fbl: FormBuilder,
     private fbr: FormBuilder,
+    private fbfa: FormBuilder,
     private providerService: ProviderService,
     private platformService: PlatformService
   ) {
@@ -185,13 +210,13 @@ export class ZonapagoComponent implements OnInit {
     this.crearFormularioRegistro();
     this.cambiosFormularioRegistro();
     this.sWindow = this.platformService.sWindow;
+
+    this.crearFormulariofa();
+    this.cambiosFormulariofa();
   }
 
   ngOnInit(): void {
-    this.loginok = !this.auth.noAuth();
-    if (this.loginok) {
-      this.usuario = this.auth.getUser();
-    }
+    this.comprobarLogin();
 
     this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacion =
@@ -205,11 +230,13 @@ export class ZonapagoComponent implements OnInit {
 
     this.vcale = true;
     this.getPedido();
-    //this.patchPedido();
+    this.crearCompanions();
+    this.getCountries();
   }
 
   ngAfeterViewInit() {
     this.comprobarLogin();
+
   }
 
   @HostListener('window:scroll')
@@ -231,18 +258,41 @@ export class ZonapagoComponent implements OnInit {
   }
 
   comprobarLogin() {
-    let login = this.auth.noAuth();
-    if (login) {
+    this.loginok = !this.auth.noAuth();
+    if (this.loginok) {
+      this.registrado = true;
       this.usuario = this.auth.getUser();
-      this.forma.patchValue({
-        email: this.usuario.email,
-        name: this.usuario.name,
-        surname: this.usuario.surname,
-        telefono: this.usuario.phone,
-        prefijo: this.usuario.prefijo,
-        aceptacion: true,
-      });
+
+      this.pedido.cliente.name = this.usuario.name;
+      this.pedido.cliente.surname = this.usuario.surname;
+      this.pedido.cliente.email = this.usuario.email;
+      this.pedido.cliente.phone = this.usuario.phone;
+      this.pedido.cliente.prefijo = this.usuario.prefijo;
+
     }
+    else{
+      this.alertasService.alertaKO("Madguides", this.mensaje1);
+    }
+  }
+
+  crearCompanions(){
+    
+    this.limpiarcompsE();
+    this.pedido.visitasPedido.forEach(el => {
+      ///el primer adulto es el propio usuario
+      if(el.adultos > 1){
+        for (let index = 0; index < el.adultos - 1; index++) {
+          let co = new CompanionsModel();
+          this.addcompsE("","",0,el.visit_uuid, el.horario_uuid, index, el.visit_lang_title, this.maxold ); 
+        }
+      }
+      if(el.ninos > 0){
+        for (let index = 0; index < el.ninos; index++) {
+          let co = new CompanionsModel();
+          this.addcompsE("","",0,el.visit_uuid, el.horario_uuid, index, el.visit_lang_title, this.maxoldchildren); 
+        }
+      }
+    });
   }
 
   crearFormularioLogin() {
@@ -271,6 +321,12 @@ export class ZonapagoComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(1)]],
       prefijo: [''],
       phone: ['', [Validators.required, Validators.minLength(2)]],
+      street: ['', [Validators.required, Validators.minLength(2)]],
+      number: ['', [Validators.required]],
+      country: ['',[Validators.required]],
+      state: ['',[Validators.required]],
+      city: ['',[Validators.required]],
+      
     });
   }
 
@@ -282,6 +338,10 @@ export class ZonapagoComponent implements OnInit {
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
       this.usuario.phone = this.formregister.get('phone')?.value;
+      this.usuario.street = this.formregister.get('street')?.value;
+      this.usuario.number = this.formregister.get('number')?.value;
+      this.usuario.country = this.formregister.get('country')?.value;
+      this.usuario.state = this.formregister.get('state')?.value;
       this.btactivadoreg = false;
 
       if (this.formregister.status != 'INVALID') {
@@ -289,69 +349,138 @@ export class ZonapagoComponent implements OnInit {
       }
     });
   }
+
   getPedido() {
     this.pedido = this.carritoService.getCart();
     this.preciototal = this.globalService.getFormatNumber(this.pedido.total);
   }
 
+  getMe(){
+    this.auth.getMe().subscribe((resp:any) => {
+      this.usuario = resp;
+    })
+  }
+
   reservarvisita() {
     if (this.pedido.visitasPedido.length == 0) {
       this.router.navigate(['/buscador']);
-    } else {
+    }
+    else {
       ///guardar campos cliente
       if (!this.loginok) {
-        this.pedido.cliente.name = this.forma.value.nombre;
-        this.pedido.cliente.surname = this.forma.value.surname;
-        this.pedido.cliente.email = this.forma.value.email;
-        this.pedido.cliente.phone = this.forma.value.telefono;
-        this.pedido.cliente.prefijo = this.forma.value.prefijo;
-        if (this.forma.status == 'INVALID') {
-          this.forma.markAllAsTouched();
-          this.cambiosFormularioRegistro();
-          this.pasoactivo = 2;
-        } else {
-          ///registrarusuario
-          this.registrarusuario(this.usuario, this.pedido);
+        if(this.formregister != null){
+          this.pedido.cliente.name = this.formregister.value.nombre;
+          this.pedido.cliente.surname = this.formregister.value.surname;
+          this.pedido.cliente.email = this.formregister.value.email;
+          this.pedido.cliente.phone = this.formregister.value.telefono;
+          this.pedido.cliente.prefijo = this.formregister.value.prefijo;
+          if (this.formregister.status == 'INVALID') {
+            this.formregister.markAllAsTouched();
+            this.cambiosFormularioRegistro();
+            this.pasoactivo = 2;
+          }
+          else {
+            this.registrarusuario();
+          }
         }
-      } else if (this.aceptacionlogin) {
+        else{
+          this.pasoactivo = 2;
+        }
+      } 
+      else if (this.aceptacionpoliticas ) {
         this.pedido.cliente.name = this.usuario.name;
         this.pedido.cliente.surname = this.usuario.surname;
         this.pedido.cliente.email = this.usuario.email;
         this.pedido.cliente.phone = this.usuario.phone;
         this.pedido.cliente.prefijo = this.usuario.prefijo;
+        
+        this.pedido.visitasPedido.forEach(el => {
+          el.companions = [];
+          this.companions.forEach(comp => {
+            if(el.visit_time[0].uuid == comp["visit_time_uuid"] ){
+              el.companions.push(comp);
+            }
+          }); 
+        })
 
         this.registrarpedido(this.pedido);
-      } else {
+      }
+      // else if(!this.companionsComplet) {
+      //   this.alertasService.alertaKO(
+      //     'Madguides',
+      //     'Debe registrar datos de acompañantes'
+      //   );
+      //   this.pasoactivo = 2;
+      // } 
+      else {
         this.alertasService.alertaKO(
           'Madguides',
-          'Debe aceptar las condiciones de uso'
+          this.mensaje2
         );
         this.pasoactivo = 2;
       }
     }
   }
 
-  registrarpedido(pedido) {
+  registrarpedido(pedido: CartModel) {
     this.pedido.codigoreserva = new Date().getTime().toString();
     this.carritoService.saveCart(pedido);
     this.pedidosguardados = this.carritoService.getPedidosguardados();
     this.pedidosguardados.push(pedido);
-    this.carritoService.savePedidosguardados(this.pedidosguardados);
+
+    let token = localStorage.getItem('token');
+    let horario: ContractModel = new ContractModel();
+
+    pedido.visitasPedido.forEach( el => {
+      let usercomp: CompanionsPedidoModel = new CompanionsPedidoModel();
+      el.companions.forEach( it => {
+        usercomp.name = it.name ;
+        usercomp.surname = it.surname ;
+        usercomp.old = it.old ;
+        usercomp.email = "" ;
+        usercomp.sendmail = "false" ;
+
+        horario.users.push(usercomp);
+      })
+
+      ///rectificacion sin acompañantes api //////////////////////
+      if(horario.users.length <= 1){
+        usercomp.name = "_" ;
+        usercomp.surname = "_" ;
+        usercomp.old = 0 ;
+        usercomp.email = "" ;
+        usercomp.sendmail = "false" ;
+        horario.users.push(usercomp);
+        this.companionsComplet = true;
+      }
+      /////////////////////////////////////////////////////
+
+      horario.uuid = el.visit_time[0].uuid;
+      
+      if(this.usuario.address.length > 0){
+        horario.address = this.usuario.address[0]["address"]?.uuid;
+      }
+      
+      horario.token = token;
+
+      this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
+        let r = resp;
+      })
+    })
+    
     ///vaciar carrito en menu y vista
     this.carritoService.clearCart();
     this.providerService.setThrowCarritoupdate(new CartModel());
-
     this.router.navigate(['/compra']);
   }
 
-  aceptarlogin(aceptacionlogin: any) {
-    this.aceptacionlogin = aceptacionlogin.currentTarget.checked;
+  aceptarpoliticas(acept: any) {
+    this.aceptacionpoliticas = acept.currentTarget.checked;
   }
 
   eliminarvisitapedido(visita: VisitasResultadoModel) {
     
     let mensajeconfirmacion = 'Va a eliminar una visita';
-
     if (this.pedido.visitasPedido.length <= 1) {
       mensajeconfirmacion = 'Va a eliminar la última visita del pedido';
     }
@@ -360,11 +489,19 @@ export class ZonapagoComponent implements OnInit {
       .alertaWarning(mensajeconfirmacion, '¿Seguro que desea eliminar?')
       .then((result) => {
         if (result.value) {
+          this.compsE.controls.forEach((el, i) => {
+            if(el.value.visit_time_uuid == visita.visit_time[0].uuid ){
+              this.compsE.controls = this.compsE.controls.filter(x => x.value.visit_time_uuid != el.value.visit_time_uuid);
+              //this.deleteCompsE(i) ;
+            }
+          });
+          
           let pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
           this.pedido.visitasPedido = pedido.visitasPedido;
           this.pedido.total = pedido.total;
           this.providerService.setThrowCarritoupdate(this.pedido);
           this.preciototal = this.globalService.getFormatNumber(pedido.total);
+          
           if (this.pedido.visitasPedido.length == 0) {
             this.router.navigate(['/buscador']);
           }
@@ -394,14 +531,32 @@ export class ZonapagoComponent implements OnInit {
   }
 
   continuar() {
+    
     if (this.pasoactivo == 1) {
+      this.comprobarLogin();
       this.pasoactivo = 2;
       this.solopaso1.emit(false);
-      this.comprobarLogin();
-    } else if (this.pasoactivo == 2) {
-      this.pasoactivo = 3;
-      this.solopaso1.emit(false);
-    } else {
+    } 
+    else if (this.pasoactivo == 2) {
+      this.loginok = !this.auth.noAuth();
+      if(this.loginok && this.aceptacionpoliticas){
+        this.pasoactivo = 3;
+        this.solopaso1.emit(false);
+      }
+      else if(!this.loginok){
+        this.alertasService.alertaKO(
+          'Madguides',
+          this.mensaje1
+        );
+      }
+      else if(!this.aceptacionpoliticas){
+        this.alertasService.alertaKO(
+          'Madguides',
+          this.mensaje3
+        );
+      }
+    } 
+    else {
       this.pasoactivo = 1;
       this.solopaso1.emit(true);
     }
@@ -422,8 +577,38 @@ export class ZonapagoComponent implements OnInit {
   }
 
   cambiarpaso(n: number) {
-    this.pasoactivo = n;
+    
+    if (n == 1) {
+      this.pasoactivo = n;
+    } 
+    else if (n == 2) {
+      this.comprobarLogin();
+      this.pasoactivo = n;
+    }
+    else if (n == 3) {
+      this.loginok = !this.auth.noAuth();
+      if(this.loginok && this.aceptacionpoliticas){
+        this.pasoactivo = n;
+      }
+      else if(!this.loginok) {
+        this.alertasService.alertaKO(
+          'Madguides',
+          this.mensaje1
+        );
+      }
+      else if(!this.aceptacionpoliticas){
+        this.alertasService.alertaKO(
+          'Madguides',
+          this.mensaje3
+        );
+      }
+    }
+    else {
+      this.pasoactivo = 1;
+      this.solopaso1.emit(true);
+    }
   }
+
 
   iniciarsesion() {
     this.auth.loginUser(this.usuario).subscribe((resp) => {
@@ -431,7 +616,7 @@ export class ZonapagoComponent implements OnInit {
       this.usuario = login.user as UserModel;
       this.alertasService.alertaInfo(
         'Madguides',
-        'Bienvenido ' + login.user.name + ' Te has logueado correctamente'
+        'Bienvenido ' + login.user.name + ' Te has identificado correctamente'
       );
       this.loginok = false;
       if (login.status == 'success' && login.token != null) {
@@ -451,12 +636,118 @@ export class ZonapagoComponent implements OnInit {
       this.tipopassword = 'text';
     }
   }
-
-  registrarusuario(usuario: UserModel, pedido: CartModel) {
-    this.auth.registrarUser(usuario).subscribe((resp) => {
-      let respuesta = resp;
-      this.registrarpedido(pedido);
-      return respuesta;
+ 
+  crearFormulariofa() {
+    this.formafa = this.fbfa.group({
+      companions: this.fbfa.array([], Validators.required)
     });
   }
+
+  addcompsE(name, surname, old ,id, vid, ord, title, maxold) {
+    this.compsE.push(
+      this.fb.group({
+        name: new FormControl(name, Validators.required),
+        surname: new FormControl(surname, Validators.required),
+        old: new FormControl(old, Validators.required),
+        uuid: new FormControl(id, Validators.required),
+        visit_time_uuid: new FormControl(vid, Validators.required),
+        visit_title: new FormControl(title),
+        orden: new FormControl(ord),
+        maxold: new FormControl(maxold),
+      })
+    );
+    
+  }
+
+  cambiosFormulariofa() {
+    ///// statuChanges
+    this.formafa.valueChanges.subscribe( value => {
+      this.companions = this.formafa.get('companions').value ;
+      this.companionsComplet = false;
+    
+      if ( this.formafa.status != "INVALID") {
+        if (  this.companions.length > 0 ) {
+        this.companionsComplet = true ;
+        }
+      }
+
+    });
+  }
+
+  get compsE(): FormArray {
+    return this.formafa.get('companions') as FormArray;
+  }
+
+  limpiarcompsE() {
+    while ( this.compsE.length !== 0) {
+      this.compsE.removeAt(0);
+    }
+    this.compsE.reset(); 
+  }
+
+  deleteCompsE(index) {
+    this.compsE.removeAt(index);
+  }
+
+  getCities(stateId: string){
+    this.micuentaService.getCities(stateId).subscribe((resp)=>{
+      this.listacities = resp as CitiesModel[];
+      if(this.usuario.city != '' && this.formregister != null ){
+        this.formregister.patchValue({
+          city: this.usuario.city
+        });
+      }
+    })
+  }
+
+  getStates(countryId: string){
+    this.micuentaService.getStates(countryId).subscribe((resp)=>{
+      this.listastates = resp as StatesModel[];
+      if(this.usuario.state != '' && this.formregister != null ){
+        this.formregister.patchValue({
+          state: this.usuario.state
+        });
+        this.getCities(this.usuario.state);
+      }
+    });
+  }
+
+  seleccountry(e: any){
+    this.formregister.get('country')?.setValue(e.value);
+    this.getStates(e.value);
+  }
+
+  selecstate(e: any){
+    this.formregister.get('state')?.setValue(e.value);
+    this.getCities(e.value);
+  }
+
+  getCountries(){
+    this.micuentaService.getCountries().subscribe((resp)=>{
+      this.listacountries = resp as CountriesModel[];
+    });
+  }
+
+
+  registrarusuario(){
+    if(this.usuario != null){
+
+      this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
+            let respuesta = resp as LoginModel ;
+            if(respuesta.status == "success"){
+               let user = this.usuario; 
+               this.formregister.reset();
+               this.alertasService.alertaInfo("Madguides", this.mensaje4 );
+            }
+            else{
+              this.alertasService.alertaInfo("Madguides", respuesta.message);
+            }
+      });
+    }
+    else{
+      this.alertasService.alertaInfo("Madguides", this.mensaje1 );
+    }
+  }
+
+
 }
