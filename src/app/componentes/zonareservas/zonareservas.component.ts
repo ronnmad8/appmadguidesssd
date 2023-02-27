@@ -43,6 +43,7 @@ import { RespuestaModel } from 'src/app/models/Respuesta.model';
 export class ZonareservasComponent implements OnInit {
   @Output() updateDatosData = new EventEmitter();
   @Output() updateDatosAddress = new EventEmitter();
+  @Output() zonareservas: EventEmitter<any> = new EventEmitter();
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
 
@@ -123,6 +124,7 @@ export class ZonareservasComponent implements OnInit {
           visita.ninos = horario.users?.filter((u) => u.old < 13).length;
           visita.adultos = horario.users.length - visita.ninos;
           visita.codigoreserva = horario.uuid.toString();
+          visita.status = horario.status.name  ;
 
           this.reservas.push(visita);
         }
@@ -150,4 +152,24 @@ export class ZonareservasComponent implements OnInit {
         }
       });
   }
+
+
+  reservarahora(reserva) {
+    this.alertasService
+      .alertaWarning('Madguides', '¿Seguro que desea reservar la visita?')
+      .then((result) => {
+        if (result.value) {
+           //guardar en carrito la reserva
+           
+           this.router.navigate(['/carrito']);
+        }
+      });
+  }
+
+
+
+
+
+
+
 }

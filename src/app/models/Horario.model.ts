@@ -15,6 +15,7 @@ export class HorarioModel {
     horario_id: number;
     time: any;
     users: UserModel[];
+    status: Status;
     
     constructor(){
 
@@ -25,6 +26,7 @@ export class HorarioModel {
         this.horario_id = 0;
         this.time = new TimesModel();
         this.users = [];
+        this.status = new Status();
         
 
      
@@ -54,3 +56,8 @@ class Listprice{
     price: number;
     second: number;
 }
+class Status{
+    name: string; //process
+    
+}
+

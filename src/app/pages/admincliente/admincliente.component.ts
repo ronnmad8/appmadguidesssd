@@ -120,12 +120,24 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
     
     this.headfooterService.getMessagesPerfil().subscribe((resp)=>{
       this.messagePerfil = resp as TextoPerfilModel;
-      console.log("perfil",this.messagePerfil);
 
     });
   }
 
-
+  onActivate(reference: any) {
+    if(reference != undefined ){
+        
+        if(reference.zonareservas != undefined  ){
+          this.verreservas = true;
+          this.vercuenta = false;
+        }
+        else if(reference.zonamicuenta != undefined  )  {
+          this.verreservas = false;
+          this.vercuenta = true;
+        } 
+    }
+    
+  }
 
 
 

@@ -39,6 +39,7 @@ export class ZonamicuentaComponent implements OnInit {
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
   @Input() messagePerfilData: TextoPerfilModel ;
+  @Output() zonamicuenta: EventEmitter<any> = new EventEmitter();
 
   sWindow: any;
 

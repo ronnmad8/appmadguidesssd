@@ -724,6 +724,10 @@ img {
   min-height: 800px !important;
 }
 
+.mxw80{
+ max-width: 80%; 
+}
+
 .w20 {
   width: 20px !important;
 }
@@ -827,9 +831,27 @@ img {
 
 .posabsolX {
   position: absolute !important;
-  right: 15px !important;
-  top: 12px !important;
+  right: 5px !important;
+  top: 5px !important;
+  z-index: 100;
+}
 
+.posabsolEstado {
+  position: absolute !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.posabsolPrecio {
+  position: absolute !important;
+  right: 8px !important;
+  top: 36px !important;
+}
+
+.posabsolReservar {
+  position: absolute !important;
+  right: 8px !important;
+  bottom: 8px !important;
 }
 
 .posabsolcerrar {
@@ -3648,7 +3670,7 @@ input:checked+.sliderT:before {
   font-family: Jost-Bold;
   color: var(--c_GRIS1);
   margin-top: 2px;
-  margin-bottom: 26px;
+  margin-bottom: 6px;
 
 }
 
@@ -3821,9 +3843,10 @@ input:checked+.sliderT:before {
 }
 
 .infopanelreserva{
-  height: 120px !important;
-  max-height: 120px;
-  overflow: auto;
+  height: 160px !important;
+  max-height: 160px;
+  overflow: hidden;
+  max-width: 80%;
 }
 
 

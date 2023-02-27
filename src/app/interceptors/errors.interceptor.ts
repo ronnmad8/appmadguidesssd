@@ -38,7 +38,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
             return throwError(error);
           }
           else if (error && error.status == 401){
-            debugger
+            
             if(error.error.message.includes('verificar')){
               this.alertasService.alertaKO('Madguides', 'debe revisar verficiacion de email');
             }

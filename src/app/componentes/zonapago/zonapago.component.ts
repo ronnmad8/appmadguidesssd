@@ -74,11 +74,13 @@ export class ZonapagoComponent implements OnInit {
   @Input() messageLoginData: TextoLoginModel = new TextoLoginModel();
   @Input() messagePerfilData: TextoPerfilModel = new TextoPerfilModel();
   @Output() solopaso1: EventEmitter<boolean> = new EventEmitter();
+
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
+  
   sWindow: any;
 
   usuarioform: UserModel = new UserModel();

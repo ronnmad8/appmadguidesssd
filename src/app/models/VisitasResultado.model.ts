@@ -61,6 +61,8 @@ export class VisitasResultadoModel{
     iso_disponible: string[];
 
     image: ImagenesModel;
+    status: string;
+
     
     ///recomendadas
     precio_mayores: number;

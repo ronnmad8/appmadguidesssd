@@ -16,30 +16,48 @@
                         </picture>
                     </div>
                 </div>
-                <div class="w-100">
+                <div class="w-100 h-100 posrel">
+
+                    <div class="posabsolEstado">
+                        <div class="colVERDE ff-JB"  *ngIf="reserva.status != 'process'">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <span class="ml-1"> _Confirmada_ </span>
+                        </div>
+                        <div class="colROJO3 ff-JB" *ngIf="reserva.status == 'process' ">
+                            <i class="fa-regular fa-circle-xmark"></i>
+                            <span class="ml-1"> _Pendiente_ </span>
+                        </div>
+                    </div>
+                    <div class="posabsolPrecio">
+                        <div class="colNEGRO ff-JB " >
+                            <span> {{ reserva.precio }} € </span>
+                        </div>
+                    </div>
+                    <div class="posabsolReservar"  *ngIf="reserva.status == 'process' "  >
+                        <button class="btredondoRojo ff-JB" type="button" (click)="reservarahora(reserva)"  >
+                            Reservar ahora
+                        </button>
+                    </div>
 
                     <div class="posrel w-100  px-xl-4 px-2 ">
 
-                        <div class="posabsolX">
-                            <div class="cupo" (click)="cancelarVisita(reserva)">
-                                <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
-                            </div>
-                        </div>
-    
                         <div id="titulopanelpedido">
                             {{reserva.visit_lang_title.length > 30 ? reserva.visit_lang_title.substring(0,
                             47)+"..." : reserva.visit_lang_title }}
                         </div>
-    
+                        <div class="fs-12 ff-JB lh-1-4 colGRIS1 my-2 " style="max-width: 80%;"  *ngIf="reserva.codigoreserva">
+                            _Código de Reserva:_
+                            <span class="colROJO2">{{reserva.codigoreserva}}</span>
+                        </div>
+
                     </div>
                     <div class="posrel h-100 w-100  p-xl-4 p-2 infopanelreserva ">
-    
+
                         <div class="fs-18 p-0  mb-2 pc">
                             {{ reserva.visit_lang_description.length > 50 ?
                             reserva.visit_lang_description.substring(0, 47)+"..." :
                             reserva.visit_lang_description }}
                         </div>
-    
     
                         <div class="lh-1-4">
                             <span>{{reserva.visit_time_date | fechaleg }}</span>
@@ -59,10 +77,7 @@
                         <div class="fs-14 lh-1-4" *ngIf="reserva.visit_privada">
                             _*Visita privada_
                         </div>
-                        <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2" *ngIf="reserva.codigoreserva">
-                            _Código de Reserva:_
-                            <span class="colROJO2">{{reserva.codigoreserva}}</span>
-                        </div>
+                        
     
                         <!-- <div class="lh-1-4">
                             Idioma: 

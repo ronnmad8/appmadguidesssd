@@ -35,17 +35,7 @@
                 </div>
             </div>
 
-      <!-- <app-zonamicuenta [usuario]="usuario"  [pedidos]="pedidos"  [messagePerfilData]="messagePerfilData"
-      (updateDatosData)="guardarcambiosData($event)" 
-      (updateDatosAddress)="guardarcambiosAddress($event)"
-      ></app-zonamicuenta>
-
-      <app-zonareservas [usuario]="usuario"  [pedidos]="pedidos"  [messagePerfilData]="messagePerfilData">
-      </app-zonareservas> -->
-
-      <router-outlet></router-outlet>
-      
-
+      <router-outlet (activate)="onActivate($event)"  ></router-outlet>
       
     </div>
     
