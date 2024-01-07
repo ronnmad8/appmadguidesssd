@@ -244,8 +244,8 @@ export class ZonapagoComponent implements OnInit {
   @HostListener('window:scroll')
   onWindowScroll() {
     let posactual = this.sWindow.pageYOffset;
-    let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
-    let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
+    let posdetallevisita = this.detallevisita.nativeElement?.offsetTop - 120;
+    let posfinaldetalle = this.finaldetalle.nativeElement?.offsetTop;
 
     if (posactual <= posdetallevisita) {
       this.pegaj = 1;
@@ -464,7 +464,8 @@ export class ZonapagoComponent implements OnInit {
       }
       
       horario.token = token;
-
+      horario.country_id = this.usuario.address[0]["address"]?.country.id;
+debugger
       this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
         let r = resp;
       })
@@ -521,7 +522,9 @@ export class ZonapagoComponent implements OnInit {
 
   cerrarcalemodal() {
     this.resetear();
-    this.modal.dismiss();
+    if(this.modal != null){
+      this.modal.dismiss();
+    }
   }
 
   resetear() {

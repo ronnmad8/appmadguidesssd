@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./spinner.component.css']
 })
 export class SpinnerComponent  implements OnInit {
-  isloading$ = this.spinnerService.isloading$;
+  isloading: boolean = false;
   imagen: ImagenesModel = new ImagenesModel();
 
   constructor(
@@ -24,7 +24,9 @@ export class SpinnerComponent  implements OnInit {
   }
 
   ngOnInit(){
-    ///
+    this.spinnerService.isloading$.subscribe(resp=>{
+      this.isloading = resp as boolean
+    })
   }
 
 

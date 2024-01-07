@@ -16,7 +16,6 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
-import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
 import { CartModel } from 'src/app/models/Cart.model';
 import { ProviderService } from 'src/app/services/provider.service';

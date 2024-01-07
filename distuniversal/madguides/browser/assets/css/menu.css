@@ -1,0 +1,1185 @@
+.tstbd1 {
+  border: 2px solid rgb(92, 3, 3) !important;
+}
+
+.tstbd2 {
+  border: 2px solid rgb(248, 92, 165) !important;
+}
+
+.tstbd3 {
+  border: 2px solid rgb(136, 4, 189) !important;
+}
+
+.tstbd4 {
+  border: 2px solid rgb(2, 168, 146) !important;
+}
+
+
+.menumvl {
+  position: fixed !important;
+  left: 0 !important;
+  top: 80px !important;
+  z-index: 889 !important;
+  background-color: red;
+}
+
+.menupc {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 889 !important;
+  background-color: var(--c_BLANCO);
+  color: var(--c_GRIS1);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1920px !important;
+
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+}
+
+/*******cookies**/
+
+.aviso-cookies {
+  display: block;
+  background: #fff;
+  padding: 20px;
+  width: calc(100% - 40px);
+  max-width: 340px;
+  min-width: 300px;
+  line-height: 150%;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  padding-top: 60px;
+  box-shadow: 0px 2px 20px 10px rgba(0, 0, 0, 0.55);
+  text-align: center;
+  height: 450px;
+}
+
+.aviso-cookies .galleta {
+  max-width: 120px;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 60px);
+  width: 90px;
+}
+
+.aviso-cookies-peq {
+  max-width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: auto;
+}
+
+.cookiepeq{
+  max-width: 40px !important;
+  height: 40px !;
+  width: auto;
+  border-radius: 50% !important;
+  padding: 10px;
+}
+
+.fondo-aviso-cookies {
+  display: block;
+  background: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.close {
+  position: absolute;
+  right: 2px;
+  top: 4px;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.mhcook {
+  height: 400px !important;
+  max-height: 400px;
+}
+
+.btcook {
+  border-radius: 5x;
+  border: 1px solid #efefef;
+  height: 80px;
+  width: 100%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+
+
+
+/***barra menu pc**********/
+
+.carrito {
+  width: 56px;
+  height: 100%;
+  background-color: var(--c_GRIS1);
+  color: var(--c_BLANCO) !important;
+  text-align: center;
+}
+
+.bar {
+  width: 60px;
+  height: 100%;
+  text-align: center;
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.baridiomas {
+  width: 100px;
+  height: 100%;
+  text-align: center;
+}
+
+.posabsollink {
+  position: absolute !important;
+  top: 20px;
+  left: 0;
+  right: 0;
+}
+
+.posabsolbar {
+  position: absolute !important;
+  bottom: 24px !important;
+  right: 0;
+  left: 0;
+}
+
+.posabsolbarlupa {
+  position: absolute !important;
+  bottom: 24px !important;
+  right: -180px;
+  left: auto;
+  z-index: 1100;
+}
+
+.posabsolbaridiomas {
+  position: absolute !important;
+  bottom: 20px !important;
+  right: 10px;
+}
+
+
+
+.imlogomenupc {
+  width: 132px !important;
+  height: 50px !important;
+}
+
+.enlaceM {
+  min-width: 60px !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  margin-top: 20px;
+}
+
+/* #enlace1 {
+  min-width: 130px !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin-right: 20px !important;
+  margin-left: 0px !important;
+  margin-top: 20px;
+}
+
+#enlace2 {
+  padding: 0 !important;
+  min-width: 130px !important;
+  height: auto !important;
+  margin-left: 10px !important;
+  margin-right: 20px !important;
+  margin-top: 20px;
+}
+
+#enlace3 {
+  padding: 0 !important;
+  min-width: 130px !important;
+  height: auto !important;
+  margin-left: 20px !important;
+  margin-right: 0px !important;
+  margin-top: 20px;
+} */
+
+.divlogo_pc {
+  z-index: 10;
+  max-width: 264px;
+  padding: 0;
+}
+
+
+
+/*****movil*********/
+
+.hamb {
+  cursor: pointer;
+  position: fixed;
+  left: 20px;
+  top: 18px;
+  z-index: 200;
+  color: var(--c_GRIS1);
+  padding: 1px 6px 1px 1px;
+  border-radius: 2px;
+}
+
+.hambadmin {
+  cursor: pointer;
+  position: fixed;
+  right: 30px;
+  top: 20px;
+  z-index: 200;
+  color: #000000;
+  padding: 1px 6px 1px 1px;
+  border-radius: 2px;
+}
+
+.hambInt {
+  cursor: pointer;
+  position: relative;
+  left: 20px;
+  top: 20px;
+  z-index: 210;
+}
+
+#sidebar {
+  width: 100% !important;
+  min-width: 280px;
+  max-width: 380px;
+  transition: all 0.5s;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
+  z-index: 900;
+}
+
+#sidebar.active {
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 104% !important;
+}
+
+#sidebar {
+  margin-left: -380px;
+}
+
+#sidebar ul li a {
+  display: block;
+}
+
+.sbar {
+  position: fixed;
+  z-index: 400;
+  left: -15px;
+}
+
+.limenu {
+  height: 30px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 30px;
+  border-bottom: 0.5px solid var(--c_BLANCO2);
+}
+
+.limenu.active,
+.lisubmenu.active {
+  color: #000000 !important;
+}
+
+.posabsolmenu {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.posfixedmenu {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.lupamenumvl {
+  position: absolute;
+  right: 60px;
+  top: 6px;
+  cursor: pointer;
+}
+
+.carritomenumvl {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  cursor: pointer;
+
+}
+
+/******modal idiomas**********/
+.modalidiomas{
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  left: 1px !important;
+  text-align: left;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 120px;
+  height: 230px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+.modallogueado{
+  text-align: left;
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  right: -20px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 140px;
+  height: 200px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+
+
+/*******modal idiomas end*******************/
+
+/*******modal carrito*****/
+
+
+.posabsolmodalcarrito {
+  z-index: 11;
+  position: absolute;
+  top: 0px !important;
+  right: 0px !important;
+  left: auto !important;
+  z-index: 12;
+  
+}
+
+#preciocarrito{
+  font-size: 15px;
+}
+
+.btredondoRojoCarrito {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 295px;
+  height: 51px;
+  border: 1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px ;
+}
+
+
+
+#panelcarritovacio{
+  height: 54px;
+  width: 209px;
+  font-size: 18px;
+  border-radius: 0 0 2px 2px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: var(--c_BLANCO);
+  color: var(--c_GRIS1);
+  border: 0.5px solid #efefef;
+}
+
+#panelcarrito {
+  min-height: 360px;
+  
+  width: 347px;
+  min-height: 360px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 0 2px 2px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO);
+  color: var(--c_GRIS1);
+  border: 0.5px solid #efefef;
+}
+
+#divcarrito {
+  width: 340px;
+  height: 250px;
+  max-height: 250px;
+  padding-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2px;
+  padding-right: 2px;
+  overflow: auto;
+}
+
+.cartamodalcarrito{
+  width: 100%;
+  min-height: 100px;
+  padding: 10px 0px !important;
+  margin: 0 !important;
+}
+
+.imgcartamoadalcarrito{
+  width: 103px;
+  height: 83px;
+  padding: 0 !important;
+  border-radius: 4px;
+}
+
+.infocartamodalcarrito{
+  min-width: 210px;
+  width: 100%;
+  height: 83px;
+  padding-left: 20px !important;
+  padding-right: 5px;
+}
+
+.carritoactivo{
+  background-color: var(--c_AMARILLO) !important;
+}
+
+.cerrarmodalcarrito{
+  color: var(--c_GRIS9) !important;
+  font-size: 22px;  
+}
+
+#preciomodalcarrito{
+  color: var(--c_ROJO2) !important;
+  font-size: 15px;  
+  font-family: Jost-Bold;
+}
+
+#titulomodalcarrito{
+  color: var(--c_ROJO2) !important;
+  font-size: 15px;
+  font-family: Jost-Bold;
+}
+#texto1modalcarrito{
+  color: var(--c_GRIS1) !important;
+  font-size: 14px;
+  max-width: 170px;
+  padding-right: 5px;
+  min-height: 40px;
+  line-height: 1.1;
+}
+#texto2modalcarrito{
+  color: var(--c_GRIS1) !important;
+  font-size: 14px;
+  max-width: 170px;
+  padding-right: 5px;
+}
+
+
+
+/*******modal carrito end******************/
+
+/*******modal micuenta*****/
+
+.posabsolmicuentamodal {
+  position: absolute !important;
+  top: 0px !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 901;
+  overflow: auto;
+}
+
+.panelcuenta {
+  width: 752px;
+  height: 100%;
+  /* box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important; */
+  border: 1px solid var(--c_GRIS8);
+  padding: 0;
+  border-radius: 0 0 40px 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO) !important;
+}
+
+.panelregistro {
+  width: 752px;
+  height: 100%;
+  /* box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important; */
+  padding: 0;
+  border-radius: 0 0 40px 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO) !important;
+}
+
+.scrld{
+  height: auto;
+  overflow-x: hidden;
+}
+
+#divmicuenta {
+  width: 422px;
+  min-height: 300px;
+  height: auto;
+  padding-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#titulomodalmicuenta {
+  font-size: 24px;
+  font-family: Jost-Bold;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#accedemicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+#cjusuariomicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS7);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 14px;
+  border: 1px solid var(--c_GRIS8);
+}
+
+#emailmicuanta {
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+
+#cjpasswordmicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS7);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 14px;
+  margin-bottom: 5px;
+  border: 1px solid var(--c_GRIS8);
+}
+
+#passwordmiceanta {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#recuerdamimicuenta i {
+  font-size: 24px;
+}
+
+.posabsolbtmicuenta {
+  position: absolute !important;
+  top: 20px !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: auto !important;
+}
+
+.btredondoRojomicuenta {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 223px;
+  height: 51px;
+  border: 1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoRojomicuentamvl {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 95%;
+  height: 51px;
+  border: 1px solid var(--c_ROJO2);
+  background-color: var(--c_ROJO2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+}
+
+.btredondoApagadomicuenta {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 223px;
+  height: 51px;
+  border: 1px solid var(--c_GRIS2);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+  cursor: no-drop !important;
+}
+
+.btredondoApagadomicuentamvl {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 95%;
+  height: 51px;
+  border: 1px solid var(--c_GRIS2);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+  cursor: no-drop !important;
+}
+
+.heolvidadomicuenta {
+  font-size: 14px;
+  color: var(--c_GRIS1);
+  margin-left: auto;
+  margin-right: 26px;
+  padding-top: 8px;
+  padding-bottom: 2px;
+  text-decoration: underline;
+}
+
+.oaccedemicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.btcuadmicuenta {
+  padding-left: 4px;
+  width: 124px;
+  height: 42px;
+  border: 1px solid var(--c_GRIS8);
+  border-radius: 5px;
+  background-color: var(--c_BLANCO2) !important;
+}
+
+#btfacebookmicuenta span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+#btfacebookmicuenta i {
+  font-size: 18px;
+  margin-left: 2px;
+}
+
+#btgooglemicuenta span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+#btgooglemicuenta i {
+  font-size: 18px;
+  margin-left: 2px;
+}
+
+.imredes {
+  height: 24px !important;
+  width: auto;
+}
+
+#notienesmicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+
+/*******modal micuenta end*****/
+
+
+
+
+/**solo pc**************************************************mediaq********************************/
+
+@media (min-width: 1198px) {}
+
+
+/*solo movil ************************************************/
+
+@media (max-width: 1198px) {
+
+  .conta {
+    min-width: 100% !important;
+  }
+
+  .posfixedmenumvl{
+    position: fixed;
+    height: 80px;
+    width: 100%;
+    z-index: 9999;
+    background-color: #ffffff;
+  }
+
+
+
+  .aviso-cookies {
+    max-width: 280px;
+    min-width: 200px;
+    bottom: 20px;
+    right: 0px;
+    left: 0px;
+    height: 350;
+  }
+
+
+  .mhcook {
+    height: 300px !important;
+    max-height: 300px;
+  }
+
+  .btcook {
+    height: 40px;
+  }
+
+  /***************/
+
+  #sidebar {
+    margin-right: -380px;
+  }
+
+  #sidebar.active {
+    margin-right: 0;
+  }
+
+  #sidebarCollapse span {
+    display: none;
+  }
+
+  #sidebarP {
+    min-width: 100%;
+    max-width: 100%;
+    margin-right: -100%;
+  }
+
+  #sidebarP.active {
+    margin-right: 0;
+  }
+
+  #sidebarCollapseP span {
+    display: none;
+  }
+
+  #abrirmicuentatitulo{
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  #abrirmicuenta, #hola{
+    color: #ffffff;
+    background-color: var(--c_ROJO2);
+    height: 42px;
+  }
+  .imperfil{
+    height: 18px;
+    width: auto;
+  }
+
+  #abriridioma{
+    position: absolute !important;
+    bottom: 120px;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid var(--c_GRIS8)
+  }
+
+
+
+  /******modal idiomas**********/
+.modalidiomas{
+  position: absolute !important;
+  top: auto !important; 
+  bottom: 50px !important;
+  left: 150px !important;
+  text-align: left;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 120px;
+  height: 230px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+.modallogueado{
+  text-align: left;
+  z-index: 10;
+  position: absolute;
+  top: 60px !important; 
+  right: -20px !important;
+  background-color: var(--c_BLANCO2);
+  color: var(--c_GRIS1);
+  width: 140px;
+  height: 200px;
+  border-radius: 2px;
+  padding:15px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  border: 0.5px solid #efefef;
+  overflow: auto;
+}
+
+
+
+/*******modal idiomas end*******************/
+
+/*******modal carrito*****/
+
+
+.posabsolmodalmovil {
+  position: fixed;
+  top: 80px !important;
+  right: 0px !important;
+  left: 0px !important;
+  z-index: 901;
+  max-width: 365px;
+}
+
+#panelcarritovaciomovil{
+  height: 54px;
+  width: 100%;
+  font-size: 14px;  
+  background-color: var(--c_AMARILLO);
+  color: var(--c_GRIS1);
+  border: 0.5px solid #efefef;
+}
+
+#panelcarritocondatomovil{
+  height: 30px;
+  width: 100%;
+  font-size: 14px;  
+  background-color: var(--c_AMARILLO2);
+  color: var(--c_GRIS1);
+  border: 0.5px solid #efefef;
+  text-align: left;
+}
+
+#panelcarritomovil {
+  height: 100%;
+  width: 100%;
+  min-height: 0px;
+  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO);
+  color: var(--c_GRIS1);
+  
+}
+
+#divcarritomovil {
+  
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: auto;
+}
+
+#preciocarrito{
+  font-size: 14px;
+}
+
+.cartamodalcarrito{
+  width: 100%;
+  min-height: 100px;
+  padding: 10px 0px !important;
+  margin: 0 !important;
+}
+
+.imgcartamoadalcarrito{
+  width: 103px;
+  height: 83px;
+  padding: 0 !important;
+  border-radius: 4px;
+}
+
+.infocartamodalcarrito{
+  min-width: 210px;
+  width: 100%;
+  height: 83px;
+  padding-left: 20px !important;
+  padding-right: 5px;
+}
+
+.carritoactivo{
+  background-color: var(--c_AMARILLO) !important;
+}
+
+.cerrarmodalcarrito{
+  color: var(--c_GRIS9) !important;
+  font-size: 22px;  
+}
+
+#preciomodalcarrito{
+  color: var(--c_ROJO2) !important;
+  font-size: 15px;  
+  font-family: Jost-Bold;
+}
+
+#titulomodalcarrito{
+  color: var(--c_ROJO2) !important;
+  font-size: 15px;
+  font-family: Jost-Bold;
+}
+#texto1modalcarrito{
+  color: var(--c_GRIS1) !important;
+  font-size: 10px;
+  max-width: 170px;
+  padding-right: 5px;
+  min-height: 40px;
+  line-height: 1.1;
+}
+#texto2modalcarrito{
+  color: var(--c_GRIS1) !important;
+  font-size: 10px;
+  max-width: 170px;
+  padding-right: 5px;
+}
+
+
+
+/*******modal carrito end******************/
+
+/*******modal micuenta*****/
+
+
+.panelcuenta {
+
+  width: 100% !important;
+  min-width: 280px;
+  height: 100%;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
+  padding: 0;
+  border-radius: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--c_BLANCO);
+}
+
+
+#divmicuenta {
+  width: 100%;
+  height: 493px;
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
+  
+}
+
+#titulomodalmicuenta {
+  font-size: 16px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 8px;
+  padding-bottom: 5px;
+  color: #ffffff;
+  background-color: var(--c_ROJO2);
+  height: 42px;
+}
+
+#accedemicuenta {
+  font-size: 14px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+#cjusuariomicuenta {
+  font-size: 14px;
+  color: var(--c_GRIS7);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 14px;
+  border: 1px solid var(--c_GRIS8);
+}
+
+#emailmicuanta {
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+
+#cjpasswordmicuenta {
+  font-size: 14px;
+  color: var(--c_GRIS7);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 14px;
+  margin-bottom: 5px;
+  border: 1px solid var(--c_GRIS8);
+}
+
+#passwordmiceanta {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#recuerdamimicuenta i {
+  font-size: 20px;
+}
+
+.posabsolbtmicuenta {
+  position: absolute !important;
+  top: 20px !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  left: auto !important;
+}
+
+
+#heolvidadomicuenta {
+  font-size: 14px;
+  color: var(--c_GRIS1);
+  margin-left: auto;
+  margin-right: 26px;
+  padding-top: 8px;
+  padding-bottom: 2px;
+  text-decoration: underline;
+}
+
+#oaccedemicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.btcuadmicuenta {
+  padding-left: 4px;
+  width: 124px;
+  height: 42px;
+  border: 1px solid var(--c_GRIS8);
+  border-radius: 5px;
+  background-color: var(--c_BLANCO2) !important;
+}
+
+#btfacebookmicuenta span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+#btfacebookmicuenta i {
+  font-size: 18px;
+  margin-left: 2px;
+}
+
+#btgooglemicuenta span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+#btgooglemicuenta i {
+  font-size: 18px;
+  margin-left: 2px;
+}
+
+.imredes {
+  height: 24px !important;
+  width: auto;
+}
+
+#notienesmicuenta {
+  font-size: 18px;
+  color: var(--c_GRIS1);
+  margin-left: 0;
+  margin-right: auto;
+  padding-top: 40px;
+  padding-bottom: 5px;
+  text-align: center !important;  
+}
+
+
+/*******modal micuenta end*****/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

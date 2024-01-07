@@ -8,7 +8,7 @@
         <div class="col-3 divlogo_pc posrel">
           <div class="cupo p-0 posabsol" style="left: 15px; top: 12px" routerLink="home" (click)="quitarmodales()">
             <img src="{{logoMenu.url}}" alt="{{logoMenu.name}}" class="imlogomenupc" draggable="false"
-              onerror="this.error= null;this.src='../../assets/images/sinimagen.webp' ">
+              onerror="this.error= null;this.src='../../assets/images/sinimagen.png' ">
           </div>
         </div>
 
@@ -129,8 +129,8 @@
                   <div class="pl-1">
                     <picture>
                       <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}"
-                        data-srcset="{{visita.visit_image_url}}">
-                      <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
+                        data-srcset="{{visita?.visit_image_url}}">
+                      <img src="{{visita?.visit_image_url}}" data-src="{{visita?.visit_image_url}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -145,13 +145,12 @@
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
                     {{visita.precio}} €
                   </div>
-                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)">
-                    {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
-                    visita.visit_lang_title }}
+                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)" 
+                  innerHTML="{{ visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+'...' : visita.visit_lang_title}} "  >
                   </div>
-                  <div id="texto1modalcarrito">
-                    {{visita.visit_lang_description.length > 40 ? visita.visit_lang_description.substring(0,37)+"..." :
-                    visita.visit_lang_description }}
+                  <div id="texto1modalcarrito" innerHTML="{{visita.visit_lang_description.length > 50 ? visita.visit_lang_description.substring(0,47)+'...' :
+                    visita.visit_lang_description }}" >
+                    
                   </div>
                   <div class="d-flex" id="texto2modalcarrito">
                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"

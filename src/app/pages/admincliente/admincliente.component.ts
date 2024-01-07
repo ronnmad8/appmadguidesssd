@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd, Params  } from '@angular/router'
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { NgwWowService } from 'ngx-wow';
-import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
+
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
 import { ZonamicuentaComponent } from 'src/app/componentes/zonamicuenta/zonamicuenta.component';
 import { Meta, Title } from '@angular/platform-browser';

@@ -115,7 +115,9 @@ export class FooterComponent implements OnInit {
     this.cookSeguimiento();
 
     this.resetear();
-    this.modalI.dismiss();
+    if(this.modalI != null){
+      this.modalI.dismiss();
+    }
     this.cookiesconsent = true;
   }
 
@@ -208,7 +210,9 @@ export class FooterComponent implements OnInit {
 
   cerrarmodalI() {
     this.resetear();
-    this.modalI.dismiss();
+    if(this.modalI != null){
+      this.modalI.dismiss();
+    }
   }
 
   openI(content) {

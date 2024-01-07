@@ -136,7 +136,7 @@ export class CarritoService {
         address: pedido.address
 
       };
-      
+      debugger
       let endpoint = '/operation/buy';
       this.url = this.apiurl + endpoint;
       return this.http.post(`${this.url}`, _datos).pipe(

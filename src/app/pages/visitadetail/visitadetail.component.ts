@@ -28,6 +28,8 @@ import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
+import { HttpClient } from '@angular/common/http';
+import { TimesModel } from 'src/app/models/Times.model';
 
 
 @Component({
@@ -66,7 +68,7 @@ export class VisitadetailComponent implements OnInit{
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
       private title: Title,
-
+      private http: HttpClient
 
   )
   {
@@ -129,16 +131,18 @@ export class VisitadetailComponent implements OnInit{
       this.visitaService.getVisita(uuid).subscribe((resp)=>{
         
         let resul = resp as VisitasResultadoModel;
+                
         ///get first de lista de api
         this.visitaSel = resul ?? new VisitasResultadoModel();
-  
+        
+        console.log("xx ",this.visitaSel)
         this.providerService.setThrowVisita(this.visitaSel);
         this.setMetas();
         
       })
     }
     else{
-      console.error("uuid no valido");
+      console.error("uuid no valido ", uuid);
     }
   }
 
@@ -198,14 +202,41 @@ export class VisitadetailComponent implements OnInit{
 
   getRelatedUuid(uuid: string){
     
-    this.visitaService.getCategoryUuid(uuid).subscribe((d)=>{
-      let visita = d as VisitasResultadoModel;
-      let catuuid = visita.category_uuid; 
-      this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
-        this.related = resp as VisitasResultadoModel[];
+    //this.visitaService.getCategoryUuid(uuid).subscribe((d)=>{
+      //let visita = d as VisitasResultadoModel;
+      //let catuuid = visita.category_uuid;
+      
+      // this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
+      //   this.related = resp as VisitasResultadoModel[];
         
-      });
-    })
+      // });
+
+    //})
+
+
+    const rutaArchivoJson = 'assets/docs/recommended.json';
+    this.http.get(rutaArchivoJson).subscribe(
+      (data: any) => {
+      this.related = data as VisitasResultadoModel[];
+
+      ///correct duration and price
+      this.related.forEach(visita => {
+        if( visita.visit_time == null){
+          visita.visit_time = [];
+          visita.visit_time.push(new TimesModel());
+          visita.visit_time[0].price = 10
+          visita.visit_time[0].duration = 1
+        }
+
+     });
+
+      },
+      (error) => {
+        console.error('Error al cargar el archivo JSON:', error);
+      }
+    );
+
+
   }
 
   getRelatedTitle(tit: string){

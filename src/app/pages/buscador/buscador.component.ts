@@ -41,6 +41,7 @@ import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { dateTime } from 'date-fns/locale/af';
 import { getTime } from 'date-fns';
+import { TimesModel } from 'src/app/models/Times.model';
 
 
 
@@ -164,12 +165,27 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       if(this.filtersrutacategorias != ""){
         this.filters.categorias.push(this.filtersrutacategorias);
       }
-      console.log("start=> ",getTime.toString())
+      //console.log("start=> ",getTime.toString())
       this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
-        console.log("end=> ",getTime.toString())
+        //console.log("end=> ",getTime.toString())
         this.resultadoBuscador =  resp as ResultadoModel;
+
+        ///correct duration and price
+        this.resultadoBuscador.data.forEach(visita => {
+          
+           if( visita.visit_time == null){
+             visita.visit_time = [];
+             visita.visit_time.push(new TimesModel());
+             visita.visit_time[0].price = Math.floor(Math.random() * (40 - 10 + 1)) + 10
+             visita.visit_time[0].duration = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+           }
+
+        });
+
+
         this.bu.getVisitasBuscador(this.resultadoBuscador);
         this.numactividades = this.resultadoBuscador.total;
+
         setTimeout(() => {
           this.bu.loading = false;
         }, 500);
@@ -211,6 +227,18 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
 
 
+
+  
+  generarAleatorioPrice(visita: any): number {
+    return visita.visit_time == null || visita.visit_time[0]?.price == null
+      ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
+      : visita.visit_time[0].price;
+  }
+  generarAleatorioDuration(visita: any): number {
+    return visita.visit_time == null || visita.visit_time[0]?.duration == null
+      ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
+      : visita.visit_time[0].duration;
+  }
 
   
 

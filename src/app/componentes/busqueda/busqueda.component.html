@@ -1,5 +1,5 @@
-<div id="busc" class="container px-xl-1 ">
-    <div id="rdivtipoplan" class=" row w-100 posrel d-xl-flex px-3 my-0">
+<div id="busc" class="container px-xl-1 " >
+    <div id="rdivtipoplan" class=" row w-100 posrel d-xl-flex px-3 my-0"  >
         <div class="pc p-0 m-0" *ngIf="!isrespon"  >
             <div id="divtipoplan">
                 <div id="buscadorpor">
@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div  >
         <div class="mvl posrel">
             <div id="fncordenar" class="w-100 d-flex posrel fnco" style="z-index: 200" [ngClass]="{'posfixedord': ordfixed , 'posrel': !ordfixed   }"   >
                 <div id="ordenar" class="w-50 text-center py-2 cupo" (click)="verordenarmvl()"  >
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="mh40 pc"></div>
-    <div id="contenidobusca" class="w-100 d-xl-flex " style="align-self: start; position: relative;" >
+    <div id="contenidobusca" class="w-100 d-xl-flex " style="align-self: start; position: relative;"    >
 
         <div id="filtros"  *ngIf="vfiltros "  >
             <div class="mvl">
@@ -140,7 +140,7 @@
                     </div>
                 </div>
 
-                <div >
+                <div>
                     <div class="row p-1">
                         
                         <!-- <div #pastidefechas  class="posrel pastifiltro cupo " *ngIf="filtFechas != ''" >
@@ -290,8 +290,8 @@
 
         </div>
 
-        <div id="resultadobusca">
-            <div id="ordenarpor pc" *ngIf="!isrespon" class="d-flex">
+        <div id="resultadobusca"    >
+            <div id="ordenarpor pc" *ngIf="!isrespon" class="d-flex"   >
                 <div id="ordenarportexto">
                     {{messageSearchData.orderby}}
                 </div>
@@ -299,11 +299,11 @@
                     <select #ordenarsel class="custom-select custom-select-sm" name="ordenarporsel"
                         (change)="cambiarorden($event)"  >
                         <option value="{{li.id}}" *ngFor="let li of listaordenarfiltro">
-                            <span *ngIf="li.id == 1" > {{messageSearchData.relevance}} </span>
-                            <span *ngIf="li.id == 2" > {{messageSearchData.titles.price}} - {{messageSearchData.levels.height.less}}  </span>
-                            <span *ngIf="li.id == 3" > {{messageSearchData.titles.price}} - {{messageSearchData.levels.height.more}}  </span>
-                            <span *ngIf="li.id == 4" > {{messageSearchData.titles.duration}} - {{messageSearchData.levels.duration.less}}  </span>
-                            <span *ngIf="li.id == 5" > {{messageSearchData.titles.duration}} - {{messageSearchData.levels.duration.more}}  </span>
+                            <span *ngIf="li.id == 1" > {{messageSearchData?.relevance}} </span>
+                            <span *ngIf="li.id == 2" > {{messageSearchData?.titles.price}} - {{messageSearchData?.levels.height.less}}  </span>
+                            <span *ngIf="li.id == 3" > {{messageSearchData?.titles.price}} - {{messageSearchData?.levels.height.more}}  </span>
+                            <span *ngIf="li.id == 4" > {{messageSearchData?.titles.duration}} - {{messageSearchData?.levels.duration.less}}  </span>
+                            <span *ngIf="li.id == 5" > {{messageSearchData?.titles.duration}} - {{messageSearchData?.levels.duration.more}}  </span>
                             
                         </option>
                     </select>
@@ -311,31 +311,31 @@
             </div>
             
 
-            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of listaresultados; let i = index" [ngModel]="listaresultados" >
+            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of listaresultados; let i = index"   >
                 
-                <div *ngIf=" visita.visit_uuid != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita.visit_uuid, visita.visit_lang_title)"  >
-                    <div class="visitastemporada" *ngIf="visita.visit_temporada == 1" >
+                <div *ngIf=" visita?.visit_uuid != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita?.visit_uuid, visita?.visit_lang_title)"  >
+                    <div class="visitastemporada" *ngIf="visita?.visit_temporada == 1" >
                         <div >
-                            {{messageSearchData.viewTemp}}
+                            {{messageSearchData?.viewTemp}}
                         </div>
                     </div>
 
                     <div class="imgvisitabuscador">
                         <picture>
-                            <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}"
+                            <source media="(min-width: 0px)" srcset="{{visita?.visit_image_url}}" data-srcset="{{visita.visit_image_url}}"
                                 class="pc">
-                            <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
-                                class="pc imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.jpg' "  >
+                            <img src="{{visita?.visit_image_url}}" data-src="{{visita?.visit_image_url}}" alt=""
+                                class="pc imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.png' "  >
                             <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}"
                                 class="mvl">
-                            <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
-                                class="mvl imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.jpg' "  >
+                            <img src="{{visita?.visit_image_url_movil}}" data-src="{{visita?.visit_image_url_movil}}" alt=""
+                                class="mvl imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.png' "  >
                         </picture>
                     </div>
 
-                    <div class="panelinfovisitabuscador">
+                    <div class="panelinfovisitabuscador"   >
                         <div class="titvisitabuscador">
-                            <span>{{visita.visit_lang_title.length > 30 ? visita.visit_lang_title.substring(0,27)+"..." : visita.visit_lang_title}} </span>
+                            <span>{{visita?.visit_lang_title.length > 30 ? visita?.visit_lang_title.substring(0,27)+"..." : visita?.visit_lang_title}} </span>
                         </div>
                         <div class="textvisitabuscador " *ngIf="!isrespon">
                             <span  [innerHTML]="visita.visit_lang_description.length > 90 ? visita.visit_lang_description.substring(0,87)+'...' : visita.visit_lang_description " >
@@ -344,17 +344,17 @@
 
                         <div class="infovisitabuscador w-100 d-flex ">
                             <div class="preciovisitabuscador ">
-                                <span class="preciovisitaeurobuscador posrel">{{visita.visit_time[0].price}} € </span>
+                                <span class="preciovisitaeurobuscador posrel">{{visita.visit_time == null ? 0  : visita.visit_time[0].price }} € </span>
                                 <span class="porpersonabuscador">por persona</span>
                             </div>
                             <div class="horasvisitabuscador d-flex">
-                                <img class="imghorasvisitabuscador mr-1" src='assets/images/i-reloj.svg' alt="" onerror="this.src='assets/images/sinimagen.jpg' ">
-                                <span class="cantidadhorasvisitabuscador mx-1">{{visita.visit_time[0].duration}}h</span>
+                                <img class="imghorasvisitabuscador mr-1" src='assets/images/i-reloj.svg' alt="" onerror="this.src='assets/images/sinimagen.png' ">
+                                <span class="cantidadhorasvisitabuscador mx-1">{{visita.visit_time == null ? 0  : visita.visit_time[0].duration}}h</span>
                             </div>
                             <div class="idiomasvisitabuscador cupo "  (mouseenter)="onSelect(i)" (mouseleave)="deSelect()" 
                             (touch)="onSelect(i)" (touchend)="deSelect()"  >
                                 <img src="assets/images/i-idiomas.svg" class="imicono3" draggable="false" 
-                                onerror="this.error=null;this.src='assets/images/sinimagen.jpg' " >
+                                onerror="this.error=null;this.src='assets/images/sinimagen.png' " >
                             </div> 
                             <div *ngIf="selectedVisita == i.toString()" class="posabsolidiomasdispo fs-10"   >
                                <div>{{messageSearchData.available}}</div>
@@ -366,24 +366,25 @@
                     </div>
                 </div>
             </div>
-            <div class="mh300" *ngIf="listaresultados.length == 0 && cargado">
+
+            <div class="mh300" *ngIf="listaresultados.length == 0 && cargado"  >
                 <div class="panelVisitaBuscador d-flex " style="display: flex;
                 justify-content: center;
                 align-items: center;"  >
-                   {{messageSearchData.noResult}}
+                   {{messageSearchData?.noResult}}
 
                 </div> 
 
             </div>
-            <div class="spinner-container mt-4 text-center w-100 mh100" *ngIf="loading"  >
+            <!-- <div class="spinner-container mt-4 text-center w-100 mh100" *ngIf="loading "  >
                 <div class="spinner-border" role="status">
                 </div>
-            </div>
-            <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
+            </div> -->
+            <div class="w-100 p-1 mt-1 text-center mx-auto mh100">
                 <button class="btRedondoVerMasResultados animated fadeIn slow" type="button" 
                 (click)="vermasresultados()" 
                 *ngIf="listaresultados.length < resultado.total && listaresultados.length != 0" >
-                    <span class="ff-JB" *ngIf="!loading">{{messageSearchData.view}} {{messageSearchData.more}}</span>
+                    <span class="ff-JB">{{messageSearchData?.view}} {{messageSearchData?.more}}</span>
                 </button>               
             </div>
     

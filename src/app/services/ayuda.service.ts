@@ -56,16 +56,16 @@ export class AyudaService {
     messageData.title1 = "Preguntas frecuentes";
     messageData.message1 = "A continuación encontrarás las preguntas más frecuentes que nos realizan nuestros clientes." ;
 
-    messageData.question1 = "¿Lorem Ipsum is simply dummy text of the printing typesetting indus?";
-    messageData.response1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took";
-    messageData.question2 = "¿Lorem Ipsum is simply dummy text of the printing typesetting indus?";
-    messageData.response2 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took";
-    messageData.question3 = "¿Lorem Ipsum is simply dummy text of the printing typesetting indus?";
-    messageData.response3 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took";
-    messageData.question4 = "¿Lorem Ipsum is simply dummy text of the printing typesetting indus?";
-    messageData.response4 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took";
-    messageData.question5 = "¿Lorem Ipsum is simply dummy text of the printing typesetting indus?";
-    messageData.response5 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took";
+    messageData.question1 = "¿Cómo Puedo Reservar una Visita Guiada en Madrid?";
+    messageData.response1 = "Para reservar una visita guiada en Madrid, simplemente navega por nuestro sitio web, elige la experiencia que te interese y sigue los pasos para completar la reserva en línea. También estamos disponibles para asistirte a través de nuestro servicio de atención al cliente.";
+    messageData.question2 = "¿Cuáles Son las Atracciones Principales Cubiertas por las Visitas?";
+    messageData.response2 = "Nuestras visitas guiadas abarcan una amplia variedad de atracciones en Madrid, desde los icónicos museos hasta los encantadores barrios históricos. Consulta la descripción de cada tour para conocer las atracciones específicas incluidas.";
+    messageData.question3 = "¿Cuál es la Política de Cancelación?";
+    messageData.response3 = "Nuestra política de cancelación varía según el tipo de tour. Te recomendamos revisar cuidadosamente los términos y condiciones al momento de la reserva. En general, ofrecemos flexibilidad, pero algunos tours pueden tener restricciones.";
+    messageData.question4 = " ¿Cómo Puedo Modificar mi Reserva?";
+    messageData.response4 = "Para modificar tu reserva, por favor, ponte en contacto con nuestro equipo de atención al cliente lo antes posible. Estaremos encantados de ayudarte a realizar ajustes según la disponibilidad.";
+    messageData.question5 = "¿Hay Descuentos Disponibles para Grupos Grandes?";
+    messageData.response5 = "Sí, ofrecemos descuentos para grupos grandes. Contáctanos directamente para obtener información detallada y personalizada sobre las tarifas de grupo y las opciones disponibles.";
 
     messageData.noencuentras = "¿No encuentras lo que buscas?";
     messageData.whatsapp = "Escríbenos un WhatsApp (656786524)";

@@ -38,6 +38,7 @@ import { TextotourModel } from 'src/app/models/Textotour.model';
 import { TextoiconsModel } from 'src/app/models/Textoicons.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class HomeComponent implements OnInit{
       private title: Title,
       private homeService: HomeService,
       private providerService: ProviderService,
-
+      private http: HttpClient
   )
   {
     this.title.setTitle( "▷ Madguides");
@@ -179,18 +180,33 @@ export class HomeComponent implements OnInit{
 
 
   getRecommended(){
-    this.homeService.getRecomendadasHome().subscribe( (resp) => {
-      this.recommended = resp as VisitasResultadoModel[];
-      
-    });
+    
+    ////fakerun
+    // this.homeService.getRecomendadasHome().subscribe( (resp) => {
+    //   this.recommended = resp as VisitasResultadoModel[];  
+    // });
+    
+    const rutaArchivoJson = 'assets/docs/recommended.json';
+    this.http.get(rutaArchivoJson).subscribe(
+      (data: any) => {
+        this.recommended = data as VisitasResultadoModel[];
+      },
+      (error) => {
+        console.error('Error al cargar el archivo JSON:', error);
+      }
+    );
+
+
+
   }
 
 
   getComments(){
-    this.homeService.getCommentsHome().subscribe( (resp) => {
-      this.comments =  resp as ComentariosModel[];
+    ////fakerun
+    // this.homeService.getCommentsHome().subscribe( (resp) => {
+    //   this.comments =  resp as ComentariosModel[];
 
-    } );
+    // } );
   }
 
   

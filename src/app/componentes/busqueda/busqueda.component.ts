@@ -1,4 +1,6 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostListener,
@@ -34,7 +36,7 @@ import { TextosearchModel } from 'src/app/models/Textosearch.model';
   selector: 'app-busqueda',
   templateUrl: './busqueda.component.html',
 })
-export class BusquedaComponent implements OnInit {
+export class BusquedaComponent implements OnInit, AfterViewInit {
   @Output() filtrarBusqueda = new EventEmitter();
   @Input() cargado: boolean = false;
   @Input() messageSearchData: TextosearchModel = new TextosearchModel();
@@ -162,7 +164,7 @@ export class BusquedaComponent implements OnInit {
     private globalService: GlobalService,
     private listasService: ListasService,
     private platformService: PlatformService,
-    
+    private cdr: ChangeDetectorRef
   ) {
     this.sWindow = this.platformService.sWindow ;
   }
@@ -182,6 +184,13 @@ export class BusquedaComponent implements OnInit {
     this.getFechasHoy();
     this.verdisponibilidad();
     this.isrespon = this.platformService.isrespon;
+
+    this.cdr.detectChanges();
+  }
+
+  ngAfterViewInit() {
+    
+    
   }
 
   @HostListener('window:scroll')
@@ -787,6 +796,8 @@ export class BusquedaComponent implements OnInit {
     this.filters.categorias = this.categoriasSel;
     this.verdisponibilidad()
   }
+
+
 
 
 }

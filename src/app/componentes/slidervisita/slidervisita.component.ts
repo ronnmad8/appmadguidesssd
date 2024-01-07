@@ -39,6 +39,7 @@ import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
 import { PlatformService } from 'src/app/services/platform.service';
 import { AlertasService } from 'src/app/services/alertas.service';
 import { ImagenesVisitaModel } from 'src/app/models/ImagenesVisita.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-slidervisita',
@@ -179,6 +180,7 @@ export class SlidervisitaComponent implements OnInit{
   verZonePuntodeencuentro: boolean = false;
   verPanel: boolean = false;
   secuencial: number = 1;
+  defaultvisitime: TimesModel[] = [];
 
   constructor(
     private wowService: NgwWowService,
@@ -190,7 +192,8 @@ export class SlidervisitaComponent implements OnInit{
     private carritoService: CarritoService,
     private renderer: Renderer2,
     private platformService: PlatformService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
+    private http: HttpClient
     
   ) {
     this.wowService.init();
@@ -198,6 +201,14 @@ export class SlidervisitaComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+    ///default visittime
+    const rutaArchivoJson = 'assets/docs/visita.json';
+    this.http.get(rutaArchivoJson).subscribe(
+      (data: TimesModel) => {
+        this.defaultvisitime.push(data);
+    });
+
    
     this.listenProvider();
     this.week = this.globalService.week;
@@ -242,15 +253,18 @@ export class SlidervisitaComponent implements OnInit{
     this.providerService.getThrowVisita.subscribe((resp) => {
       var provVisita = resp as VisitasResultadoModel;
       
-      if (provVisita.visit_uuid != null) {
-        this.getVisitaResultado(provVisita);
-
-        let hoy = moment();
-        let estemes = hoy.format('MM');
-        let esteyear = hoy.format('YYYY');
-        this.getDaysFromDate(estemes, esteyear);
-        this.getCherryDay();
+      if (provVisita.visit_time == null) {
+        provVisita.visit_time = this.defaultvisitime;
       }
+
+      this.getVisitaResultado(provVisita);
+
+      let hoy = moment();
+      let estemes = hoy.format('MM');
+      let esteyear = hoy.format('YYYY');
+      this.getDaysFromDate(estemes, esteyear);
+      this.getCherryDay();
+      
     });
 
     this.providerService.getThrowMessagesVisita.subscribe((resp) => {
@@ -268,34 +282,35 @@ export class SlidervisitaComponent implements OnInit{
   }
 
   getVisitaResultado(visita: VisitasResultadoModel) {
+    
     this.visitaresultado = visita;
     console.log(
       '----VISITA RESULTADO',
       this.visitaresultado
     );
+
     this.listaImagenesVisita = []
     this.listaImagenesVisitaLat = [];
     this.getImagenesVisita();
 
-
     //info
     this.descripcion = visita.visit_lang_description;
     this.descripcioncorta = this.descripcion.substring(0, 200);
-
     if (this.timesSel != null) {
-      this.timesSel = visita.visit_time[0];
+      this.timesSel = visita.visit_time != null ? visita.visit_time[0] : new TimesModel();
     }
-    
+  
     this.maximopersonas = this.timesSel.available;
     this.vendidas = this.timesSel.buy;
     this.disponibles = this.maximopersonas - this.vendidas;
-   
+  
     this.getCalculoPrecio();
 
     ///get idiomas
     this.listasService.getIdiomas().subscribe((resp) => {
       this.listaidiomas = resp as LanguagesModel[];
       this.listaidiomasvisita = [];
+      this.idiomasdisponibles = "";
       this.visitaresultado.iso_disponible.forEach((idiomaiso, index) => {
         let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso) ?? new LanguagesModel();
         idiom.id = index;
@@ -303,11 +318,11 @@ export class SlidervisitaComponent implements OnInit{
         let idiomasum = idiom.name.toLowerCase();
         this.idiomasdisponibles += (  idiomasum ) + ', ';
       })
-
     });
     
     this.idiomaSel = this.visitaresultado.visit_time[0].iso ;
-
+    debugger
+    this.listahorasvisita = [];
     this.listahoras.forEach((hora) => {
       let initsp = this.timesSel.init.split(':');
       let res = initsp[0] + ':' + initsp[1];
@@ -325,6 +340,7 @@ export class SlidervisitaComponent implements OnInit{
         this.listahorasvisita.push({ value: res, viewValue: res });
       }
     });
+    
     
   }
 
@@ -675,6 +691,7 @@ export class SlidervisitaComponent implements OnInit{
   
     if (day.visitday) {
       this.daySel = day;
+      
       const monthYear = this.dateSelect.format('YYYY-MM');
       const parse = `${monthYear}-${day.value}`;
       const objectDate = moment(parse);
