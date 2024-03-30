@@ -12,6 +12,7 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextosModel } from 'src/app/models/Textos.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 
@@ -21,9 +22,9 @@ import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 })
 export class SlidertestimoniosComponent implements OnInit {
  
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   @Input() messagesOpinionsData: TextoopinionsModel = new TextoopinionsModel();
   @Input() commentsData: ComentariosModel[] = [];
-  @Input() logoData: ImagenesModel = new ImagenesModel;
   
   public show: boolean = true;
   public cargados: boolean = false;

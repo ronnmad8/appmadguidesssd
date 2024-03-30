@@ -14,6 +14,7 @@ import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { TextotourModel } from 'src/app/models/Textotour.model';
 import { TextoiconsModel } from 'src/app/models/Textoicons.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 
@@ -25,9 +26,7 @@ import { TextoiconsModel } from 'src/app/models/Textoicons.model';
 export class BannerhomeComponent implements OnInit, AfterViewInit {
 
   @Input() mostrarmodalbuscador: boolean = true;
-  @Input() messagesTourData: TextotourModel = new TextotourModel();
-  @Input() messagesIconsData: TextoiconsModel = new TextoiconsModel();
-  @Input() bannertopData: ImagenesModel = new ImagenesModel();
+  @Input() textconts: TextContentsModel = new TextContentsModel();
 
   @ViewChild('cjbusqueda') cjbusqueda: ElementRef;
   

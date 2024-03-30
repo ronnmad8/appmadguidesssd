@@ -15,6 +15,9 @@ import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -31,10 +34,10 @@ export class AvisolegalComponent implements OnInit {
   
   banner :ImagenesModel = new ImagenesModel();
   bannerbottom :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
   messagePoliticas: TextopoliticasModel= new TextopoliticasModel();
-  
+
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
 
   constructor(
       private acro : ActivatedRoute,
@@ -47,7 +50,7 @@ export class AvisolegalComponent implements OnInit {
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
-
+      private globalService: GlobalService,
   )
   {
     // this.title.setTitle( "▷ Madguides");
@@ -63,13 +66,28 @@ export class AvisolegalComponent implements OnInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-    this.getMessagesForm();
-    this.getMessagesImage();
-    this.getMessageavisolegal();
     this.getImagenes();
-    
+    this.getTexts();
+
   }
 
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    this.messagePoliticas.title = this.textconts.avisolegal_title;
+    this.messagePoliticas.textohtml = this.textconts.avisolegal_text;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+          this.messagePoliticas.title = this.textconts.avisolegal_title;
+          this.messagePoliticas.textohtml = this.textconts.avisolegal_text;
+        }
+      })
+    }
+  }
 
   getImagenes(){
     this.politicasService.getImages().subscribe( (resp) => {
@@ -79,43 +97,6 @@ export class AvisolegalComponent implements OnInit {
 
     } );
   }
-
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
-
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-      this.messageImage = respuesta;
-    });
-  }
-
-
-  getMessageavisolegal(){
-    this.politicasService.getMessagesAvisolegal().subscribe( (resp) => {
-      let respuesta: TextopoliticasModel =  resp as TextopoliticasModel; 
-      this.messagePoliticas = respuesta;
-    } );
-  }
-
-
-
-
-  
-
-  
-  
-
-
- 
-   
-  
 
 
   

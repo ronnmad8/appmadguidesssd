@@ -321,7 +321,7 @@ export class SlidervisitaComponent implements OnInit{
     });
     
     this.idiomaSel = this.visitaresultado.visit_time[0].iso ;
-    debugger
+    
     this.listahorasvisita = [];
     this.listahoras.forEach((hora) => {
       let initsp = this.timesSel.init.split(':');
@@ -340,7 +340,6 @@ export class SlidervisitaComponent implements OnInit{
         this.listahorasvisita.push({ value: res, viewValue: res });
       }
     });
-    
     
   }
 

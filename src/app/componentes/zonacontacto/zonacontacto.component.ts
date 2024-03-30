@@ -14,6 +14,7 @@ import {
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 
@@ -24,6 +25,7 @@ import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 export class ZonacontactoComponent implements OnInit {
 
   @Input() enlace: string = "";
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   @Input() messageFormData: MessagesFormModel = new MessagesFormModel();
   @Input() messageImageData: MessagesImageModel = new MessagesImageModel();
   @Input() bannerbottomData: ImagenesModel = new ImagenesModel;

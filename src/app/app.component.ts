@@ -20,6 +20,8 @@ export class AppComponent {
 {
   this.getCurrentLanguage() ;
   
+  this.globalService.setTextContents();
+  this.globalService.setlanguages();
 }
 
 

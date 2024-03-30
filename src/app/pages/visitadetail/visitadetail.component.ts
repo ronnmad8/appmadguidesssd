@@ -30,6 +30,9 @@ import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { HttpClient } from '@angular/common/http';
 import { TimesModel } from 'src/app/models/Times.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 @Component({
@@ -55,6 +58,9 @@ export class VisitadetailComponent implements OnInit{
   bannerbottom: ImagenesModel = new ImagenesModel(); //bannertop
   related: VisitasResultadoModel[] = [];
 
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
+
   constructor(
       private acro : ActivatedRoute,
       private router: Router,
@@ -68,8 +74,8 @@ export class VisitadetailComponent implements OnInit{
       private activatedRoute: ActivatedRoute,
       private meta: Meta,
       private title: Title,
-      private http: HttpClient
-
+      private http: HttpClient,
+      private globalService: GlobalService,
   )
   {
     ///
@@ -102,10 +108,12 @@ export class VisitadetailComponent implements OnInit{
         }
         
         this.getMessages();
-        this.getMessagesForm();
-        this.getMessagesImage();
-        this.getMessagesHome();
-        this.getImagenesForm();
+        // this.getMessagesForm();
+        // this.getMessagesImage();
+        // this.getMessagesHome();
+        // this.getImagenesForm();
+
+        this.getTexts();
         
       }
     );
@@ -125,6 +133,19 @@ export class VisitadetailComponent implements OnInit{
     this.meta.updateTag({ property :"og:image", content:  this.visitaSel.visit_image_url  });
   }
   
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
 
   getVisita(uuid: string){
     if(uuid != "" && uuid != null){
@@ -165,31 +186,6 @@ export class VisitadetailComponent implements OnInit{
         this.messages = resp as VisitaAssetsModel;
         this.providerService.setThrowMessagesVisita(this.messages);
       })
-  }
-
-
-  getImagenesContacto(){
-    this.homeService.getImagenesHome().subscribe( (resp) => {
-      let imagenesResp =  resp as ImagenesModel[];
-      this.bannerbottom = imagenesResp.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-    } );
-  }
-
-
-  getMessagesHome(){
-    this.homeService.getMessagesHome().subscribe( (resp) => {
-      let respuesta: any =  resp ;
-      this.messagesRelated = respuesta[0] ?? new MessagesModel();
-      
-    } );
-  }
-
-
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      this.messagesForm = resp as MessagesFormModel;
-    } );
   }
 
 
@@ -248,18 +244,6 @@ export class VisitadetailComponent implements OnInit{
       });
     })
   }
-
-
-  getImagenesForm(){
-    this.homeService.getImagenesHome().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-    } );
-  }
-
-
-  
-  
 
   
 }

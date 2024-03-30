@@ -10,6 +10,7 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
 })
 export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   @Input() messagesRecomendadasData: TextorecomendadasModel = new TextorecomendadasModel();
   @Input() recommendedData: VisitasResultadoModel[] = [];
 

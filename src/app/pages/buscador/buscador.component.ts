@@ -42,6 +42,9 @@ import { ProviderService } from 'src/app/services/provider.service';
 import { dateTime } from 'date-fns/locale/af';
 import { getTime } from 'date-fns';
 import { TimesModel } from 'src/app/models/Times.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -75,6 +78,9 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   page: number = 1;
   numactividades: number = 0;
 
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
+
   constructor(
       private acro : ActivatedRoute,
       private router: Router,
@@ -88,13 +94,13 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
-
+      private globalService: GlobalService,
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.title.setTitle( "▷ Buscador");
+    this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'Madguides visitas guiadas en Madrid' });
     
     
   }
@@ -104,15 +110,16 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-    this.getMessagesSearch();
-    this.getMessagesForm();
-    this.getMessagesImage();
+    // this.getMessagesSearch();
+    // this.getMessagesForm();
+    // this.getMessagesImage();
+
     this.getMessages();
     this.getImagenesBuscador();
    
     this.menuPublic.emit(0);
-    
-    
+
+    this.getTexts();
   }
 
 
@@ -138,6 +145,20 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
         this.getVisitasBuscador();
       }
       );
+  }
+
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
 
 
@@ -182,7 +203,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
         });
 
-
         this.bu.getVisitasBuscador(this.resultadoBuscador);
         this.numactividades = this.resultadoBuscador.total;
 
@@ -196,26 +216,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getMessagesSearch(){
-    this.buscadorService.getMessagesSearch().subscribe( (resp) => {
-      let respuesta: TextosearchModel =  resp as TextosearchModel; ;
-      this.messageSearch = respuesta;
-    } );
-  }
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      this.messageImage =  resp  as MessagesImageModel;
-
-    } );
-  }
 
   getMessages(){
     this.homeService.getMessagesHome().subscribe( (resp) => {
@@ -226,9 +226,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
-  
   generarAleatorioPrice(visita: any): number {
     return visita.visit_time == null || visita.visit_time[0]?.price == null
       ? Math.floor(Math.random() * (40 - 10 + 1)) + 10

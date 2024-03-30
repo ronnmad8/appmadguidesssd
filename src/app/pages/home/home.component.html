@@ -1,17 +1,15 @@
 <div class="w-100 ">
 
     <div #banner class="" >
-        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador" [messagesTourData]="messagesTour" 
-         [messagesIconsData]="messagesIcons" [bannertopData]="bannertop"    ></app-bannerhome>
+        <app-bannerhome [mostrarmodalbuscador]="mostrarmodalbuscador" [textconts]="textconts"  ></app-bannerhome>
     </div>
 
     <div #recomendadas class="" >
-        <app-slidervisitas [recommendedData]="recommended" [messagesRecomendadasData]="messagesRecomendadas" ></app-slidervisitas>
+        <app-slidervisitas [recommendedData]="recommended"  [textconts]="textconts"   ></app-slidervisitas>
     </div>
     
     <section #testimonios>
-        <app-slidertestimonios [commentsData]="comments" [logoData]="logo" 
-        [messagesOpinionsData]="messagesOpinions"  >
+        <app-slidertestimonios [commentsData]="comments"  [textconts]="textconts"  >
         </app-slidertestimonios>
     </section>
     
@@ -19,7 +17,7 @@
 
     <section #contct id="contct" class="my-3" >
         <div></div>
-       <app-zonacontacto [messageFormData]="messagesForm" [messageImageData]="messageImage"   [bannerbottomData]="bannerbottom"   ></app-zonacontacto>
+       <app-zonacontacto   [textconts]="textconts"   ></app-zonacontacto>
     </section>
 
 </div>

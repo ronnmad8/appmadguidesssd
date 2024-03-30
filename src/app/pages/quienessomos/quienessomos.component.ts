@@ -33,6 +33,9 @@ import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextoquienessomosModel } from 'src/app/models/Textoquienessomos.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -51,11 +54,11 @@ export class QuienessomosComponent implements OnInit {
   
   banner :ImagenesModel = new ImagenesModel();
   bannerbottom :ImagenesModel = new ImagenesModel();
-  imagenempresa :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
   messageLaempresa: TextoquienessomosModel= new TextoquienessomosModel();
   
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
+
 
   constructor(
       private acro : ActivatedRoute,
@@ -71,15 +74,14 @@ export class QuienessomosComponent implements OnInit {
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
-
+      private globalService: GlobalService,
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.title.setTitle( "▷ Quienes somos");
+    this.meta.updateTag({ name: 'description', content: 'quienes somos madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides' });
+    this.meta.updateTag({ name: 'keywords', content: 'madguides' });
 
-    
   }
   
 
@@ -87,69 +89,23 @@ export class QuienessomosComponent implements OnInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-
-    this.getMessagesForm();
-    this.getMessagesImage();
-    this.getMessagesLaempresa();
-    this.getImagenes();
-
-   
+    this.getTexts();
     this.menuPublic.emit(0);
-    
-    
+        
   }
 
-
-  getImagenes(){
-    this.quienessomosService.getImages().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.banner = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-      //this.imagenempresa = imagenes.find(x => x.name == 'imagenempresa') ?? new ImagenesModel();
-
-      this.imagenempresa.url = "../../assets/images/imagenempresa.png";
-
-    } );
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
-
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
-
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-      this.messageImage = respuesta;
-    } );
-  }
-
-
-  getMessagesLaempresa(){
-    this.quienessomosService.getMessages().subscribe( (resp) => {
-      let respuesta: TextoquienessomosModel =  resp as TextoquienessomosModel; 
-      this.messageLaempresa = respuesta;
-      
-    } );
-  }
-
-
-
-
-  
-
-  
-  
-
-
- 
-   
-  
-
 
   
 }

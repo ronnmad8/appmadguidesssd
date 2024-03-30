@@ -12,40 +12,65 @@ import { TimesModel } from '../models/Times.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { PlatformService } from './platform.service';
 import { TextoPerfilModel } from '../models/TextoPerfil.model';
+import { TextDataModel } from '../models/TextData.model';
+import { TextContentsModel } from '../models/TextContents.model';
+import { ProviderService } from './provider.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
 
+  idlang: number = 1;
+  textcontents: TextContentsModel = new TextContentsModel(); 
+  listaTextDataModel: TextDataModel[] =  [];
+  
   textoPerfil: TextoPerfilModel = new TextoPerfilModel();
-
-
 
   userToken: string = '';
   idUsuario: string = '';
   url: string = '';
   apiurl: string;
+  apiurlold: string;
 
   listatiposidentificacion: any[];
   week: any;
   months: any;
   listahoras: any[];
   idiomasIsos: any[];
+  listaidlangs: any[] = [];
   redes: any;
+
 
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private platformService: PlatformService,
+    private providerService: ProviderService,
     private router: Router
   ) {
+
     this.apiurl = environment.apiurl;
+    this.apiurlold = environment.apiurlold;
+    this.setlanguages();
     this.getListas();
-    
+
   }
 
   getListas() {
+
+    this.listaidlangs = [
+      { id: 1, name: 'es' },
+      { id: 2, name: 'en' },
+      { id: 3, name: 'fr' },
+      { id: 4, name: 'de' },
+      { id: 5, name: 'it' },
+      { id: 6, name: 'pl' },
+      { id: 7, name: 'el' },
+      { id: 8, name: 'pt' },
+    ];
+
     this.listatiposidentificacion = [
       { id: 1, name: 'DNI' },
       { id: 2, name: 'CIF' },
@@ -137,6 +162,19 @@ export class GlobalService {
     return navigator.language;
   }
 
+
+  getIdLang(lang: string = "es") {
+    let idlg = 1;
+    if (lang != undefined) {
+      this.listaidlangs.forEach(resp=>{
+        if (resp.iso == lang) {
+          idlg= resp.id;
+        }
+      }) 
+    }
+    return idlg;
+  }
+
   getFormatNumber(n: number) {
     if (n != 0 && !Number.isNaN(n)) {
       let num = n.toFixed(2);
@@ -209,8 +247,6 @@ export class GlobalService {
     vi.init = visita.visit_time_init;
     vi.end = visita.visit_time_end;
     vi.date = visita.visit_time_date;
-    
-
     vi.iso = visita.visit_time_iso;
     vi.duration = visita.visit_time_duration;
 
@@ -251,27 +287,53 @@ export class GlobalService {
     }
     this.platformService.sWindow.open(url);
   }
+  
 
+  /////////////////carga de textos 
+  setTextContents(){
+    this.getTextcontentsglobal().subscribe((resp)=>{
+      if(resp && resp["data"]){
+        this.listaTextDataModel = resp["data"] as TextDataModel[] ?? [] ;
+        this.textcontents = this.setTextContentsByLanguage(this.listaTextDataModel , this.idlang );
+        console.log("setTextContents()  ", this.textcontents)
+      }
+    })
+  }
 
+  setTextContentsByLanguage(lista:TextDataModel[],  idlanguage: number = 1) {
+    let textcont: TextContentsModel = new TextContentsModel();
+    if( lista.length > 0){
+      textcont.dataok = true;
+      lista.forEach((data: TextDataModel) => {
+        if(data.idlang == idlanguage){
+          textcont[data.nombre] = data.contenido ;
+        }
+      });
+    }
+    return textcont;
+  }
 
-  ///get Texto mi cuenta
-  getTextoPerfil() {
-      let endpoint = '/assets/perfil?' ;
+  setlanguages(){
+    let lang = this.getLanguage()
+    this.idlang = this.getIdLang(lang);
+  }
+
+  getTextcontentsglobal() {
+    let endpoint = '/textcontents/'+this.idlang ;
       this.url = this.apiurl + endpoint;
-      return this.http.get( `${this.url}` )
-      .pipe(
-        map( 
-          (resp) =>{
-          return resp;
+      console.log("getTextcontentsglobal()  ",this.url)
+      return this.http.get(`${this.url}` ).pipe(
+        map((resp) =>{
+            return resp as TextDataModel;
         }),
         catchError((err) => {
           console.error("Error  " , err.error);
-                  return err.error;
+          return err.error;
         })
       );
   }
-  
- 
+
+
 
 
 

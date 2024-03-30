@@ -41,16 +41,6 @@ export class AyudaService {
 
     this.url = this.apiurl + endpoint;
 
-    // return this.http.get(`${this.url}`).pipe(
-    //   map((resp) => {
-    //     var messageData: VisitaAssetsModel[] = resp as VisitaAssetsModel[];
-    //     return messageData;
-    //   }),
-    //   catchError((err) => {
-    //     console.error('Error  ', err.error);
-    //     return err.error;
-    //   })
-    // );
 
     var messageData: TextoayudaModel = new TextoayudaModel();
     messageData.title1 = "Preguntas frecuentes";

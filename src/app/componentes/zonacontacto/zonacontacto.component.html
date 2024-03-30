@@ -1,16 +1,16 @@
 <div class="w-100 p-0 m-0">
   <div id="bancontacto" class="imagebannerseccion posrel w-100 ">
     <picture>
-      <source media="(min-width: 968px)" srcset="{{bannerbottomData.url}}" data-srcset="{{bannerbottomData.url}}">
-      <source media="(min-width: 0px)" srcset="{{bannerbottomData.url_movil}}"
-        data-srcset="{{bannerbottomData.url_movil}}">
-      <img src="{{bannerbottomData.url}}" data-src="{{bannerbottomData.url}}" alt="banner madguides"
+      <source media="(min-width: 968px)" srcset="assets/images/imagen-footer.jpg" data-srcset="assets/images/imagen-footer.jpg">
+      <source media="(min-width: 0px)" srcset="assets/images/imagen-footer.jpg" 
+        data-srcset="assets/images/imagen-footer.jpg">
+      <img src="assets/images/imagen-footer.jpg" data-src="assets/images/imagen-footer.jpg" alt="banner madguides"
         class="imagebannerseccion lazyload " onerror="this.src='assets/images/sinimagen.png' ">
     </picture>
 
     <div id="posabsollemacontacto" class="w-100 d-xl-flex text-center ">
       <div class="mx-auto">
-        {{messageImageData.message}}
+        {{textconts.bannerbottom}}
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
                     <img src="assets/images/i-contacto.svg" data-src="assets/images/i-contacto.svg"
                       alt="" class=" lazyload ">
                     <span>
-                      {{messageFormData.title}}
+                      {{textconts.form_title}}
                     </span>
                   </div>
                 </div>
@@ -37,19 +37,19 @@
               <div class="row ">
                 <div id="nombrecontact" class="col-xl-6">
                   <div class="cuad posrel">
-                    <input class="w-100" type="text" placeholder="{{messageFormData.name}}" name="nombre" id="nombre"
+                    <input class="w-100" type="text" placeholder="{{textconts.form_name}}" name="nombre" id="nombre"
                       formControlName="nombre">
                     <div *ngIf="nombresel != '' " class="fieldpeq3">
-                      {{messageFormData.name}}
+                      {{textconts.form_name}}
                     </div>
                   </div>
                 </div>
                 <div id="emailcontact" class="col-xl-6">
                   <div class="cuad posrel">
-                    <input class="w-100" type="text" placeholder="{{messageFormData.email}}" name="email" id="email"
+                    <input class="w-100" type="text" placeholder="{{textconts.form_email}}" name="email" id="email"
                       formControlName="email">
                     <div *ngIf="emailsel != '' " class="fieldpeq3">
-                      {{messageFormData.email}}
+                      {{textconts.form_email}}
                     </div>
                   </div>
                 </div>
@@ -58,11 +58,11 @@
               <div class="row d-flex p-0 posrel mt-1">
                 <div id="mensajecontact " class="col-12">
                   <div class="cuadG posrel">
-                    <textarea class="" type="text" placeholder="{{messageFormData.message}}" cols="4" name="mensaje" id="mensaje"
+                    <textarea class="" type="text" placeholder="{{textconts.form_message}}" cols="4" name="mensaje" id="mensaje"
                       formControlName="mensaje">
                     </textarea>
                     <div *ngIf="mensajesel != '' " class="fieldpeq3">
-                      {{messageFormData.message}}
+                      {{textconts.form_message}}
                     </div>
                   </div>
                 </div>
@@ -76,17 +76,17 @@
                       formControlName="aceptacion">
                     </div>
                     <div class="fs-16 mx-2 w-100 ">
-                      <span class="mx-1">{{messageFormData.policy}} </span>
-                      <a routerlink="/politicaprivacidad">{{messageFormData.link}}</a>
+                      <span class="mx-1">{{textconts.form_policy}} </span>
+                      <a routerlink="/politicaprivacidad">{{textconts.form_link}}</a>
                     </div>
                 </div>
 
                 <div id="btcontact" class="col-xl-4 col-12 text-xl-right text-center">
                   <button *ngIf="btactivadoT" type="button" class="btgris cupo" (click)="enviarMail()"  >
-                    {{messageFormData.button}}
+                    {{textconts.form_button}}
                   </button>
                   <button *ngIf="!btactivadoT" type="button" class="btgris apagado">
-                    {{messageFormData.button}}
+                    {{textconts.form_button}}
                   </button>
                   <div class="mh30">
                   </div>

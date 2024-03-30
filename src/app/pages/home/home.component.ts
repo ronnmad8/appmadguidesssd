@@ -39,6 +39,9 @@ import { TextoiconsModel } from 'src/app/models/Textoicons.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
 import { HttpClient } from '@angular/common/http';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { GlobalService } from 'src/app/services/global.service';
+import { TextDataModel } from 'src/app/models/TextData.model';
 
 
 @Component({
@@ -48,7 +51,7 @@ import { HttpClient } from '@angular/common/http';
 })
 
 
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   @Output() menuPublic: EventEmitter<any> = new EventEmitter();
   @ViewChild(BannerhomeComponent) bh: BannerhomeComponent;
@@ -64,13 +67,6 @@ export class HomeComponent implements OnInit{
   imageneshome :ImagenesModel[] = [];
   recommended: VisitasResultadoModel[] = [];
   comments: ComentariosModel[] = [];
-  //message: MessagesModel ;
-  messagesForm: MessagesFormModel = new MessagesFormModel(); //texto del formulario
-  messagesTour: TextotourModel = new TextotourModel(); //texto del banner
-  messagesIcons: TextoiconsModel = new TextoiconsModel(); //texto de iconos banner
-  messagesOpinions: TextoopinionsModel = new TextoopinionsModel(); //texto de iconos banner
-  messagesRecomendadas: TextorecomendadasModel = new TextorecomendadasModel(); //texto de iconos banner
-  messageImage: MessagesImageModel = new MessagesImageModel(); //texto banner formulario
 
   //imagenes
   bannerproducto: ImagenesModel = new ImagenesModel(); //banner-ficha-de-producto
@@ -80,7 +76,8 @@ export class HomeComponent implements OnInit{
   logotexto: ImagenesModel = new ImagenesModel(); //logo-texto
   logo: ImagenesModel = new ImagenesModel(); //logo
 
-
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
 
   constructor(
       private acro: ActivatedRoute,
@@ -92,6 +89,7 @@ export class HomeComponent implements OnInit{
       private title: Title,
       private homeService: HomeService,
       private providerService: ProviderService,
+      private globalService: GlobalService,
       private http: HttpClient
   )
   {
@@ -109,18 +107,33 @@ export class HomeComponent implements OnInit{
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
+    //this.getRecommended();
+    //this.getComments();
+    //this.getImageneshome();
+    //this.getMessagesImage();
     
-    this.getRecommended();
-    this.getComments();
-    this.getImageneshome();
-    this.getMessagesImage();
+    //this.getMessagesOpinions();
+    //this.getMessagesRecomendadas();
+    //this.getMessagesForm();
+    //this.getMessagesTour();
+    //this.getMessagesIcons();
     
-    this.getMessagesOpinions();
-    this.getMessagesRecomendadas();
-    this.getMessagesForm();
-    this.getMessagesTour();
-    this.getMessagesIcons();
-    
+    this.getTexts();
+
+  }
+
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
 
 
@@ -136,47 +149,47 @@ export class HomeComponent implements OnInit{
   }
 
   
-  getMessagesTour(){
-    this.homeService.getMessagesTour().subscribe( (resp) => {
-      this.messagesTour = resp as TextotourModel;
-    } );
-  }
+  // getMessagesTour(){
+  //   this.homeService.getMessagesTour().subscribe( (resp) => {
+  //     this.messagesTour = resp as TextotourModel;
+  //   } );
+  // }
 
   
-  getMessagesIcons(){
-    this.homeService.getMessagesIcons().subscribe( (resp) => {
-      this.messagesIcons = resp as TextoiconsModel;
-    } );
-  }
+  // getMessagesIcons(){
+  //   this.homeService.getMessagesIcons().subscribe( (resp) => {
+  //     this.messagesIcons = resp as TextoiconsModel;
+  //   } );
+  // }
 
 
-  getMessagesOpinions(){
-    this.homeService.getMessagesOpinions().subscribe( (resp) => {
-      this.messagesOpinions = resp as TextoopinionsModel;
-    } );
-  }
+  // getMessagesOpinions(){
+  //   this.homeService.getMessagesOpinions().subscribe( (resp) => {
+  //     this.messagesOpinions = resp as TextoopinionsModel;
+  //   } );
+  // }
 
 
-  getMessagesRecomendadas(){
-    this.homeService.getMessagesRecomendadas().subscribe( (resp) => {
-      this.messagesRecomendadas = resp as TextorecomendadasModel;
-    } );
-  }
+  // getMessagesRecomendadas(){
+  //   this.homeService.getMessagesRecomendadas().subscribe( (resp) => {
+  //     this.messagesRecomendadas = resp as TextorecomendadasModel;
+  //   } );
+  // }
 
 
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      this.messagesForm =  resp  as MessagesFormModel;
-    } );
-  }
+  // getMessagesForm(){
+  //   this.homeService.getMessagesForm().subscribe( (resp) => {
+  //     this.messagesForm =  resp  as MessagesFormModel;
+  //   } );
+  // }
 
 
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      this.messageImage =  resp  as MessagesImageModel;
+  // getMessagesImage(){
+  //   this.homeService.getMessagesImage().subscribe( (resp) => {
+  //     this.messageImage =  resp  as MessagesImageModel;
 
-    } );
-  }
+  //   } );
+  // }
 
 
   getRecommended(){

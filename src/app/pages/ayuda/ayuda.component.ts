@@ -22,6 +22,9 @@ import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { TextoayudaModel } from 'src/app/models/Textoayuda.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -44,6 +47,8 @@ export class AyudaComponent implements OnInit {
   messageImage: MessagesImageModel = new MessagesImageModel();
   messageFaqs: TextoayudaModel= new TextoayudaModel();
   
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
 
   constructor(
       private acro : ActivatedRoute,
@@ -57,6 +62,7 @@ export class AyudaComponent implements OnInit {
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
+      private globalService: GlobalService,
 
   )
   {
@@ -74,14 +80,29 @@ export class AyudaComponent implements OnInit {
     this.providerService.setThrowFooterpol(true);
 
 
-    this.getMessagesForm();
-    this.getMessagesImage();
-    this.getMessageFaqs();
+    // this.getMessagesForm();
+    // this.getMessagesImage();
+    // this.getMessageFaqs();
+
     this.getImagenes();
     
+    this.getTexts();
     
   }
 
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
 
   getImagenes(){
     this.ayudaService.getImages().subscribe( (resp) => {
@@ -93,29 +114,29 @@ export class AyudaComponent implements OnInit {
   }
 
 
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
+  // getMessagesForm(){
+  //   this.homeService.getMessagesForm().subscribe( (resp) => {
+  //     let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
+  //     this.messageForm = respuesta;
+  //   } );
+  // }
 
 
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-      this.messageImage = respuesta;
-    } );
-  }
+  // getMessagesImage(){
+  //   this.homeService.getMessagesImage().subscribe( (resp) => {
+  //     let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
+  //     this.messageImage = respuesta;
+  //   } );
+  // }
 
 
-  getMessageFaqs(){
-    this.ayudaService.getMessages().subscribe( (resp) => {
-      let respuesta: TextoayudaModel =  resp as TextoayudaModel; 
-      this.messageFaqs = respuesta;
+  // getMessageFaqs(){
+  //   this.ayudaService.getMessages().subscribe( (resp) => {
+  //     let respuesta: TextoayudaModel =  resp as TextoayudaModel; 
+  //     this.messageFaqs = respuesta;
       
-    } );
-  }
+  //   } );
+  // }
 
 
 

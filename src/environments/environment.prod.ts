@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiurl : 'https://turismo.endesys.com/api'
+  apiurlold : 'https://turismo.endesys.com/api',
+  apiurl: 'https://gestion.endesys.org/api'
 };

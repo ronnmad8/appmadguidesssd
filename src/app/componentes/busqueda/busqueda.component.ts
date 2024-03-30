@@ -30,6 +30,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextosearchModel } from 'src/app/models/Textosearch.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   @Output() filtrarBusqueda = new EventEmitter();
   @Input() cargado: boolean = false;
   @Input() messageSearchData: TextosearchModel = new TextosearchModel();
+  @Input() textconts: TextContentsModel = new TextContentsModel();
 
   sWindow: any;
   maxvalueprecio = 300;

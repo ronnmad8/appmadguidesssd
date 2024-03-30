@@ -16,21 +16,21 @@
                     <div class="mx-auto colGRIS1">
                         <div class="mb-3">
                             <h4 class="fs-20 ff-JB ">
-                                {{messageFooter.menu1.title}}
+                                {{textconts.footer_menu1_title}}
                             </h4>
                         </div>
                         <div class="enlacefoot" routerLink="/quienessomos">
-                            <span>{{messageFooter.menu1.who}}</span>
+                            <span>{{textconts.footer_menu1_who}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/contacto">
                             <span>Contacto</span>
                         </div>
                         <div class="enlacefoot" routerLink="/ayuda">
-                            <span>{{messageFooter.menu1.help}}</span>
+                            <span>{{textconts.footer_menu1_help}}</span>
                         </div>
-                        <div class="enlacefoot" routerLink="/medidascovid">
-                            <span>{{messageFooter.menu1.covid}}</span>
-                        </div>
+                        <!-- <div class="enlacefoot" routerLink="/medidascovid">
+                            <span>{{textconts.footer_menu1_covid}}</span>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-xl-3" *ngIf="!nomostrarenlacesfooter">
@@ -41,16 +41,16 @@
                             </h4>
                         </div>
                         <div class="enlacefoot" routerLink="/politicasprivacidad">
-                            <span>{{messageFooter.menu2.policy}}</span>
+                            <span>{{textconts.footer_menu2_policy}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/avisolegal">
-                            <span>{{messageFooter.menu2.notice}}</span>
+                            <span>{{textconts.footer_menu2_notice}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/politicascookies">
-                            <span>{{messageFooter.menu2.cookie}}</span>
+                            <span>{{textconts.footer_menu2_cookie}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/politicascompra">
-                            <span>{{messageFooter.menu2.purchase}}</span>
+                            <span>{{textconts.footer_menu2_purchase}}</span>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="col-xl-3 " *ngIf="nomostrarenlacesfooter">
                     <div class="posrel colGRIS1">
                         <div class="posabsol" style="left: 0; top: 50px" routerLink="/politicascompra">
-                            <span>Política de compra y devolución</span>
+                            <span>{{textconts.footer_menu2_purchase}}</span>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                     <div id="widg1" (click)="showwidg1()" class="accord cupo d-flex posrel">
                         <div class="text-left">
                             <span>
-                                {{messageFooter.menu1.title}}
+                                {{textconts.footer_menu1_title}}
                             </span>
                         </div>
                         <div class="posabsolRight mt-2">
@@ -116,16 +116,16 @@
                     </div>
                     <div id="divwdg1" *ngIf="widg1show" class="animated fadeIn my-2">
                         <div class="enlacefoot" routerLink="/quienessomos">
-                            <span>{{messageFooter.menu1.who }} </span>
+                            <span>{{textconts.footer_menu1_who }} </span>
                         </div>
                         <div class="enlacefoot" routerLink="/contacto">
                             <span>Contacto</span>
                         </div>
                         <div class="enlacefoot" routerLink="/ayuda">
-                            <span>{{messageFooter.menu1.help}}</span>
+                            <span>{{textconts.footer_menu1_help}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/medidascovid">
-                            <span>{{messageFooter.menu1.covid}}</span>
+                            <span>{{textconts.footer_menu1_covid}}</span>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                     <div id="widg2" (click)="showwidg2()" class="accord cupo d-flex posrel">
                         <div class="text-left">
                             <span>
-                                {{messageFooter.menu2.title}}
+                                {{textconts.footer_menu2_title}}
                             </span>
                         </div>
                         <div class="posabsolRight mt-2">
@@ -145,16 +145,16 @@
                     </div>
                     <div id="divwidg2" *ngIf="widg2show" class="bordebot  animated fadeIn my-2">
                         <div class="enlacefoot" routerLink="/politicasprivacidad">
-                            <span>{{messageFooter.menu2.policy}}</span>
+                            <span>{{textconts.footer_menu2_policy}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/avisolegal">
-                            <span>{{messageFooter.menu2.notice}}</span>
+                            <span>{{textconts.footer_menu2_notice}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/politicascookies">
-                            <span>{{messageFooter.menu2.cookie}}</span>
+                            <span>{{textconts.footer_menu2_cookie}}</span>
                         </div>
                         <div class="enlacefoot" routerLink="/politicascompra">
-                            <span>{{messageFooter.menu2.purchase}}</span>
+                            <span>{{textconts.footer_menu2_purchase}}</span>
                         </div>
                     </div>
                     <div class="h30"></div>
@@ -179,7 +179,7 @@
             <div class="col-12 mt-3" *ngIf="nomostrarenlacesfooter">
                 <div class="colGRIS1 text-center">
                     <div routerLink="/politicascompra">
-                        <span>Política de compra y devolución</span>
+                        <span>{{textconts.footer_menu2_purchase}}</span>
                     </div>
                 </div>
             </div>
@@ -215,22 +215,20 @@
         <div class="h60"></div>
         <img src="assets/images/cookies.png" alt="Galleta" data-src="assets/images/cookies.png"
             class="galleta lazyload " onerror="this.src='assets/images/sinimagen.png' ">
-        <h3>Cookies</h3>
-        <p>Utilizamos cookies propias y de terceros para mejorar nuestros servicios.</p>
+        <h3>{{textconts.cookies_title}} </h3>
+        <p>{{textconts.cookies_utilizamos}}</p>
         <div>
-            <button class="btn bgROJO1 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="aceptarcookiestodas()">Aceptar
-                todas</button>
+            <button class="btn bgROJO1 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="aceptarcookiestodas()">{{textconts.cookies_aceptar}}</button>
         </div>
         <div>
-            <button class="btn bgGRIS3 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="denegarcookies()">Denegar no
-                esenciales</button>
+            <button class="btn bgGRIS3 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="denegarcookies()">{{textconts.cookies_denegar}}</button>
         </div>
         <div>
             <button class="btn bgVERDE colBLANCO w-100 my-2" id="btn-aceptar-cookies"
-                (click)="openI(modalcookies)">Configurar</button>
+                (click)="openI(modalcookies)">{{textconts.cookies_configurar}}</button>
         </div>
         <div class="cupo mt-2" routerLink="/politicascookies">
-            <p> Ver información sobre de Cookies</p>
+            <p> {{textconts.cookies_verinfo}}</p>
         </div>
     </div>
     <div class="aviso-cookies-peq bgBLANCO2 animated fadeIn" style="animation-delay: 2s" id="aviso-cookies-peq"
@@ -244,7 +242,7 @@
 <ng-template #modalcookies let-modal class="brdtest3" >
     <div class="modal-header">
         <div class="w-100 mx-auto text-center">
-            <p class="fs-22" id="modal-basic-title"><b>PREFERENCIA DE COOKIES</b></p>
+            <p class="fs-22" id="modal-basic-title"><b>{{textconts.cookies_preferencias}}</b></p>
         </div>
         <div class="close" aria-label="Close" (click)="cerrarmodalI()">
             <span><i class="fa fa-circle-xmark fs-20"></i></span>
@@ -258,27 +256,21 @@
                 <div class="col-xl-8 px-2">
                     <div class="mhcook p-0 m-0">
                         <div class="mb-0" *ngIf="pestacookie == 1">
-                            <span class="fs-18"><b> Seguridad y privacidad </b></span><br>
+                            <span class="fs-18"><b> {{textconts.cookies_seguridad}} </b></span><br>
                             <span class="fs-16">
-                                Las cookies son archivos que se almacenan en el navegador al visitar una web,
-                                su uso va dirigido a mejorar la experiencia de usuario.
+                                {{textconts.cookies_cookiesson}}
                             </span><br>
                             <span class="fs-16">
-                                Desde este panel puedes gestionar tus preferencias de grupos de cookies,
-                                pero recuerda que una cookie es para mejora de la navegación.
+                                {{textconts.cookies_desdepanel}}
                             </span>
                         </div>
                         <div class="mb-0" *ngIf="pestacookie == 2">
-                            <span class="fs-18"><b> Cookies esenciales obligatorias </b></span><br>
+                            <span class="fs-18"><b> {{textconts.cookies_esenciales}} </b></span><br>
                             <span class="fs-16">
-                                Son aquellas cookies destinadas a dar el servicio especíico de la web y que permiten
-                                hacer uso de sus
-                                servicios.
+                                {{textconts.cookies_sonaquellas}}
                             </span><br>
                             <span class="fs-16">
-                                No sería posible brindar la funciones de sesión de usuario, no entran dentro del
-                                grupo de cookies
-                                prescindibles.
+                                {{textconts.cookies_noseria}}
                             </span>
                             <div class="mt-2">
                                 <label class="switch">
@@ -288,15 +280,12 @@
                             </div>
                         </div>
                         <div class="mb-0" *ngIf="pestacookie == 3">
-                            <span class="fs-18"><b> Cookies de funcionalidad </b></span><br>
+                            <span class="fs-18"><b> {{textconts.cookies_funcionalidad}} </b></span><br>
                             <span class="fs-16">
-                                Las cookies de funcionalidad registran la información de lo que elija el usuario
-                                permitiendo
-                                dar a la web un contenido relevante.
+                                {{textconts.cookies_registranlainfo}}
                             </span><br>
                             <span class="fs-16">
-                                Permiten dar una experiencia individualizada y recordar
-                                su configuración y opciones de accesibilidad.
+                                {{textconts.cookies_sonaquellas}}
                             </span>
                             <div class="mt-2">
                                 <label class="switch">
@@ -306,20 +295,12 @@
                             </div>
                         </div>
                         <div class="mb-0" *ngIf="pestacookie == 4">
-                            <span class="fs-18"><b> Cookies de rendimiento </b></span><br>
+                            <span class="fs-18"><b> {{textconts.cookies_rendimiento}} </b></span><br>
                             <span class="fs-16">
-                                En este caso las cookies ayudan a analizar las forma en que se usa el servicio qeu
-                                ofrece la web.
-                                La aportación de uso de cada usuario hace que la web este más optimizada a nivel de
-                                experiencia de
-                                usuario.
+                                {{textconts.cookies_ayudananalizar}}
                             </span><br>
                             <span class="fs-16">
-                                Se miden tráfico y como se accede al sitio web. todo contribuye a poder seguir
-                                mejorando.
-                                Se puede determinar asi la cantidad de usuario y los errores ayudando a un posteior
-                                diagnóstico para
-                                mejorar el producto.
+                                {{textconts.cookies_midentrafico}}
                             </span>
                             <div class="mt-2">
                                 <label class="switch">
@@ -329,18 +310,12 @@
                             </div>
                         </div>
                         <div class="mb-0" *ngIf="pestacookie == 5">
-                            <span class="fs-18"><b> Cookies de seguimiento </b></span><br>
+                            <span class="fs-18"><b> {{textconts.cookies_seguimiento}} </b></span><br>
                             <span class="fs-16">
-                                Estas cookies se usan para publicidad segmentada, enseñan al visitante anuncios
-                                interesantes para él.
-                                Son de terceros proveedores de contenido y publicidad. Se recopila información
-                                conjunta de variso sitios
-                                web y las actividades del navegador del usuario.
+                                {{textconts.cookies_publicidadsegmentada}}
                             </span><br>
                             <span class="fs-16">
-                                El objetivo es poder mostrar anuncios enfocados a los intereses del usuario y no
-                                otros más generales.
-                                Sirve también para medir la efectividad de los anuncios y varios dispositivos.
+                                {{textconts.cookies_mostraranuncios}}
                             </span>
                             <div class="mt-2">
                                 <label class="switch">
@@ -355,34 +330,34 @@
                 <div class="col-xl-4 mt-1 p-0 ">
                     <div class="btcook" (click)="setpestanacookie(1)">
                         <span class="fs-14">
-                            Seguridad y privacidad
+                            {{textconts.cookies_tab_seguridad}}
                         </span>
                     </div>
                     <div class="btcook " (click)="setpestanacookie(2)">
                         <span class="fs-14">
-                            Cookies necesarias para esta web
+                            {{textconts.cookies_tab_necesarias}}
                         </span>
                     </div>
                     <div class="btcook " (click)="setpestanacookie(3)">
                         <span class="fs-14">
-                            Cookies para funcionalidad
+                            {{textconts.cookies_tab_funcionalidad}}
                         </span>
                     </div>
                     <div class="btcook " (click)="setpestanacookie(4)">
                         <span class="fs-14">
-                            Cookies para rendimiento
+                            {{textconts.cookies_tab_rendimiento}}
                         </span>
                     </div>
                     <div class="btcook " (click)="setpestanacookie(5)">
                         <span class="fs-14">
-                            Cookies para seguimiento
+                            {{textconts.cookies_tab_seguimiento}}
                         </span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btredondoRojo" type="submit"> GUARDAR </button>
+            <button class="btredondoRojo" type="submit"> {{textconts.cookies_guardar}} </button>
         </div>
     </form>
 

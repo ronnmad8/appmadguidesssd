@@ -12,6 +12,7 @@ import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
  
   @Input() messageData: VisitaAssetsModel = new  VisitaAssetsModel();
   @Input() relatedData: VisitasResultadoModel[] = [];
+  @Input() textconts: TextContentsModel = new TextContentsModel();
 
   public show: boolean = true;
   public cargados: boolean = false;

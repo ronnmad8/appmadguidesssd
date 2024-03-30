@@ -10,6 +10,7 @@ import { VisitasModel } from '../models/Visitas.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { CartModel } from '../models/Cart.model';
+import { TextContentsModel } from '../models/TextContents.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,8 @@ export class ProviderService {
    /// 
   }
 
+  private providerText$ = new ReplaySubject<TextContentsModel>()
+  
   private provider1$ = new ReplaySubject<VisitasResultadoModel>()
   private provider2$ = new ReplaySubject<VisitaAssetsModel>()
   private provider3$ = new ReplaySubject<CartModel>()
@@ -40,6 +43,10 @@ export class ProviderService {
 
   ///get/////////////////////////////////////////////////////////////////////////////////////////////////////////
   
+  public get getThrowTextContent() {
+    return this.providerText$.asObservable();
+  }
+
   public get getThrowVisita() {
     return this.provider1$.asObservable();
   }
@@ -70,6 +77,11 @@ export class ProviderService {
 
 
   ////set//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  public setThrowTextConrtents(t: TextContentsModel) {
+    this.providerText$.next(t);
+  }
+
   public setThrowVisita(t: VisitasResultadoModel) {
     this.provider1$.next(t);
   }

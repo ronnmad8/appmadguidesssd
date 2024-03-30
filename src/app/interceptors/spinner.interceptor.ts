@@ -23,10 +23,10 @@ export class SpinnerInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.spinnerService.show();
+    //this.spinnerService.show();
     return next.handle(request).pipe(
       finalize(() => {
-        this.spinnerService.hide();
+       // this.spinnerService.hide();
       })
     );
   }

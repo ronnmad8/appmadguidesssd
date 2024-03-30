@@ -169,6 +169,7 @@ export class NavbarComponent implements OnInit {
     this.getVisitascarrito();
     this.getCountries();
 
+
     this.modalOptions = {
       backdrop: "static",
       backdropClass: "customBackdrop",
@@ -758,9 +759,11 @@ export class NavbarComponent implements OnInit {
   }
 
   getCountries(){
-    this.micuentaService.getCountries().subscribe((resp)=>{
-      this.listacountries = resp as CountriesModel[];
-    });
+    if(this.listacountries.length == 0){
+      this.micuentaService.getCountries().subscribe((resp)=>{
+        this.listacountries = resp as CountriesModel[];
+      });
+    }
   }
 
   gotocarrito(){

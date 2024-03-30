@@ -18,6 +18,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlatformService } from 'src/app/services/platform.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import * as e from 'express';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-footer',
@@ -47,6 +50,9 @@ export class FooterComponent implements OnInit {
   listacookiesfuncionalidad: any[] = [];
   editarcookies: boolean = false;
 
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
+
 
   constructor(
     private auth: AuthService,
@@ -57,7 +63,8 @@ export class FooterComponent implements OnInit {
     private providerService: ProviderService,
     private router: Router,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private globalService: GlobalService,
   ) {
     //leer persona
     this.adminactive = false;
@@ -68,10 +75,26 @@ export class FooterComponent implements OnInit {
     this.crearFormularioI();
     this.cambiosFormularioI();
 
-    this.getMessageFooter();
+    // this.getMessageFooter();
     this.getLogoFooter();
     this.getListaCookies();
     this.listenProvider();
+    this.getTexts();
+    
+
+  }
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
 
   listenProvider(){
@@ -85,11 +108,11 @@ export class FooterComponent implements OnInit {
     });
   }
 
-  getMessageFooter() {
-    this.headfooterService.getMessagesFooter().subscribe((resp) => {
-      this.messageFooter = resp as FooterModel;
-    });
-  }
+  // getMessageFooter() {
+  //   this.headfooterService.getMessagesFooter().subscribe((resp) => {
+  //     this.messageFooter = resp as FooterModel;
+  //   });
+  // }
 
   getLogoFooter() {
     this.headfooterService.getLogoFooter().subscribe((resp) => {
@@ -222,12 +245,15 @@ export class FooterComponent implements OnInit {
 
   resetear() {
     this.getcookies();
-    this.formasetcookies.controls['funcionalidad'].setValue(
-      this.funcionalidadsel
-    );
-    this.formasetcookies.controls['rendimiento'].setValue(this.rendimientosel);
-    this.formasetcookies.controls['seguimiento'].setValue(this.seguimientosel);
-    localStorage.setItem('cookiesconsent', 'true');
+
+    if(this.formasetcookies){
+      this.formasetcookies.controls['funcionalidad'].setValue(
+        this.funcionalidadsel
+      );
+      this.formasetcookies.controls['rendimiento'].setValue(this.rendimientosel);
+      this.formasetcookies.controls['seguimiento'].setValue(this.seguimientosel);
+      localStorage.setItem('cookiesconsent', 'true');
+    }
   }
 
   aceptarcookiestodas() {

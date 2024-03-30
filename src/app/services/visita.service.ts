@@ -33,7 +33,7 @@ export class VisitaService {
     private globalService: GlobalService,
     private router: Router
   ) {
-    this.apiurl = environment.apiurl;
+    this.apiurl = environment.apiurlold;
     this.clang = this.globalService.getLanguage();
     this.userToken = this.auth.leerToken();
   }

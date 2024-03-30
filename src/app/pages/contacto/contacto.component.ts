@@ -15,6 +15,9 @@ import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacont
 import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { ProviderService } from 'src/app/services/provider.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -36,6 +39,9 @@ export class ContactoComponent implements OnInit {
   imagenempresa :ImagenesModel = new ImagenesModel();
   messageForm: MessagesFormModel = new MessagesFormModel();
   messageImage: MessagesImageModel = new MessagesImageModel();
+
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
   
 
   constructor(
@@ -48,64 +54,37 @@ export class ContactoComponent implements OnInit {
       private meta: Meta,
       private title: Title,
       private providerService: ProviderService,
+      private globalService: GlobalService,
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.title.setTitle( "▷ Contacto");
+    this.meta.updateTag({ name: 'description', content: 'contacto madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
 
-    
   }
   
 
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
     
-    this.getMessagesForm();
-    this.getMessagesImage();
-    this.getImagenes();
+    this.getTexts();
       
   }
 
 
-  getImagenes(){
-    this.homeService.getImagenesHome().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-
-    } );
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
-
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
-
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-      this.messageImage = respuesta;
-    } );
-  }
-
-
-
-
-  
-
-  
-  
-
-
- 
-   
-  
-
 
   
 }

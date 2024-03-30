@@ -18,6 +18,7 @@ import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstr
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextoquienessomosModel } from 'src/app/models/Textoquienessomos.model';
 import { PlatformService } from 'src/app/services/platform.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
 
@@ -31,7 +32,7 @@ import { PlatformService } from 'src/app/services/platform.service';
 export class LaempresaComponent implements OnInit {
 
   @Input () imagenempresaData: ImagenesModel = new ImagenesModel();
-  @Input () messageLaempresaData: TextoquienessomosModel = new  TextoquienessomosModel();
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   sWindow: any;
 
   modal: NgbModalRef;

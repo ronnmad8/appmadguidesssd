@@ -9,16 +9,16 @@
           <div id="panelbuscadorhome">
             <div id="titulomodalbuscador">
               <div class="ff-JB">
-                {{messagesTourData.title}}
+                {{textconts.bannertop_tittle }}
               </div>
             </div>
             <div id="subtitulomodalbuscador">
               <div>
                 <span>
-                  {{messagesTourData.message1}}
+                  {{textconts.bannertop_message1}}
                 </span>
                 <span class="ff-JB">
-                  {{messagesTourData.message2}}
+                  {{textconts.bannertop_message2}}
                 </span>
               </div>
             </div>
@@ -26,10 +26,10 @@
             <div id="cjbuscador" class="posrel">
               <div id="divcjbuscador">
                 <input #cjbusqueda id="cjbusqueda" type="text" maxlength="30"  class="colGRIS1 posabsolcjbuscador" 
-                [placeholder]="messagesTourData.input" 
+                [placeholder]="textconts.bannertop_input" 
                  (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda"  />
                 <button class="btredondoRojo posabsolbtbuscador" type="button" (click)="verbuscador()"  >
-                  <span>{{messagesTourData.button}}</span>
+                  <span>{{textconts.bannertop_button}}</span>
                   <span><i class="fa fa-arrow-right "></i></span>
                 </button>
                 <div class="spinner-container posrel" *ngIf="loading && busqueda.length > 0"  >
@@ -95,7 +95,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messagesIconsData.guide}}
+                    {{textconts.bannertop_icons_guide}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -104,7 +104,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messagesIconsData.group}}
+                    {{textconts.bannertop_icons_group}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -113,7 +113,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messagesIconsData.talk}}
+                    {{textconts.bannertop_icons_talk}}
                   </div>
                 </div>
                 <div class="col-3">
@@ -122,7 +122,7 @@
                       style="height: 39px; width: 30px">
                   </div>
                   <div class="text-center py-2">
-                    {{messagesIconsData.price}}
+                    {{textconts.bannertop_icons_price}}
                   </div>
                 </div>
 
@@ -137,9 +137,9 @@
 
     <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.2s" >
       <picture>
-        <source media="(min-width: 968px)" srcset="{{bannertopData.url}}" data-srcset="{{bannertopData.url}}">
-        <source media="(min-width: 0px)" srcset="{{bannertopData.url_movil}}" data-srcset="{{bannertopData.url_movil}}">
-        <img src="{{bannertopData.url}}" data-src="{{bannertopData.url}}" alt="banner madguides"
+        <source media="(min-width: 968px)" srcset="assets/images/bannertop.jpg" data-srcset="assets/images/bannertop.jpg">
+        <source media="(min-width: 0px)" srcset="assets/images/bannertop.jpg" data-srcset="assets/images/bannertop.jpg">
+        <img src="assets/images/bannertop.jpg" data-src="assets/images/bannertop.jpg" alt="banner madguides"
           class="imagebannerhome" onerror="this.src='assets/images/sinimagen.png' ">
       </picture>
     </div>
