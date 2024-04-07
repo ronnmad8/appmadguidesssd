@@ -10,7 +10,6 @@ import { VisitasModel } from 'src/app/models/Visitas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
@@ -48,12 +47,12 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
 
 
   vertodascategoria(){
-    let category_uuid = this.relatedData[0].category_lang_uuid;
-    this.router.navigate(['/buscador/category', category_uuid]);
+    
+    this.router.navigate(['/buscador/category']);
   }
 
   verdetalle(visita: VisitasResultadoModel){
-    this.router.navigate(['/visita', visita.visit_lang_title , visita.visit_uuid]);
+    this.router.navigate(['/visita', visita.titulo , visita.uuid]);
   }
   
   

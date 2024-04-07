@@ -9,8 +9,6 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ProviderService } from '../../services/provider.service';
@@ -38,14 +36,20 @@ import { TimesModel } from 'src/app/models/Times.model';
 import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
 import { PlatformService } from 'src/app/services/platform.service';
 import { AlertasService } from 'src/app/services/alertas.service';
-import { ImagenesVisitaModel } from 'src/app/models/ImagenesVisita.model';
 import { HttpClient } from '@angular/common/http';
+import { ReservationModel } from 'src/app/models/Reservations.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { IMinimatch } from 'minimatch';
+import { ImagenesModel } from 'src/app/models/Imagenes.model';
 
 @Component({
   selector: 'app-slidervisita',
   templateUrl: './slidervisita.component.html',
 })
 export class SlidervisitaComponent implements OnInit{
+
+  @Input() textconts: TextContentsModel = new TextContentsModel();
+
   @ViewChild('imagenlista') imagenlista: any;
   @ViewChild('detallevisita') detallevisita: any;
   @ViewChild('finaldetalle') finaldetalle: any;
@@ -99,11 +103,12 @@ export class SlidervisitaComponent implements OnInit{
 
   isrespon: boolean = false;
   //imagenes
-  listaImagenesVisita: ImagenesVisitaModel[] = [];
-  listaImagenesVisitaLat: ImagenesVisitaModel[] = [];
+  listaImagenesVisita: ImagenesModel[] = [];
+  listaImagenesVisitaLat: ImagenesModel[] = [];
 
-  //times select
-  timesSel: TimesModel = new TimesModel();
+  //times select !!! revisar TODO
+  timesSel: any ;
+  newReserva: ReservationModel;
 
   //calendario
   monthSelect: any[];
@@ -180,7 +185,7 @@ export class SlidervisitaComponent implements OnInit{
   verZonePuntodeencuentro: boolean = false;
   verPanel: boolean = false;
   secuencial: number = 1;
-  defaultvisitime: TimesModel[] = [];
+  defaultvisitime: number = 0;
 
   constructor(
     private wowService: NgwWowService,
@@ -202,12 +207,14 @@ export class SlidervisitaComponent implements OnInit{
 
   ngOnInit(): void {
 
+    this.newReserva = new ReservationModel();
+
     ///default visittime
-    const rutaArchivoJson = 'assets/docs/visita.json';
-    this.http.get(rutaArchivoJson).subscribe(
-      (data: TimesModel) => {
-        this.defaultvisitime.push(data);
-    });
+    // const rutaArchivoJson = 'assets/docs/visita.json';
+    // this.http.get(rutaArchivoJson).subscribe(
+    //   (data: TimesModel) => {
+    //     this.defaultvisitime.push(data);
+    // });
 
    
     this.listenProvider();
@@ -253,8 +260,8 @@ export class SlidervisitaComponent implements OnInit{
     this.providerService.getThrowVisita.subscribe((resp) => {
       var provVisita = resp as VisitasResultadoModel;
       
-      if (provVisita.visit_time == null) {
-        provVisita.visit_time = this.defaultvisitime;
+      if (provVisita.duracionmin == null) {
+        provVisita.duracionmin = this.defaultvisitime;
       }
 
       this.getVisitaResultado(provVisita);
@@ -291,13 +298,12 @@ export class SlidervisitaComponent implements OnInit{
 
     this.listaImagenesVisita = []
     this.listaImagenesVisitaLat = [];
-    this.getImagenesVisita();
 
     //info
-    this.descripcion = visita.visit_lang_description;
+    this.descripcion = visita.descripcion;
     this.descripcioncorta = this.descripcion.substring(0, 200);
     if (this.timesSel != null) {
-      this.timesSel = visita.visit_time != null ? visita.visit_time[0] : new TimesModel();
+      this.timesSel = visita.duracionmin != null ? visita.duracionmin : 0;
     }
   
     this.maximopersonas = this.timesSel.available;
@@ -311,7 +317,7 @@ export class SlidervisitaComponent implements OnInit{
       this.listaidiomas = resp as LanguagesModel[];
       this.listaidiomasvisita = [];
       this.idiomasdisponibles = "";
-      this.visitaresultado.iso_disponible.forEach((idiomaiso, index) => {
+      this.visitaresultado.languages.forEach((idiomaiso, index) => {
         let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso) ?? new LanguagesModel();
         idiom.id = index;
         this.listaidiomasvisita.push(idiom);
@@ -320,7 +326,7 @@ export class SlidervisitaComponent implements OnInit{
       })
     });
     
-    this.idiomaSel = this.visitaresultado.visit_time[0].iso ;
+    this.idiomaSel = null; //this.visitaresultado. ;
     
     this.listahorasvisita = [];
     this.listahoras.forEach((hora) => {
@@ -333,7 +339,7 @@ export class SlidervisitaComponent implements OnInit{
     });
   
     //buscar si hay mas horas mismo dia
-    this.visitaresultado.visit_time.forEach((v) => {
+    this.visitaresultado.hours.forEach((v) => {
       if (v.date == this.timesSel.date && v.init != this.timesSel.init) {
         let initsp = v.init.split(':');
         let res = initsp[0] + ':' + initsp[1];
@@ -345,17 +351,7 @@ export class SlidervisitaComponent implements OnInit{
 
 
   getImageFirst(visita: VisitasResultadoModel) {
-    var imagen1: ImagenesModel = new ImagenesModel();
-    imagen1.id = 1;
-    imagen1.title = visita.visit_image_title;
-    imagen1.description = visita.visit_image_description;
-    imagen1.alt = '';
-    imagen1.iso = visita.visit_image_iso;
-    imagen1.uuid = visita.visit_image_uuid;
-    imagen1.url = visita.visit_image_url;
-    imagen1.url_movil = visita.visit_image_url_movil;
-    imagen1.url_galleria = visita.visit_image_url_gallery;
-    imagen1.name = visita.visit_image_name;
+    var imagen1: ImagenesModel = visita.images[0];
     return imagen1;
   }
 
@@ -425,9 +421,9 @@ export class SlidervisitaComponent implements OnInit{
       this.horanovalid = false;
     }
     if (this.timesSel.init != this.horaSel) {
-      this.timesSel =
-        this.visitaresultado.visit_time.find((x) => x.init == this.horaSel) ??
-        this.timesSel;
+      // this.timesSel =
+      //   this.visitaresultado.visit_time.find((x) => x.init == this.horaSel) ??
+      //   this.timesSel;
       this.getCalculoPrecio();
     }
     this.setSecuencial();
@@ -581,7 +577,7 @@ export class SlidervisitaComponent implements OnInit{
       url = "https://www.facebook.com/sharer/sharer.php?u=https://madguides.es/"+this.router.url;
     }
     else if(red == 'twitter'){
-      url = "https://twitter.com/intent/tweet?url=https://madguides.es/"+this.router.url+"&text="+this.visitaresultado.category_lang_title;
+      url = "https://twitter.com/intent/tweet?url=https://madguides.es/"+this.router.url+"&text="+this.visitaresultado.categorias[0].name;
     }
     else if(red == 'instagram'){
       url = "https://www.instagram.com/?url=https://madguides.es/"+this.router.url;
@@ -633,9 +629,9 @@ export class SlidervisitaComponent implements OnInit{
     }
     ///dias de la visita
     let diasvisita: TimesModel[] = [];
-    this.visitaresultado.visit_time.forEach((dia: TimesModel) => {
-      diasvisita.push(dia);
-    });
+    // this.visitaresultado.visit_time.forEach((dia: TimesModel) => {
+    //   diasvisita.push(dia);
+    // });
 
     ///marcar dias de la visita y seleccionado de ese mes
     arrayDays.forEach((day: any) => {
@@ -699,9 +695,10 @@ export class SlidervisitaComponent implements OnInit{
       this.caleinfo =  this.globalService.getFechaleg(objectDate.format('DD/MM/YYYY'));
       this.calenovalid = false;
 
-      let coi = this.visitaresultado.visit_time.find(
-        (x) => x.date == day.year + '-' + day.month + '-' + day.value
-      );
+      let coi = null 
+      ///this.visitaresultado..find(
+      /// () (x) => x.date == day.year + '-' + day.month + '-' + day.value
+      ///);
       if (coi != null) {
         this.timesSel = coi;
         this.getCalculoPrecio();
@@ -714,16 +711,7 @@ export class SlidervisitaComponent implements OnInit{
     this.setSecuencial();
   }
 
-  getImagenesVisita() {
-    this.visitaService.getVisitaImagenes(this.visitaresultado.visit_uuid).subscribe((resp)=>{
-      this.visitaresultado.visit_image = resp as ImagenesVisitaModel[];
-      this.listaImagenesVisita = this.visitaresultado.visit_image;
-      this.listaImagenesVisitaLat = this.visitaresultado.visit_image;
-      this.listaImagenesVisitaLat[0].sel = true;
-      
-    })
-    
-  }
+
 
 
 
@@ -765,20 +753,20 @@ export class SlidervisitaComponent implements OnInit{
     if (valido) {
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
-      this.visitaresultado.adultos = this.adultoSel;
-      this.visitaresultado.ninos = this.ninosSel;
-      this.visitaresultado.menores = this.menoresSel;
-      this.visitaresultado.precio = this.preciototal;
-      this.visitaresultado.fecha = this.dateValue;
-      this.visitaresultado.hora = this.horainfo;
-      this.visitaresultado.horario_uuid = this.timesSel.uuid ;
-      this.visitaresultado.idioma = this.idiominfo;
+      // this.visitaresultado.adults = this.adultoSel;
+      // this.visitaresultado.ninos = this.ninosSel;
+      // this.visitaresultado.menores = this.menoresSel;
+      // this.visitaresultado.precio = this.preciototal;
+      // this.visitaresultado.fecha = this.dateValue;
+      // this.visitaresultado.hora = this.horainfo;
+      // this.visitaresultado.horario_uuid = this.timesSel.uuid ;
+      // this.visitaresultado.idioma = this.idiominfo;
       if (carrito.visitasPedido == null) {
         carrito.visitasPedido = [];
       }
       carrito.visitasPedido.push(this.visitaresultado);
       carrito.total = Number(this.globalService.getFormatNumber(carrito.total + this.preciototal));
-      carrito.totalfinal = Number(this.globalService.getFormatNumber(carrito.total * (1 + carrito.taxamt)));
+      carrito.totalfinal = Number(this.globalService.getFormatNumber(carrito.total * (1 + carrito.impuesto)));
       this.carritoService.saveCart(carrito);
       ///actualizar carrito menu
       this.providerService.setThrowCarritoupdate(carrito);

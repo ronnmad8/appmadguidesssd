@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { ListasService } from '../../services/listas.service';
 import { GlobalService } from '../../services/global.service';
@@ -29,7 +28,6 @@ import { CalendarModel } from 'src/app/models/calendar.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { PlatformService } from 'src/app/services/platform.service';
-import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
@@ -40,7 +38,6 @@ import { TextContentsModel } from 'src/app/models/TextContents.model';
 export class BusquedaComponent implements OnInit, AfterViewInit {
   @Output() filtrarBusqueda = new EventEmitter();
   @Input() cargado: boolean = false;
-  @Input() messageSearchData: TextosearchModel = new TextosearchModel();
   @Input() textconts: TextContentsModel = new TextContentsModel();
 
   sWindow: any;
@@ -80,7 +77,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   duracionSel: string[] = [];
   languagesSel: string[] = [];
   franjasSel: string[] = [];
-  caracteristicasSel: string[] = [];
+  caracteristicasSel: number[] = [];
   categoriasSel: string[] = [];
   ordenarSel: OrdenModel = new OrdenModel();
 
@@ -186,6 +183,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.getFechasHoy();
     this.verdisponibilidad();
     this.isrespon = this.platformService.isrespon;
+
+
 
     this.cdr.detectChanges();
   }
@@ -406,15 +405,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   ///categorias
   getCategoriasFiltro() {
     this.listasService.getCategorias().subscribe((resp) => {
-      let categorias = resp as CategoriasModel[];
-      categorias.forEach((categoria) => {
-        categoria.childs.forEach((child) => {
-          child.parent_value = categoria.value;
-          child.parent_title = categoria.title;
-          child.parent_description = categoria.description;
-          this.categoriasfiltro.push(child);
-        });
-      });
+      this.categoriasfiltro = resp as CategoriasModel[];
     });
   }
 
@@ -633,7 +624,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
 
   /// sel idiomas
   checkLanguagesSelected(ev: any) {
-    
+
     let va = ev.target.value;
     this.idiomasfiltro.forEach((item) => {
       item.disabled = false;
@@ -736,7 +727,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   checkCaracteristicasSelected(ev: any) {
     let va = ev.target.value;
     this.caracteristicasfiltro.forEach((item) => {
-      if (item.value == va) {
+      if (item.id == va) {
         item.selected = ev.target.checked;
       }
     });
@@ -744,8 +735,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.caracteristicasSel = [];
     this.filtCaracteristicas = [];
     car.forEach((item) => {
-      this.caracteristicasSel.push(item.value);
-      this.filtCaracteristicas.push(item.title);
+      this.caracteristicasSel.push(item.id);
+      this.filtCaracteristicas.push(item.name);
     });
     this.filters.caracteristicas = this.caracteristicasSel;
     this.verdisponibilidad()
@@ -755,10 +746,10 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   deleteFiltCaracteristica(fc: string) {
     this.filtCaracteristicas = this.filtCaracteristicas.filter((x) => x != fc);
     this.caracteristicasSel = this.caracteristicasfiltro
-      .filter((x) => x.title != fc)
-      .map((x) => x.value);
+      .filter((x) => x.name != fc)
+      .map((x) => x.id);
     this.caracteristicasfiltro.forEach((item) => {
-      if (item.title == fc) {
+      if (item.name == fc) {
         item.selected = false;
       }
     });
@@ -770,7 +761,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   setCategoriaFiltro(ev: any) {
     let va = ev.currentTarget.id.replace('cate-', '');
     this.categoriasfiltro.forEach((item) => {
-      if (item.value == va) {
+      if (item == va) {
         item.selected = true;
       }
     });
@@ -778,8 +769,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.categoriasSel = [];
     this.filtCategorias = [];
     ca.forEach((item) => {
-      this.categoriasSel.push(item.value);
-      this.filtCategorias.push(item.title);
+      this.categoriasSel.push(item.name);
+      this.filtCategorias.push(item.content);
     });
     this.filters.categorias = this.categoriasSel;
     this.verdisponibilidad()
@@ -788,10 +779,10 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   deleteFiltCategoria(fc: string) {
     this.filtCategorias = this.filtCategorias.filter((x) => x != fc);
     this.categoriasSel = this.categoriasfiltro
-      .filter((x) => x.title != fc)
-      .map((x) => x.value);
+      .filter((x) => x.name != fc)
+      .map((x) => x.content);
     this.categoriasfiltro.forEach((item) => {
-      if (item.title == fc) {
+      if (item.name == fc) {
         item.selected = false;
       }
     });

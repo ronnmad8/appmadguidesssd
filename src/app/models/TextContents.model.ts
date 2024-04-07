@@ -43,7 +43,8 @@ export class TextContentsModel {
   menu_contact: string;
   menu_hello: string;
   menu_recovery: string;
-  menu_registermenu_count: string;
+  menu_register: string;
+  menu_count: string;
   menu_login: string;
   menu_cart: string;
   cart_search: string;
@@ -209,6 +210,7 @@ export class TextContentsModel {
   micuenta_form_address: string;
   micuenta_form_number: string;
   micuenta_form_country: string;
+  micuenta_form_cp: string;
   micuenta_form_state: string;
   micuenta_form_city: string;
   micuenta_reservas_title: string;
@@ -236,6 +238,10 @@ export class TextContentsModel {
   buscador_1: string;
   buscador_2: string;
   buscador_3: string;
+  buscador_filtrar: string;
+  buscador_visitatemporada: string;
+  buscador_sinresultados: string;
+  buscador_sugerencias: string;
 
   politicascookies_title: string;
   politicascookies_text: string;
@@ -275,7 +281,19 @@ export class TextContentsModel {
   cookies_tab_rendimiento: string;
   cookies_tab_seguimiento: string;
   cookies_guardar: string;
-
+  modificar: string;
+  continuar: string;
+  paso1: string;
+  paso2: string;
+  paso3: string;
+  acompanantes: string;
+  edad: string;
+  privada: string;
+  confirmada: string;
+  pendiente: string;
+  reserva: string;
+  touren: string;
+  relacionadas: string;
 
   constructor() {
     this.dataok  = false;
@@ -318,7 +336,8 @@ export class TextContentsModel {
     this.menu_contact = '';
     this.menu_hello = '';
     this.menu_recovery = '';
-    this.menu_registermenu_count = '';
+    this.menu_register = '';
+    this.menu_count = '';
     this.menu_login = '';
     this.menu_cart = '';
     this.cart_search = '';
@@ -368,6 +387,7 @@ export class TextContentsModel {
     this.buscador_caracteristicas = '';
     this.buscador_quitarfiltros = '';
     this.buscador_veractividades = '';
+    this.buscador_visitatemporada = '';
     this.buscador_hoy = '';
     this.buscador_manana = '';
     this.buscador_borrar = '';
@@ -392,6 +412,7 @@ export class TextContentsModel {
     this.buscador_duracionnmayor = '';
     this.buscador_duracionmenor = '';
     this.buscador_porpersona = '';
+    this.buscador_sugerencias = '';
     this.login_micuenta = '';
     this.login_reservas = '';
     this.login_ayuda = '';
@@ -439,6 +460,7 @@ export class TextContentsModel {
     this.buscador_compartir = '';
     this.buscador_tambientepuede = '';
     this.buscador_actividades = '';
+    this.buscador_sinresultados = '';
     this.ayudas_title = '';
     this.ayudas_text1 = '';
     this.ayudas_question1 = '';
@@ -484,6 +506,7 @@ export class TextContentsModel {
     this.micuenta_form_address = '';
     this.micuenta_form_number = '';
     this.micuenta_form_country = '';
+    this.micuenta_form_cp = '';
     this.micuenta_form_state = '';
     this.micuenta_form_city = '';
     this.micuenta_reservas_title = '';
@@ -511,6 +534,7 @@ export class TextContentsModel {
     this.buscador_1 = '';
     this.buscador_2 = '';
     this.buscador_3 = '';
+    this.buscador_filtrar = '';
 
     this.politicascookies_title = '';
     this.politicasprivacidad_title = '';
@@ -548,7 +572,19 @@ export class TextContentsModel {
     this.cookies_tab_rendimiento = '';
     this.cookies_tab_seguimiento = '';
     this.cookies_guardar = '';
-
+    this.modificar = '';
+    this.continuar = '';
+    this.paso1 = '';
+    this.paso2 = '';
+    this.paso3 = '';
+    this.acompanantes = '';
+    this.edad = '';
+    this.privada = '';
+    this.confirmada = '';
+    this.pendiente = '';
+    this.reserva = '';
+    this.touren = '';
+    this.relacionadas = '';
 
 
 

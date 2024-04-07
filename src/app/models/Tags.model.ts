@@ -3,16 +3,14 @@ import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
 export class TagsModel {
     id: number;
-    description: string;
-    title: string;
-    value: string;
+    uuid: string;
+    name: string;
     selected: boolean;
 
     constructor(){
         this.id = 0;
-        this.description = "";
-        this.title = "";
-        this.value = "";
+        this.uuid = "";
+        this.name = "";
         this.selected = false;
     }
 }

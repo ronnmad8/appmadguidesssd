@@ -80,11 +80,11 @@ export class CarritoService {
 
   deleteProductCart(uuid: string){
     let cart: CartModel = this.getCart();
-    cart.visitasPedido.forEach( (el, index) => {
-      if(el.visit_uuid == uuid){
+    cart.reservas.forEach( (el, index) => {
+      if(el.uuid == uuid){
          cart.visitasPedido.splice(index, 1);
-         cart.total = cart.total - el.precio;
-         cart.totalfinal = cart.total * (1 + cart.taxamt);
+         cart.total = cart.total - el.total ;
+         cart.totalfinal = cart.total * (1 + cart.impuesto);
       }
     });
     this.saveCart(cart);

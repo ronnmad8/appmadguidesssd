@@ -7,9 +7,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
@@ -20,7 +18,6 @@ import { TextContentsModel } from 'src/app/models/TextContents.model';
 export class SlidervisitasComponent implements OnInit, AfterViewInit {
  
   @Input() textconts: TextContentsModel = new TextContentsModel();
-  @Input() messagesRecomendadasData: TextorecomendadasModel = new TextorecomendadasModel();
   @Input() recommendedData: VisitasResultadoModel[] = [];
 
   public show: boolean = true;
@@ -108,7 +105,7 @@ export class SlidervisitasComponent implements OnInit, AfterViewInit {
   }
 
   verdetalle(visita: VisitasResultadoModel){
-    this.router.navigate(['/visita/', visita.visit_lang_title, visita.visit_uuid  ]);
+    this.router.navigate(['/visita/', visita.titulo, visita.uuid  ]);
   }
 
 

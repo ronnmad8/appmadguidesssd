@@ -11,7 +11,6 @@ import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
-import { TextoayudaModel } from 'src/app/models/Textoayuda.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
@@ -26,7 +25,6 @@ import { TextContentsModel } from 'src/app/models/TextContents.model';
 export class FaqsComponent implements OnInit {
 
   @Input () imagenempresaData: ImagenesModel = new ImagenesModel();
-  @Input () messageFaqsData: TextoayudaModel = new  TextoayudaModel();
   @Input() textconts: TextContentsModel = new TextContentsModel();
   sWindow: any;
 

@@ -14,7 +14,6 @@ import { CarritoService } from '../../services/carrito.service';
 import { VisitaService } from '../../services/visita.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
@@ -25,8 +24,10 @@ import { TextoCashModel } from 'src/app/models/TextoCash.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { HomeService } from 'src/app/services/home.service';
 import { HeadfooterService } from 'src/app/services/headfooter.service';
-import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
-import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { GlobalService } from 'src/app/services/global.service';
+
 
 
 @Component({
@@ -44,10 +45,11 @@ export class CarritoComponent implements OnInit{
   
   messageCash: TextoCashModel;
   messageVisita: VisitaAssetsModel;
-  messageLogin: TextoLoginModel;
-  messagePerfil: TextoPerfilModel;
   pedido : CartModel = new CartModel();
   carritoId: number = 0;
+
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
 
   constructor(
       private router: Router,
@@ -63,7 +65,7 @@ export class CarritoComponent implements OnInit{
       private visitaService: VisitaService,
       private homeService: HomeService,
       private headfooterService: HeadfooterService,
-
+      private globalService: GlobalService,
   )
   {
     // this.title.setTitle( "▷ Madguides");
@@ -80,39 +82,28 @@ export class CarritoComponent implements OnInit{
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(false);
-    this.getMessagesCash();
-    this.getMessagesVisita();
-    this.getMessagesLogin();
-    this.getMessagesPerfil();
+
     this.getPedido();
-
+    this.getTexts();
   }
 
-  getMessagesCash(){
-    this.carritoService.getMessagesCash().subscribe( (resp) => {
-      this.messageCash = resp as TextoCashModel;
-    } );
+
+
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
   }
 
-  getMessagesVisita(){
-    this.visitaService.getMessagesVisita().subscribe( (resp) => {
-      this.messageVisita = resp as VisitaAssetsModel;
-      
-    } );
-  }
 
-  getMessagesLogin(){
-    this.headfooterService.getMessagesLogin().subscribe( (resp) => {
-      this.messageLogin = resp as TextoLoginModel;
-      
-    } );
-  }
-
-  getMessagesPerfil(){
-    this.headfooterService.getMessagesPerfil().subscribe( (resp) => {
-      this.messagePerfil = resp as TextoPerfilModel;
-    } );
-  }
 
 
   getPedido() {

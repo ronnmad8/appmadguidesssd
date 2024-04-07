@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
 import { UserModel } from '../models/User.model';
 import { LoginModel } from '../models/Login.model';
 import { RecordarmeModel } from '../models/Recordarme.model';
-import { CountriesModel } from '../models/Countries.model';
-import { StatesModel } from '../models/States.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { RespuestaModel } from '../models/Respuesta.model';
 

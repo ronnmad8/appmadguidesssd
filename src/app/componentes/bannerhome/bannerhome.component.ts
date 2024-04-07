@@ -2,18 +2,13 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
- 
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { ProviderService } from '../../services/provider.service';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
-import { TextotourModel } from 'src/app/models/Textotour.model';
-import { TextoiconsModel } from 'src/app/models/Textoicons.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
@@ -78,8 +73,8 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
   }
 
   verdetalle(visita: VisitasResultadoModel){
-    let titleleg = visita.visit_lang_title.replace(' ', '-')  ;
-    this.router.navigate(['/visita', titleleg , visita.visit_uuid]);
+    let titleleg = visita.titulo.replace(' ', '-')  ;
+    this.router.navigate(['/visita', titleleg , visita.uuid]);
   }
 
 

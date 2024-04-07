@@ -14,7 +14,7 @@ export class FiltersModel {
     fechaFin: string;
     horario: string[];
     languages: string[];
-    caracteristicas: string[];
+    caracteristicas: number[];
     categorias: string[];
     ordenar: string;
     orderasc: string;

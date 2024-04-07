@@ -9,8 +9,6 @@ import { HomeService } from '../../services/home.service';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { ComentariosModel } from 'src/app/models/Cometarios.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 

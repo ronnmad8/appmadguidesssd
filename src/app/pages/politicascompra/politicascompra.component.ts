@@ -13,8 +13,6 @@ import { PoliticasService } from '../../services/politicas.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
@@ -32,12 +30,9 @@ import { GlobalService } from 'src/app/services/global.service';
 
 export class PoliticascompraComponent implements OnInit {
 
-  banner :ImagenesModel = new ImagenesModel();
-  bannerbottom :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
+
   messagePoliticas: TextopoliticasModel= new TextopoliticasModel();
-  
+  bannerimage: string = '';
   textconts: TextContentsModel = new TextContentsModel();
   listatextcontsdata: TextDataModel[] = [];
 
@@ -55,10 +50,10 @@ export class PoliticascompraComponent implements OnInit {
       private globalService: GlobalService,
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.title.setTitle( "▷ Política de compra");
+    this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'Madguides visitas guiadas en Madrid' });
 
     
   }
@@ -68,7 +63,7 @@ export class PoliticascompraComponent implements OnInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-    this.getImagenes();
+    this.bannerimage = "assets/images/banner-ficha-de-producto.jpg"; 
     this.getTexts();
     
   }
@@ -90,31 +85,10 @@ export class PoliticascompraComponent implements OnInit {
     }
   }
 
-
-  getImagenes(){
-    this.politicasService.getImages().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.banner = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-
-    } );
-  }
-
-
-
-
-
   
 
   
   
-
-
- 
-   
-  
-
-
   
 }
 

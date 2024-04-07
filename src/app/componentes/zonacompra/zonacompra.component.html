@@ -9,7 +9,7 @@
                     <div class="panelFull ">
                         <div class="fs-24 ff-JB">
                             <i class="far fa-circle-check colVerde mr-2 posrel" style="top:0px"></i>
-                            Gracias por la compra
+                            {{textconts.cart_graciascompra}}  
                         </div>
                         <div class="pl-2 fs-18 my-3">
                             Hemos enviado un email a
@@ -18,46 +18,43 @@
                         </div>
                     </div>
                     <div class="w-100 posrel">
-                        <div class="panelReservafirmada" *ngFor="let visitapedido of listaPedido ">
+                        <div class="panelReservafirmada" *ngFor="let reserva of listaPedido ">
                             <div class="imgReservafirmada">
-                                <div #imageneslatid id="im-{{visitapedido.visit_uuid}}" >
+                                <div #imageneslatid id="im-{{reserva.visit.uuid}}" >
                                     <picture>
-                                        <source media="(min-width: 0px)" srcset="{{visitapedido.visit_image_url}}"
-                                            data-srcset="{{visitapedido.visit_image_url}}">
-                                        <img class="imgReservafirmada" src="{{visitapedido.visit_image_url}}"
-                                            data-src="{{visitapedido.visit_image_url}}"
-                                            alt="{{visitapedido.visit_lang_title}}">
+                                        <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
+                                            data-srcset="{{reserva.visit.images[0]}}">
+                                        <img class="imgReservafirmada" src="{{reserva.visit.images[0]}}"
+                                            data-src="{{reserva.visit.images[0]}}"
+                                            alt="{{reserva.visit.titulo}}">
                                     </picture>
                                 </div>
                             </div>
                             <div class="panelinfoReservafirmada">
                                 <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
-                                    {{visitapedido.visit_lang_title}} _
+                                    {{reserva.visit.titulo}} 
                                 </div>
                                 <div class="lh-1-4">
-                                    <span>{{visitapedido.visit_time[0].date | fechaleg }}</span>
-                                    <span class="mx-1"> a las {{visitapedido.visit_time[0].init | horaleg }} </span>
+                                    <span>{{reserva.fecha | fechaleg }}</span>
+                                    <span class="mx-1"> a las {{reserva.fecha | horaleg }} </span>
                                 </div>
                                 <div class="lh-1-4">
-                                    Tour en <span class="ml-1">{{visitapedido.visit_time[0].iso | idiomaiso |
+                                    {{textconts.touren}} <span class="ml-1">{{reserva.getLanguage(reserva.language_id) | idiomaiso |
                                         capitalize}}</span>
                                 </div>
                                 <div class="fs-14 lh-1-4 ff-JB mt-1">
                                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                                             style="margin-right: -3px; margin-top: -2px;"></i>
-                                        {{visitapedido.adultos}}</span>
+                                        {{reserva.adults}}</span>
                                     <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                                             style="margin-right: -3px; margin-top: 0px;"></i>
-                                        {{visitapedido.ninos}}</span>
-                                    <!-- <span><i class="fa fa-person fs-12" title="Menores"
-                                            style="margin-right: -3px; margin-top: px;"></i>
-                                        {{visitapedido.menores}}</span> -->
+                                        {{reserva.children}}</span>
                                 </div>
-                                <div class="fs-14 lh-1-4" *ngIf="visitapedido.visit_privada">
-                                    *Visita privada
+                                <div class="fs-14 lh-1-4" *ngIf="reserva.visit.privada">
+                                    {{textconts.privada}}
                                 </div>
                                 <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2">
-                                    Código de Reserva:
+                                    {{textconts.reserva}}
                                     <span class="colROJO2">{{pedido.codigoreserva}}</span>
                                 </div>
                             </div>
@@ -65,7 +62,7 @@
 
                         <div class="posabsolverreservas">
                             <button class="btredondoRojoVerReservas " type="button" (click)="verMisReservas()">
-                                <span class="ff-JB">Ver mis reservas</span>
+                                <span class="ff-JB">{{textconts.reserva}}  </span>
                             </button>
                         </div>
 

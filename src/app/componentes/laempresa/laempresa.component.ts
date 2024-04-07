@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, Renderer2, Output, EventEmitter } from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ListasService } from '../../services/listas.service';
@@ -16,7 +15,6 @@ import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
-import { TextoquienessomosModel } from 'src/app/models/Textoquienessomos.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 

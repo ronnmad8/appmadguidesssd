@@ -1,6 +1,6 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
-import { AddressModel } from './Address.model';
+
 
 export class UserModel {
 
@@ -16,7 +16,7 @@ export class UserModel {
     rol: string;
     type: string;
     document: string;
-    address: AddressModel[];
+    address: any[];
     street: string;
     number: string;
     postal: string;

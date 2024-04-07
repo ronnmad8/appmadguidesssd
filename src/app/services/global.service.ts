@@ -11,7 +11,6 @@ import { VisitasModel } from '../models/Visitas.model';
 import { TimesModel } from '../models/Times.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { PlatformService } from './platform.service';
-import { TextoPerfilModel } from '../models/TextoPerfil.model';
 import { TextDataModel } from '../models/TextData.model';
 import { TextContentsModel } from '../models/TextContents.model';
 import { ProviderService } from './provider.service';
@@ -25,8 +24,7 @@ export class GlobalService {
   idlang: number = 1;
   textcontents: TextContentsModel = new TextContentsModel(); 
   listaTextDataModel: TextDataModel[] =  [];
-  
-  textoPerfil: TextoPerfilModel = new TextoPerfilModel();
+
 
   userToken: string = '';
   idUsuario: string = '';
@@ -54,6 +52,7 @@ export class GlobalService {
     this.apiurl = environment.apiurl;
     this.apiurlold = environment.apiurlold;
     this.setlanguages();
+    this.setHoursId()
     this.getListas();
 
   }
@@ -102,32 +101,32 @@ export class GlobalService {
       'Diciembre',
     ];
 
-    this.listahoras = [
-      { key: '0', value: '00:00' },
-      { key: '1', value: '01:00' },
-      { key: '2', value: '02:00' },
-      { key: '3', value: '03:00' },
-      { key: '4', value: '04:00' },
-      { key: '5', value: '05:00' },
-      { key: '6', value: '06:00' },
-      { key: '7', value: '07:00' },
-      { key: '8', value: '08:00' },
-      { key: '9', value: '09:00' },
-      { key: '10', value: '10:00' },
-      { key: '11', value: '11:00' },
-      { key: '12', value: '12:00' },
-      { key: '13', value: '13:00' },
-      { key: '14', value: '14:00' },
-      { key: '15', value: '15:00' },
-      { key: '16', value: '16:00' },
-      { key: '17', value: '17:00' },
-      { key: '18', value: '18:00' },
-      { key: '19', value: '19:00' },
-      { key: '20', value: '20:00' },
-      { key: '21', value: '21:00' },
-      { key: '22', value: '22:00' },
-      { key: '23', value: '23:00' },
-    ];
+    // this.listahoras = [
+    //   { key: '0', value: '00:00' },
+    //   { key: '1', value: '01:00' },
+    //   { key: '2', value: '02:00' },
+    //   { key: '3', value: '03:00' },
+    //   { key: '4', value: '04:00' },
+    //   { key: '5', value: '05:00' },
+    //   { key: '6', value: '06:00' },
+    //   { key: '7', value: '07:00' },
+    //   { key: '8', value: '08:00' },
+    //   { key: '9', value: '09:00' },
+    //   { key: '10', value: '10:00' },
+    //   { key: '11', value: '11:00' },
+    //   { key: '12', value: '12:00' },
+    //   { key: '13', value: '13:00' },
+    //   { key: '14', value: '14:00' },
+    //   { key: '15', value: '15:00' },
+    //   { key: '16', value: '16:00' },
+    //   { key: '17', value: '17:00' },
+    //   { key: '18', value: '18:00' },
+    //   { key: '19', value: '19:00' },
+    //   { key: '20', value: '20:00' },
+    //   { key: '21', value: '21:00' },
+    //   { key: '22', value: '22:00' },
+    //   { key: '23', value: '23:00' },
+    // ];
 
     this.idiomasIsos = [
       { key: 'es', value: 'español', value_en: 'Spanish' },
@@ -166,8 +165,11 @@ export class GlobalService {
   getIdLang(lang: string = "es") {
     let idlg = 1;
     if (lang != undefined) {
+      if(this.listaidlangs.length == 0){
+        this.getListas();
+      }
       this.listaidlangs.forEach(resp=>{
-        if (resp.iso == lang) {
+        if (resp.name == lang) {
           idlg= resp.id;
         }
       }) 
@@ -239,26 +241,6 @@ export class GlobalService {
     return fechaleg;
   }
 
-  mapperVisitas(visita: VisitasResultadoModel) {
-    let vi = new TimesModel();
-    vi.min = visita.visit_time_min;
-    vi.max = visita.visit_time_max;
-    vi.uuid = visita.visit_time_uuid;
-    vi.init = visita.visit_time_init;
-    vi.end = visita.visit_time_end;
-    vi.date = visita.visit_time_date;
-    vi.iso = visita.visit_time_iso;
-    vi.duration = visita.visit_time_duration;
-
-    if (visita.duration != null) {
-      vi.duration = visita.duration;
-    }
-  
-
-    visita.visit_time = [];
-    visita.visit_time.push(vi);
-    return visita;
-  }
 
   getlistatiposidentificacion() {
     return this.listatiposidentificacion;
@@ -300,13 +282,33 @@ export class GlobalService {
     })
   }
 
+  setHoursId(){
+    this.getHoursId().subscribe((resp)=>{
+      if(resp){
+        this.listahoras = resp as string[] ?? [] ;
+        console.log("setHoursId()  ", this.textcontents)
+      }
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   setTextContentsByLanguage(lista:TextDataModel[],  idlanguage: number = 1) {
     let textcont: TextContentsModel = new TextContentsModel();
     if( lista.length > 0){
       textcont.dataok = true;
       lista.forEach((data: TextDataModel) => {
         if(data.idlang == idlanguage){
-          textcont[data.nombre] = data.contenido ;
+          textcont[data.nombre.trim()] = data.contenido.trim() ;
         }
       });
     }
@@ -319,12 +321,29 @@ export class GlobalService {
   }
 
   getTextcontentsglobal() {
+    this.setlanguages();
     let endpoint = '/textcontents/'+this.idlang ;
       this.url = this.apiurl + endpoint;
       console.log("getTextcontentsglobal()  ",this.url)
       return this.http.get(`${this.url}` ).pipe(
         map((resp) =>{
             return resp as TextDataModel;
+        }),
+        catchError((err) => {
+          console.error("Error  " , err.error);
+          return err.error;
+        })
+      );
+  }
+
+
+  getHoursId() {
+    
+    let endpoint = '/hoursid' ;
+      this.url = this.apiurl + endpoint;
+      return this.http.get(`${this.url}` ).pipe(
+        map((resp) =>{
+            return resp as string;
         }),
         catchError((err) => {
           console.error("Error  " , err.error);

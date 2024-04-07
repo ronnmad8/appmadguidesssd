@@ -12,8 +12,6 @@ import { VisitasModel } from '../models/Visitas.model';
 import { ResultadoModel } from '../models/Resultado.model';
 import { FiltersModel } from '../models/Filters.model';
 import { TimesModel } from '../models/Times.model';
-import { TextorecomendadasModel } from '../models/Textorecomendadas.model';
-import { TextosearchModel } from '../models/Textosearch.model';
 
 
 
@@ -99,7 +97,7 @@ export class BuscadorService {
         var resultado: ResultadoModel  = resp as ResultadoModel; 
         resultado.data.forEach((el: any, index: number) => {
             if(el.visit_time_uuid != null && el.visit_time == null){
-                el = this.globalService.mapperVisitas(el);
+                el = [];
 
             }
           });
@@ -111,45 +109,6 @@ export class BuscadorService {
       })
     );
   }
-
-
-  getImagenesbuscador()  {
-
-    let endpoint = '/assets/find?file=bannerbottom,banner-ficha-de-producto' ;
-    this.url = this.apiurl + endpoint;
-
-    return this.http.get( `${this.url}` )
-    .pipe(
-      map( resp =>{
-        let imagenes: ImagenesModel[] = resp as ImagenesModel[];
-        return imagenes;    
-      } ) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
-  }
-
-
-  getMessagesSearch()  {
-
-    let endpoint = '/assets/search?' ;
-    this.url = this.apiurl + endpoint ;
-
-    return this.http.get( `${this.url}` )
-    .pipe(
-      map( resp =>{
-        var data = resp as TextosearchModel;  
-        return data;   
-      } ) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
-  }
-
 
 
 }

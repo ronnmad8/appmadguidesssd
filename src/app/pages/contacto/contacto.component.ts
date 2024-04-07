@@ -12,7 +12,6 @@ import { HomeService } from '../../services/home.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
 import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
@@ -37,7 +36,6 @@ export class ContactoComponent implements OnInit {
   
   bannerbottom :ImagenesModel = new ImagenesModel();
   imagenempresa :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
   messageImage: MessagesImageModel = new MessagesImageModel();
 
   textconts: TextContentsModel = new TextContentsModel();

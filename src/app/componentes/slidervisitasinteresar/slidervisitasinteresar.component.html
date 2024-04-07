@@ -4,7 +4,7 @@
     <div class="row p-0 m-0 ">
       <div class="col-12 p-0 text-center ">
         <div id="titulovisitasrecomendadas">
-          <span class="colGRIS1">{{messageData.messages.related }} </span>
+          <span class="colGRIS1">{{ textconts.relacionadas }} </span>
         </div>
       </div>
     </div>
@@ -13,17 +13,17 @@
 
       <div class="p-0 my-0 mx-2" *ngFor="let visita of relatedData">
         <div class="panelVisita posrel cupo" (click)="verdetalle(visita)" >
-          <div class="visitastemporada" *ngIf="visita?.visit_temporada == 1" >
+          <div class="visitastemporada" *ngIf="visita?.temporada" >
             <div>
-              Visita de temporada
+              {{textconts.buscador_visitatemporada}}
             </div>
           </div>
           <div class="imgvisita">
             <picture>
-              <source media="(min-width: 0px)" srcset="{{visita?.visit_image_url}}" data-srcset="{{visita?.visit_image_url}}" class="pc">
-              <img src="{{visita?.visit_image_url}}" data-src="{{visita?.visit_image_url}}" alt="" class="pc imgvisita lazyload bordeimagencard">
-              <source media="(min-width: 0px)" srcset="{{visita?.visit_image_url}}" data-srcset="{{visita?.visit_image_url}}" class="mvl">
-              <img src="{{visita?.visit_image_url_movil}}" data-src="{{visita?.visit_image_url_movil}}" alt=""
+              <source media="(min-width: 0px)" srcset="{{visita?.images[0]}}" data-srcset="{{visita?.images[0]}}" class="pc">
+              <img src="{{visita?.images[0]}}" data-src="{{visita?.images[0]}}" alt="" class="pc imgvisita lazyload bordeimagencard">
+              <source media="(min-width: 0px)" srcset="{{visita?.images[0]}}" data-srcset="{{visita?.images[0]}}" class="mvl">
+              <img src="{{visita?.images[0]}}" data-src="{{visita?.images[0]}}" alt=""
                 class="mvl imgvisita lazyload bordeimagencard">
             </picture>
           </div>
@@ -31,20 +31,20 @@
 
           <div class="w-100 p-0 m-0">
             <div class="titvisita">
-              <span>{{visita?.visit_lang_title.length > 50 ? visita?.visit_lang_title.substring(0,47)+"..." : visita?.visit_lang_title}}</span>
+              <span>{{visita?.titulo.length > 50 ? visita.titulo.substring(0,47)+"..." : visita?.titulo.length}}</span>
             </div>
             <div class="textvisita">
-              <span  [innerHTML]=" visita?.visit_lang_description.length > 70 ? visita?.visit_lang_description.substring(0,67)+'...' : visita?.visit_lang_description "  >
+              <span  [innerHTML]=" visita?.descripcion.length > 70 ? visita?.descripcion.substring(0,67)+'...' : visita?.descripcion "  >
               </span>
             </div>
             <div class="infovisita  d-flex w-100 ">
               <div class="preciovisita">
-                <span class="preciovisitaeuro">{{visita?.visit_time[0].price}}€ </span>
-                <span class="porpersona">por persona</span>
+                <span class="preciovisitaeuro">{{visita?.precio  }}€ </span>
+                <span class="porpersona">{{textconts.buscador_porpersona}} </span>
               </div>
               <div class="horasvisita">
                 <img class="imghorasvisita  mb-2 mr-1" src='assets/images/i-reloj.svg' alt="">
-                <span class="cantidadhorasvisita ">{{visita?.visit_time[0].duration}}h</span>
+                <span class="cantidadhorasvisita ">{{visita?.duracionmin   }}h</span>
 
               </div>
             </div>
@@ -57,7 +57,7 @@
     <div class="row p-0 m-0">
       <div class="col-12 p-0 text-center">
         <button id="btvertodas" type="button" class="cupo" (click)="vertodascategoria()"  >
-          <span>{{messageData?.messages.view }}</span>
+          <span>{{textconts.cart_search }}  </span>
         </button>
       </div>
     </div>

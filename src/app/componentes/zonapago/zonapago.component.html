@@ -6,13 +6,13 @@
                     <div class="circulopasos ">
                         1
                     </div>
-                    <span class="descripcionpaso"> {{messageCashData?.step?.step1}} </span>
+                    <span class="descripcionpaso">  {{textconts.paso1 }} </span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 1">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(1)">
                         1
                     </div>
-                    <span class="descripcionpasoapagado"> {{messageCashData?.step?.step1}} </span>
+                    <span class="descripcionpasoapagado">  {{textconts.paso1 }}</span>
                 </div>
             </div>
             <div id="paso2" class="col-xl-4 text-center h40">
@@ -20,13 +20,13 @@
                     <div class="circulopasos ">
                         2
                     </div>
-                    <span class="descripcionpaso"> {{messageCashData?.step?.step2}} </span>
+                    <span class="descripcionpaso">  {{textconts.paso2 }} </span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(2)">
                         2
                     </div>
-                    <span class="descripcionpasoapagado"> {{messageCashData?.step?.step2}} </span>
+                    <span class="descripcionpasoapagado">  {{textconts.paso2 }} </span>
                 </div>
             </div>
             <div id="paso3" class=" col-xl-4 text-center h40">
@@ -34,13 +34,13 @@
                     <div class="circulopasos ">
                         3
                     </div>
-                    <span class="descripcionpaso"> {{messageCashData?.step?.step3}}</span>
+                    <span class="descripcionpaso">  {{textconts.paso3 }}</span>
                 </div>
                 <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
                     <div class="circulopasosapagado cupo" (click)="cambiarpaso(3)">
                         3
                     </div>
-                    <span class="descripcionpasoapagado"> {{messageCashData?.step?.step3}} </span>
+                    <span class="descripcionpasoapagado"> {{textconts.paso3 }} </span>
                 </div>
             </div>
         </div>
@@ -53,13 +53,13 @@
                         <div class="circulopasos ">
                             1
                         </div>
-                        <span class="descripcionpaso"> {{messageCashData?.order}} </span>
+                        <span class="descripcionpaso"> {{textconts.cart_cabecera_revisapedido }}  </span>
                     </div>
                     <div class="p-0 mx-auto d-flex" *ngIf="pasoactivo != 1">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(1)">
                             1
                         </div>
-                        <span class="descripcionpasoapagado"> {{messageCashData?.order}} </span>
+                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_revisapedido }}  </span>
                     </div>
                 </div>
                 <div id="paso2m" class="col-4 text-center h20">
@@ -67,13 +67,13 @@
                         <div class="circulopasos ">
                             2
                         </div>
-                        <span class="descripcionpaso"> {{messageCashData?.dataSimple}}</span>
+                        <span class="descripcionpaso"> {{textconts.cart_cabecera_datospersonales }} </span>
                     </div>
                     <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(2)">
                             2
                         </div>
-                        <span class="descripcionpasoapagado"> {{messageCashData?.dataSimple}} </span>
+                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_datospersonales }}  </span>
                     </div>
                 </div>
                 <div id="paso3m" class=" col-4 text-center h20">
@@ -81,13 +81,13 @@
                         <div class="circulopasos ">
                             3
                         </div>
-                        <span class="descripcionpaso">{{messageCashData?.pay}}  </span>
+                        <span class="descripcionpaso">{{textconts.cart_cabecera_metodospago }}   </span>
                     </div>
                     <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(3)">
                             3
                         </div>
-                        <span class="descripcionpasoapagado"> {{messageCashData?.pay}} </span>
+                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_metodospago }}  </span>
                     </div>
                 </div>
             </div>
@@ -102,15 +102,15 @@
         <div class="p-0 m-0">
             <div class="conteni d-xl-flex">
                 <div class="h-100 w-100 mx-auto divPanelVisitaCarrito ">
-                    <div class="panelVisitaCarrito" *ngFor="let visitapedido of pedido.visitasPedido">
+                    <div class="panelVisitaCarrito" *ngFor="let reserva of pedido.reservas">
                         <div class="h-100">
-                            <div #imageneslatid id="im-{{visitapedido?.id}}" class="chimaglat cupo">
+                            <div #imageneslatid id="im-{{reserva.id}}" class="chimaglat cupo">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{visitapedido?.visit_image_url}}"
-                                        data-srcset="{{visitapedido?.visit_image_url}}">
-                                    <img class="imglat" src="{{visitapedido?.visit_image_url}}"
-                                        data-src="{{visitapedido?.visit_image_url}}"
-                                        alt="{{visitapedido?.visit_lang_title}}" style="height: 194px ;">
+                                    <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
+                                        data-srcset="{{reserva.visit.images[0]}}">
+                                    <img class="imglat" src="{{reserva.visit.images[0]}}"
+                                        data-src="{{reserva.visit.images[0]}}"
+                                        alt="{{reserva.visit.titulo}}" style="height: 194px ;">
                                 </picture>
                             </div>
                         </div>
@@ -122,39 +122,36 @@
                                             style="top: -5px" draggable="false">
                                     </div> -->
                                     
-                                <div class="cupo" (click)="eliminarvisitapedido(visitapedido)">
+                                <div class="cupo" (click)="eliminarvisitapedido(reserva)">
                                     <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                                 </div>
                             </div>
-                            <div id="titulopanelpedido" innerHTML="{{visitapedido?.visit_lang_title.length > 30 ? visitapedido?.visit_lang_title.substring(0,
-                                47)+'...' : visitapedido?.visit_lang_title }}"  >
+                            <div id="titulopanelpedido" innerHTML="{{reserva.visit.titulo.length > 30 ? reserva.visit.titulo.substring(0,
+                                47)+'...' : reserva.visit.titulo }}"  >
                                 
                             </div>
-                            <div class="fs-18 p-0  mb-2 pc"   innerHTML=" {{visitapedido?.visit_lang_description.length > 50 ?
-                                visitapedido?.visit_lang_description.substring(0, 47)+'...' :
-                                visitapedido?.visit_lang_description }}" >
+                            <div class="fs-18 p-0  mb-2 pc"   innerHTML=" {{reserva.visit.descripcion.length > 50 ?
+                                reserva.visit.descripcion.substring(0, 47)+'...' :
+                                reserva.visit.descripcion }}" >
                                
                             </div>
                             <div class="lh-1-2">
-                                {{visitapedido?.visit_time_date}}
+                                {{reserva.fecha}}
                             </div>
-                            <div class="lh-1-2" innerHTML=" {{messageVisitaData?.details.language.description}}"  >
+                            <div class="lh-1-2" innerHTML=" {{textconts.buscador_detail_description }}     "  >
                                 <span
-                                    class="ml-1">{{visitapedido?.idioma | capitalize}}</span>
+                                    class="ml-1">{{reserva.getLanguage(reserva.language_id)| capitalize}}</span>
                             </div>
                             <div class="fs-14 lh-1-2 mt-2">
                                 <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                                         style="margin-right: -3px; margin-top: -2px;"></i>
-                                    {{visitapedido?.adultos}}</span>
+                                    {{reserva.adults}}</span>
                                 <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                                         style="margin-right: -3px; margin-top: 0px;"></i>
-                                    {{visitapedido?.ninos}}</span>
-                                <span><i class="fa fa-person fs-12" title="Menores"
-                                        style="margin-right: -3px; margin-top: px;"></i>
-                                    {{visitapedido?.menores}}</span>
+                                    {{reserva.children}}</span>
                             </div>
                             <div class="posabsolprecio ">
-                                {{ visitapedido?.precio }} €
+                                {{ reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin) }} €
                             </div>
                         </div>
                     </div>
@@ -165,17 +162,17 @@
                         <div #preciototalpedido id="preciototalpedido">
                             <div class="panelPreciototal">
                                 <div class="precioAmarillo posrel">
-                                    <div>{{messageCashData?.price}}</div>
+                                    <div>{{textconts.buscador_precio }}  </div>
                                     <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{ preciototal }} €</div>
                                 </div>
                                 <div class="mt-3 mx-auto text-center">
                                     <button class="btredondoRojoxl " type="button" routerLink="/buscador">
-                                        <span class="ff-JB">{{messageCashData?.reserve}}</span>
+                                        <span class="ff-JB">{{textconts.micuenta_menu_reservas }} </span>
                                     </button>
                                 </div>
                                 <div class="mt-2 mx-auto text-center">
                                     <button class="btredondoRojoPreciototal " type="button" (click)="continuar()">
-                                        <span class="ff-JB">{{messageCashData?.button}}</span>
+                                        <span class="ff-JB">{{textconts.continuar}}</span>
                                     </button>
                                 </div>
                             </div>
@@ -201,45 +198,45 @@
                         <div class="fs-20 ff-JB" style="max-width: 210px">{{messageCashData?.thank}}</div>
                         <div class="posabsolRight">
                             <div class="btline127 " (click)="modificarCarrito()">
-                                <div>{{messageCashData?.cart}}</div>
+                                <div>{{textconts.micuenta_title}}</div>
                                 <div class="linefull posrel" style="top: -30px"></div>
                                 <div></div>
                             </div>
                         </div>
                     </div>
                     <div class="panelResumenVisits ">
-                        <div class="my-3" *ngFor="let visitapedido of pedido.visitasPedido">
+                        <div class="my-3" *ngFor="let reserva of pedido.reservas">
                             <div class="fs-16 lh-1-4 mb-1 d-flex">
                                 <div style="width: 268px">
-                                    {{visitapedido?.visit_lang_title}}
+                                    {{reserva.visit.titulo}}
                                 </div>
                                 <div class="text-right" style="width: 68px">
-                                    {{visitapedido?.precio}} €
+                                    {{reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin)}} €
                                 </div>
                             </div>
                             <div class="fs-14 lh-1-4">
-                                {{visitapedido?.visit_time_date}}
+                                {{reserva.fecha}}
                             </div>
                             <div class="fs-14 lh-1-4">
-                                {{messageVisitaData?.data?.language}}: <span
-                                    class="ml-1">{{visitapedido?.visit_lang_iso}}</span>
+                                {{textconts.buscador_idioma}} : <span
+                                    class="ml-1">{{reserva.getLanguage(reserva.language_id)}}</span>
                             </div>
                             <div class="fs-14 lh-1-4">
                                 <span>{{messageVisitaData?.price?.adults}}</span> <span
-                                    class="mx-1">{{visitapedido?.adultos}} </span>
+                                    class="mx-1">{{reserva.adults}} </span>
                                 <span>{{messageVisitaData?.price?.children}}</span> <span class="mx-1">
-                                    {{visitapedido?.ninos}} </span>
+                                    {{reserva.children}} </span>
                                 <!-- <span>{{messageVisitaData.price.minor}}</span> <span class="mx-1">
                                     {{visitapedido.menores}} </span> -->
                             </div>
-                            <div class="fs-14 lh-1-4 colVERDE" *ngIf="visitapedido.visit_refundable">
-                                {{messageCashData?.cancel24}}
+                            <div class="fs-14 lh-1-4 colVERDE" *ngIf="reserva.visit.cancelacion">
+                                {{textconts.buscador_detail_cancelation}}
                             </div>
                         </div>
                     </div>
                     <div class="precioAmarillo posrel mt-4">
-                        <div>{{messageCashData?.process}}</div>
-                        <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{preciototal}} €</div>
+                        <div>{{textconts.cart_procesopago}}  </div>
+                        <div class="text-right mr-0 ml-auto ff-JB posabsolRight">{{ preciototal   }} €</div>
                     </div>
                 </div>
             </div>
@@ -250,15 +247,15 @@
                     <form class="validate-form" [formGroup]="formregister">
                         <div class="hazlogin d-xl-flex">
                             <div>
-                                <span> {{messageCashData?.register}} </span>
+                                <span>  {{textconts.login_notienescuenta}}</span>
                                 <span class="colROJO2 cupo" (click)="abrirLogin(loginmodal)">
-                                    {{messageCashData?.social}}</span>
+                                  {{textconts.login_registrarseaqui}}  </span>
                             </div>
                             <div class="posabsolRedes cupo" (click)="abrirLogin(loginmodal)">
-                                <span>{{messageCashData?.login}} </span>
-                                <span class="mx-1"><img src="../../assets/images/i-facebookG.svg" class="imicono8l"
+                                <span>{{textconts.cart_ohazlogin  }} </span>
+                                <span class="mx-1"><img src="assets/images/i-facebookG.svg" class="imicono8l"
                                         draggable="false"></span>
-                                <span class="mx-1"><img src="../../assets/images/i-google+G.svg" class="imicono8l"
+                                <span class="mx-1"><img src="assets/images/i-google+G.svg" class="imicono8l"
                                         draggable="false"></span>
                             </div>
                         </div>
@@ -266,43 +263,43 @@
                         <div class="panelDatosReserva">
 
                             <div class="row px-2">
-                                <div class="col-12 fs-20 ff-JB px-2 mb-2">{{messageCashData?.data}}</div>
+                                <div class="col-12 fs-20 ff-JB px-2 mb-2">{{textconts.micuenta_form_datospersonales  }}  </div>
 
                                 <div class="col-xl-6  px-2 ">
                                     <div class="cj posrel">
-                                        <input type="text" class="w-100 scolGRIS1" placeholder=" Nombre " name="name"
+                                        <input type="text" class="w-100 scolGRIS1" placeholder=" {{textconts.micuenta_form_name }}  " name="name"
                                             id="name" formControlName="name" />
                                         <div *ngIf="formregister.value.name != '' " class="fieldpeq3">
-                                            {{messageCashData?.placeholder?.name}}
+                                            {{textconts.micuenta_form_name }} 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
                                     <div class="cj posrel">
-                                        <input type="text" class="w-100 colGRIS1" placeholder=" Apellidos "
+                                        <input type="text" class="w-100 colGRIS1" placeholder="{{textconts.micuenta_form_surname }} "
                                             name="surname" id="surname"
                                             formControlName="surname" />
                                         <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
-                                            {{messageCashData?.placeholder?.surname}}
+                                            {{textconts.micuenta_form_surname }} 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
                                     <div class="cj posrel">
                                         <input type="email" class="w-100 colGRIS1"
-                                            placeholder="{{messageCashData?.placeholder.email}}" name="email" id="email"
+                                            placeholder="{{textconts.micuenta_form_email }}" name="email" id="email"
                                             formControlName="email" />
-                                        <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
-                                            {{messageCashData?.placeholder.email}}
+                                        <div *ngIf="formregister.value.email != '' " class="fieldpeq3">
+                                            {{textconts.micuenta_form_email }} 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
                                     <div class="cj posrel">
-                                        <input type="password" class="w-100 colGRIS1" placeholder="Password"
+                                        <input type="password" class="w-100 colGRIS1" placeholder="{{textconts.login_password }}"
                                             name="password" id="password" formControlName="password" />
-                                        <div *ngIf="formregister.value.surname != '' " class="fieldpeq3">
-                                            _Password
+                                        <div *ngIf="formregister.value.password != '' " class="fieldpeq3">
+                                            {{textconts.login_password }}
                                         </div>
                                     </div>
                                 </div>
@@ -311,7 +308,7 @@
                                         <input type="text" class="w-100 colGRIS1" placeholder=" Prefijo " name="prefijo"
                                             id="prefijo" formControlName="prefijo" />
                                         <div *ngIf="formregister.value.prefijo != '' " class="fieldpeq3">
-                                            _Prefijo
+                                            {{textconts.login_registro_prefijo }}
                                         </div>
                                     </div>
                                 </div>
@@ -322,65 +319,57 @@
                                             placeholder="{{messageCashData.placeholder.phone}}" name="telefono"
                                             id="telefono" formControlName="phone" />
                                         <div *ngIf="formregister.value.telefono != '' " class="fieldpeq3">
-                                            {{messageCashData.placeholder.phone}}
+                                            {{textconts.login_registro_phone }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-6 px-2 ">
                                     <div class="cj posrel">
                                         <input type="text" class="w-100 colGRIS1"
-                                            placeholder="_street_" name="telefono"
-                                            id="street" formControlName="street" />
+                                            placeholder=" {{textconts.login_registro_address }}" name="address"
+                                            id="address" formControlName="address" />
                                         <div *ngIf="formregister.value.street != '' " class="fieldpeq3">
-                                            _street_
+                                            {{textconts.login_registro_address }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-6 px-2 ">
                                     <div class="cj posrel">
                                         <input type="text" class="w-100 colGRIS1"
-                                            placeholder="_number_" name="telefono"
+                                            placeholder="{{textconts.login_registro_number }}" name="number"
                                             id="number" formControlName="number" />
                                         <div *ngIf="formregister.value.number != '' " class="fieldpeq3">
-                                            _number_
+                                            {{textconts.login_registro_number }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
-                                    <div class="posrel">
-                                        <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
-                                      name="country" formControlName="country">
-                                      <option value="{{li.id}}" *ngFor="let li of listacountries">
-                                        {{li.name}}
-                                      </option>
-                                    </select>
+                                    <div class="cj posrel">
+                                        <input type="text" class="w-100 colGRIS1"
+                                            placeholder="  {{textconts.login_registro_country }}" name="country"
+                                            id="country" formControlName="country" />
                                         <div *ngIf="formregister.value.country != '' " class="fieldpeq3">
-                                            _country_
+                                            {{textconts.login_registro_country }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
-                                    <div class="posrel">
-                                        <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)" name="state"
-                                      formControlName="state">
-                                      <option value="{{li.id}}" *ngFor="let li of listastates">
-                                        {{li.name}}
-                                      </option>
-                                    </select>
-                                        <div *ngIf="formregister.value.states != '' " class="fieldpeq3">
-                                            _state_
+                                    <div class="cj posrel">
+                                        <input type="text" class="w-100 colGRIS1"
+                                            placeholder="  {{textconts.login_registro_state }}" name="state"
+                                            id="state" formControlName="state" />
+                                        <div *ngIf="formregister.value.state != '' " class="fieldpeq3">
+                                            {{textconts.login_registro_state }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 px-2 ">
-                                    <div class="posrel">
-                                        <select #cities class="cjselect w-100" id="city" name="city" formControlName="city">
-                                            <option value="{{li.id}}" *ngFor="let li of listacities">
-                                              {{li.name}}
-                                            </option>
-                                          </select>
+                                    <div class="cj posrel">
+                                        <input type="text" class="w-100 colGRIS1"
+                                            placeholder="  {{textconts.login_registro_city }}" name="city"
+                                            id="city" formControlName="city" />
                                         <div *ngIf="formregister.value.city != '' " class="fieldpeq3">
-                                            _city_
+                                            {{textconts.login_registro_city }}
                                         </div>
                                     </div>
                                 </div>
@@ -389,10 +378,10 @@
                         </div>
                         <div class="btcontdatosper ">
                             <button *ngIf="btactivadoreg" class="btredondoRojoContinuar " type="button" (click)="registrarusuario()">
-                                <span class="ff-JB">_Registrar_</span>
+                                <span class="ff-JB">{{textconts.login_registro_registrar }}  </span>
                             </button>
                             <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
-                                <span>_Registrar_</span>
+                                <span>{{textconts.login_registro_registrar }}</span>
                             </button>
                         </div>
                     </form>
@@ -402,14 +391,14 @@
 
                     <div class="panelDatosReserva">
                         <div class="row px-2">
-                            <div class="col-12 fs-20 ff-JB px-2 mb-2">{{messageCashData?.data}}</div>
+                            <div class="col-12 fs-20 ff-JB px-2 mb-2">  {{textconts.cart_cabecera_datospersonales }} </div>
 
                             <div class="col-xl-6  px-2 ">
                                 <div class="cj posrel">
                                     <input type="text" class="w-100 scolGRIS1" name="namelogin" id="namelogin"
                                         [value]="usuario.name" disabled />
                                     <div class="fieldpeq3">
-                                        {{messageCashData?.placeholder.name}}
+                                          {{textconts.micuenta_form_name }}
                                     </div>
                                 </div>
                             </div>
@@ -418,7 +407,7 @@
                                     <input type="text" class="w-100 colGRIS1" name="surnamelogin" id="surnamelogin"
                                         [value]="usuario.surname" disabled />
                                     <div class="fieldpeq3">
-                                        {{messageCashData?.placeholder.surname}}
+                                        {{textconts.micuenta_form_surname }}
                                     </div>
                                 </div>
                             </div>
@@ -428,7 +417,7 @@
                                     name="emaillogin" id="emaillogin"
                                         [value]="usuario.email" disabled />
                                     <div class="fieldpeq3">
-                                        {{messageCashData?.placeholder.email}}
+                                        {{textconts.micuenta_form_email }}
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +428,7 @@
                                     name="prefijologin" id="prefijologin"
                                        [value]="usuario.prefix_phone_id" disabled />
                                     <div class="fieldpeq3">
-                                        _Prefijo
+                                        {{textconts.micuenta_form_prefijo }}
                                     </div>
                                 </div>
                             </div>
@@ -448,7 +437,7 @@
 
                         <div class="" id="comps" *ngIf="compsE.controls.length > 0"  >
                             <div class="row px-2">
-                                <div class="col-12 fs-20 ff-JB px-2 mb-2">Acompañantes ({{compsE.controls.length}}) </div>
+                                <div class="col-12 fs-20 ff-JB px-2 mb-2">{{textconts.acompanantes}} ({{compsE.controls.length}}) </div>
                             </div>
                         
                             <div class="col-12 fs-18 ff-JB px-2 mb-2 colorGRIS3"></div>
@@ -458,10 +447,10 @@
                                     <div class="row" [formGroupName]="i">
                                         
                                         <div class="col-12" *ngIf="c.value.maxold != maxoldchildren"   >
-                                            {{ c.value.orden + 1  }}º  - _Adulto_ -  {{ c.value.visit_title }}
+                                            {{ c.value.orden + 1  }}º  - {{textconts.buscador_adulto}}   -  {{ c.value.visit_title }}
                                         </div>
                                         <div class="col-12" *ngIf="c.value.maxold == maxoldchildren"  >
-                                            {{ c.value.orden + 1  }}º  - _Niño_ -  {{ c.value.visit_title }}
+                                            {{ c.value.orden + 1  }}º  - {{textconts.buscador_detail_infantil}} -  {{ c.value.visit_title }}
                                         </div>
                                         
                                         <div class="col-xl-4  px-2 ">
@@ -469,7 +458,7 @@
                                                 <input type="text" class="w-100 scolGRIS1" name="name"
                                                     id="name_comp-{{i}}" formControlName="name" />
                                                 <div class="fieldpeq3">
-                                                    {{messageCashData?.placeholder.name}}
+                                                    {{textconts.micuenta_form_name }}
                                                 </div>
                                             </div>
                                         </div>
@@ -478,7 +467,7 @@
                                                 <input type="text" class="w-100 scolGRIS1" name="surname"
                                                     id="surname_comp-{{i}}" formControlName="surname" />
                                                 <div class="fieldpeq3">
-                                                    {{messageCashData?.placeholder.surname}}
+                                                    {{textconts.micuenta_form_surname }}
                                                 </div>
                                             </div>
                                         </div>
@@ -488,7 +477,7 @@
                                                 max="{{c.value.maxold}}" min="3"
                                                     id="old_comp-{{i}}" formControlName="old" />
                                                 <div class="fieldpeq3">
-                                                    _edad_
+                                                    {{textconts.edad }}
                                                 </div>
                                             </div>
                                         </div>
@@ -510,9 +499,8 @@
                                     [value]="aceptacionpoliticas">
                             </div>
                             <div class="fs-16 mx-2">
-                                {{messageCashData?.policy.message1}} <a routerlink="">{{messageCashData?.policy.message2}}
-                                </a>{{messageCashData?.policy.message3}}<a routerlink="">
-                                    {{messageCashData?.policy.message4}}</a>
+                                {{textconts.form_policy}}   <a routerlink=""> {{textconts.form_link}} 
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -521,7 +509,7 @@
 
                 <div class="btcontdatosper "  *ngIf="loginok || registrado"  >
                     <button class="btredondoRojoContinuar " type="button" (click)="continuar()">
-                        <span class="ff-JB">{{messageCashData?.button}}</span>
+                        <span class="ff-JB">{{textconts.continuar }} </span>
                     </button>
                 </div>
             </div>
@@ -531,24 +519,24 @@
 
                     <div class="panelMetodopago">
                         <div class="row px-2">
-                            <div class="col-12 fs-20 ff-JB px-2 my-4">{{messageCashData?.process}}</div>
+                            <div class="col-12 fs-20 ff-JB px-2 my-4">{{textconts.cart_procesopago }}   </div>
                             <div class="col-12 px-2 d-flex">
                                 <div class="mx-2">
                                     <i class="fa fa-check colROJO2 fs-24"></i>
                                 </div>
-                                <div class="mx-2 fs-20">{{messageCashData?.cart}}</div>
+                                <div class="mx-2 fs-20">-</div>
                                 <div class="mx-2">
-                                    <img src="../../assets/images/i-mastercard.svg" class="imicono3" draggable="false">
+                                    <img src="assets/images/i-mastercard.svg" class="imicono3" draggable="false">
                                 </div>
                                 <div class="mx-2">
-                                    <img src="../../assets/images/i-visa.svg" class="imicono3" draggable="false">
+                                    <img src="assets/images/i-visa.svg" class="imicono3" draggable="false">
                                 </div>
                             </div>
 
                             <div class="col-xl-8"></div>
                             <div class="col-xl-4 text-right">
                                 <button class="btredondoRojoPagar " type="button" (click)="reservarvisita()">
-                                    <span class="ff-JB">{{messageCashData?.paying}}</span>
+                                    <span class="ff-JB"> {{textconts.buscador_reservar }} r </span>
                                 </button>
                             </div>
                         </div>
@@ -569,7 +557,7 @@
             <div id="divmicuenta">
                 <form class="validate-form" [formGroup]="formlogin">
                     <div class="w-100 d-flex posrel">
-                        <div class="px-3 ff-JB fs-24 ">{{messagePerfilData.account}}</div>
+                        <div class="px-3 ff-JB fs-24 ">{{textconts.login_micuenta }} </div>
                         <div class="posabsol" style="right: -24px">
                             <div class="cupo" (click)="modal.dismiss()">
                                 <i class="fa fa-x"></i>
@@ -579,7 +567,7 @@
 
                     <div class="px-3">
                         <div class="my-3 fs-18">
-                            {{messageLoginData.session}}
+                            {{textconts.login_iniciarsesion}}
                         </div>
                         <div class="cj">
                             <input type="text" class="colGRIS1 " placeholder=" Usuario email" id="" name="email"
@@ -598,28 +586,29 @@
                                 <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
                                 <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
                             </div>
-                            <div class="mt-1 ml-2"> {{messageLoginData.remember}}</div>
+                            <div class="mt-1 ml-2">{{textconts.login_recordarme }} </div>
                         </div>
                         <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                             <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button"
                                 (click)="iniciarsesion()">
-                                <span> {{messageLoginData.session}}</span>
+                                <span> {{textconts.login_iniciarsesion}}</span>
                             </button>
                             <button *ngIf="!btactivado" class="btredondoApagadomicuenta " type="button">
-                                <span> {{messageLoginData.session}}</span>
+                                <span> {{textconts.login_iniciarsesion}}</span>
                             </button>
 
                         </div>
                         <div class="oaccedemicuenta">
-                            {{messageLoginData?.accede}}
+                             
+                            {{textconts.cart_modalcuenta_oaccede }} 
                         </div>
                         <div class="w-100 p-0 ">
                             <button id="btfacebookmicuenta" class="btcuadmicuenta mx-1" type="button">
-                                <img src="../../assets/images/logofb.png" class="imredes" draggable="false">
+                                <img src="assets/images/logofb.png" class="imredes" draggable="false">
                                 <span>Facebook</span>
                             </button>
                             <button id="btgooglemicuenta" class="btcuadmicuenta mx-1" type="button">
-                                <img src="../../assets/images/logog.png" class="imredes" draggable="false">
+                                <img src="assets/images/logog.png" class="imredes" draggable="false">
                                 <span>Google</span>
                             </button>
                         </div>

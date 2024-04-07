@@ -25,19 +25,14 @@ import { HomeService } from '../../services/home.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { HomerespModel } from 'src/app/models/Homeresp.model';
 import { DuracionesModel } from 'src/app/models/Duraciones.model';
 import { FiltersModel } from 'src/app/models/Filters.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { dateTime } from 'date-fns/locale/af';
 import { getTime } from 'date-fns';
@@ -68,10 +63,7 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   bannertop :ImagenesModel = new ImagenesModel();
   resultadoBuscador :ResultadoModel = new ResultadoModel();
   texts: string[] = [];
-  messageSearch: TextosearchModel = new TextosearchModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
-  message: MessagesModel = new MessagesModel();
+
   filters: FiltersModel = new FiltersModel();
   filtersrutacategorias: string= "";
   filtersrutatitle: string= "";
@@ -110,13 +102,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-    // this.getMessagesSearch();
-    // this.getMessagesForm();
-    // this.getMessagesImage();
-
-    this.getMessages();
-    this.getImagenesBuscador();
-   
     this.menuPublic.emit(0);
 
     this.getTexts();
@@ -162,14 +147,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   }
 
 
-  getImagenesBuscador(){
-    this.buscadorService.getImagenesbuscador().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-      this.bannerfichadeproducto = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
-
-    } );
-  }
 
 
   getVisitasBuscador(){
@@ -194,11 +171,9 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
         ///correct duration and price
         this.resultadoBuscador.data.forEach(visita => {
           
-           if( visita.visit_time == null){
-             visita.visit_time = [];
-             visita.visit_time.push(new TimesModel());
-             visita.visit_time[0].price = Math.floor(Math.random() * (40 - 10 + 1)) + 10
-             visita.visit_time[0].duration = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+           if( visita.duracionmin == null){
+             visita.precio = Math.floor(Math.random() * (40 - 10 + 1)) + 10
+             visita.duracionmin = Math.floor(Math.random() * (2 - 1 + 1)) + 1
            }
 
         });
@@ -217,13 +192,6 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   }
 
 
-  getMessages(){
-    this.homeService.getMessagesHome().subscribe( (resp) => {
-      let respuesta: MessagesModel =  resp as MessagesModel; ;
-      this.message = respuesta;
-      
-    } );
-  }
 
 
   generarAleatorioPrice(visita: any): number {

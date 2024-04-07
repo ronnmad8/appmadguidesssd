@@ -1,8 +1,6 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
-import { StatesModel } from './States.model';
-import { CitiesModel } from './Cities.model';
-import { CountriesModel } from './Countries.model';
+
 import { CompanionsModel } from './Companions.model';
 import { CompanionsPedidoModel } from './CompanionsPedido.model';
 

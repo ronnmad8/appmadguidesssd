@@ -35,6 +35,7 @@ import { ReservationModel } from 'src/app/models/Reservations.model';
 import { HorarioModel } from 'src/app/models/Horario.model';
 import { ContractModel } from 'src/app/models/Contract.model';
 import { RespuestaModel } from 'src/app/models/Respuesta.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 @Component({
   selector: 'app-zonareservas',
@@ -46,17 +47,16 @@ export class ZonareservasComponent implements OnInit {
   @Output() zonareservas: EventEmitter<any> = new EventEmitter();
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
+  @Input() textconts: TextContentsModel = new TextContentsModel();
 
   sWindow: any;
-
-  horarios: HorarioModel[] = [];
   loading: boolean = false;
   isrespon: boolean = false;
   scrollPosition: number = 0;
 
   verreservas: boolean = false;
   vercuenta: boolean = true;
-  reservas: VisitasResultadoModel[] = [];
+  reservas: ReservationModel[] = [];
   loginok: boolean = false;
 
   constructor(
@@ -93,42 +93,17 @@ export class ZonareservasComponent implements OnInit {
 
   getReservas() {
     this.pedidos.forEach((pedido) => {
-      if (pedido.visitasPedido.length > 0) {
-        this.reservas.push(...pedido.visitasPedido);
+      if (pedido.reservas.length > 0) {
+        this.reservas.push(...pedido.reservas);
       }
     });
   }
 
   getReservations() {
     this.micuentaService.getReservation().subscribe((resp) => {
-      this.horarios = resp as HorarioModel[];
 
-      this.reservas = [];
-      this.horarios.forEach((horario) => {
-        if (horario.time?.time?.visit != null) {
-          let visita = new VisitasResultadoModel();
-          let v = horario.time?.time?.visit;
-          let t = horario.time?.time;
-
-          visita.visit_uuid = v.uuid;
-          visita.visit_image_url = v.image.image.url;
-          visita.visit_lang_title = v.language[0].title;
-          visita.visit_lang_description = v.language[0].description;
-          visita.visit_time_date = t.date;
-          visita.visit_encuentro = v.encuentro;
-          visita.visit_time_uuid = t.uuid;
-          visita.visit_time_init = t.time_init;
-          visita.visit_time_end = t.time_end;
-          visita.precio = t.list_price.price;
-
-          visita.ninos = horario.users?.filter((u) => u.old < 13).length;
-          visita.adultos = horario.users.length - visita.ninos;
-          visita.codigoreserva = horario.uuid.toString();
-          visita.status = horario.status.name  ;
-
-          this.reservas.push(visita);
-        }
-      });
+      this.reservas = resp as ReservationModel[];
+      
     });
   }
 
@@ -144,7 +119,7 @@ export class ZonareservasComponent implements OnInit {
               if ((respuesta.status = 'success')) {
                 this.alertasService.alertaInfo(
                   'Madguides',
-                  'Visita cancelada correctamente'
+                  'Reserva cancelada correctamente'
                 );
               }
               this.getReservations();

@@ -7,75 +7,75 @@
             <div class="panelReservafirmada" *ngFor="let reserva of reservas ">
 
                 <div class="h-100">
-                    <div #imageneslatid id="im-{{reserva.visit_uuid}}" class="chimaglat cupo">
+                    <div #imageneslatid id="im-{{reserva.visit.uuid}}" class="chimaglat cupo">
                         <picture>
-                            <source media="(min-width: 0px)" srcset="{{reserva.visit_image_url}}"
-                                data-srcset="{{reserva.visit_image_url}}">
-                            <img class="imglat" src="{{reserva.visit_image_url}}" data-src="{{reserva.visit_image_url}}"
-                                alt="{{reserva.visit_image_url}}" style="height: 194px;min-width: 232px ;">
+                            <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
+                                data-srcset="{{reserva.visit.images[0]}}">
+                            <img class="imglat" src="{{reserva.visit.images[0]}}" data-src="{{reserva.visit.images[0]}}"
+                                alt="{{reserva.visit.images[0]}}" style="height: 194px;min-width: 232px ;">
                         </picture>
                     </div>
                 </div>
                 <div class="w-100 h-100 posrel">
 
                     <div class="posabsolEstado">
-                        <div class="colVERDE ff-JB"  *ngIf="reserva.status != 'process'">
+                        <div class="colVERDE ff-JB"  *ngIf="reserva.status != 1">
                             <i class="fa-regular fa-circle-check"></i>
-                            <span class="ml-1"> _Confirmada_ </span>
+                            <span class="ml-1"> {{textconts.confirmada}} </span>
                         </div>
-                        <div class="colROJO3 ff-JB" *ngIf="reserva.status == 'process' ">
+                        <div class="colROJO3 ff-JB" *ngIf="reserva.status == 1 ">
                             <i class="fa-regular fa-circle-xmark"></i>
-                            <span class="ml-1"> _Pendiente_ </span>
+                            <span class="ml-1"> {{textconts.pendiente}} </span>
                         </div>
                     </div>
                     <div class="posabsolPrecio">
                         <div class="colNEGRO ff-JB " >
-                            <span> {{ reserva.precio }} € </span>
+                            <span> {{ reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin) }} € </span>
                         </div>
                     </div>
-                    <div class="posabsolReservar"  *ngIf="reserva.status == 'process' "  >
+                    <div class="posabsolReservar"  *ngIf="reserva.status == 1 "  >
                         <button class="btredondoRojo ff-JB" type="button" (click)="reservarahora(reserva)"  >
-                            Reservar ahora
+                            {{textconts.buscador_reservar}}
                         </button>
                     </div>
 
                     <div class="posrel w-100  px-xl-4 px-2 ">
 
                         <div id="titulopanelpedido">
-                            {{reserva.visit_lang_title.length > 30 ? reserva.visit_lang_title.substring(0,
-                            47)+"..." : reserva.visit_lang_title }}
+                            {{reserva.visit.titulo.length > 30 ? reserva.visit.titulo.substring(0,
+                            47)+"..." : reserva.visit.titulo }}
                         </div>
-                        <div class="fs-12 ff-JB lh-1-4 colGRIS1 my-2 " style="max-width: 80%;"  *ngIf="reserva.codigoreserva">
-                            _Código de Reserva:_
-                            <span class="colROJO2">{{reserva.codigoreserva}}</span>
+                        <div class="fs-12 ff-JB lh-1-4 colGRIS1 my-2 " style="max-width: 80%;"  *ngIf="reserva.status != 0">
+                            {{textconts.reserva}}
+                            <span class="colROJO2">{{reserva.uuid }}</span>
                         </div>
 
                     </div>
                     <div class="posrel h-100 w-100  p-xl-4 p-2 infopanelreserva ">
 
                         <div class="fs-18 p-0  mb-2 pc">
-                            {{ reserva.visit_lang_description.length > 50 ?
-                            reserva.visit_lang_description.substring(0, 47)+"..." :
-                            reserva.visit_lang_description }}
+                            {{ reserva.visit.descripcion.length > 50 ?
+                            reserva.visit.descripcion.substring(0, 47)+"..." :
+                            reserva.visit.descripcion }}
                         </div>
     
                         <div class="lh-1-4">
-                            <span>{{reserva.visit_time_date | fechaleg }}</span>
-                            <span class="mx-1"> a las {{reserva.visit_time_init | horaleg }} </span>
+                            <span>{{reserva.fecha | fechaleg }}</span>
+                            <span class="mx-1"> a las {{reserva.getHora(reserva.visit_hours_id)  | horaleg }} </span>
                         </div>
     
                         <div class="fs-14 lh-1-4 ff-JB">
     
                             <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                                     style="margin-right: -3px; margin-top: -2px;"></i>
-                                {{reserva.adultos}}</span>
+                                {{reserva.adults}}</span>
                             <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                                     style="margin-right: -3px; margin-top: 0px;"></i>
-                                {{reserva.ninos}}</span>
+                                {{reserva.children}}</span>
     
                         </div>
-                        <div class="fs-14 lh-1-4" *ngIf="reserva.visit_privada">
-                            _*Visita privada_
+                        <div class="fs-14 lh-1-4" *ngIf="reserva.visit.privada">
+                            * 
                         </div>
                         
     

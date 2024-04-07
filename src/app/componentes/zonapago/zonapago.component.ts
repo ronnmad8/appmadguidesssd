@@ -13,7 +13,6 @@ import {
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { GlobalService } from '../../services/global.service';
 import { VisitaService } from '../../services/visita.service';
@@ -50,16 +49,14 @@ import { PlatformService } from 'src/app/services/platform.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextoCashModel } from 'src/app/models/TextoCash.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
-import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
-import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { CompanionsModel } from 'src/app/models/Companions.model';
 import { CompanionsPedidoModel } from 'src/app/models/CompanionsPedido.model';
 import { ContractModel } from 'src/app/models/Contract.model';
-import { CitiesModel } from 'src/app/models/Cities.model';
-import { StatesModel } from 'src/app/models/States.model';
-import { CountriesModel } from 'src/app/models/Countries.model';
+
 import { MicuentaService } from 'src/app/services/micuenta.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { ReservationModel } from 'src/app/models/Reservations.model';
 
 @Component({
   selector: 'app-zonapago',
@@ -71,8 +68,7 @@ export class ZonapagoComponent implements OnInit {
   @Input() visitaId: number = 0;
   @Input() messageCashData: TextoCashModel = new TextoCashModel();
   @Input() messageVisitaData: VisitaAssetsModel = new VisitaAssetsModel();
-  @Input() messageLoginData: TextoLoginModel = new TextoLoginModel();
-  @Input() messagePerfilData: TextoPerfilModel = new TextoPerfilModel();
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   @Output() solopaso1: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('imagenlista') imagenlista: any;
@@ -175,10 +171,6 @@ export class ZonapagoComponent implements OnInit {
   maxold: number = 1000;
   maxoldchildren: number = 13;
 
-  listacountries: CountriesModel[] = [];
-  listastates: StatesModel[] = [];
-  listacities: CitiesModel[] = [];
-
   registrado: boolean = false;
 
   mensaje1 = "Debe registrarse para continuar";
@@ -233,7 +225,7 @@ export class ZonapagoComponent implements OnInit {
     this.vcale = true;
     this.getPedido();
     this.crearCompanions();
-    this.getCountries();
+
   }
 
   ngAfeterViewInit() {
@@ -280,18 +272,18 @@ export class ZonapagoComponent implements OnInit {
   crearCompanions(){
     
     this.limpiarcompsE();
-    this.pedido.visitasPedido.forEach(el => {
+    this.pedido.reservas.forEach(el => {
       ///el primer adulto es el propio usuario
-      if(el.adultos > 1){
-        for (let index = 0; index < el.adultos - 1; index++) {
+      if(el.adults > 1){
+        for (let index = 0; index < el.adults - 1; index++) {
           let co = new CompanionsModel();
-          this.addcompsE("","",0,el.visit_uuid, el.horario_uuid, index, el.visit_lang_title, this.maxold ); 
+          this.addcompsE("","",0,el.visit.uuid, el.visit_hours_id, index, el.visit.titulo, this.maxold ); 
         }
       }
-      if(el.ninos > 0){
-        for (let index = 0; index < el.ninos; index++) {
+      if(el.children > 0){
+        for (let index = 0; index < el.children ; index++) {
           let co = new CompanionsModel();
-          this.addcompsE("","",0,el.visit_uuid, el.horario_uuid, index, el.visit_lang_title, this.maxoldchildren); 
+          this.addcompsE("","",0,el.visit.uuid, el.visit_hours_id, index, el.visit.titulo, this.maxoldchildren); 
         }
       }
     });
@@ -396,11 +388,11 @@ export class ZonapagoComponent implements OnInit {
         this.pedido.cliente.phone = this.usuario.phone;
         this.pedido.cliente.prefijo = this.usuario.prefijo;
         
-        this.pedido.visitasPedido.forEach(el => {
-          el.companions = [];
+        this.pedido.reservas.forEach(el => {
+          el.users = [];
           this.companions.forEach(comp => {
-            if(el.visit_time[0].uuid == comp["visit_time_uuid"] ){
-              el.companions.push(comp);
+            if(el.visit.uuid == comp["visit.uuid"] ){
+              el.users.push(comp);
             }
           }); 
         })
@@ -433,9 +425,9 @@ export class ZonapagoComponent implements OnInit {
     let token = localStorage.getItem('token');
     let horario: ContractModel = new ContractModel();
 
-    pedido.visitasPedido.forEach( el => {
+    pedido.reservas.forEach( el => {
       let usercomp: CompanionsPedidoModel = new CompanionsPedidoModel();
-      el.companions.forEach( it => {
+      el.users.forEach( it => {
         usercomp.name = it.name ;
         usercomp.surname = it.surname ;
         usercomp.old = it.old ;
@@ -457,7 +449,7 @@ export class ZonapagoComponent implements OnInit {
       }
       /////////////////////////////////////////////////////
 
-      horario.uuid = el.visit_time[0].uuid;
+      horario.uuid = el.visit.uuid;
       
       if(this.usuario.address.length > 0){
         horario.address = this.usuario.address[0]["address"]?.uuid;
@@ -481,11 +473,11 @@ debugger
     this.aceptacionpoliticas = acept.currentTarget.checked;
   }
 
-  eliminarvisitapedido(visita: VisitasResultadoModel) {
+  eliminarvisitapedido(reserva: ReservationModel) {
     
     let mensajeconfirmacion = 'Va a eliminar una visita';
-    if (this.pedido.visitasPedido.length <= 1) {
-      mensajeconfirmacion = 'Va a eliminar la última visita del pedido';
+    if (this.pedido.reservas.length <= 1) {
+      mensajeconfirmacion = 'Va a eliminar la última reserva del pedido';
     }
 
     this.alertasService
@@ -493,13 +485,13 @@ debugger
       .then((result) => {
         if (result.value) {
           this.compsE.controls.forEach((el, i) => {
-            if(el.value.visit_time_uuid == visita.visit_time[0].uuid ){
+            if(el.value.visit_time_uuid == reserva.uuid ){
               this.compsE.controls = this.compsE.controls.filter(x => x.value.visit_time_uuid != el.value.visit_time_uuid);
               //this.deleteCompsE(i) ;
             }
           });
           
-          let pedido = this.carritoService.deleteProductCart(visita.visit_uuid);
+          let pedido = this.carritoService.deleteProductCart(reserva.uuid);
           this.pedido.visitasPedido = pedido.visitasPedido;
           this.pedido.total = pedido.total;
           this.providerService.setThrowCarritoupdate(this.pedido);
@@ -694,44 +686,9 @@ debugger
     this.compsE.removeAt(index);
   }
 
-  getCities(stateId: string){
-    this.micuentaService.getCities(stateId).subscribe((resp)=>{
-      this.listacities = resp as CitiesModel[];
-      if(this.usuario.city != '' && this.formregister != null ){
-        this.formregister.patchValue({
-          city: this.usuario.city
-        });
-      }
-    })
-  }
 
-  getStates(countryId: string){
-    this.micuentaService.getStates(countryId).subscribe((resp)=>{
-      this.listastates = resp as StatesModel[];
-      if(this.usuario.state != '' && this.formregister != null ){
-        this.formregister.patchValue({
-          state: this.usuario.state
-        });
-        this.getCities(this.usuario.state);
-      }
-    });
-  }
 
-  seleccountry(e: any){
-    this.formregister.get('country')?.setValue(e.value);
-    this.getStates(e.value);
-  }
 
-  selecstate(e: any){
-    this.formregister.get('state')?.setValue(e.value);
-    this.getCities(e.value);
-  }
-
-  getCountries(){
-    this.micuentaService.getCountries().subscribe((resp)=>{
-      this.listacountries = resp as CountriesModel[];
-    });
-  }
 
 
   registrarusuario(){

@@ -6,7 +6,6 @@ import { AlertasService } from 'src/app/services/alertas.service';
 import { HomeService } from 'src/app/services/home.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { HeadfooterService } from 'src/app/services/headfooter.service';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { FooterModel } from 'src/app/models/Footer.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import {
@@ -76,7 +75,6 @@ export class FooterComponent implements OnInit {
     this.cambiosFormularioI();
 
     // this.getMessageFooter();
-    this.getLogoFooter();
     this.getListaCookies();
     this.listenProvider();
     this.getTexts();
@@ -108,17 +106,7 @@ export class FooterComponent implements OnInit {
     });
   }
 
-  // getMessageFooter() {
-  //   this.headfooterService.getMessagesFooter().subscribe((resp) => {
-  //     this.messageFooter = resp as FooterModel;
-  //   });
-  // }
 
-  getLogoFooter() {
-    this.headfooterService.getLogoFooter().subscribe((resp) => {
-      this.logoFooter = resp as ImagenesModel;
-    });
-  }
 
   showwidg1() {
     this.widg1show = !this.widg1show;

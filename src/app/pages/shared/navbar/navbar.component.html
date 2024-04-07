@@ -7,8 +7,8 @@
 
         <div class="col-3 divlogo_pc posrel">
           <div class="cupo p-0 posabsol" style="left: 15px; top: 12px" routerLink="home" (click)="quitarmodales()">
-            <img src="{{logoMenu.url}}" alt="{{logoMenu.name}}" class="imlogomenupc" draggable="false"
-              onerror="this.error= null;this.src='../../assets/images/sinimagen.png' ">
+            <img src="assets/images/logo-madguides.svg" alt="" class="imlogomenupc" draggable="false"
+              onerror="this.error= null;this.src='assets/images/sinimagen.png' ">
           </div>
         </div>
 
@@ -17,19 +17,19 @@
 
             <div id="enlace1" class="posrel enlaceM" (mouseenter)="hov2=true" (mouseleave)="hov2=false">
               <div class="cupo fs-20" routerLink="/quienessomos" routerLinkActive="active" (click)="quitarmodales()">
-                <span [ngClass]="{'colNEGRO': hov2}">{{messageMenu?.who}}</span>
+                <span [ngClass]="{'colNEGRO': hov2}">{{textconts.menu_who}}</span>
               </div>
             </div>
 
             <div id="enlace2" class="posrel enlaceM" (mouseenter)="hov3=true" (mouseleave)="hov3=false">
               <div class="cupo fs-20" routerLink="/contacto" routerLinkActive="active" (click)="quitarmodales()">
-                <span [ngClass]="{'colNEGRO': hov3}">{{messageMenu?.contact}}</span>
+                <span [ngClass]="{'colNEGRO': hov3}">{{textconts.menu_contact}}</span>
               </div>
             </div>
 
             <div id="enlace3" class="posrel enlaceM" (mouseenter)="hov4=true" (mouseleave)="hov4=false">
               <div class="cupo fs-20" routerLink="/ayuda" routerLinkActive="active" (click)="quitarmodales()">
-                <span [ngClass]="{'colNEGRO': hov4}">{{messageMenu?.help}}</span>
+                <span [ngClass]="{'colNEGRO': hov4}">{{textconts.menu_help}}</span>
               </div>
             </div>
 
@@ -40,7 +40,7 @@
 
           <div class="bar posrel ml-auto mr-0">
             <div class="cupo posabsolbarlupa py-2 " (click)="mostrarbusqueda()">
-              <img src="../../assets/images/i-lupa.svg" class="cupo im50" draggable="false">
+              <img src="assets/images/i-lupa.svg" class="cupo im50" draggable="false">
             </div>
           </div>
 
@@ -65,7 +65,7 @@
 
           <div class="bar posrel mx-1 colGRIS1">
             <div class="cupo posabsolbar py-2 " (click)="mostrarusuario()">
-              <img src="../../assets/images/i-perfil.svg" class="im50" draggable="false">
+              <img src="assets/images/i-perfil.svg" class="im50" draggable="false">
             </div>
             <div class="posabsolnot" *ngIf="!loginok">
               <i class="fa fa-circle fs-8 colROJO1"></i>
@@ -90,7 +90,7 @@
 
           <div class="carrito posrel" [ngClass]="{ 'carritoactivo': vercarrito}">
             <div class="cupo posabsolbar py-2 " (click)="mostrarcarrito()">
-              <img src="../../assets/images/i-carrito.svg" class="im50" draggable="false">
+              <img src="assets/images/i-carrito.svg" class="im50" draggable="false">
             </div>
             <div class="posabsolcarro badge bgBLANCO colROJO1 ">
               {{actividades}}
@@ -101,7 +101,7 @@
 
         <div class="col-9 posrel" *ngIf="isZonapago">
           <div class="posabsol d-flex" style="top: 24px; right: 15px">
-            <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px"
+            <img src="assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px"
               draggable="false">
             <div class="fs-24 ml-2">_Pago seguro_</div>
           </div>
@@ -115,7 +115,7 @@
       <div id="modalcarrito" class="posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
         <div id="panelcarritovacio" *ngIf="pedido.visitasPedido.length == 0">
           <div class="text-center py-3">
-            {{messageCart.cart.vacio}}
+            {{textconts.cart_vacio}}
           </div>
         </div>
 
@@ -123,14 +123,14 @@
           [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
 
           <div id="divcarrito">
-            <div class="bordeli p-0" *ngFor="let visita of pedido.visitasPedido">
+            <div class="bordeli p-0" *ngFor="let reserva of pedido.reservas">
               <div class="cartamodalcarrito d-flex ">
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}"
-                        data-srcset="{{visita?.visit_image_url}}">
-                      <img src="{{visita?.visit_image_url}}" data-src="{{visita?.visit_image_url}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
+                        data-srcset="{{reserva.visit.images[0]}}">
+                      <img src="{{reserva.visit.images[0]}}" data-src="{{reserva.visit.images[0]}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -138,29 +138,27 @@
 
                 <div class="posrel infocartamodalcarrito">
                   <div class="posabsol" style="right: 5px; top: 0">
-                    <span class="cupo" (click)="eliminarvisitacarrito(visita.visit_uuid)">
+                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.visit.uuid)">
                       <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{visita.precio}} €
+                    {{reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin)}} €
                   </div>
-                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)" 
-                  innerHTML="{{ visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+'...' : visita.visit_lang_title}} "  >
+                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(reserva.visit)" 
+                  innerHTML="{{ reserva.visit.titulo.length > 20 ? reserva.visit.titulo.substring(0,17)+'...' : reserva.visit.titulo}} "  >
                   </div>
-                  <div id="texto1modalcarrito" innerHTML="{{visita.visit_lang_description.length > 50 ? visita.visit_lang_description.substring(0,47)+'...' :
-                    visita.visit_lang_description }}" >
+                  <div id="texto1modalcarrito" innerHTML="{{reserva.visit.descripcion.length > 50 ? reserva.visit.descripcion.substring(0,47)+'...' :
+                    reserva.visit.descripcion }}" >
                     
                   </div>
                   <div class="d-flex" id="texto2modalcarrito">
                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                         style="margin-right: -3px; margin-top: -2px;"></i>
-                      {{visita.adultos}}</span>
+                      {{reserva.adults}}</span>
                     <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                         style="margin-right: -3px; margin-top: 0px;"></i>
-                      {{visita.ninos}}</span>
-                    <span><i class="fa fa-person fs-12" title="Menores" style="margin-right: -3px; margin-top: px;"></i>
-                      {{visita.menores}}</span>
+                      {{reserva.children}}</span>
                   </div>
                 </div>
 
@@ -171,7 +169,7 @@
           <div class="bordeli p-1 w-100">
             <div class="my-2 posrel">
               <div class="fs-14 pl-2 colGRIS3">
-                {{actividades}} {{messageCart.cart.actividades}}
+                {{actividades}} {{textconts.cart_actividades}}
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
                 {{ totalcarrito }} €
@@ -182,7 +180,7 @@
           <div class="w-100">
             <div class="my-3 mx-auto text-center">
               <button class="btredondoRojoCarrito" type="button" (click)="gotocarrito()"  >
-                <span class="ff-JB">{{messageCart.cart.finalizar}}</span>
+                <span class="ff-JB">{{textconts.cart_finalizar}}</span>
               </button>
             </div>
           </div>
@@ -200,22 +198,22 @@
 
           <form class="validate-form" [formGroup]="formlogin">
             <div id="divmicuenta">
-              <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+              <div  class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
                 <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                   <i class="fa fa-angle-left fs-20"></i>
                 </div>
-                <div id="abrirmicuentatitulo" class="px-3">{{messageLogin.title}}</div>
+                <div class="px-3">{{textconts.micuenta_title}}    </div>
               </div>
               <div class="px-3">
                 <div id="accedemicuenta">
-                  {{messageLogin.subtitle}}
+                  {{textconts.login_accedeatucuenta}} 
                 </div>
                 <div class="cj">
-                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                  <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_email }} " id=""
                     name="email" formControlName="email" />
                 </div>
                 <div class="cj  d-flex posrel">
-                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.password}}"
+                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{textconts.login_registro_password }}"
                     id="password" name="password" formControlName="password" />
                   <div class="posabsolRm5 ">
                     <i class="fa-solid fa-eye-slash" (click)="verpassword(false)" *ngIf="verpass"></i>
@@ -227,17 +225,17 @@
                     <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
                     <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
                   </div>
-                  <div class="mt-1 ml-2">{{messageLogin.remember}}</div>
+                  <div class="mt-1 ml-2">{{textconts.login_recordarme }}   </div>
                 </div>
                 <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center ">
                   <button *ngIf="btactivado" class="btredondoRojomicuenta " type="button" (click)="iniciarsesion()">
-                    <span>{{ messageLogin.session }}</span>
+                    <span>{{textconts.login_iniciarsesion }}   </span>
                   </button>
                   <button *ngIf="!btactivado" class="btredondoApagadomicuenta " type="button">
-                    <span>{{ messageLogin.session }}</span>
+                    <span>{{textconts.login_iniciarsesion }}    </span>
                   </button>
                   <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
-                    {{messageLogin.forgot}}
+                    {{textconts.login_heolvidado }} 
                     <div class="spinner-container text-center posrel" style="top: -70px; left: 10px" *ngIf="loading">
                       <div class="spinner-border colGRIS8 text-center " role="status">
                       </div>
@@ -262,8 +260,8 @@
 
 
                 <div id="notienesmicuenta">
-                  <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
-                    {{messageLogin.register}}
+                  <span> {{textconts.login_notienescuenta }}   </span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                    {{textconts.login_registrarseaqui }} 
                   </span>
                 </div>
 
@@ -284,32 +282,32 @@
           <form class="validate-form" [formGroup]="formforget">
             <div id="divmicuenta">
               <div class="mh30"></div>
-              <div id="titulomodalmicuenta" class="w-100 d-flex posrel">
+              <div  class="w-100 d-flex posrel">
                 <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                   <i class="fa fa-angle-left fs-20"></i>
                 </div>
-                <div id="abrirmicuentatitulo" class="px-3">Olvidé mi contraseña</div>
+                <div  class="px-3">{{textconts.login_olvidemipassword }}    </div>
               </div>
               <div class="px-3">
                 <div id="accedemicuenta">
-                  {{messageMenu.recovery}}
+                  {{textconts.menu_recovery }} 
                 </div>
                 <div class="cj">
-                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id=""
+                  <input type="text" class="colGRIS1 " placeholder=" {{textconts.login_registro_email }}" id=""
                     name="email" formControlName="email" />
                 </div>
 
                 <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                   <button *ngIf="btForgetactivado" class="btredondoRojomicuenta " type="button"
                     (click)="renovarpassword()">
-                    <span>Enviar</span>
+                    <span>{{textconts.login_enviar }} </span>
                     <div class="spinner-container posrel" style="top: -35px; left: 0px" *ngIf="loading">
                       <div class="spinner-border colGRIS8" role="status">
                       </div>
                     </div>
                   </button>
                   <button *ngIf="!btForgetactivado" class="btredondoApagadomicuenta " type="button">
-                    <span>Enviar</span>
+                    <span>{{textconts.login_enviar }}  </span>
                   </button>
                 </div>
                 <div>
@@ -334,11 +332,11 @@
 
             <form class="validate-form" [formGroup]="formregister">
               <div id="divmicuenta">
-                <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                <div  class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
                   <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                     <i class="fa fa-angle-left fs-20"></i>
                   </div>
-                  <div id="abrirmicuentatitulo" class="px-3">Registro</div>
+                  <div class="px-3"> {{textconts.login_Registro }}  </div>
                 </div>
                 <div class="px-3 row">
 
@@ -347,7 +345,7 @@
                       <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
                         formControlName="email" />
                     </div>
-                    <div class="lblform">_email_</div>
+                    <div class="lblform">{{textconts.login_registro_email }}   </div>
                   </div>
                   <div class="col-12 posrel">
                     <div class="cj posrel d-flex">
@@ -358,96 +356,88 @@
                       <div class="posabsolRm10" *ngIf="!verpass"> <i class="fa-solid fa-eye"
                           (click)="verpassword(true)"></i> </div>
                     </div>
-                    <div class="lblform">_password_</div>
+                    <div class="lblform">{{textconts.login_registro_password }}</div>
                   </div>
                   <div class="col-12 posrel ">
                     <div class="cj">
                       <input type="text" class="colGRIS1 " placeholder="Nombre" id="name" name="name"
                         formControlName="name" />
                     </div>
-                    <div class="lblform">_nombre_</div>
+                    <div class="lblform">{{textconts.login_registro_name }}</div>
                   </div>
                   <div class="col-12 posrel">
                     <div class="cj">
                       <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surname" name="surname"
                         formControlName="surname" />
                     </div>
-                    <div class="lblform">_apellidos_</div>
+                    <div class="lblform">{{textconts.login_registro_surname }}</div>
                   </div>
                   <div class="col-xl-4 posrel">
                     <div class="cj">
                       <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijo" name="prefijo"
                         formControlName="prefijo" />
                     </div>
-                    <div class="lblform">prefijo</div>
+                    <div class="lblform">{{textconts.login_registro_prefijo }}</div>
                   </div>
                   <div class="col-xl-8 posrel">
                     <div class="cj">
                       <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefon" name="telefon"
                         formControlName="telefono" />
                     </div>
-                    <div class="lblform">teléfono</div>
+                    <div class="lblform">{{textconts.login_registro_phone }}</div>
                   </div>
                   <div class="col-xl-8 posrel">
                     <div class="cj">
                       <input type="text" class="colGamRIS1 " placeholder="Calle " id="street" name="street"
                         formControlName="street" />
                     </div>
-                    <div class="lblform">address </div>
+                    <div class="lblform">{{textconts.login_registro_address }} </div>
                   </div>
                   <div class="col-xl-4 posrel">
                     <div class="cj">
                       <input type="text" class="colGamRIS1 " placeholder="Número " id="number" name="number"
                         formControlName="number" />
                     </div>
-                    <div class="lblform">_número_</div>
+                    <div class="lblform">{{textconts.login_registro_number }}</div>
                   </div>
 
                   <div class="col-xl-12 posrel">
-                    <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
-                      name="country" formControlName="country">
-                      <option value="{{li.id}}" *ngFor="let li of listacountries">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">country</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="{{textconts.login_registro_country }} " id="country" name="country" formControlName="country" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_country }}</div>
                   </div>
 
                   <div class="col-xl-12 posrel">
-                    <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)" name="state"
-                      formControlName="state">
-                      <option value="{{li.id}}" *ngFor="let li of listastates">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">provincia</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="{{textconts.login_registro_state }} " id="state" name="state" formControlName="state" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_state }}</div>
                   </div>
                   
                   <div class="col-xl-12 posrel">
-                    <select #cities class="cjselect w-100" id="city" name="city" formControlName="city">
-                      <option value="{{li.id}}" *ngFor="let li of listacities">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">city</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " placeholder="{{textconts.login_registro_city }} " id="state" name="city" formControlName="city" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_city }}</div>
                   </div>
 
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuenta " type="button" (click)="registrar()">
-                      <span>{{messageMenu.register}}</span>
+                      <span>{{textconts.login_registro_registrar }}  </span>
                       <div class="spinner-container posrel" style="top: -30px" *ngIf="loading">
                         <div class="spinner-border colGRIS8 text-center" role="status">
                         </div>
                       </div>
                     </button>
                     <button *ngIf="!btactivadoreg" class="btredondoApagadomicuenta" type="button">
-                      <span>{{messageMenu.register}}</span>
+                      <span>{{textconts.login_registro_registrar }} </span>
                     </button>
                   </div>
 
-                  <div id="iralogin">
-                    <span>{{messageMenu.count}},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
-                      {{messageMenu.login}}
+                  <div>
+                    <span>{{textconts.menu_count }},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
+                      {{textconts.menu_login }}
                     </span>
                   </div>
 
@@ -482,17 +472,17 @@
                     <div class="imgcartamodalprop">
                       <div class="pc pl-1">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}"
-                            data-srcset="{{visita.visit_image_url}}">
-                          <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
+                            data-srcset="{{visita.images[0]}}">
+                          <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
                       <div class="mvl">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
-                            data-srcset="{{visita.visit_image_url_movil}}">
-                          <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
+                            data-srcset="{{visita.images[0]}}">
+                          <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
@@ -500,8 +490,8 @@
 
                     <div class="posrel infocartamodalprop cupo" (click)="verdetalle(visita)">
                       <div id="textomodalprop">
-                        {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
-                        visita.visit_lang_title }}
+                        {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." :
+                        visita.titulo }}
                       </div>
                     </div>
                   </div>
@@ -510,7 +500,7 @@
 
               <div class="posrel d-flex">
                 <div id="vertodosprop" class="cupo" (click)="verbuscador()">
-                  {{messageCart.search}}
+                  {{textconts.bannertop_button }} 
                   <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
                     busqueda}}"</span>
                 </div>
@@ -532,7 +522,7 @@
   <div *ngIf="isrespon" id="mvlcabecera" class="mvl posfixedmenumvl ">
     <div class="d-flex posrel mt-3">
       <div class="cupo w-100 text-center mx-auto " routerLink="home" (click)="mostrar()">
-        <img src="{{logoMenu.url}}" alt="{{logoMenu.name}}" style="width:110px; height: auto;" draggable="false">
+        <img src="{{logoMenu.url}}" alt="" style="width:110px; height: auto;" draggable="false">
       </div>
 
       <div *ngIf="!isZonapago">
@@ -540,18 +530,18 @@
           <i class="fas fa-bars fs-28 posabsol" style="left: 20px; top: 6px" title="abrir" menu (click)="menu()"></i>
         </div>
         <div class="carritomenumvl" (click)="mostrarcarrito()">
-          <img src="../../assets/images/i-carritoN.svg" class="im50" draggable="false">
+          <img src="assets/images/i-carritoN.svg" class="im50" draggable="false">
         </div>
         <div class="lupamenumvl" (click)="mostrarbusqueda(); mostrar()">
-          <img src="../../assets/images/i-lupa.svg" class="im50" draggable="false">
+          <img src="assets/images/i-lupa.svg" class="im50" draggable="false">
         </div>
       </div>
 
       <div class="posrel d-flex w-100" *ngIf="isZonapago">
         <div>
-          <img src="../../assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px" draggable="false">
+          <img src="assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px" draggable="false">
         </div>
-        <div class="fs-24 mx-1 d-flex" style="min-width: 140px ;">_Pago seguro_</div>
+        <div class="fs-24 mx-1 d-flex" style="min-width: 140px ;">{{textconts.cart_pagoseguro  }}      </div>
       </div>
 
     </div>
@@ -563,14 +553,14 @@
       <div class="posrel">
 
         <div id="abrirmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(true)" *ngIf="!loginok">
-          <div class="px-4 py-2">Mi cuenta</div>
+          <div class="px-4 py-2"> {{textconts.login_micuenta }}   </div>
           <div class="cupo imperfil posabsolRight px-1">
             <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
         </div>
 
         <div id="hola" class="w-100 d-flex posrel" *ngIf="loginok">
-          <div class="px-4 py-2">Hola <span class="mx-1">{{usuario?.name}}</span> </div>
+          <div class="px-4 py-2">{{textconts.micuenta_hola }} <span class="mx-1">{{usuario?.name}}</span> </div>
           <div class="cupo imperfil posabsolRight px-1">
             <img src="../../assets/images/i-perfilB.svg" class="imperfil" draggable="false">
           </div>
@@ -578,7 +568,7 @@
 
         <div id="mvlidiomas" class="posabsolBot">
           <div id="abriridioma" class="d-flex p-3">
-            <div class="px-3 ">Idioma</div>
+            <div class="px-3 ">{{textconts.buscador_idioma }} </div>
             <div class="cupo imperfil " (click)="mostraridiomas()">
               <span>{{idioma}}</span>
             </div>
@@ -598,17 +588,17 @@
         <div id="mvlenlaces" class="panscrollM">
           <div class="posrel limenu px-3 m-0">
             <a class="cupo w-50  " routerLink="/quienessomos" routerLinkActive="active" (click)="mostrar()">
-              <span>{{messageMenu?.who}}</span>
+              <span>{{textconts.menu_who }}  </span>
             </a>
           </div>
           <div class="posrel limenu px-3 m-0">
             <a class="cupo w-50  " routerLink="/contacto" routerLinkActive="active" (click)="mostrar()">
-              <span>{{messageMenu?.contact}}</span>
+              <span> {{textconts.menu_contact }}   </span>
             </a>
           </div>
           <div class="posrel limenu px-3 m-0">
             <a class="cupo w-50  " routerLink="/ayuda" routerLinkActive="active" (click)="mostrar()">
-              <span>{{messageMenu?.help}}</span>
+              <span>{{textconts.menu_help }} </span>
             </a>
           </div>
 
@@ -617,17 +607,17 @@
             <div class="linecell"></div>
             <div class="posrel limenu px-3 m-0">
               <a class="cupo w-50  " routerLink="/zonacliente/micuenta" routerLinkActive="active" (click)="mostrar()">
-                <span>Ver mi cuenta</span>
+                <span>{{textconts.micuenta_menu_micuenta }}  </span>
               </a>
             </div>
             <div class="posrel limenu px-3 m-0">
               <a class="cupo w-50  " routerLink="/zonacliente/reservas" routerLinkActive="active" (click)="mostrar()">
-                <span>Ver reservas</span>
+                <span>{{textconts.micuenta_menu_reservas }}</span>
               </a>
             </div>
             <div class="posrel limenu px-3 m-0">
               <a class="cupo w-50 " (click)="cerrarsesion()">
-                <span>Cerrar sesión</span>
+                <span>{{textconts.login_cerrarsesion }}</span>
               </a>
             </div>
           </div>
@@ -640,55 +630,54 @@
       <div id="modalcarritomovil" class="posabsolmodalmovil" *ngIf="vercarrito && !isZonapago">
         <div id="panelcarritovaciomovil" *ngIf="pedido.visitasPedido.length == 0">
           <div class="text-center py-3">
-            {{messageCart.cart.vacio}}
+            {{textconts.cart_vacio }} 
           </div>
         </div>
         <div id="panelcarritomovil" *ngIf="!carritovacio">
           <div id="panelcarritocondatomovil">
             <div class="text-xl-center text-left py-1 px-3">
-              {{messageMenu.cart}}
+              {{textconts.menu_cart }} 
             </div>
           </div>
 
           <div id="divcarritomovil">
-            <div class="bordeli p-0" *ngFor="let visita of visitascarrito">
+            <div class="bordeli p-0" *ngFor="let reserva of reservas">
               <div class="cartamodalcarrito d-flex">
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
-                        data-srcset="{{visita.visit_image_url_movil}}">
-                      <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
+                        data-srcset="{{reserva.visit.images[0]}}">
+                      <img src="{{reserva.visit.images[0]}}" data-src="{{reserva.visit.images[0]}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
                 </div>
                 <div class="posrel infocartamodalcarrito">
                   <div class="posabsol" style="right: 5px; top: 0">
-                    <span class="cupo" (click)="eliminarvisitacarrito(visita.visit_lang_uuid)">
+                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.visit.uuid)">
                       <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{visita.precio}} €
+                    {{reserva.visit.preciohoramin * (reserva.visit.duracionmin / 60) }} €
                   </div>
-                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(visita)">
-                    {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
-                    visita.visit_lang_title}}
+                  <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(reserva.visit)">
+                    {{reserva.visit.titulo.length > 20 ? reserva.visit.titulo.substring(0,17)+"..." :
+                    reserva.visit.titulo}}
                   </div>
                   <div id="texto1modalcarrito">
-                    {{visita.visit_lang_description.length > 40 ? visita.visit_lang_description.substring(0,37)+"..." :
-                    visita.visit_lang_description }}
+                    {{reserva.visit.descripcion.length > 40 ? reserva.visit.descripcion.substring(0,37)+"..." :
+                    reserva.visit.descripcion }}
                   </div>
                   <div class="d-flex" id="texto2modalcarrito">
                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                         style="margin-right: -3px; margin-top: -2px;"></i>
-                      {{visita.adultos}}</span>
-                    <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
+                      {{reserva.adults}}</span>
+                    <span class="mx-2"> <i class="fa fa-person fs-16" title="{{textconts.buscador_detail_infantil }} "
                         style="margin-right: -3px; margin-top: 0px;"></i>
-                      {{visita.ninos}}</span>
-                    <span><i class="fa fa-person fs-12" title="Menores" style="margin-right: -3px; margin-top: px;"></i>
-                      {{visita.menores}}</span>
+                      {{reserva.children}}</span>
+
                   </div>
                 </div>
               </div>
@@ -697,7 +686,7 @@
           <div class="bordeli p-1 w-100">
             <div class="my-2 posrel">
               <div class="fs-14 pl-2 colGRIS3">
-                {{actividades}} {{messageCart.cart.actividades}}
+                {{actividades}} {{textconts.cart_actividades}}
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
                 {{ totalcarrito }} €
@@ -707,7 +696,7 @@
           <div class="w-100 pb-2">
             <div class="my-3 mx-auto text-center">
               <button class="btredondoRojoCarrito" type="button" [routerLink]="['/carrito']">
-                <span class="ff-JB">{{messageCart.cart.finalizar}}</span>
+                <span class="ff-JB">{{textconts.cart_finalizar}}</span>
               </button>
             </div>
           </div>
@@ -721,22 +710,22 @@
 
           <form class="validate-form" [formGroup]="formlogin">
             <div id="divmicuenta">
-              <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+              <div  class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
                 <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                   <i class="fa fa-angle-left fs-20"></i>
                 </div>
-                <div id="abrirmicuentatitulo" class="px-3">{{messageLogin.title}}</div>
+                <div class="px-3">{{textconts.login_micuenta}}</div>
               </div>
               <div class="px-3 mt-3">
                 <div id="accedemicuenta">
-                  {{messageLogin.subtitle}}
+                  {{textconts.login_accedeatucuenta}}
                 </div>
                 <div class="cj">
-                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id="email"
+                  <input type="text" class="colGRIS1 " placeholder="{{textconts.form_email}}" id="email"
                     name="email" formControlName="email" />
                 </div>
                 <div class="cj posrel">
-                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.password}}"
+                  <input [type]="tipopassword" class="colGRIS1 " placeholder=" {{textconts.login_password}}"
                     id="password" name="password" formControlName="password" />
                   <div class="posabsolRm5" *ngIf="verpass"> <i class="fa-solid fa-eye-slash"
                       (click)="verpassword(false)"></i> </div>
@@ -748,21 +737,21 @@
                     <i class="fa-solid fa-toggle-on colGRIS1 " *ngIf="recordarme"></i>
                     <i class="fa-solid fa-toggle-off colGRIS2 " *ngIf="!recordarme"></i>
                   </div>
-                  <div class="mt-1 ml-2">{{messageLogin.remember}}</div>
+                  <div class="mt-1 ml-2"> {{textconts.login_recordarme }}   </div>
                 </div>
                 <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                   <button *ngIf="btactivado" class="btredondoRojomicuentamvl " type="button" (click)="iniciarsesion()">
-                    <span>{{ messageLogin.session }}</span>
+                    <span>{{textconts.login_iniciarsesion}}</span>
                   </button>
                   <button *ngIf="!btactivado" class="btredondoApagadomicuentamvl " type="button">
-                    <span>{{ messageLogin.session }}</span>
+                    <span>{{ textconts.login_iniciarsesion }}</span>
                   </button>
                   <div class="heolvidadomicuenta cupo" (click)="vermodalforgot()">
-                    {{messageLogin.forgot}}
+                    {{textconts.login_heolvidado}}
                   </div>
                 </div>
                 <div class="oaccedemicuenta">
-                  {{messageLogin.accede}}
+                  {{textconts.login_accedeatucuenta}}
                 </div>
 
 
@@ -781,8 +770,8 @@
 
 
                 <div id="notienesmicuenta">
-                  <span>{{messageLogin.cuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
-                    {{messageLogin.register}}
+                  <span>{{textconts.login_notienescuenta}}</span><span class="colROJO3 cupo" (click)="vermodalregistrar()">
+                    {{textconts.login_registrarseaqui}}
                   </span>
                 </div>
 
@@ -796,28 +785,28 @@
 
           <form class="validate-form" [formGroup]="formforget">
             <div id="divmicuenta">
-              <div id="titulomodalmicuenta" class="w-100 d-flex posrel">
+              <div  class="w-100 d-flex posrel">
                 <div class="cupo posabsol mvl" style="left: 12px; top: 10px" (click)="vermodalusuario()">
                   <i class="fa fa-angle-left fs-20"></i>
                 </div>
-                <div id="abrirmicuentatitulo" class="px-3">_Olvidé mi contraseña_</div>
+                <div class="px-3">{{textconts.login_olvidemipassword}}</div>
               </div>
               <div class="px-3 mt-3">
                 <div id="accedemicuenta">
-                  {{messageMenu.recovery}}
+                  {{textconts.login_iniciarsesion}}
                 </div>
                 <div class="cj">
-                  <input type="text" class="colGRIS1 " placeholder=" {{messageLogin.placeholder.email}}" id="emailrec"
+                  <input type="text" class="colGRIS1 " placeholder=" {{textconts.login_registro_email}} " id="emailrec"
                     name="emailrec" formControlName="email" />
                 </div>
 
                 <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                   <button *ngIf="btForgetactivado" class="btredondoRojomicuentamvl " type="button"
                     (click)="renovarpassword()">
-                    <span>_Enviar_</span>
+                    <span>{{textconts.login_enviar}}</span>
                   </button>
                   <button *ngIf="!btForgetactivado" class="btredondoApagadomicuentamvl " type="button">
-                    <span>_Enviar_</span>
+                    <span>{{textconts.login_enviar}}</span>
                   </button>
                 </div>
                 <div>
@@ -835,22 +824,22 @@
           <div class="scrld posrel">
             <form class="validate-form" [formGroup]="formregister">
               <div id="divmicuenta">
-                <div id="titulomodalmicuenta" class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
+                <div class="w-100 d-flex posrel" (click)="mostrarusuariob(false)">
                   <div class="cupo posabsol mvl" style="left: 12px; top: 10px">
                     <i class="fa fa-angle-left fs-20"></i>
                   </div>
-                  <div id="abrirmicuentatitulo" class="px-3">_Registro_</div>
+                  <div  class="px-3">{{textconts.menu_register}}</div>
                 </div>
                 <div class="px-3 mt-3">
                   <div class="ff-JB">
-                    <span>_Datos personales_</span>
+                    <span>{{textconts.micuenta_form_datospersonales}}</span>
                   </div>
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Usuario email" id="emailreg" name="emailreg"
+                    <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_email}}" id="emailreg" name="emailreg"
                       formControlName="email" />
                   </div>
                   <div class="cj posrel">
-                    <input [type]="tipopassword" class="colGRIS1 " placeholder=" Contraseña" id="passwordreg"
+                    <input [type]="tipopassword" class="colGRIS1 " placeholder="{{textconts.login_registro_password}}" id="passwordreg"
                       name="passwordreg" formControlName="password" />
                     <div class="posabsolRm5" *ngIf="verpass">
                       <i class="fa-solid fa-eye-slash" (click)="verpassword(false)"></i>
@@ -860,76 +849,71 @@
                     </div>
                   </div>
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Nombre" id="namereg" name="namereg"
+                    <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_name}}" id="namereg" name="namereg"
                       formControlName="name" />
                   </div>
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Apellidos" id="surnamereg" name="surnamereg"
+                    <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_surname}}" id="surnamereg" name="surnamereg"
                       formControlName="surname" />
                   </div>
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Prefijo" id="prefijoreg" name="prefijoreg"
+                    <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_prefijo}}" id="prefijoreg" name="prefijoreg"
                       formControlName="prefijo" />
                   </div>
                   <div class="cj">
-                    <input type="text" class="colGRIS1 " placeholder="Telefono" id="telefonreg" name="telefonreg"
+                    <input type="text" class="colGRIS1 " placeholder="{{textconts.login_registro_phone}}" id="telefonreg" name="telefonreg"
                       formControlName="telefono" />
                   </div>
 
                   <div class="col-xl-6 px-2 posrel">
                     <div class="cj">
-                      <input type="text" class="colGamRIS1 " placeholder="Calle " id="street" name="street"
+                      <input type="text" class="colGamRIS1 " placeholder="{{textconts.login_registro_address}}" id="street" name="street"
                         formControlName="street" />
                     </div>
                     <div class="lblform"> _direccion_ </div>
                   </div>
                   <div class="col-xl-6 px-2 posrel">
                     <div class="cj">
-                      <input type="text" class="colGamRIS1 " placeholder="Número " id="number" name="number"
+                      <input type="text" class="colGamRIS1 " placeholder="{{textconts.login_registro_number}} " id="number" name="number"
                         formControlName="number" />
                     </div>
                     <div class="lblform">_número_</div>
                   </div>
 
                   <div class="col-xl-6 px-2 posrel">
-                    <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
-                      name="country" formControlName="country">
-                      <option value="{{li.id}}" *ngFor="let li of listacountries">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">_pais_</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " id="country" name="country" placeholder="{{textconts.login_registro_country}} "
+                      formControlName="country" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_country}}</div>
                   </div>
                   <div class="col-xl-6 px-2 posrel">
-                    <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)" name="state"
-                      formControlName="state">
-                      <option value="{{li.id}}" *ngFor="let li of listastates">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">_provincia_</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " id="state" name="state" placeholder="{{textconts.login_registro_state}} "
+                      formControlName="state" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_state}}</div>
                   </div>
                   <div class="col-xl-6 px-2 posrel">
-                    <select #cities class="cjselect w-100" id="city" name="city" formControlName="city">
-                      <option value="{{li.id}}" *ngFor="let li of listacities">
-                        {{li.name}}
-                      </option>
-                    </select>
-                    <div class="lblform">_ciudad_</div>
+                    <div class="cj">
+                      <input type="text" class="colGamRIS1 " id="city" name="city" placeholder="{{textconts.login_registro_city}} "
+                      formControlName="city" />
+                    </div>
+                    <div class="lblform">{{textconts.login_registro_city}}</div>
                   </div>
 
                   <div class="w-100 p-0 ml-auto mr-0 my-3 text-xl-right text-center">
                     <button *ngIf="btactivadoreg" class="btredondoRojomicuentamvl " type="button" (click)="registrar()">
-                      <span>{{messageMenu.register}}</span>
+                      <span>{{textconts.login_registro_registrar}}</span>
                     </button>
                     <button *ngIf="!btactivadoreg" class="btredondoApagadomicuentamvl" type="button">
-                      <span>{{messageMenu.register}}</span>
+                      <span>{{textconts.login_registro_registrar}}</span>
                     </button>
                   </div>
 
-                  <div id="iralogin">
-                    <span>{{messageMenu.count}},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
-                      {{messageMenu.login}}
+                  <div>
+                    <span>{{textconts.menu_count }},</span><span class="colROJO3 cupo" (click)="vermodalusuario()">
+                      {{textconts.menu_login}}
                     </span>
                   </div>
 
@@ -946,11 +930,11 @@
         <div class="panelcuenta mh400">
 
 
-          <div id="titulomodalmicuenta" class="w-100 d-flex posrel">
+          <div class="w-100 d-flex posrel">
             <div class="cupo posabsolRm5" (click)="mostrarbusqueda()">
               <i class="fa fa-x fs-14 mt-2"></i>
             </div>
-            <div id="abrirmicuentatitulo" class="px-3">_¿Que quieres visitar?_</div>
+            <div class="px-3">{{textconts.bannertop_input}}</div>
           </div>
 
           <div class="p-4">
@@ -958,7 +942,7 @@
               <input #cjbusqueda id="cjbusqueda" type="text" maxlength="30" class="colGRIS1 posabsolcjbuscador"
                 [placeholder]="" (keyup)="buscarprop()" [(ngModel)]="busqueda" [value]="busqueda" />
               <button class="btredondoRojo posabsolbtbuscador" type="button" (click)="verbuscador()">
-                <span>Buscar</span>
+                <span> {{textconts.bannertop_button}} </span>
                 <span><i class="fa fa-arrow-right "></i></span>
               </button>
               <div class="mh40"></div>
@@ -970,9 +954,9 @@
                         <div class="imgcartamodalprop">
                           <div>
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url_movil}}"
-                                data-srcset="{{visita.visit_image_url_movil}}">
-                              <img src="{{visita.visit_image_url_movil}}" data-src="{{visita.visit_image_url_movil}}"
+                              <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
+                                data-srcset="{{visita.images[0]}}">
+                              <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}"
                                 alt="" class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>
@@ -980,8 +964,8 @@
 
                         <div class="posrel infocartamodalprop2 cupo" (click)="verdetalle(visita)">
                           <div id="textomodalprop">
-                            {{visita.visit_lang_title.length > 20 ? visita.visit_lang_title.substring(0,17)+"..." :
-                            visita.visit_lang_title }}
+                            {{visita.titulo.length > 20 ? visita.titulo.substring(0,17)+"..." :
+                            visita.titulo }}
                           </div>
                         </div>
                       </div>
@@ -990,7 +974,7 @@
 
                   <div class="posrel d-flex">
                     <div id="vertodosprop2" class="cupo" (click)="verbuscador()">
-                      _Ver todos los resultados para_
+                       {{textconts.bannertop_verresultados}}
                       <span class="colROJO2 ml-1">"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." :
                         busqueda}}"</span>
                     </div>

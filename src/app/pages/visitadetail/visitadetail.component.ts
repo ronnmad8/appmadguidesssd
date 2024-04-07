@@ -14,7 +14,6 @@ import { HomeService } from '../../services/home.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
@@ -24,10 +23,7 @@ import { SlidervisitaComponent } from 'src/app/componentes/slidervisita/slidervi
 import { VisitaService } from 'src/app/services/visita.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { HttpClient } from '@angular/common/http';
 import { TimesModel } from 'src/app/models/Times.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
@@ -50,11 +46,7 @@ export class VisitadetailComponent implements OnInit{
   imagenesproducto :ImagenesModel[] = [];
   visitauuid: string = "";
   visitaSel: VisitasResultadoModel = new VisitasResultadoModel();
-  textosproducto :TextosModel = new TextosModel();
   messages: VisitaAssetsModel = new VisitaAssetsModel();
-  messagesForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
-  messagesRelated: MessagesModel = new MessagesModel();
   bannerbottom: ImagenesModel = new ImagenesModel(); //bannertop
   related: VisitasResultadoModel[] = [];
 
@@ -84,10 +76,10 @@ export class VisitadetailComponent implements OnInit{
   
 
   ngOnInit() {
-    
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
-
+    
+    this.getTexts();
     
     //parametro uuid 
     this.acro.params.subscribe(
@@ -103,18 +95,8 @@ export class VisitadetailComponent implements OnInit{
         }
         else if(tituloparam != null){
           
-          this.getVisitaTitle(tituloparam );
           this.getRelatedTitle(tituloparam);
         }
-        
-        this.getMessages();
-        // this.getMessagesForm();
-        // this.getMessagesImage();
-        // this.getMessagesHome();
-        // this.getImagenesForm();
-
-        this.getTexts();
-        
       }
     );
 
@@ -122,15 +104,15 @@ export class VisitadetailComponent implements OnInit{
 
 
   setMetas(){
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
-    this.meta.updateTag({ property :"og:url", content:  ("https://madguides.es/"+ this.router.url)  });
+    this.title.setTitle( "▷ Visita");
+    this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'Madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ property :"og:url", content:  ("https://madguidesmadrid.com/"+ this.router.url)  });
     this.meta.updateTag({ property :"og:type", content: "website"  });
-    this.meta.updateTag({ property :"og:title", content:  this.visitaSel.visit_lang_title  });
-    this.meta.updateTag({ property :"og:description", content:  this.visitaSel.visit_lang_description  });
-    this.meta.updateTag({ property :"og:image", content:  this.visitaSel.visit_image_url  });
+    this.meta.updateTag({ property :"og:title", content:  this.visitaSel.titulo  });
+    this.meta.updateTag({ property :"og:description", content:  this.visitaSel.titulo  });
+    this.meta.updateTag({ property :"og:image", content:  this.visitaSel.images[0].url  });
   }
   
 
@@ -149,18 +131,18 @@ export class VisitadetailComponent implements OnInit{
 
   getVisita(uuid: string){
     if(uuid != "" && uuid != null){
-      this.visitaService.getVisita(uuid).subscribe((resp)=>{
+      // this.visitaService.getVisita(uuid).subscribe((resp)=>{
         
-        let resul = resp as VisitasResultadoModel;
+      //   let resul = resp as VisitasResultadoModel;
                 
-        ///get first de lista de api
-        this.visitaSel = resul ?? new VisitasResultadoModel();
+      //   ///get first de lista de api
+      //   this.visitaSel = resul ?? new VisitasResultadoModel();
         
-        console.log("xx ",this.visitaSel)
-        this.providerService.setThrowVisita(this.visitaSel);
-        this.setMetas();
+      //   console.log("xx ",this.visitaSel)
+      //   this.providerService.setThrowVisita(this.visitaSel);
+      //   this.setMetas();
         
-      })
+      // })
     }
     else{
       console.error("uuid no valido ", uuid);
@@ -168,32 +150,6 @@ export class VisitadetailComponent implements OnInit{
   }
 
 
-  getVisitaTitle(title: string){
-   
-      this.visitaService.getVisitaTitle(title).subscribe((resp)=>{
-        
-        let resul = resp as VisitasResultadoModel[];
-        this.visitaSel = resul[0] ?? new VisitasResultadoModel();
-        this.providerService.setThrowVisita(this.visitaSel);
-
-      })
-
-  }
-
-
-  getMessages(){
-      this.visitaService.getMessagesVisita().subscribe((resp)=>{
-        this.messages = resp as VisitaAssetsModel;
-        this.providerService.setThrowMessagesVisita(this.messages);
-      })
-  }
-
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      this.messageImage = resp as MessagesImageModel;
-    } );
-  }
 
 
   getRelatedUuid(uuid: string){
@@ -217,11 +173,10 @@ export class VisitadetailComponent implements OnInit{
 
       ///correct duration and price
       this.related.forEach(visita => {
-        if( visita.visit_time == null){
-          visita.visit_time = [];
-          visita.visit_time.push(new TimesModel());
-          visita.visit_time[0].price = 10
-          visita.visit_time[0].duration = 1
+        if( visita.duracionmin == null){
+          visita.duracionmin = 0;
+          visita.preciohoramin = 0;
+
         }
 
      });
@@ -236,13 +191,13 @@ export class VisitadetailComponent implements OnInit{
   }
 
   getRelatedTitle(tit: string){
-    this.visitaService.getCategoryTitle(tit).subscribe((d)=>{
-      let visita = d as VisitasResultadoModel;
-      let catuuid = visita.category_lang_uuid;
-      this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
-      this.related = resp as VisitasResultadoModel[];
-      });
-    })
+    // this.visitaService.getCategoryTitle(tit).subscribe((d)=>{
+    //   let visita = d as VisitasResultadoModel;
+    //   let catuuid = visita.category_lang_uuid;
+    //   this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
+    //   this.related = resp as VisitasResultadoModel[];
+    //   });
+    // })
   }
 
   

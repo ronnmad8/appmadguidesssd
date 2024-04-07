@@ -4,7 +4,7 @@
     <div class="posabsolbeforemodal ">
       <div class="container posrel ">
 
-        <div class="animated fadeInUp  posabsolmodalbannerhome" style="animation-delay: 1.2s"
+        <div class="animated fadeInUp  posabsolmodalbannerhome" style="animation-delay: 0.8s"
           *ngIf="mostrarmodalbuscador">
           <div id="panelbuscadorhome">
             <div id="titulomodalbuscador">
@@ -46,15 +46,15 @@
                         <div class="imgcartamodalprop">
                           <div class="pc pl-1">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}">
-                              <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.images[0].url}}" data-srcset="{{visita.images[0].url}}">
+                              <img src="{{visita.images[0].url}}" data-src="{{visita.images[0].url}}" alt=""
                                 class="imgcartamodalprop lazyload "  >
-                            </picture>
+                            </picture>  
                           </div>
                           <div class="mvl">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.visit_image_url}}" data-srcset="{{visita.visit_image_url}}">
-                              <img src="{{visita.visit_image_url}}" data-src="{{visita.visit_image_url}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.images[0].url}}" data-srcset="{{visita.images[0].url}}">
+                              <img src="{{visita.images[0].url}}" data-src="{{visita.images[0].url}}" alt=""
                                 class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>
@@ -62,7 +62,7 @@
         
                         <div class="posrel infocartamodalprop cupo"  (click)="verdetalle(visita)"  >
                           <div id="textomodalprop">
-                            {{visita.visit_lang_title.length > 30 ? visita.visit_lang_title.substring(0,27)+"..." : visita.visit_lang_title }}
+                            {{visita.titulo.length > 30 ? visita.titulo.substring(0,27)+"..." : visita.titulo }}
                           </div>
                         </div>
                       </div>
@@ -135,7 +135,7 @@
     </div>
 
 
-    <div class="imagenbanner animated fadeIn slow" style="animation-delay: 1.2s" >
+    <div class="imagenbanner animated fadeIn slow" style="animation-delay: 0.2s" >
       <picture>
         <source media="(min-width: 968px)" srcset="assets/images/bannertop.jpg" data-srcset="assets/images/bannertop.jpg">
         <source media="(min-width: 0px)" srcset="assets/images/bannertop.jpg" data-srcset="assets/images/bannertop.jpg">

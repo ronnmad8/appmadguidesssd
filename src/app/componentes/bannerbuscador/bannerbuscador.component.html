@@ -3,23 +3,23 @@
 
     <div class="posabsolresultado d-xl-flex ">
       <div class="posrel d-flex pl-2 mt-xl-2 mt-3">
-        <img src="../../assets/images/i-luparojo.svg" class="imicono1" draggable="false">
-        <div class="pc" id="textoresultado">{{messageSearchData.title}}</div>
-        <div class="mvl" id="textoresultadomovil">{{messageSearchData.title}}</div>
+        <img src="assets/images/i-luparojo.svg" class="imicono1" draggable="false">
+        <div class="pc" id="textoresultado">{{textconts.buscador_resultado}}</div>
+        <div class="mvl" id="textoresultadomovil">{{textconts.buscador_resultado}}</div>
         <div id="buscaresultado" class="mx-2">"{{busqueda}}"</div>
       </div>
       <div class="posrel px-2 mt-2">
-        <div id="contresultado">{{numactividades}} <span class="mx-1">{{messageSearchData.activity}}</span> {{messageSearchData.find}} </div>
+        <div id="contresultado">{{numactividades}} <span class="mx-1">{{textconts.buscador_actividadesencontradas}}</span> </div>
       </div>
     </div>
 
     <div class="imagenbannerbuscador animated fadeIn ">
       <picture>
-        <source media="(min-width: 968px)" srcset="{{bannerfichadeproductoData.url}}" data-srcset="{{bannerfichadeproductoData.url}}">
-        <source media="(min-width: 0px)" srcset="{{bannerfichadeproductoData.url_movil}}" data-srcset="{{bannerfichadeproductoData.url_movil}}">
+        <source media="(min-width: 968px)" srcset="assets/images/banner-ficha-de-producto.jpg" data-srcset="assets/images/banner-ficha-de-producto.jpg}">
+        <source media="(min-width: 0px)" srcset="assets/images/banner-ficha-de-producto.jpg" data-srcset="assets/images/banner-ficha-de-producto.jpg">
         
-        <img src="{{bannerfichadeproductoData.url}}" data-src="{{bannerfichadeproductoData.url}}" 
-          class="imgbannerbusc " onerror="this.error= null;this.src='../../assets/images/sinimagen.png' ">
+        <img src="assets/images/banner-ficha-de-producto.jpg" data-src="assets/images/banner-ficha-de-producto.jpg" 
+          class="imgbannerbusc " onerror="this.error= null;this.src='assets/images/sinimagen.png' ">
       </picture>
     </div>
   </div>

@@ -20,7 +20,6 @@ import { AlertasService } from '../../../services/alertas.service';
 import { AuthService } from '../../../services/auth.service';
 import { MicuentaService } from '../../../services/micuenta.service';
 import { HeadfooterService } from '../../../services/headfooter.service';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
@@ -29,15 +28,12 @@ import { LoginModel } from 'src/app/models/Login.model';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { MenuModel } from 'src/app/models/Menu.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextoLoginModel } from 'src/app/models/TextoLogin.model';
 import { RecordarmeModel } from 'src/app/models/Recordarme.model';
 import { SocialAuthService, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 import { PlatformService } from 'src/app/services/platform.service';
-import { TextoCartModel } from 'src/app/models/TextoCart.model';
-import { UsuarioModel } from 'src/app/models/Usuario.model';
-import { CountriesModel } from 'src/app/models/Countries.model';
-import { CitiesModel } from 'src/app/models/Cities.model';
-import { StatesModel } from 'src/app/models/States.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { ReservationModel } from 'src/app/models/Reservations.model';
 
 @Component({
   selector: 'app-navbar',
@@ -62,7 +58,7 @@ export class NavbarComponent implements OnInit {
   modalOptions: NgbModalOptions;
   idioma: string = "";
   idiomas: LanguagesModel[] = [];
-  visitascarrito: VisitasResultadoModel[] = [];
+  reservas: ReservationModel[] = [];
   totalcarrito: string = "0";
   vercarrito: boolean = false;
   verusuario: boolean = false;
@@ -95,8 +91,6 @@ export class NavbarComponent implements OnInit {
   
   logoB :boolean = true ;
   messageMenu: MenuModel;
-  messageLogin: TextoLoginModel;
-  messageCart: TextoCartModel;
   formlogin: FormGroup;
   formregister: FormGroup;
   formforget: FormGroup;
@@ -121,9 +115,9 @@ export class NavbarComponent implements OnInit {
   tresize: any;
   pageadmin: boolean = false;
 
-  listacountries: CountriesModel[] = [];
-  listastates: StatesModel[] = [];
-  listacities: CitiesModel[] = [];
+
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
   
   constructor(
     private auth: AuthService,
@@ -160,14 +154,10 @@ export class NavbarComponent implements OnInit {
     this.listatiposidentificacion = this.globalService.getlistatiposidentificacion();
     this.loginadmin();
     this.getCart();
-    this.getMessageMenu();
-    this.getMessageLogin();
-    this.getMessageCart();
-    this.getLogoMenu();
     this.getIdiomas();
-    ///prueba viajes carrito
-    this.getVisitascarrito();
-    this.getCountries();
+    this.getReservasCarrito();
+
+    this.getTexts();
 
 
     this.modalOptions = {
@@ -249,7 +239,7 @@ export class NavbarComponent implements OnInit {
     this.providerService.getThrowCarritoupdate.subscribe((resp)=>{
       this.pedido = resp as CartModel;
       this.vercarrito = true;
-      this.getVisitascarrito();
+      this.getReservasCarrito();
     });
 
     this.providerService.getThrowHiddModales.subscribe((resp)=>{
@@ -267,6 +257,20 @@ export class NavbarComponent implements OnInit {
   }
 
 
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
+
+
   getCart() {
     if(this.carritoService.haveCart()){
       this.pedido = this.carritoService.getCart();
@@ -278,31 +282,6 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-
-  getMessageMenu(){
-    this.headfooterService.getMessagesMenu().subscribe( (resp) => {
-      this.messageMenu = resp as MenuModel;
-    } );
-  }
-
-
-  getMessageLogin(){
-    this.headfooterService.getMessagesLogin().subscribe( (resp) => {
-      this.messageLogin = resp as TextoLoginModel;
-    } );
-  }
-
-  getMessageCart(){
-    this.headfooterService.getMessagesCart().subscribe( (resp) => {
-      this.messageCart = resp as TextoCartModel;
-    } );
-  }
-
-  getLogoMenu(){
-    this.headfooterService.getLogoMenu().subscribe( (resp) => {
-      this.logoMenu = resp as ImagenesModel;
-    } );
-  }
 
   
   getIdiomas(){
@@ -431,9 +410,9 @@ export class NavbarComponent implements OnInit {
   }
 
   
-  getVisitascarrito(){
-    this.visitascarrito = this.pedido.visitasPedido;
-    if(this.visitascarrito.length > 0){
+  getReservasCarrito(){
+    this.reservas = this.pedido.reservas;
+    if(this.reservas.length > 0){
       this.carritovacio = false;
     }
     this.totalcarrito = this.globalService.getFormatNumber(this.pedido.total);
@@ -546,14 +525,14 @@ export class NavbarComponent implements OnInit {
       this.providerService.setThrowFococaja(true);
     }
 
-    if(this.cjbusque){
-        setTimeout(()=>{ 
+    setTimeout(()=>{ 
+      if(this.cjbusque != undefined && this.cjbusque.nativeElement != null){
           this.cjbusque.nativeElement.focus(); 
-        },400);  
-    }
-    else{
-      this.busqueda = "";
-    }
+      }
+      else{
+        this.busqueda = "";
+      }
+    },400);  
 
   }
 
@@ -582,7 +561,7 @@ export class NavbarComponent implements OnInit {
   
 
   verdetalle(visita: VisitasResultadoModel){
-    this.router.navigate(['/visita', visita.visit_lang_title , visita.visit_uuid]);
+    this.router.navigate(['/visita', visita.titulo , visita.uuid]);
   }
 
 
@@ -724,47 +703,6 @@ export class NavbarComponent implements OnInit {
     //this.socialAuthService.signOut();
   }
 
-
-  getCities(stateId: string){
-    this.micuentaService.getCities(stateId).subscribe((resp)=>{
-      this.listacities = resp as CitiesModel[];
-      if(this.usuario.city != '' && this.formregister != null ){
-        this.formregister.patchValue({
-          city: this.usuario.city
-        });
-      }
-    })
-  }
-
-  getStates(countryId: string){
-    this.micuentaService.getStates(countryId).subscribe((resp)=>{
-      this.listastates = resp as StatesModel[];
-      if(this.usuario.state != '' && this.formregister != null ){
-        this.formregister.patchValue({
-          state: this.usuario.state
-        });
-        this.getCities(this.usuario.state);
-      }
-    });
-  }
-
-  seleccountry(e: any){
-    this.formregister.get('country')?.setValue(e.value);
-    this.getStates(e.value);
-  }
-
-  selecstate(e: any){
-    this.formregister.get('state')?.setValue(e.value);
-    this.getCities(e.value);
-  }
-
-  getCountries(){
-    if(this.listacountries.length == 0){
-      this.micuentaService.getCountries().subscribe((resp)=>{
-        this.listacountries = resp as CountriesModel[];
-      });
-    }
-  }
 
   gotocarrito(){
     let nologin = this.auth.noAuth();

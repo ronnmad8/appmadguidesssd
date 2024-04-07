@@ -18,9 +18,6 @@ import { AyudaService } from '../../services/ayuda.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { TextoayudaModel } from 'src/app/models/Textoayuda.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { TextDataModel } from 'src/app/models/TextData.model';
@@ -40,12 +37,7 @@ export class AyudaComponent implements OnInit {
   @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
   
   
-  banner :ImagenesModel = new ImagenesModel();
-  bannerbottom :ImagenesModel = new ImagenesModel();
-  imagenempresa :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
-  messageFaqs: TextoayudaModel= new TextoayudaModel();
+  bannerimage: string = '';
   
   textconts: TextContentsModel = new TextContentsModel();
   listatextcontsdata: TextDataModel[] = [];
@@ -66,10 +58,10 @@ export class AyudaComponent implements OnInit {
 
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.title.setTitle( "▷ Ayuda");
+    this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'Madguides visitas guiadas en Madrid' });
 
     
   }
@@ -80,12 +72,7 @@ export class AyudaComponent implements OnInit {
     this.providerService.setThrowFooterpol(true);
 
 
-    // this.getMessagesForm();
-    // this.getMessagesImage();
-    // this.getMessageFaqs();
-
-    this.getImagenes();
-    
+    this.bannerimage = "assets/images/banner-ficha-de-producto.jpg"; 
     this.getTexts();
     
   }
@@ -104,53 +91,8 @@ export class AyudaComponent implements OnInit {
     }
   }
 
-  getImagenes(){
-    this.ayudaService.getImages().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.banner = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-
-    } );
-  }
-
-
-  // getMessagesForm(){
-  //   this.homeService.getMessagesForm().subscribe( (resp) => {
-  //     let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-  //     this.messageForm = respuesta;
-  //   } );
-  // }
-
-
-  // getMessagesImage(){
-  //   this.homeService.getMessagesImage().subscribe( (resp) => {
-  //     let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-  //     this.messageImage = respuesta;
-  //   } );
-  // }
-
-
-  // getMessageFaqs(){
-  //   this.ayudaService.getMessages().subscribe( (resp) => {
-  //     let respuesta: TextoayudaModel =  resp as TextoayudaModel; 
-  //     this.messageFaqs = respuesta;
-      
-  //   } );
-  // }
-
-
-
-
-  
-
-  
-  
-
 
  
-   
-  
-
 
   
 }

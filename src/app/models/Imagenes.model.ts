@@ -1,40 +1,35 @@
 //import { StringifyOptions } from 'querystring';
+import { NumberSymbol } from '@angular/common';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
 
 export class ImagenesModel{
+
     
     id: number;
     uuid: string;
+    visit_id: number;
+    path: string;
+    filename: string;
+    type: string;
+    order: number;
     url: string;
-    url_movil: string;
-    url_galleria: string;
-    name: string;
+    
 
-    title: string;
-    description: string;
-    alt: string;
-    iso: string;
-    sel: boolean;
-    temporada: boolean;
-
-    image: ImagenesModel;
     
     constructor(){
-        this.id = 0;
-        this.uuid = "";
-        this.url = "";
-        this.url_galleria = "";
-        this.name = "";
-        
-        this.title = "";
-        this.description = "";
-        this.alt = "";
-        this.iso = "";
-        this.sel = false;
-        this.temporada = false;
-    
 
+        this.uuid = "";
+        this.visit_id = 0;
+        this.path = "";
+        this.filename = "";
+        this.type="";
+        this.order=0;
+
+    }
+
+    getUrl(imagen: ImagenesModel){
+      return  imagen.path+ "/" + imagen.filename;
     }
 
 

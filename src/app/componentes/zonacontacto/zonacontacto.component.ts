@@ -2,7 +2,6 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { HomeService } from '../../services/home.service';
 import { MailService } from '../../services/mail.service';
 import {
@@ -11,9 +10,7 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { MessagesModel } from 'src/app/models/Messages.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
+
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
@@ -26,9 +23,7 @@ export class ZonacontactoComponent implements OnInit {
 
   @Input() enlace: string = "";
   @Input() textconts: TextContentsModel = new TextContentsModel();
-  @Input() messageFormData: MessagesFormModel = new MessagesFormModel();
-  @Input() messageImageData: MessagesImageModel = new MessagesImageModel();
-  @Input() bannerbottomData: ImagenesModel = new ImagenesModel;
+
   
   show: boolean = true;
   forma: FormGroup;

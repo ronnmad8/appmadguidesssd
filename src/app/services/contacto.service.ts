@@ -11,16 +11,9 @@ import { Router } from '@angular/router';
 import { VisitasModel } from '../models/Visitas.model';
 import { HomerespModel } from '../models/Homeresp.model';
 import { ComentariosModel } from '../models/Cometarios.model';
-import { TextosModel } from '../models/Textos.model';
-import { MessagesModel } from '../models/Messages.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { ResultadoModel } from '../models/Resultado.model';
-import { MessagesFormModel} from '../models/MessageseForm.model';
-import { MessagesImageModel} from '../models/MessagesImage.model';
 import { utf8Encode } from '@angular/compiler/src/util';
-import { TextotourModel } from '../models/Textotour.model';
-import { TextoiconsModel } from '../models/Textoicons.model';
-import { TextorecomendadasModel } from '../models/Textorecomendadas.model';
 
 
 @Injectable({
@@ -45,23 +38,6 @@ export class ContactoService {
 
     
 
-    getMessagesForm()  {
-
-      let endpoint = '/assets/home/form?' ;
-      this.url = this.apiurl + endpoint;
-  
-      return this.http.get( `${this.url}`)
-      .pipe(
-        map( resp =>{
-          var data = resp as MessagesFormModel;  
-          return data;   
-        } ) ,
-        catchError((err) => {
-          console.error("Error  " , err.error);
-                  return err.error;
-        })
-      );
-    }
 
 
     

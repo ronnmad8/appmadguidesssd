@@ -15,20 +15,20 @@
                                 _hola_
                             </div>
                             <div class="ff-JB colROJO1 pt-0 py-0 m-0">
-                                {{usuario?.name}}
+                                {{textconts.menu_hello}}
                             </div>
                             <div class="linefull my-3"></div>
                             <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': vercuenta}"
                             [routerLink]="['/zonacliente/micuenta']" routerLinkActive="router-link-active" >
-                                {{messagePerfil?.menu?.account}}
+                                {{textconts.micuenta_menu_micuenta}}
                             </div>
                             <div class="menulatenlace py-1 m-0 cupo" [ngClass]="{'activolat': verreservas}"
                                 [routerLink]="['/zonacliente/reservas']" routerLinkActive="router-link-active"   >
-                                {{messagePerfil?.menu?.reservation}}
+                                {{textconts.micuenta_menu_reservas}}
                             </div>
                             <div class="menulatenlace py-1 m-0 cupo" [routerLink]="['/ayuda']"
                                 routerLinkActive="router-link-active">
-                                {{messagePerfil?.menu?.help}}
+                                {{textconts.menu_help}}
                             </div>
                         </div>
                     </div>

@@ -17,21 +17,15 @@ import { QuienessomosService } from '../../services/quienessomos.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
 import { VisitasModel } from 'src/app/models/Visitas.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { HomerespModel } from 'src/app/models/Homeresp.model';
 import { DuracionesModel } from 'src/app/models/Duraciones.model';
 import { FiltersModel } from 'src/app/models/Filters.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { TextosearchModel } from 'src/app/models/Textosearch.model';
 import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
-import { TextoquienessomosModel } from 'src/app/models/Textoquienessomos.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { TextDataModel } from 'src/app/models/TextData.model';
@@ -52,9 +46,8 @@ export class QuienessomosComponent implements OnInit {
   @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
   
   
-  banner :ImagenesModel = new ImagenesModel();
+  bannerimage :string = "";
   bannerbottom :ImagenesModel = new ImagenesModel();
-  messageLaempresa: TextoquienessomosModel= new TextoquienessomosModel();
   
   textconts: TextContentsModel = new TextContentsModel();
   listatextcontsdata: TextDataModel[] = [];
@@ -89,6 +82,7 @@ export class QuienessomosComponent implements OnInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
+    this.bannerimage = "assets/images/banner-ficha-de-producto.jpg"; 
     this.getTexts();
     this.menuPublic.emit(0);
         

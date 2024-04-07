@@ -10,10 +10,6 @@ import { HomeService } from '../../services/home.service';
 import { PoliticasService } from '../../services/politicas.service';
 
 import { Meta, Title } from '@angular/platform-browser';
-import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
-import { TextopoliticasModel } from 'src/app/models/Textopoliticas.model';
 import { ProviderService } from 'src/app/services/provider.service';
 
 
@@ -29,11 +25,7 @@ export class MedidascovidComponent implements OnInit {
 
   
   
-  banner :ImagenesModel = new ImagenesModel();
-  bannerbottom :ImagenesModel = new ImagenesModel();
-  messageForm: MessagesFormModel = new MessagesFormModel();
-  messageImage: MessagesImageModel = new MessagesImageModel();
-  messagePoliticas: TextopoliticasModel= new TextopoliticasModel();
+
   
 
   constructor(
@@ -62,59 +54,8 @@ export class MedidascovidComponent implements OnInit {
   ngOnInit() {
     this.providerService.setThrowHiddModales(true);
 
-    this.getMessagesForm();
-    this.getMessagesImage();
-    this.getMessagemedidascovid();
-    this.getImagenes();
     
   }
-
-
-  getImagenes(){
-    this.politicasService.getImages().subscribe( (resp) => {
-      let imagenes =  resp as ImagenesModel[];
-      this.banner = imagenes.find(x => x.name == 'banner-ficha-de-producto') ?? new ImagenesModel();
-      this.bannerbottom = imagenes.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-
-    } );
-  }
-
-
-  getMessagesForm(){
-    this.homeService.getMessagesForm().subscribe( (resp) => {
-      let respuesta: MessagesFormModel =  resp as MessagesFormModel; 
-      this.messageForm = respuesta;
-    } );
-  }
-
-
-  getMessagesImage(){
-    this.homeService.getMessagesImage().subscribe( (resp) => {
-      let respuesta: MessagesImageModel =  resp as MessagesImageModel; 
-      this.messageImage = respuesta;
-    });
-  }
-
-
-  getMessagemedidascovid(){
-    this.politicasService.getMessagesMedidascovid().subscribe( (resp) => {
-      let respuesta: TextopoliticasModel =  resp as TextopoliticasModel; 
-      this.messagePoliticas = respuesta;
-    } );
-  }
-
-
-
-
-  
-
-  
-  
-
-
- 
-   
-  
 
 
   

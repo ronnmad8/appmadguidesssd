@@ -13,7 +13,6 @@ import { AuthService } from '../../services/auth.service';
 import { CarritoService } from '../../services/carrito.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';

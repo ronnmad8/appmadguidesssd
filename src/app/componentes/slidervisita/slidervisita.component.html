@@ -6,7 +6,7 @@
         <div class="w-100 d-flex p-0 m-0 posrel">
             <div class="posrel p-0 text-left ">
                 <div id="titulovisita">
-                    <span class="colGRIS1">{{visitaresultado?.visit_lang_title}} </span>
+                    <span class="colGRIS1">{{visitaresultado?.titulo}} </span>
                 </div>
             </div>
             <div class=" d-flex posabsolRight">
@@ -21,7 +21,7 @@
                     <div class="preciovisitaeuro ml-2 mr-0">{{timesSel?.price}} €</div>
                 </div>
                 <div class="posabsol d-flex cupo" style="top: 30px; right: 0px" (click)="abrirverredes()">
-                    <img src="../../assets/images/i-compartir.svg" class="imicono4" draggable="false">
+                    <img src="assets/images/i-compartir.svg" class="imicono4" draggable="false">
                     <span class="colGRIS1 mx-2 fs-16">{{messages?.messages?.share}} </span>
                     <span class="colGRIS1 ">
                         <i class=" fa fa-angle-down fs-16" *ngIf="!verredes"></i>
@@ -49,22 +49,22 @@
 
                     <div class="p-0 m-0 fimaglat max5ima">
                         <div class="p-0 m-0 imageneslat" *ngFor="let imageneslat of listaImagenesVisitaLat ">
-                            <div #imageneslatid id="imlt-{{imageneslat.visit_image_uuid}}" class="chimaglat cupo">
+                            <div #imageneslatid id="imlt-{{imageneslat}}" class="chimaglat cupo">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{imageneslat.visit_image_url}}"
-                                        data-srcset="{{imageneslat.visit_image_url}}">
-                                    <img class="imglat" [ngClass]="{'imgsel': imageneslat.sel}"
-                                        src="{{imageneslat.visit_image_url}}" data-src="{{imageneslat.visit_image_url}}"
-                                        alt="{{imageneslat.visit_image_uuid}}">
+                                    <source media="(min-width: 0px)" srcset="{{imageneslat}}"
+                                        data-srcset="{{imageneslat}}">
+                                    <img class="imglat" [ngClass]="{'imgsel': imageneslat}"
+                                        src="{{imageneslat}}" data-src="{{imageneslat}}"
+                                        alt="{{imageneslat}}">
                                 </picture>
                             </div>
                         </div>
                     </div>
 
                     <div class="detalleslider">
-                        <swiper #imagenlista id="imagenlista" [config]="config"
+                        <!-- <swiper #imagenlista id="imagenlista" [config]="config"
                             (slideChangeTransitionEnd)="getIndexSel()">
-                            <div id="im-{{imagenes.visit_image_uuid}}" class="p-0 m-0 imagenescent"
+                            <div id="im-{{imagenes}}" class="p-0 m-0 imagenescent"
                                 *ngFor="let imagenes of listaImagenesVisita">
                                 <div class="posrel">
                                     <div class="posrel w-100">
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </swiper>
+                        </swiper> -->
                     </div>
 
                     <div class="posrel shad">
@@ -261,12 +261,12 @@
                                                         <div class="w-100 d-flex mw100">
                                                             <div class="posrelbtm5">
                                                                 <div *ngIf="ninosSel == 0">
-                                                                    <img src="../../assets/images/i-restarapagado.svg"
+                                                                    <img src="assets/images/i-restarapagado.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                                 <div class="cupo" *ngIf="ninosSel > 0"
                                                                     (click)="restarninos()">
-                                                                    <img src="../../assets/images/i-restar.svg"
+                                                                    <img src="assets/images/i-restar.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                             </div>
@@ -275,7 +275,7 @@
                                                             </div>
                                                             <div class="posrelbtm5">
                                                                 <div class="cupo" (click)="sumarninos()">
-                                                                    <img src="../../assets/images/i-sumar.svg"
+                                                                    <img src="assets/images/i-sumar.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                             </div>
@@ -302,7 +302,7 @@
                                                     </div>
                                                 </div>
                                                 <div #checkprivada class="d-flex w-100 posrel my-3"
-                                                    *ngIf="visitaresultado.visit_privada">
+                                                    *ngIf="newReserva.private">
                                                     <div class="ml-0 mr-auto ">
                                                         <div class="fs-20 mr-2 posrel " style="top: -3px">
                                                             <input #priv type="checkbox" name="privada" id="privada"
@@ -325,7 +325,7 @@
 
                                         <div #validacioncale class="d-flex w-100 posrel my-1" *ngIf="calenovalid">
                                             <div class=" posrel " style="top:-4px">
-                                                <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                                <img src="assets/images/i-validacion.svg" class="imicono8"
                                                     draggable="false">
                                             </div>
                                             <div>
@@ -482,56 +482,54 @@
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-relojG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.duration.title}}</span>
+                                <span class="ml-2">{{textconts.buscador_duracion}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{visitaresultado.visit_time_duration}} {{messages.details.duration.description}}
+                                {{visitaresultado.duracionmin}} 
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-idiomas.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
                                 <span class="ml-2">{{messages.details.language.title | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{messages.details.language.description }} {{idiomasdisponibles}}
+                                {{textconts.touren}} {{idiomasdisponibles}}
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
                                 <span class="ml-2">{{messages.details.when.title | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{messages.details.when.description1 }}
-                                {{messages.details.when.description2 }}
-                                {{messages.details.when.description3 }}
+                             _descripcion_
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
                                 <span class="ml-2">{{messages.details.accesibility.title | capitalize}}</span>
                             </div>
-                            <div class="col-xl-8" *ngIf="visitaresultado.visit_accessibility">
+                            <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad">
                                 Accesible en silla de ruedas.
                             </div>
-                            <div class="col-xl-8" *ngIf="!visitaresultado.visit_accessibility">
-                                <img src="../../assets/images/i-restar.svg" class="imicono2" draggable="false">
+                            <div class="col-xl-8" *ngIf="!visitaresultado.accesibilidad">
+                                <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.pet.title | capitalize}}</span>
+                                <span class="ml-2">{{textconts.buscador_detail_pets | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
                                 {{messages.details.pet.description | capitalize}}
@@ -546,11 +544,11 @@
                             {{messages.tabs.cancel | capitalize}}
                         </div>
                         <div class="posrel my-1">
-                            <div class="f-18" *ngIf="visitaresultado.visit_refundable">
-                                {{messages.details.cancel}}
+                            <div class="f-18" *ngIf="visitaresultado.cancelacion">
+                                {{textconts.buscador_detail_cancelation}}
                             </div>
-                            <div class="f-18 posabsolNo" *ngIf="!visitaresultado.visit_refundable">
-                                <img src="../../assets/images/i-restar.svg" class="imicono2" draggable="false">
+                            <div class="f-18 posabsolNo" *ngIf="!visitaresultado.cancelacion">
+                                <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                         </div>
                     </div>
@@ -566,9 +564,9 @@
                                 {{messages.details.meeting.description}}
                             </div>
                         </div>
-                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.visit_encuentro" target="_blank"
+                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
                             follow="nofollow">
-                            {{messages.details.meeting.link}}
+                            {{textconts.buscador_detail_verengooglemaps}}
                         </a>
                     </div>
                 </div>
@@ -585,13 +583,13 @@
         <div class="contenimvl">
             <div class="detalleslider">
                 <swiper #imagenlista id="imagenlista" [config]="config">
-                    <div id="im-{{imagenes.visit_image_uuid}}" class="p-0 m-0 " *ngFor="let imagenes of listaImagenesVisita">
+                    <div id="im-{{imagen.id}}" class="p-0 m-0 " *ngFor="let imagen of listaImagenesVisita">
                         <div class="posrel">
                             <div class="bannerproductomvl">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{imagenes.visit_image_url}}"
-                                        data-srcset="{{imagenes.visit_image_url}}">
-                                    <img class="imgproductomvl" src="{{imagenes.visit_image_url}}" data-src="{{imagenes.visit_image_url}}" alt="{{imagenes.visit_image_uuid}}">
+                                    <source media="(min-width: 0px)" srcset="{{imagen.url}}"
+                                        data-srcset="{{imagen.url}}">
+                                    <img class="imgproductomvl" src="{{imagen.url}}" data-src="{{imagen.url}}" alt="{{imagen.uuid}}">
                                 </picture>
                             </div>
                         </div>
@@ -604,7 +602,7 @@
 
             <div class="p-2 text-left ">
                 <div id="titulovisita">
-                    <span class="colGRIS1">{{visitaresultado.visit_lang_title}} </span>
+                    <span class="colGRIS1">{{visitaresultado.titulo}} </span>
                 </div>
             </div>
 
@@ -716,17 +714,17 @@
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-relojG.svg" class="imicono8 posrel mb-2" draggable="false">
-                                <span class="ml-2">{{messages.details.duration.title}}</span>
+                                <img src="assets/images/i-relojG.svg" class="imicono8 posrel mb-2" draggable="false">
+                                <span class="ml-2">{{textconts.ayudas_answer2}}</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{visitaresultado.visit_time[0].duration}} {{messages.details.duration.descripction}}
+                                {{visitaresultado.duracionmin}} 
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-idiomas.svg" class="imicono8 posrel mb-2" draggable="false">
+                                <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2" draggable="false">
                                 <span class="ml-2">{{messages.details.language.title | capitalize}}</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
@@ -753,17 +751,17 @@
                                     draggable="false">
                                 <span class="ml-2">{{messages.details.accesibility.title | capitalize}}</span>
                             </div>
-                            <div class="col-xl-8" *ngIf="visitaresultado.visit_accessibility" >
-                                Accesible en silla de ruedas.
+                            <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad" >
+                                {{textconts.buscador_detail_accesibilidad}}
                             </div>
-                            <div class="col-xl-8 px-4 py-2" *ngIf="!visitaresultado.visit_accessibility">
-                                <img src="../../assets/images/i-restar.svg" class="imicono2" draggable="false">
+                            <div class="col-xl-8 px-4 py-2" *ngIf="!visitaresultado.accesibilidad">
+                                <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
                                 <span class="ml-2">{{messages.details.pet.title | capitalize}}</span>
                             </div>
@@ -785,11 +783,11 @@
                         </div>
                     </div>
                     <div class="posrel my-1 p-2 animated fadeIn" [hidden]="!verZoneCancelaciones">
-                        <div class="f-18" *ngIf="visitaresultado.visit_refundable">
+                        <div class="f-18" *ngIf="visitaresultado.cancelacion">
                             {{messages.details.cancel}}
                         </div>
-                        <div class="f-18" *ngIf="!visitaresultado.visit_refundable">
-                            <img src="../../assets/images/i-restar.svg" class="imicono2" draggable="false">
+                        <div class="f-18" *ngIf="!visitaresultado.cancelacion">
+                            <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                         </div>
                     </div>
                 </div>
@@ -811,7 +809,7 @@
                         <div class="f-18">
                             {{messages.details.meeting.description}}
                         </div>
-                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.visit_encuentro" target="_blank"
+                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
                             follow="nofollow">
                             {{messages.details.meeting.link}}
                         </a>
@@ -1092,7 +1090,7 @@
                                             </div>
                                         </div>
                                         <div #checkprivada class="d-flex w-100 posrel my-3"
-                                            *ngIf="visitaresultado.visit_privada">
+                                            *ngIf="newReserva.private">
                                             <div class="ml-0 mr-auto ">
                                                 <div class="fs-20 mr-2 posrel " style="top: -3px">
                                                     <input #priv type="checkbox" name="privada" id="privada"

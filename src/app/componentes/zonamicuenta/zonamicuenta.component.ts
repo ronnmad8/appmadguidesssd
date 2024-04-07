@@ -15,15 +15,13 @@ import { LoginModel } from 'src/app/models/Login.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { HeadfooterService } from 'src/app/services/headfooter.service';
-import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
-import { CountriesModel } from 'src/app/models/Countries.model';
 import { StatesModel } from 'src/app/models/States.model';
 import { CitiesModel } from 'src/app/models/Cities.model';
 import { PrefixModel } from 'src/app/models/Prefix.model';
 import { Observable } from 'rxjs';
 import { CarritoService } from 'src/app/services/carrito.service';
-import { AddressModel } from 'src/app/models/Address.model';
 import { RespuestaModel } from 'src/app/models/Respuesta.model';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 @Component({
   selector: 'app-zonamicuenta',
@@ -38,17 +36,14 @@ export class ZonamicuentaComponent implements OnInit {
   @Output() updateDatosAddress = new EventEmitter();
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
-  @Input() messagePerfilData: TextoPerfilModel ;
+  @Input() textconts: TextContentsModel = new TextContentsModel();
+  
   @Output() zonamicuenta: EventEmitter<any> = new EventEmitter();
 
   sWindow: any;
 
   listatest = [];
 
-  listacountries: CountriesModel[] = [];
-  listastates: StatesModel[] = [];
-  listacities: CitiesModel[] = [];
-  listaprefix: PrefixModel[] = [];
   listatiposidentificacions: any[] = [];
   listaresultados: [] = [];
   loading: boolean = false;
@@ -60,8 +55,6 @@ export class ZonamicuentaComponent implements OnInit {
   vercuenta: boolean = true;
   reservas: VisitasResultadoModel[] = [];
   loginok: boolean = false;
-
-  textoperfil: TextoPerfilModel;
 
   constructor(
     private router: Router,
@@ -83,10 +76,8 @@ export class ZonamicuentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMessagesPerfil();
+    //this.getMessagesPerfil();
     this.getUser();
-    this.getCountries();
-    this.getPrefijos();
     this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacions = this.globalService.getlistatiposidentificacion();
     this.providerService.setThrowPageadmin(true);
@@ -170,15 +161,12 @@ export class ZonamicuentaComponent implements OnInit {
       number: this.usuario.number,
       namefacturacion: this.usuario.namefacturacion,
       surnamefacturacion: this.usuario.surnamefacturacion,
-      
       state: this.usuario.state,
       city: this.usuario.city,
 
     });
 
-    if(this.forma.value.country != '' ){
-      this.getStates(this.forma.value.country);
-    }
+
  
   }
 
@@ -237,13 +225,7 @@ export class ZonamicuentaComponent implements OnInit {
     });
   }
 
-  getMessagesPerfil() {
-    
-    this.headfooterService.getMessagesPerfil().subscribe((resp)=>{
-      this.messagePerfilData = resp as TextoPerfilModel;
-      
-    });
-  }
+
   
 
   selecparticular(){
@@ -256,50 +238,6 @@ export class ZonamicuentaComponent implements OnInit {
      this.forma.get('particular')?.setValue(false);
   }
 
-  seleccountry(e: any){
-    this.forma.get('country')?.setValue(e.value);
-    this.getStates(e.value);
-  }
-
-  selecstate(e: any){
-    this.forma.value.state?.setValue(e.value);
-    this.getCities(e.value);
-  }
-
-  getCountries(){
-    this.micuentaService.getCountries().subscribe((resp)=>{
-      this.listacountries = resp as CountriesModel[];
-    });
-  }
-
-  getPrefijos(){
-    this.micuentaService.getPrefix().subscribe((resp)=>{
-      this.listaprefix = resp as PrefixModel[];
-    });
-  }
-
-  getCities(stateId: string){
-    this.micuentaService.getCities(stateId).subscribe((resp)=>{
-      this.listacities = resp as CitiesModel[];
-      if(this.usuario.city != '' && this.forma != null ){
-        this.forma.patchValue({
-          city: this.usuario.city
-        });
-      }
-    })
-  }
-
-  getStates(countryId: string){
-    this.micuentaService.getStates(countryId).subscribe((resp)=>{
-      this.listastates = resp as StatesModel[];
-      if(this.usuario.state != '' && this.forma != null ){
-        this.forma.patchValue({
-          state: this.usuario.state
-        });
-        this.getCities(this.usuario.state);
-      }
-    });
-  }
   
 
 

@@ -1,30 +1,23 @@
 //import { StringifyOptions } from 'querystring';
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
-import { FeaturesModel } from './Features.model';
-import { TagsModel } from './Tags.model';
 
 
 export class CategoriasModel{
     
     id: number;
-    value: string;
-    title: string;
-    description: string;
-    childs: CategoriasModel[];
-    parent_value: string;
-    parent_title: string;
-    parent_description: string;
+    category_id: number;
+    language_id: number;
+    uuid: string;
+    content: string;
+    name: string;
     selected: boolean;
 
     constructor(){
-        this.id = 0;
-        this.value = "";
-        this.title = "";
-        this.description = "";
-        this.childs = [];
-        this.parent_value = "";
-        this.parent_title = "";
-        this.parent_description = "";
+        this.category_id = 0;
+        this.language_id = 1;
+        this.uuid = "";
+        this.content = "";
+        this.name = "";
         this.selected = false;
 
     }

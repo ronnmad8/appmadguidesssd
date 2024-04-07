@@ -24,24 +24,17 @@ import { ProviderService } from '../../services/provider.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BannerhomeComponent } from 'src/app/componentes/bannerhome/bannerhome.component';
 import { SlidervisitasComponent } from 'src/app/componentes/slidervisitas/slidervisitas.component';
 import { SlidertestimoniosComponent } from 'src/app/componentes/slidertestimonios/slidertestimonios.component';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 import { ComentariosModel } from 'src/app/models/Cometarios.model';
-import { MessagesModel } from 'src/app/models/Messages.model';
-import { MessagesFormModel } from 'src/app/models/MessageseForm.model';
-import { MessagesImageModel } from 'src/app/models/MessagesImage.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { TextotourModel } from 'src/app/models/Textotour.model';
-import { TextoiconsModel } from 'src/app/models/Textoicons.model';
-import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
-import { TextorecomendadasModel } from 'src/app/models/Textorecomendadas.model';
 import { HttpClient } from '@angular/common/http';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { GlobalService } from 'src/app/services/global.service';
 import { TextDataModel } from 'src/app/models/TextData.model';
+import { VisitaService } from 'src/app/services/visita.service';
 
 
 @Component({
@@ -68,16 +61,9 @@ export class HomeComponent implements OnInit {
   recommended: VisitasResultadoModel[] = [];
   comments: ComentariosModel[] = [];
 
-  //imagenes
-  bannerproducto: ImagenesModel = new ImagenesModel(); //banner-ficha-de-producto
-  bannerbottom: ImagenesModel = new ImagenesModel(); //bannerbottom
-  bannertop: ImagenesModel = new ImagenesModel(); //bannertop
-  logovertical: ImagenesModel = new ImagenesModel(); //logo-madguides-vertical
-  logotexto: ImagenesModel = new ImagenesModel(); //logo-texto
-  logo: ImagenesModel = new ImagenesModel(); //logo
-
   textconts: TextContentsModel = new TextContentsModel();
   listatextcontsdata: TextDataModel[] = [];
+  visitasrecomendadas: VisitasResultadoModel[] = [];
 
   constructor(
       private acro: ActivatedRoute,
@@ -90,6 +76,7 @@ export class HomeComponent implements OnInit {
       private homeService: HomeService,
       private providerService: ProviderService,
       private globalService: GlobalService,
+      private visitaService: VisitaService,
       private http: HttpClient
   )
   {
@@ -107,19 +94,10 @@ export class HomeComponent implements OnInit {
     this.providerService.setThrowHiddModales(true);
     this.providerService.setThrowFooterpol(true);
 
-    //this.getRecommended();
-    //this.getComments();
-    //this.getImageneshome();
-    //this.getMessagesImage();
-    
-    //this.getMessagesOpinions();
-    //this.getMessagesRecomendadas();
-    //this.getMessagesForm();
-    //this.getMessagesTour();
-    //this.getMessagesIcons();
-    
     this.getTexts();
-
+    this.getRecommended();
+    //this.getComments();
+  
   }
 
 
@@ -131,91 +109,28 @@ export class HomeComponent implements OnInit {
         if(resp && resp["data"]){
           this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+          console.log("TEXTCONTENTS*** ", this.textconts)
         }
       })
     }
   }
 
 
-  getImageneshome(){
-    this.homeService.getImagenesHome().subscribe( (resp) => {
-      this.imageneshome =  resp as ImagenesModel[];
-      
-      this.bannertop = this.imageneshome.find(x => x.name == 'bannertop') ?? new ImagenesModel();
-      this.bannerbottom = this.imageneshome.find(x => x.name == 'bannerbottom') ?? new ImagenesModel();
-      this.logo = this.imageneshome.find(x => x.name == 'logo') ?? new ImagenesModel();
-
-    } );
-  }
-
-  
-  // getMessagesTour(){
-  //   this.homeService.getMessagesTour().subscribe( (resp) => {
-  //     this.messagesTour = resp as TextotourModel;
-  //   } );
-  // }
-
-  
-  // getMessagesIcons(){
-  //   this.homeService.getMessagesIcons().subscribe( (resp) => {
-  //     this.messagesIcons = resp as TextoiconsModel;
-  //   } );
-  // }
-
-
-  // getMessagesOpinions(){
-  //   this.homeService.getMessagesOpinions().subscribe( (resp) => {
-  //     this.messagesOpinions = resp as TextoopinionsModel;
-  //   } );
-  // }
-
-
-  // getMessagesRecomendadas(){
-  //   this.homeService.getMessagesRecomendadas().subscribe( (resp) => {
-  //     this.messagesRecomendadas = resp as TextorecomendadasModel;
-  //   } );
-  // }
-
-
-  // getMessagesForm(){
-  //   this.homeService.getMessagesForm().subscribe( (resp) => {
-  //     this.messagesForm =  resp  as MessagesFormModel;
-  //   } );
-  // }
-
-
-  // getMessagesImage(){
-  //   this.homeService.getMessagesImage().subscribe( (resp) => {
-  //     this.messageImage =  resp  as MessagesImageModel;
-
-  //   } );
-  // }
-
-
   getRecommended(){
-    
-    ////fakerun
-    // this.homeService.getRecomendadasHome().subscribe( (resp) => {
-    //   this.recommended = resp as VisitasResultadoModel[];  
-    // });
-    
-    const rutaArchivoJson = 'assets/docs/recommended.json';
-    this.http.get(rutaArchivoJson).subscribe(
-      (data: any) => {
-        this.recommended = data as VisitasResultadoModel[];
-      },
-      (error) => {
-        console.error('Error al cargar el archivo JSON:', error);
+    debugger
+    this.visitaService.getVisitasRecomendadas( this.globalService.idlang ).subscribe((resp)=>{
+      if(resp && resp["data"]){
+
+        console.log("VISITASRECOMENDAS  RESP*** ", resp)
+        this.visitasrecomendadas = resp["data"] as VisitasResultadoModel[] ?? [] ;
+        console.log("VISITASRECOMENDAS*** ", this.visitasrecomendadas)
       }
-    );
-
-
-
+    })
   }
 
 
   getComments(){
-    ////fakerun
+    //fakerun
     // this.homeService.getCommentsHome().subscribe( (resp) => {
     //   this.comments =  resp as ComentariosModel[];
 

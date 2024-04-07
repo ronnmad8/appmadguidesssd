@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TextoPerfilModel } from './models/TextoPerfil.model';
 import { GlobalService } from './services/global.service';
 import { PlatformService } from './services/platform.service';
 

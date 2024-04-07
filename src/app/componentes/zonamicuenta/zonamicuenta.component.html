@@ -8,18 +8,18 @@
                     <div class="panelMicuenta d-flex ">
                         <div class="infoMicuenta posrel w-100">
                             <div class="titmicuenta">
-                                <span>{{messagePerfilData?.account}} </span>
+                                <span>{{textconts.micuenta_title}} </span>
                             </div>
                             <div class="posabsolR fs-14 p-xl-4 p-2">
                                 <div>{{usuario.roles[0]?.name}}</div>
                                 <div *ngIf="usuario.afiliado != ''">
-                                    <span>ID de Afiliado:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}}
-                                        _</span>
+                                    <span>ID:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}}
+                                    </span>
                                 </div>
                             </div>
                             <div class="w-100 d-flex px-3 pt-1 pb-4">
                                 <div class="logoavatar">
-                                    <span class="p-0"><img src="../../assets/images/i-avatar.svg"
+                                    <span class="p-0"><img src="assets/images/i-avatar.svg"
                                             class="imicono100 posrel" draggable="false"></span>
                                 </div>
                                 <div class="posrel" style="left: 30px">
@@ -43,7 +43,7 @@
                     <div #paneldatospersonales id="paneldatospersonales" class="panelMicuenta d-flex ">
                         <div class="infoMicuenta">
                             <div class="titmicuenta">
-                                <span>{{messagePerfilData?.staff}} </span>
+                                <span>{{textconts.micuenta_title}}  </span>
                             </div>
                             <div class="infoMicuenta w-100 d-flex">
                                 <div class="row px-2">
@@ -53,38 +53,38 @@
                                             <input #name type="text" class="w-100 scolGRIS1" placeholder=""
                                                 name="name" id="name" formControlName="name" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.titles?.name}}:</div>
+                                        <div class="lblform">{{textconts.micuenta_form_name}}:</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="w-100 colGRIS1" placeholder=""
                                                 name="surname" id="surname" formControlName="surname" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.titles?.surname}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_surname}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
-                                            <input #email type="email" class="w-100 colGRIS1"
-                                                placeholder="{{messagePerfilData?.titles?.email}}" name="email" id="email"
+                                            <input #emailcuenta type="email" class="w-100 colGRIS1"
+                                                placeholder="{{textconts.micuenta_form_email}} " name="email" id="email"
                                                 formControlName="email" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.titles?.email}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_email}} </div>
                                     </div>
                                     <div class="col-xl-2 col-4 pl-2 pr-1 posrel">
-                                        <select #prefix class="cjselect w-100" id="prefijo"
-                                            name="prefijo" formControlName="prefijo">
-                                            <option value="{{li.id}}" *ngFor="let li of listaprefix">
-                                                {{li.code}}
-                                            </option>
-                                        </select>
-                                        <div class="lblform">{{messagePerfilData?.titles?.prefix}}</div>
+
+                                        <div class="cj">
+                                            <input #prefijocuenta type="prefijo" class="w-100 colGRIS1"
+                                                placeholder="{{textconts.micuenta_form_prefijo}} " name="prefijo" id="prefijo"
+                                                formControlName="prefijo" />
+                                        </div>
+                                        <div class="lblform">{{textconts.micuenta_form_prefijo}} </div>
                                     </div>
                                     <div class="col-xl-4 col-8 pl-1 pr-2 posrel">
                                         <div class="cj">
-                                            <input #phone type="phone" class="w-100 colGRIS1" placeholder="{{messagePerfilData?.titles?.phone}}"
+                                            <input #phone type="phone" class="w-100 colGRIS1" placeholder="{{textconts.micuenta_form_telefono}} "
                                                 name="phone" id="phone" formControlName="phone" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.titles?.phone}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_telefono}} </div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <select #typedoc class="cjselect w-100" id="tipoidentificacion"
@@ -93,28 +93,28 @@
                                                 {{li.name}}
                                             </option>
                                         </select>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.documentation}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_numerotipodoc}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input #document type="text" class="colGRIS1 " placeholder="Numero identificacion "
                                                 id="numeroidentificacion" name="document" formControlName="document" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.number}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_number}} </div>
                                     </div>
                                     <div class="col-xl-6 px-2 ">
                                         <div class="p-0 m-0">
                                             <input name="rb" id="rb-1" type="radio" (change)="selecparticular()" formControlName="particular"  >
-                                            <label class="mx-2" for="rb-1">{{messagePerfilData?.invoice?.options?.option1}}</label>
+                                            <label class="mx-2" for="rb-1">{{textconts.micuenta_form_user}}</label>
                                             <input name="rb" id="rb-2" type="radio" (change)="selecempresa()"  formControlName="particular" >
-                                            <label class="mx-2" for="rb-2">{{messagePerfilData?.invoice?.options?.option2}}</label>
+                                            <label class="mx-2" for="rb-2">{{textconts.micuenta_form_company}}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
                                 <button class="btredondoRojoMicuenta  " type="button" (click)="modificarDatosData()">
-                                    <span>{{messagePerfilData?.buttons?.change}}</span>
+                                    <span>{{textconts.modificar}}</span>
                                 </button>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                     <div #paneldatosfacturacion id="paneldatosfacturacion" class="panelMicuenta d-flex ">
                         <div class="infoMicuenta">
                             <div class="titmicuenta">
-                                <span> {{messagePerfilData?.invoice?.title}}</span>
+                                <span> {{textconts.micuenta_title}}</span>
                             </div>
                             <div class="infoMicuenta w-100 d-flex">
                                 <div class="row px-2">
@@ -132,58 +132,49 @@
                                             <input type="text" class="colGamRIS1 " placeholder="Calle " id="street"
                                                 name="street" formControlName="street" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.address}}  </div>
+                                        <div class="lblform">{{textconts.micuenta_form_address}} </div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGamRIS1 " placeholder="Número " id="number"
                                                 name="number" formControlName="number" />
                                         </div>
-                                        <div class="lblform">_número_</div>
+                                        <div class="lblform">{{textconts.micuenta_form_number}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input type="text" class="colGRIS1 " placeholder="Codigo postal "
                                                 id="codigopostal" name="codigopostal" formControlName="postal" />
                                         </div>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.postal}}</div>
+                                        <div class="lblform">{{textconts.micuenta_form_cp}}</div>
                                     </div>
                                     
                                     <div class="col-xl-6 px-2 posrel">
-                                        <select #paises class="cjselect w-100" id="country" (change)="seleccountry($event.target)"
-                                            name="country" formControlName="country">
-                                            <option value="{{li.id}}" *ngFor="let li of listacountries" >
-                                                {{li.name}}
-                                            </option>
-                                        </select>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.country}}</div>
+                                        <div class="cj">
+                                            <input type="text" class="colGRIS1 " placeholder="{{textconts.micuenta_form_country}} "
+                                                id="country" name="country" formControlName="country" />
+                                        </div>
+                                        <div class="lblform">{{textconts.micuenta_form_country}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
-                                        <select #states class="cjselect w-100" id="state" (change)="selecstate($event.target)"
-                                            name="state" formControlName="state">
-                                            <option value="{{li.id}}" *ngFor="let li of listastates" >
-                                                {{li.name}}
-                                            </option>
-                                        </select>
-                                        <div class="lblform">provincia</div>
+                                        <div class="cj">
+                                            <input #states type="text" class="colGRIS1 " placeholder="{{textconts.micuenta_form_state}} "
+                                                id="state" name="state" formControlName="state" />
+                                        </div>
+                                        <div class="lblform">{{textconts.micuenta_form_state}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
-                                        <select #cities class="cjselect w-100" id="city"
-                                            name="city" formControlName="city">
-                                            <option value="{{li.id}}" *ngFor="let li of listacities" >
-                                                {{li.name}}
-                                            </option>
-                                        </select>
-                                        <div class="lblform">{{messagePerfilData?.invoice?.titles?.city}}</div>
+                                        <div class="cj">
+                                            <input #cities type="text" class="colGRIS1 " placeholder="{{textconts.micuenta_form_city}} "
+                                                id="city" name="city" formControlName="city" />
+                                        </div>>
+                                        <div class="lblform">{{textconts.micuenta_form_city}}</div>
                                     </div>
-
-                                    
                                 </div>
-
                             </div>
                             <div class="w-100 p-1 mt-1 text-center mx-auto mh100" *ngIf="!loading">
                                 <button class="btredondoRojoMicuenta  " type="button" (click)="modificarDatosAddress()">
-                                    <span>{{messagePerfilData?.buttons?.change}}</span>
+                                    <span>{{textconts.modificar}}</span>
                                 </button>
                             </div>
                         </div>

@@ -14,11 +14,9 @@ import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
 import { CarritoService } from '../../services/carrito.service';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { UserModel } from 'src/app/models/User.model';
-import { TextoPerfilModel } from 'src/app/models/TextoPerfil.model';
 ///services
 import { GlobalService } from '../../services/global.service';
 import { AuthService } from '../../services/auth.service';
@@ -26,6 +24,8 @@ import { AuthService } from '../../services/auth.service';
 import { AlertasService } from '../../services/alertas.service';
 import { HeadfooterService } from 'src/app/services/headfooter.service';
 import { PlatformService } from 'src/app/services/platform.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
 
 
 @Component({
@@ -44,10 +44,12 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
   pedido :CartModel = new CartModel();
   usuario: UserModel = new UserModel();
   pedidos: CartModel[] = [];
-  messagePerfil: TextoPerfilModel = new TextoPerfilModel();
   isrespon: boolean = false;
   vercuenta: boolean = false;
   verreservas: boolean = false;
+
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
 
   constructor(
       private acro: ActivatedRoute,
@@ -65,12 +67,11 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
 
   )
   {
-    // this.title.setTitle( "▷ Madguides");
-    // this.meta.updateTag({ name: 'description', content: 'madguides carritos guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'author', content: 'madguides carritos guiadas en Madrid' });
-    // this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ carritos guiadas en Madrid' });
+    this.title.setTitle( "▷ Administracion cliente");
+    this.meta.updateTag({ name: 'description', content: 'madguides carritos guiadas en Madrid' });
+    this.meta.updateTag({ name: 'author', content: 'madguides carritos guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'Madguides carritos guiadas en Madrid' });
 
-    this.getMessagesPerfil();
   }
   
   
@@ -78,7 +79,8 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
     this.isrespon = this.platformService.isrespon;
     this.zonanopago.emit();
     this.loginadmin();
-    
+
+    this.getTexts();
     
   }
 
@@ -103,6 +105,18 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
   }
 
 
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp && resp["data"]){
+          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
 
   loginadmin() {
     
@@ -116,13 +130,6 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
 
 
 
-  getMessagesPerfil() {
-    
-    this.headfooterService.getMessagesPerfil().subscribe((resp)=>{
-      this.messagePerfil = resp as TextoPerfilModel;
-
-    });
-  }
 
   onActivate(reference: any) {
     if(reference != undefined ){

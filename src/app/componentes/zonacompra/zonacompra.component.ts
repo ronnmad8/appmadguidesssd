@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, Renderer2, Output, EventEmitter } from '@angular/core';
 import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { TextosModel } from 'src/app/models/Textos.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ListasService } from '../../services/listas.service';
@@ -19,6 +18,9 @@ import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { UserModel } from 'src/app/models/User.model';
 import { PlatformService } from 'src/app/services/platform.service';
+import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { GlobalService } from 'src/app/services/global.service';
+import { ReservationModel } from 'src/app/models/Reservations.model';
 
 
 @Component({
@@ -33,11 +35,12 @@ export class ZonacompraComponent implements OnInit {
   modal: NgbModalRef;
   modalOptions: NgbModalOptions;
   @Input() visitaId: number = 0;
+  @Input() textconts: TextContentsModel = new TextContentsModel();
   @ViewChild('imagenlista') imagenlista: any;
   sWindow: any;
 
   carritoId: number = 0;
-  listaPedido: VisitasResultadoModel[] = [];
+  listaPedido: ReservationModel[] = [];
   isrespon: boolean = false;
   pedidos: CartModel[] = [];
   pedido: CartModel = new CartModel();
@@ -54,7 +57,8 @@ export class ZonacompraComponent implements OnInit {
     private renderer: Renderer2,
     private modalService: NgbModal,
     private auth: AuthService ,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private globalService: GlobalService,
   ) { 
     this.wowService.init(); 
     this.sWindow = this.platformService.sWindow;
@@ -89,7 +93,7 @@ export class ZonacompraComponent implements OnInit {
     if(this.pedidos.length > 0){
       this.pedidos = this.pedidos.filter(x => x.cliente.email == this.usuario.email);
       this.pedido = this.pedidos[this.pedidos.length - 1]
-      this.listaPedido = this.pedido.visitasPedido;
+      this.listaPedido = this.pedido.reservas;
     }
   }
 
