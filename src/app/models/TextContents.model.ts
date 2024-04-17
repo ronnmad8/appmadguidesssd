@@ -115,7 +115,7 @@ export class TextContentsModel {
   buscador_relevancia: string;
   buscador_preciomasbajo: string;
   buscador_preciomasalto: string;
-  buscador_duracionnmayor: string;
+  buscador_duracionmayor: string;
   buscador_duracionmenor: string;
   buscador_porpersona: string;
   login_micuenta: string;
@@ -409,7 +409,7 @@ export class TextContentsModel {
     this.buscador_relevancia = '';
     this.buscador_preciomasbajo = '';
     this.buscador_preciomasalto = '';
-    this.buscador_duracionnmayor = '';
+    this.buscador_duracionmayor = '';
     this.buscador_duracionmenor = '';
     this.buscador_porpersona = '';
     this.buscador_sugerencias = '';

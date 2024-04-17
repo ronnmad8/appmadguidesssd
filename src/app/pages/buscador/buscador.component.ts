@@ -28,7 +28,6 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { ZonacontactoComponent } from 'src/app/componentes/zonacontacto/zonacontacto.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { HomerespModel } from 'src/app/models/Homeresp.model';
 import { DuracionesModel } from 'src/app/models/Duraciones.model';
@@ -40,6 +39,7 @@ import { TimesModel } from 'src/app/models/Times.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { TextDataModel } from 'src/app/models/TextData.model';
 import { GlobalService } from 'src/app/services/global.service';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 
 
 
@@ -57,11 +57,10 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   @ViewChild(BusquedaComponent ) bu: BusquedaComponent;
   @ViewChild(ZonacontactoComponent) zc: ZonacontactoComponent;
   
-  
   bannerfichadeproducto :ImagenesModel = new ImagenesModel();
   bannerbottom :ImagenesModel = new ImagenesModel();
   bannertop :ImagenesModel = new ImagenesModel();
-  resultadoBuscador :ResultadoModel = new ResultadoModel();
+  resultadoBuscador :VisitasResultadoModel[] = [];
   texts: string[] = [];
 
   filters: FiltersModel = new FiltersModel();
@@ -69,6 +68,7 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
   filtersrutatitle: string= "";
   page: number = 1;
   numactividades: number = 0;
+  maxvalueprecio: number = 0;
 
   textconts: TextContentsModel = new TextContentsModel();
   listatextcontsdata: TextDataModel[] = [];
@@ -113,9 +113,9 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     this.acro.params.subscribe(
       (params: Params) => {
         ///categoria filtro ruta
-        let cat_uuid = params.category_uuid;
-        if(cat_uuid != null){
-          this.filtersrutacategorias = cat_uuid
+        let catid = params.categoryid;
+        if(catid != null){
+          this.filtersrutacategorias = catid
         }
         ///recomendados filtro ruta
         let recommended = params.recommended;
@@ -138,8 +138,8 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
         }
       })
@@ -156,35 +156,27 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
     
       this.filters = this.bu.filters;
       this.page = this.bu.page;
-      this.bu.loading = true;
+      
       if(this.filtersrutatitle != ""){
         this.filters.title = this.filtersrutatitle;
       }
       if(this.filtersrutacategorias != ""){
-        this.filters.categorias.push(this.filtersrutacategorias);
+        //this.filters.categorias.push(this.filtersrutacategorias);
       }
       //console.log("start=> ",getTime.toString())
+      this.bu.loading = true;
       this.buscadorService.getResultadoBuscador(this.filters, this.page).subscribe( (resp) => {
         //console.log("end=> ",getTime.toString())
-        this.resultadoBuscador =  resp as ResultadoModel;
-
-        ///correct duration and price
-        this.resultadoBuscador.data.forEach(visita => {
-          
-           if( visita.duracionmin == null){
-             visita.precio = Math.floor(Math.random() * (40 - 10 + 1)) + 10
-             visita.duracionmin = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-           }
-
-        });
+        this.resultadoBuscador =  resp as VisitasResultadoModel[] ?? [];
+        this.resultadoBuscador = this.globalService.getImageDefault(this.resultadoBuscador);
+        this.resultadoBuscador = this.globalService.getLanguages(this.resultadoBuscador);
 
         this.bu.getVisitasBuscador(this.resultadoBuscador);
-        this.numactividades = this.resultadoBuscador.total;
-
+        this.numactividades = this.resultadoBuscador.length ;
         setTimeout(() => {
           this.bu.loading = false;
-        }, 500);
-      } );
+        }, 800);
+      });
       setTimeout(() => {
         this.bu.loading = false;
       }, 10000);
@@ -194,16 +186,18 @@ export class BuscadorComponent implements OnInit, AfterViewInit {
 
 
 
-  generarAleatorioPrice(visita: any): number {
-    return visita.visit_time == null || visita.visit_time[0]?.price == null
-      ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
-      : visita.visit_time[0].price;
-  }
-  generarAleatorioDuration(visita: any): number {
-    return visita.visit_time == null || visita.visit_time[0]?.duration == null
-      ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
-      : visita.visit_time[0].duration;
-  }
+  // generarAleatorioPrice(visita: any): number {
+  //   return visita.visit_time == null || visita.visit_time[0]?.price == null
+  //     ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
+  //     : visita.visit_time[0].price;
+  // }
+
+
+  // generarAleatorioDuration(visita: any): number {
+  //   return visita.visit_time == null || visita.visit_time[0]?.duration == null
+  //     ? Math.floor(Math.random() * (40 - 10 + 1)) + 10
+  //     : visita.visit_time[0].duration;
+  // }
 
   
 

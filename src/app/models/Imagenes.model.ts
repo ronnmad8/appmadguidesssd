@@ -25,12 +25,11 @@ export class ImagenesModel{
         this.filename = "";
         this.type="";
         this.order=0;
+        this.url="assets/images/sinimagen.png";
 
     }
 
-    getUrl(imagen: ImagenesModel){
-      return  imagen.path+ "/" + imagen.filename;
-    }
+
 
 
 }

@@ -17,12 +17,12 @@
                 </div>
                 <div class="linvertical mx-3"></div>
                 <div class="d-flex w-100">
-                    <div class="colGRIS1 mx-3 fs-16 mt-1">{{messages?.messages?.from}} </div>
+                    <div class="colGRIS1 mx-3 fs-16 mt-1">_messages?.messages?.from_ </div>
                     <div class="preciovisitaeuro ml-2 mr-0">{{timesSel?.price}} €</div>
                 </div>
                 <div class="posabsol d-flex cupo" style="top: 30px; right: 0px" (click)="abrirverredes()">
                     <img src="assets/images/i-compartir.svg" class="imicono4" draggable="false">
-                    <span class="colGRIS1 mx-2 fs-16">{{messages?.messages?.share}} </span>
+                    <span class="colGRIS1 mx-2 fs-16">_messages?.messages?.share_ </span>
                     <span class="colGRIS1 ">
                         <i class=" fa fa-angle-down fs-16" *ngIf="!verredes"></i>
                         <i class=" fa fa-angle-up fs-16" *ngIf="verredes"></i>
@@ -135,7 +135,7 @@
                                             <div class="w-100 cupo posrel" (click)="verHora()">
                                                 <div class="fs-20 ml-0 mr-auto">
                                                     <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
-                                                        {{messages.data.hour}}
+                                                        _data.hour_
                                                     </span>
                                                     <span class="ml-1 colGRIS1">
                                                         {{horainfo}}
@@ -163,7 +163,7 @@
                                             <div class="w-100 cupo posrel" (click)="verIdioma()">
                                                 <div class="fs-20 ml-0 mr-auto">
                                                     <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
-                                                        {{messages.data.language}}
+                                                        _data.language_
                                                     </span>
                                                     <span class="ml-1 colGRIS1">
                                                         {{idiominfo | capitalize}}
@@ -193,15 +193,15 @@
                                                 <div class="fs-20 ml-0 mr-auto d-flex">
                                                     <span class="colGRIS1 ff-JB"
                                                         *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
-                                                        {{messages.data.people}}
+                                                        _data.people_
                                                     </span>
                                                     <div class="posrel fs-18 colGRIS2" style="top: 0px"
                                                         *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
                                                         <span [ngClass]="{'colGRIS1': adultoSel > 0 }">
-                                                            {{messages.price.adults}} {{adultoSel}}
+                                                            _price.adults_ {{adultoSel}}
                                                         </span>
                                                         <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
-                                                            {{messages.price.children}} (3-11)  {{ninosSel}} 
+                                                            _price.children_ (3-11)  {{ninosSel}} 
                                                         </span>
                                                         <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
                                                             Menores {{menoresSel}}
@@ -225,12 +225,12 @@
                                                         <div class="w-100 d-flex mw100">
                                                             <div class="posrelbtm5">
                                                                 <div *ngIf="adultoSel == 0">
-                                                                    <img src="../../assets/images/i-restarapagado.svg"
+                                                                    <img src="assets/images/i-restarapagado.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                                 <div class="cupo" *ngIf="adultoSel > 0"
                                                                     (click)="restaradulto()">
-                                                                    <img src="../../assets/images/i-restar.svg"
+                                                                    <img src="assets/images/i-restar.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                             </div>
@@ -239,7 +239,7 @@
                                                             </div>
                                                             <div class="posrelbtm5">
                                                                 <div class="cupo" (click)="sumaradulto()">
-                                                                    <img src="../../assets/images/i-sumar.svg"
+                                                                    <img src="assets/images/i-sumar.svg"
                                                                         class="imicono4" draggable="false">
                                                                 </div>
                                                             </div>
@@ -253,7 +253,7 @@
                                                 <div #ninos class="row my-2">
                                                     <div class="col-4 text-left posrel">
                                                         <div class="fs-8 posabsol" style="top: -6px">
-                                                            {{messages.price.children}} (3-11)
+                                                            _price.children_ (3-11)
                                                         </div>
                                                         <div class="fs-16">{{precioninosst}} €</div>
                                                     </div>
@@ -329,8 +329,8 @@
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">{{messages.errors.date}}</div>
-                                            </div>
+                                                <div class="fs-16 colROJO1">_errors.date_  </div>
+                                            </div> 
                                         </div>
                                         <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
                                             <div class=" posrel " style="top:-4px">
@@ -338,7 +338,7 @@
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">{{messages.errors.hour}}
+                                                <div class="fs-16 colROJO1">_errors.hour_
                                                 </div>
                                             </div>
                                         </div>
@@ -348,7 +348,7 @@
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">{{messages.errors.language}}
+                                                <div class="fs-16 colROJO1">_errors.language_
                                                 </div>
                                             </div>
                                         </div>
@@ -358,7 +358,7 @@
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">{{messages.errors.people}}
+                                                <div class="fs-16 colROJO1">_errors.people_
                                                 </div>
                                             </div>
                                         </div>
@@ -388,28 +388,28 @@
                         <div class="pestas d-flex ">
                             <div id="pestaDescripcion" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 1}"
                                 (click)="ScrollToElement(zoneDescripcion,1)">
-                                {{messages.tabs.description | capitalize}}
+                                _tabs.description | capitalize_
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaPrecios" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 2}"
                                 (click)="ScrollToElement(zonePrecios,2)">
-                                {{messages.tabs.price | capitalize}}
+                                _tabs.price | capitalize_
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaDetalles" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 3}"
                                 (click)="ScrollToElement(zoneDetalles,3)">
-                                {{messages.tabs.details | capitalize}}
+                                _tabs.details | capitalize_
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaCancelaciones" class="cupo text-center"
                                 [ngClass]="{'pulsada': pestaactiv == 4}" (click)="ScrollToElement(zoneCancelaciones,4)">
-                                {{messages.tabs.cancel | capitalize}}
+                                _tabs.cancel | capitalize_
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaPuntoencuentro" class="cupo text-center"
                                 [ngClass]="{'pulsada': pestaactiv == 5}"
                                 (click)="ScrollToElement(zonePuntodeencuentro,5)">
-                                {{messages.tabs.meeting | capitalize}}
+                                _tabs.meeting | capitalize_
                             </div>
                         </div>
                     </div>
@@ -422,7 +422,7 @@
                             <div class="fs-18" [innerHtml]="descripcioncorta" *ngIf="!vermas">
                             </div>
                             <div class="colROJO1 cupo" (click)="abrirvermas()" *ngIf="!vermas">
-                                {{messages.messages.description}}
+                                _messages.description_
                             </div>
                             <div class="fs-18" [innerHtml]="descripcion" *ngIf="vermas">
                             </div>
@@ -435,25 +435,25 @@
                     <div #zonePrecios class="scroll-with-offset mb-4">
 
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            {{messages.tabs.price | capitalize}}
+                            _tabs.price | capitalize_
                         </div>
                         <table class="table fs-18" style="width: 304px">
                             <tbody>
                                 <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">{{messages.price.adults}} </td>
+                                    <td class="tdprecios">_price.adults_ </td>
                                     <td class="tdprecios text-right">{{precioadultosst}} €</td>
                                 </tr>
                                 <tr class="bgBLANCO trprecios">
-                                    <td class="tdprecios">{{messages.price.children}} (3-11)<span
-                                            class="fs-12 ml-1">{{messages.price.range}}</span></td>
+                                    <td class="tdprecios">_price.children_ (3-11)<span
+                                            class="fs-12 ml-1">_price.range</span></td>
                                     <td class="tdprecios text-right">{{precioninosst}} €</td>
                                 </tr>
                                 <!-- <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">{{messages.price.children}} <span
-                                            class="fs-12 ml-1">{{messages.price.minor}}</span></td>
+                                    <td class="tdprecios">_price.children}} <span
+                                            class="fs-12 ml-1">_price.minor}}</span></td>
                                     <td class="tdprecios text-right">
                                         <span *ngIf="preciomenores > 0">{{preciomenoresst}} €</span>
-                                        <span *ngIf="preciomenores == 0">{{messages.price.free}}</span>
+                                        <span *ngIf="preciomenores == 0">_price.free}}</span>
                                     </td>
                                 </tr> -->
                             </tbody>
@@ -465,16 +465,16 @@
                 <div class="conteni ">
                     <div #zoneDetalles class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1"  >
-                            {{messages.tabs.description | capitalize}}
+                            _tabs.description | capitalize_
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-seguridad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.covid.title}}</span>
+                                <span class="ml-2">_details.covid.title_</span>
                             </div>
                             <div class="col-xl-8">
-                                {{messages.details.covid.description | capitalize }}
+                                _details.covid.description | capitalize _
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -493,7 +493,7 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.language.title | capitalize}}</span>
+                                <span class="ml-2">_details.language.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8">
                                 {{textconts.touren}} {{idiomasdisponibles}}
@@ -504,7 +504,7 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.when.title | capitalize}}</span>
+                                <span class="ml-2">_details.when.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8">
                              _descripcion_
@@ -515,7 +515,7 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.accesibility.title | capitalize}}</span>
+                                <span class="ml-2">_details.accesibility.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad">
                                 Accesible en silla de ruedas.
@@ -532,7 +532,7 @@
                                 <span class="ml-2">{{textconts.buscador_detail_pets | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{messages.details.pet.description | capitalize}}
+                                _details.pet.description | capitalize_
                             </div>
                         </div>
                     </div>
@@ -541,7 +541,7 @@
                 <div class="conteni ">
                     <div #zoneCancelaciones class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            {{messages.tabs.cancel | capitalize}}
+                            _tabs.cancel | capitalize_
                         </div>
                         <div class="posrel my-1">
                             <div class="f-18" *ngIf="visitaresultado.cancelacion">
@@ -557,11 +557,11 @@
                 <div class="conteni ">
                     <div #zonePuntodeencuentro class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            {{messages.tabs.meeting | capitalize}}
+                            _tabs.meeting | capitalize_
                         </div>
                         <div class="posrel my-1 ">
                             <div class="f-18">
-                                {{messages.details.meeting.description}}
+                                _details.meeting.description_
                             </div>
                         </div>
                         <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
@@ -654,7 +654,7 @@
                     <div class="accormovil d-flex cupo my-2 p-2 posrel" (click)="abrirVerZonePrecios()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                {{messages.tabs.price | capitalize}} 
+                                _tabs.price | capitalize_
                             </span>
                         </div>
                         <div class="posabsolRight mx-1">
@@ -687,7 +687,7 @@
                     <div class="accormovil bgBLANCO2 d-flex cupo my-2 p-2 posrel" (click)="abrirVerZoneDetalle()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                {{messages.tabs.description | capitalize}}
+                                _tabs.description | capitalize_
                             </span>
                         </div>
                         <div class="posabsolRight mx-1">
@@ -705,10 +705,10 @@
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-seguridad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.covid.title}}</span>
+                                <span class="ml-2">_details.covid.title_</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{messages.details.covid.description | capitalize }}
+                                _details.covid.description | capitalize _
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -725,10 +725,10 @@
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
                                 <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2" draggable="false">
-                                <span class="ml-2">{{messages.details.language.title | capitalize}}</span>
+                                <span class="ml-2">_details.language.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{messages.details.language.description }} {{idiomasdisponibles}}
+                                _details.language.description _ {{idiomasdisponibles}}
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -736,12 +736,12 @@
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.when.title | capitalize}}</span>
+                                <span class="ml-2">_details.when.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{messages.details.when.description1 }}
-                                {{messages.details.when.description2 }}
-                                {{messages.details.when.description3 }}
+                                _details.when.description1 _
+                                _details.when.description2 _
+                                _details.when.description3 _
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -749,7 +749,7 @@
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.accesibility.title | capitalize}}</span>
+                                <span class="ml-2">_details.accesibility.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad" >
                                 {{textconts.buscador_detail_accesibilidad}}
@@ -763,10 +763,10 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">{{messages.details.pet.title | capitalize}}</span>
+                                <span class="ml-2">_details.pet.title | capitalize_</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{messages.details.pet.description | capitalize}}
+                                _details.pet.description | capitalize
                             </div>
                         </div>
                     </div>
@@ -775,7 +775,7 @@
                 <div #zoneCancelaciones class="scroll-with-offset mb-1">
                     <div class="accormovil bgBLANCO2 d-flex cupo my-2 p-2 posrel" (click)="abrirVerZoneCancelaciones()">
                         <div class="fs-20 ff-JB colGRIS1">
-                            {{messages.tabs.cancel | capitalize}}
+                            _tabs.cancel | capitalize_
                         </div>
                         <div class="posabsolRight mx-1">
                             <i class="fa fa-angle-down" *ngIf="!verZoneCancelaciones"></i>
@@ -784,7 +784,7 @@
                     </div>
                     <div class="posrel my-1 p-2 animated fadeIn" [hidden]="!verZoneCancelaciones">
                         <div class="f-18" *ngIf="visitaresultado.cancelacion">
-                            {{messages.details.cancel}}
+                            _details.cancel_
                         </div>
                         <div class="f-18" *ngIf="!visitaresultado.cancelacion">
                             <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
@@ -797,7 +797,7 @@
                         (click)="abrirVerZonePuntodeencuentro()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                {{messages.tabs.meeting | capitalize}}
+                                _messages.tabs.meeting_
                             </span>
                         </div>
                         <div class="posabsolRight">
@@ -807,11 +807,11 @@
                     </div>
                     <div class="posrel my-1 p-2 animated fadeIn" [hidden]="!verZonePuntodeencuentro">
                         <div class="f-18">
-                            {{messages.details.meeting.description}}
+                            _details.meeting.description_
                         </div>
                         <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
                             follow="nofollow">
-                            {{messages.details.meeting.link}}
+                            _details.meeting.link
                         </a>
                     </div>
                 </div>
@@ -888,7 +888,7 @@
                                     <div class="w-100 cupo posrel" (click)="verHora()">
                                         <div class="fs-20 ml-0 mr-auto">
                                             <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
-                                                {{messages.data.hour}}
+                                                _hour_
                                             </span>
                                             <span class="ml-1 colGRIS1">
                                                 {{horainfo}}
@@ -916,7 +916,7 @@
                                     <div class="w-100 cupo posrel" (click)="verIdioma()">
                                         <div class="fs-20 ml-0 mr-auto">
                                             <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
-                                                {{messages.data.language}}
+                                                _language_
                                             </span>
                                             <span class="ml-1 colGRIS1">
                                                 {{idiominfo | capitalize}}
@@ -946,15 +946,15 @@
                                         <div class="fs-20 ml-0 mr-auto d-flex">
                                             <span class="colGRIS1 ff-JB"
                                                 *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
-                                                {{messages.data.people}}
+                                                _people_
                                             </span>
                                             <div class="posrel fs-18 colGRIS2" style="top: 0px"
                                                 *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
                                                 <span [ngClass]="{'colGRIS1': adultoSel > 0 }">
-                                                    {{messages.price.adults}} {{adultoSel}}
+                                                    _adults_ {{adultoSel}}
                                                 </span>
                                                 <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
-                                                    {{messages.price.children}} {{ninosSel}}
+                                                    _children_ {{ninosSel}}
                                                 </span>
                                                 <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
                                                     Menores {{menoresSel}}
@@ -983,7 +983,7 @@
                                                         </div>
                                                         <div class="cupo" *ngIf="adultoSel > 0"
                                                             (click)="restaradulto()">
-                                                            <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                            <img src="assets/images/i-restar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -992,7 +992,7 @@
                                                     </div>
                                                     <div class="posrelbtm5">
                                                         <div class="cupo" (click)="sumaradulto()">
-                                                            <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                            <img src="assets/images/i-sumar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -1006,7 +1006,7 @@
                                         <div #ninos class="row my-2">
                                             <div class="col-4 text-left posrel">
                                                 <div class="fs-8 posabsol" style="top: -6px">
-                                                    {{messages.price.children}} (3-11)
+                                                    _children_ (3-11)
                                                 </div>
                                                 <div class="fs-16">{{precioninosst}} €</div>
                                             </div>
@@ -1014,11 +1014,11 @@
                                                 <div class="w-100 d-flex mw100">
                                                     <div class="posrelbtm5">
                                                         <div *ngIf="ninosSel == 0">
-                                                            <img src="../../assets/images/i-restarapagado.svg"
+                                                            <img src="assets/images/i-restarapagado.svg"
                                                                 class="imicono4" draggable="false">
                                                         </div>
                                                         <div class="cupo" *ngIf="ninosSel > 0" (click)="restarninos()">
-                                                            <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                            <img src="assets/images/i-restar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -1027,7 +1027,7 @@
                                                     </div>
                                                     <div class="posrelbtm5">
                                                         <div class="cupo" (click)="sumarninos()">
-                                                            <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                            <img src="assets/images/i-sumar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -1049,12 +1049,12 @@
                                                 <div class="w-100 d-flex mw100">
                                                     <div class="posrelbtm5">
                                                         <div *ngIf="menoresSel == 0">
-                                                            <img src="../../assets/images/i-restarapagado.svg"
+                                                            <img src="assets/images/i-restarapagado.svg"
                                                                 class="imicono4" draggable="false">
                                                         </div>
                                                         <div class="cupo" *ngIf="menoresSel > 0"
                                                             (click)="restarmenores()">
-                                                            <img src="../../assets/images/i-restar.svg" class="imicono4"
+                                                            <img src="assets/images/i-restar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -1063,7 +1063,7 @@
                                                     </div>
                                                     <div class="posrelbtm5">
                                                         <div class="cupo" (click)="sumarmenores()">
-                                                            <img src="../../assets/images/i-sumar.svg" class="imicono4"
+                                                            <img src="assets/images/i-sumar.svg" class="imicono4"
                                                                 draggable="false">
                                                         </div>
                                                     </div>
@@ -1113,11 +1113,11 @@
 
                                 <div #validacioncale class="d-flex w-100 posrel my-1" *ngIf="calenovalid">
                                     <div class=" posrel " style="top:-4px">
-                                        <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                        <img src="assets/images/i-validacion.svg" class="imicono8"
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">{{messages.errors.date}}</div>
+                                        <div class="fs-16 colROJO1">_error date_</div>
                                     </div>
                                 </div>
                                 <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
@@ -1126,7 +1126,7 @@
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">{{messages.errors.hour}}
+                                        <div class="fs-16 colROJO1">_error hour_
                                         </div>
                                     </div>
                                 </div>
@@ -1136,7 +1136,7 @@
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">{{messages.errors.language}}
+                                        <div class="fs-16 colROJO1">_error language_
                                         </div>
                                     </div>
                                 </div>
@@ -1146,7 +1146,7 @@
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">{{messages.errors.people}}
+                                        <div class="fs-16 colROJO1">_error people_
                                         </div>
                                     </div>
                                 </div>

@@ -6,9 +6,7 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable, ReplaySubject} from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
-import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { CartModel } from '../models/Cart.model';
 import { TextContentsModel } from '../models/TextContents.model';
 
@@ -31,7 +29,6 @@ export class ProviderService {
   private providerText$ = new ReplaySubject<TextContentsModel>()
   
   private provider1$ = new ReplaySubject<VisitasResultadoModel>()
-  private provider2$ = new ReplaySubject<VisitaAssetsModel>()
   private provider3$ = new ReplaySubject<CartModel>()
   private provider4$ = new ReplaySubject<boolean>()
   private provider5$ = new ReplaySubject<boolean>()
@@ -50,9 +47,7 @@ export class ProviderService {
   public get getThrowVisita() {
     return this.provider1$.asObservable();
   }
-  public get getThrowMessagesVisita() {
-    return this.provider2$.asObservable();
-  }
+
   public get getThrowCarritoupdate() {
     return this.provider3$.asObservable();
   }
@@ -85,9 +80,7 @@ export class ProviderService {
   public setThrowVisita(t: VisitasResultadoModel) {
     this.provider1$.next(t);
   }
-  public setThrowMessagesVisita(t: VisitaAssetsModel) {
-    this.provider2$.next(t);
-  }
+
   public setThrowCarritoupdate(t: CartModel ) {
     this.provider3$.next(t);
   }

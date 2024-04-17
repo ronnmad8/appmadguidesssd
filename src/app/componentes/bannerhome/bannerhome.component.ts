@@ -5,12 +5,9 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
 import { ProviderService } from '../../services/provider.service';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
-
 
 
 
@@ -52,20 +49,20 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
   }
 
 
+
+
   buscarprop(){
-    
     if(this.timeout) {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(()=> {
       this.loading = true;
       this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
-        let resultado = resp as ResultadoModel;
-        this.visitasprop = resultado.data as VisitasResultadoModel[];
+        this.visitasprop = resp as VisitasResultadoModel[];
+        this.visitasprop = this.globalService.getImageDefault(this.visitasprop);
         this.loading = false;
       }) ;
-    }, 10); 
-
+    }, 400); 
   }
   
   verbuscador(){

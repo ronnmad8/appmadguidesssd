@@ -6,11 +6,9 @@ import { Observable, Subject } from 'rxjs';
 import { NgwWowService } from 'ngx-wow';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 
 
@@ -20,7 +18,6 @@ import { TextContentsModel } from 'src/app/models/TextContents.model';
 })
 export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
  
-  @Input() messageData: VisitaAssetsModel = new  VisitaAssetsModel();
   @Input() relatedData: VisitasResultadoModel[] = [];
   @Input() textconts: TextContentsModel = new TextContentsModel();
 

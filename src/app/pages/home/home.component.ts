@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
     this.title.setTitle( "▷ Madguides");
     this.meta.updateTag({ name: 'description', content: 'madguides visitas guiadas en Madrid' });
     this.meta.updateTag({ name: 'author', content: 'madguides visitas guiadas en Madrid' });
-    this.meta.updateTag({ name: 'keywords', content: '▷ Madguides ✅ visitas guiadas en Madrid' });
+    this.meta.updateTag({ name: 'keywords', content: 'madguides visitas guiadas en Madrid' });
 
     this.wowService.init();
 
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
 
     this.getTexts();
     this.getRecommended();
-    //this.getComments();
+    this.getComments();
   
   }
 
@@ -106,8 +106,8 @@ export class HomeComponent implements OnInit {
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
           console.log("TEXTCONTENTS*** ", this.textconts)
         }
@@ -117,29 +117,27 @@ export class HomeComponent implements OnInit {
 
 
   getRecommended(){
-    debugger
     this.visitaService.getVisitasRecomendadas( this.globalService.idlang ).subscribe((resp)=>{
-      if(resp && resp["data"]){
-
-        console.log("VISITASRECOMENDAS  RESP*** ", resp)
-        this.visitasrecomendadas = resp["data"] as VisitasResultadoModel[] ?? [] ;
-        console.log("VISITASRECOMENDAS*** ", this.visitasrecomendadas)
+      if(resp){
+        this.visitasrecomendadas = resp as VisitasResultadoModel[] ?? [] ;
+        this.visitasrecomendadas = this.globalService.getImageDefault(this.visitasrecomendadas);
+        console.log("VISITASRECOMENDAS*** ", this.visitasrecomendadas);
       }
     })
   }
 
 
   getComments(){
-    //fakerun
-    // this.homeService.getCommentsHome().subscribe( (resp) => {
-    //   this.comments =  resp as ComentariosModel[];
-
-    // } );
+    this.globalService.getTextcomments().subscribe( (resp) => {
+      this.comments =  resp as ComentariosModel[];
+      this.comments.forEach(element => {
+        if(element.visit) { 
+          element.visit_name = element.visit[0].name ;
+        } ;
+      });
+      console.log("COMMENTS*** ", this.comments);
+    } );
   }
-
-  
-
-
 
 
 

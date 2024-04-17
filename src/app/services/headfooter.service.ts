@@ -8,7 +8,6 @@ import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { HomerespModel } from '../models/Homeresp.model';
 import { ComentariosModel } from '../models/Cometarios.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';

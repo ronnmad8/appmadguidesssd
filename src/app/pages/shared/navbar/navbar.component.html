@@ -128,9 +128,9 @@
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
-                        data-srcset="{{reserva.visit.images[0]}}">
-                      <img src="{{reserva.visit.images[0]}}" data-src="{{reserva.visit.images[0]}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
+                        data-srcset="{{reserva.visit.mediafile}}">
+                      <img src="{{reserva.visit.mediafile}}" data-src="{{reserva.visit.mediafile}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -465,24 +465,24 @@
           </div>
 
           <div class="posabsolpropbuscador">
-            <div id="panelpropbuscador" *ngIf="busqueda.length > 0 && visitasprop.length > 0">
+            <div id="panelpropbuscador" *ngIf="busqueda?.length > 0 && visitasprop?.length > 0">
               <div id="listaprop" class="bordeli p-0 m-0">
                 <div class="p-0" *ngFor="let visita of visitasprop">
                   <div class="cartamodalprop d-flex ">
                     <div class="imgcartamodalprop">
                       <div class="pc pl-1">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
-                            data-srcset="{{visita.images[0]}}">
-                          <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.mediafile}}"
+                            data-srcset="{{visita.mediafile}}">
+                          <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
                       <div class="mvl">
                         <picture>
-                          <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
-                            data-srcset="{{visita.images[0]}}">
-                          <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}" alt=""
+                          <source media="(min-width: 0px)" srcset="{{visita.mediafile}}"
+                            data-srcset="{{visita.mediafile}}">
+                          <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}" alt=""
                             class="imgcartamodalprop lazyload ">
                         </picture>
                       </div>
@@ -646,9 +646,9 @@
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
-                        data-srcset="{{reserva.visit.images[0]}}">
-                      <img src="{{reserva.visit.images[0]}}" data-src="{{reserva.visit.images[0]}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
+                        data-srcset="{{reserva.visit.mediafile}}">
+                      <img src="{{reserva.visit.mediafile}}" data-src="{{reserva.visit.mediafile}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -947,16 +947,16 @@
               </button>
               <div class="mh40"></div>
               <div class="px-0 mt-3">
-                <div *ngIf="busqueda.length > 0 && visitasprop.length > 0">
+                <div *ngIf="busqueda?.length > 0 && visitasprop?.length > 0">
                   <div id="listaprop2">
                     <div class="p-0" *ngFor="let visita of visitasprop">
                       <div class="cartamodalprop2 d-flex ">
                         <div class="imgcartamodalprop">
                           <div>
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.images[0]}}"
-                                data-srcset="{{visita.images[0]}}">
-                              <img src="{{visita.images[0]}}" data-src="{{visita.images[0]}}"
+                              <source media="(min-width: 0px)" srcset="{{visita.mediafile}}"
+                                data-srcset="{{visita.mediafile}}">
+                              <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}"
                                 alt="" class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>

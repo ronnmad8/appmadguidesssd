@@ -8,8 +8,8 @@ import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { ResultadoModel } from '../models/Resultado.model';
+import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { FiltersModel } from '../models/Filters.model';
 import { TimesModel } from '../models/Times.model';
 
@@ -41,67 +41,32 @@ export class BuscadorService {
 
   getResultadoBuscador( filters: FiltersModel, page: number ) {
 
-    let endpoint = '/visit?' ;
+    let endpoint = '/visitsearch' ;
     this.url = this.apiurl + endpoint;
+
     filters.precioFin = (filters.precioFin == 0 ? 1000000 : filters.precioFin );
    
-    ////filtro titulo
-    if(filters.title != ''){
-      this.url += "&title=" + filters.title ;  
-    }
-    
-    ///perpage
-    this.url += "&per_page= 8" ;
+    let params ={
+      "search": filters.title,
+      "tags" : filters.caracteristicas,
+      "categories" : filters.categorias,
+      "languages" : filters.languages,
+      "precioIni" : filters.precioIni,
+      "precioFin" : filters.precioFin,
+      "duracion" : filters.duracion,
+      "franjashorarias" : filters.franja,
+      "fechaini" : filters.fechaIni,
+      "fechafin" : filters.fechaFin,
+      "ordenar" : filters.ordenar,
+      "idlang" : this.globalService.idlang
 
-    ///pagina
-    this.url += "&page=" + page ;
+    }
 
-    ////filtro fechas
-    if(filters.fechaIni != ''){
-      this.url += "&date=" + filters.fechaIni 
-      if(filters.fechaFin != ''){
-        this.url +=  "," + filters.fechaFin; 
-      }  
-    }
-    ////filtro idiomas
-    if(filters.languages.length > 0){
-      this.url += "&language=" + filters.languages.join(','); 
-    }
-    ////filtro duracion
-    if(filters.duracion.length > 0){
-      this.url += "&duration=" + filters.duracion.join('-');  ; 
-    }
-    ////filtro franja horaria
-    if(filters.franja.length > 0){
-      this.url += "&time=" + filters.franja.join(',');
-    }
-    ////filtro precio
-    if(filters.precioIni != 0 || filters.precioFin != 0){
-       this.url += "&price=" + filters.precioIni + "," + filters.precioFin;
-    }
-    ///filtro caracteristicas
-    if(filters.caracteristicas.length > 0){
-      this.url += "&tags=" + filters.caracteristicas.join(',');
-    }
-    ///filtro categorias
-    if(filters.categorias.length > 0){
-      this.url += "&category=" + filters.categorias.join(',');
-    }
-    ///filtro orden
-    this.url += "&order=" + filters.ordenar + "&orderby="+ filters.orderasc ;
-
-    return this.http.get( `${this.url}` )
+    return this.http.post( `${this.url}`, params )
     .pipe(
       map( resp =>{
-        
-        var resultado: ResultadoModel  = resp as ResultadoModel; 
-        resultado.data.forEach((el: any, index: number) => {
-            if(el.visit_time_uuid != null && el.visit_time == null){
-                el = [];
-
-            }
-          });
-        return resultado;    
+        let respuesta =  resp["data"]  as VisitasResultadoModel[]; 
+        return respuesta;
       } ) ,
       catchError((err) => {
         console.error("Error  " , err.error);

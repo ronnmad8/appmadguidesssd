@@ -9,7 +9,6 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { BuscadorComponent } from '../../buscador/buscador.component';
 import { BusquedaComponent } from 'src/app/componentes/busqueda/busqueda.component';
 import { BannerbuscadorComponent } from 'src/app/componentes/bannerbuscador/bannerbuscador.component';
@@ -262,8 +261,8 @@ export class NavbarComponent implements OnInit {
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
         }
       })
@@ -285,15 +284,15 @@ export class NavbarComponent implements OnInit {
 
   
   getIdiomas(){
-    this.listasService.getIdiomas().subscribe( (resp) => {
-      let respuesta: LanguagesModel[] =  resp as LanguagesModel[];
-      this.idiomas = respuesta ;
+    //this.listasService.getIdiomas().subscribe( (resp) => {
+    //  let respuesta: LanguagesModel[] =  resp as LanguagesModel[];
+      this.idiomas = this.listasService.getIdiomas();
       
       let iso = localStorage.getItem('currentLanguage');
       if(this.idiomas != null){
         this.idioma = this.idiomas.find(el => el.iso == iso)?.name ?? "";
       }
-    } );
+   // } );
   }
   
 
@@ -537,6 +536,20 @@ export class NavbarComponent implements OnInit {
   }
 
 
+  // buscarprop(){
+  //   if(this.timeout) {
+  //     clearTimeout(this.timeout);
+  //   }
+  //   this.timeout = setTimeout(()=> {
+  //     this.loading = true;
+  //     this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
+  //       let resultado = resp as ResultadoModel;
+  //       this.visitasprop = resultado.data as VisitasResultadoModel[];
+  //       this.loading = false;
+  //     }) ;
+  //   }, 10);
+  // }
+
   buscarprop(){
     if(this.timeout) {
       clearTimeout(this.timeout);
@@ -544,11 +557,11 @@ export class NavbarComponent implements OnInit {
     this.timeout = setTimeout(()=> {
       this.loading = true;
       this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
-        let resultado = resp as ResultadoModel;
-        this.visitasprop = resultado.data as VisitasResultadoModel[];
+        this.visitasprop = resp as VisitasResultadoModel[];
+        this.visitasprop = this.globalService.getImageDefault(this.visitasprop);
         this.loading = false;
       }) ;
-    }, 10);
+    }, 400); 
   }
 
 

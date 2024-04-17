@@ -11,9 +11,9 @@
             </div>
             <div  class="p-2 mt-4 ovhidden" >
                 <swiper [config]="config">
-                    <div id="cate-{{cate.id}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
+                    <div id="cate-{{cate?.id}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
                        <div class="brdcirclebusca " [ngClass]="{'selcate' : cate.selected  }"  >
-                        {{cate.name.length > 26 ? cate.name.substring(0,24)+'..' : cate.name }}
+                        {{getTextCort(cate.content, 26) }}
                        </div> 
                     </div>
                 </swiper>
@@ -31,11 +31,11 @@
             </div>
             <div  class="p-2 mh40 "  >
                 <swiper [config]="config">
-                    <div id="cate-{{cate.name}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
+                    <!-- <div id="cate-{{cate.name}}" class="cupo mx-1"  *ngFor="let cate of categoriasfiltro "  (click)="setCategoriaFiltro($event)"  >
                        <div class="brdcirclebuscamvl " [ngClass]="{'selcate' : cate.selected  }"  >
                         {{cate.name.length > 16 ? cate.name.substring(0,14)+'..' : cate.name }}
                        </div> 
-                    </div>
+                    </div> -->
                 </swiper>
             </div>
         </div>
@@ -83,7 +83,7 @@
                         <span>{{textconts.buscador_resultado}}:</span>
                     </div>
                     <div id="introducefechascal" class="d-flex cupo"  (click)="verFechas()" >
-                        <img src="../../assets/images/i-calendario.svg" class="imicono2" draggable="false">
+                        <img src="assets/images/i-calendario.svg" class="imicono2" draggable="false">
                         <span *ngIf="filtFechas == ''">{{textconts.buscador_ordenar}}</span>
                         <span *ngIf="filtFechas != ''">{{filtFechas}}</span>
                     </div>
@@ -119,7 +119,7 @@
                             <ol class="olCalendar">
                                 <li *ngFor="let day of week" class="day-name ilCalendar ">{{day | slice:0:1}}</li>
         
-                                <li class="liCalendar" [ngClass]="{'daySelected': ( day.selected ) }"
+                                <li class="liCalendar" [ngClass]="{'daySelected': (  (day === this.dayIniSel || day === this.dayFinSel) ) }"
                                     (click)="clickDay(day)" [style.gridColumnStart]="first ? day?.indexWeek : 'auto'"
                                     *ngFor="let day of monthSelect; let first = first">
                                     <span   > {{day?.value}}</span>
@@ -192,7 +192,7 @@
                                 <div class="listachecks" *ngFor="let li of idiomasfiltro; let i = index">
                                     <div class="custom-control custom-checkbox "   >
                                         <input type="checkbox" class="custom-control-input " [disabled]="li.disabled"
-                                        id="idioma-{{i}}" value="{{li.uuid}}"  [ngModel]="li.selected" (change)="checkLanguagesSelected($event)" >
+                                        id="idioma-{{i}}" value="{{li.id}}"  [ngModel]="li.selected" (change)="checkLanguagesSelected($event)" >
                                         <label for="idioma-{{i}}" class="custom-control-label checkfiltrotexto"> {{li.name | capitalize}}
                                         </label>
                                     </div>
@@ -202,11 +202,11 @@
     
                         <div id="zonafiltroduracion" class="mb-4 p-0 posrelR">
                             <div class="selecfiltrostit ">
-                                {{textconts.buscador_precio}}
+                                {{textconts.buscador_duracion}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosduracion()">
-                                <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verduracion" >
-                                <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verduracion" >
+                                <img src="assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verduracion" >
+                                <img src="assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verduracion" >
                             </div>
                             <div class="p-0 m-0 animated fadeIn " *ngIf="verduracion">
                                 <div class="listachecks" *ngFor="let li of duracionesfiltro; let i = index">
@@ -225,8 +225,8 @@
                                 {{textconts.buscador_franja}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosfranja()">
-                                <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verfranja" >
-                                <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verfranja" >
+                                <img src="assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!verfranja" >
+                                <img src="assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="verfranja" >
                             </div>
                             <div class="p-0 m-0 animated fadeIn " *ngIf="verfranja">
                                 <div class="listachecks" *ngFor="let li of franjasfiltro; let i = index">
@@ -245,8 +245,8 @@
                                 {{textconts.buscador_precio}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltrosprecios()">
-                                <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false"  *ngIf="!verprecios" >
-                                <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false"  *ngIf="verprecios" >
+                                <img src="assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false"  *ngIf="!verprecios" >
+                                <img src="assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false"  *ngIf="verprecios" >
                             </div>
                             <div class="p-0 m-0 animated fadeIn " *ngIf="verprecios">
                                 <div class="posrel ">
@@ -263,8 +263,8 @@
                                 {{textconts.buscador_caracteristicas}}
                             </div>
                             <div class="selecfiltrosarrow cupo" (click)="verfiltroscaracteristicas()">
-                                <img src="../../assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!vercaracteristicas" >
-                                <img src="../../assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="vercaracteristicas" >
+                                <img src="assets/images/i-flecha-abajo.svg" class="imicono4" draggable="false" *ngIf="!vercaracteristicas" >
+                                <img src="assets/images/i-flecha-arriba.svg" class="imicono4" draggable="false" *ngIf="vercaracteristicas" >
                             </div>
                             <div class="p-0 m-0 animated fadeIn " *ngIf="vercaracteristicas">
                                 <div class="listachecks" *ngFor="let li of caracteristicasfiltro; let i = index">
@@ -289,7 +289,7 @@
 
         </div>
 
-        <div id="resultadobusca"    >
+        <div id="resultadobusca" style="position: relative;"   >
             <div id="ordenarpor pc" *ngIf="!isrespon" class="d-flex"   >
                 <div id="ordenarportexto">
                     {{textconts.buscador_ordenadopor}}
@@ -299,10 +299,10 @@
                         (change)="cambiarorden($event)"  >
                         <option value="{{li.id}}" *ngFor="let li of listaordenarfiltro">
                             <span *ngIf="li.id == 1" > {{textconts.buscador_relevancia}} </span>
-                            <span *ngIf="li.id == 2" > {{textconts.buscador_precio}} - {{textconts.buscador_duracionmenor}}  </span>
-                            <span *ngIf="li.id == 3" > {{textconts.buscador_precio}} - {{textconts.buscador_duracionnmayor}}   </span>
-                            <span *ngIf="li.id == 4" > {{textconts.buscador_duracion}} - {{textconts.buscador_duracionmenor}}   </span>
-                            <span *ngIf="li.id == 5" > {{textconts.buscador_duracion}} - {{textconts.buscador_duracionnmayor}}   </span>
+                            <span *ngIf="li.id == 2" > {{textconts.buscador_preciomasbajo}}  </span>
+                            <span *ngIf="li.id == 3" > {{textconts.buscador_preciomasalto}}   </span>
+                            <span *ngIf="li.id == 4" > {{textconts.buscador_duracionmenor}}  </span>
+                            <span *ngIf="li.id == 5" > {{textconts.buscador_duracionmayor}}    </span>
                             
                         </option>
                     </select>
@@ -310,7 +310,7 @@
             </div>
             
 
-            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of listaresultados; let i = index"   >
+            <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of resultado; let i = index"   >
                 
                 <div *ngIf=" visita?.uuid != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita?.uuid, visita?.titulo)"  >
                     <div class="visitastemporada" *ngIf="visita?.temporada " >
@@ -321,34 +321,34 @@
 
                     <div class="imgvisitabuscador">
                         <picture>
-                            <source media="(min-width: 0px)" srcset="{{visita?.images[0]}}" data-srcset="{{visita?.images[0]}}"
+                            <source media="(min-width: 0px)" srcset="{{visita?.mediafile}}" data-srcset="{{visita?.mediafile}}"
                                 class="pc">
-                            <img src="{{visita?.images[0]}}" data-src="{{visita?.images[0]}}" alt=""
+                            <img src="{{visita?.mediafile}}" data-src="{{visita?.mediafile}}" alt=""
                                 class="pc imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.png' "  >
-                            <source media="(min-width: 0px)" srcset="{{visita?.images[0]}}" data-srcset="{{visita?.images[0]}}"
+                            <source media="(min-width: 0px)" srcset="{{visita?.mediafile}}" data-srcset="{{visita?.mediafile}}"
                                 class="mvl">
-                            <img src="{{visita?.images[0]}}" data-src="{{visita?.images[0]}}" alt=""
+                            <img src="{{visita?.mediafile}}" data-src="{{visita?.mediafile}}" alt=""
                                 class="mvl imgvisitabuscador " onerror="this.error=null;this.src='assets/images/sinimagen.png' "  >
                         </picture>
                     </div>
 
                     <div class="panelinfovisitabuscador"   >
                         <div class="titvisitabuscador">
-                            <span>{{visita?.titulo.length > 30 ? visita?.titulo.substring(0,27)+"..." : visita?.titulo}} </span>
+                            <span>{{ getVisitaTitulo(visita?.titulo)}} </span>
                         </div>
                         <div class="textvisitabuscador " *ngIf="!isrespon">
-                            <span  [innerHTML]="visita.descripcion.length > 90 ? visita.descripcion.substring(0,87)+'...' : visita.descripcion " >
+                            <span  [innerHTML]="getVisitaDescripcion(visita?.descripcion, 120) " >
                             </span>
                         </div>
 
                         <div class="infovisitabuscador w-100 d-flex ">
                             <div class="preciovisitabuscador ">
-                                <span class="preciovisitaeurobuscador posrel">{{visita.preciohoramin ?? 0  }} € </span>
+                                <span class="preciovisitaeurobuscador posrel">{{getFormattedPrice(visita) ?? 0  }} € </span>
                                 <span class="porpersonabuscador">por persona</span>
                             </div>
                             <div class="horasvisitabuscador d-flex">
                                 <img class="imghorasvisitabuscador mr-1" src='assets/images/i-reloj.svg' alt="" onerror="this.src='assets/images/sinimagen.png' ">
-                                <span class="cantidadhorasvisitabuscador mx-1">{{visita.duracionmin ?? 0 }}h</span>
+                                <span class="cantidadhorasvisitabuscador mx-1">{{ getFormattedDuration(visita)  ?? 0 }}h</span>
                             </div>
                             <div class="idiomasvisitabuscador cupo "  (mouseenter)="onSelect(i)" (mouseleave)="deSelect()" 
                             (touch)="onSelect(i)" (touchend)="deSelect()"  >
@@ -358,7 +358,7 @@
                             <div *ngIf="selectedVisita == i.toString()" class="posabsolidiomasdispo fs-10"   >
                                <div>{{textconts.buscador_disponible}} </div>
                                <div *ngFor="let i of visita.languages">
-                                 <div>{{i | idiomaiso}}</div>
+                                 <div>{{i.name}}</div>
                                </div>
                             </div>
                         </div>
@@ -367,20 +367,20 @@
             </div>
 
             <div class="mh300" *ngIf="listaresultados.length == 0 && cargado"  >
-                <div class="panelVisitaBuscador d-flex " style="display: flex;
+                <div class="panelVisitaBuscador d-flex " style="
                 justify-content: center;
                 align-items: center;"  >
                    {{textconts.buscador_sinresultados}}
                 </div> 
             </div>
-            <!-- <div class="spinner-container mt-4 text-center w-100 mh100" *ngIf="loading "  >
-                <div class="spinner-border" role="status">
+            <div class="spinner-container mt-4 text-center w-100 mh100" style="position: absolute; top: 20px; left: auto; right: auto"  *ngIf="loading "  >
+                <div class="spinner-border" style="position: absolute" >
                 </div>
-            </div> -->
+            </div>
             <div class="w-100 p-1 mt-1 text-center mx-auto mh100">
                 <button class="btRedondoVerMasResultados animated fadeIn slow" type="button" 
                 (click)="vermasresultados()" 
-                *ngIf="listaresultados.length < resultado.total && listaresultados.length != 0" >
+                *ngIf="listaresultados.length != 0" >
                     <span class="ff-JB">{{textconts.cart_search}} </span>
                 </button>               
             </div>

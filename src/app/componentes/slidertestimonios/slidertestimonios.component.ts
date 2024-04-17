@@ -6,11 +6,13 @@ import { Observable, Subject } from 'rxjs';
 import { NgwWowService } from 'ngx-wow';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { HomeService } from '../../services/home.service';
+import { VisitaService } from '../../services/visita.service';
 import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, SwiperPaginationInterface, SwiperScrollbarInterface } from 'ngx-swiper-wrapper';
 import { ComentariosModel } from 'src/app/models/Cometarios.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 
 
 
@@ -71,6 +73,7 @@ export class SlidertestimoniosComponent implements OnInit {
     private wowService: NgwWowService,
     private router: Router,
     private homeService: HomeService,
+    private visitaService: VisitaService,
   ) 
   {  
       this.wowService.init(); 
@@ -84,9 +87,16 @@ export class SlidertestimoniosComponent implements OnInit {
 
 
     verdetalle(comentario: ComentariosModel){
-      this.router.navigate(['/visita', comentario.visit_lang_title , comentario.visit_uuid ]);
+      this.router.navigate(['/visita/', comentario.visit_name ]);
     }
 
  
+    getFormattedDuration(visita: VisitasResultadoModel): string {
+      return this.visitaService.getFormattedDuration(visita);
+    }
+
+    getFormattedPrice(visita: VisitasResultadoModel): string {
+      return this.visitaService.getFormattedPrice(visita);
+    }
 
 }

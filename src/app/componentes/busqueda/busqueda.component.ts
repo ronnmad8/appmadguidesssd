@@ -8,11 +8,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { VisitasModel } from 'src/app/models/Visitas.model';
+
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { ListasService } from '../../services/listas.service';
 import { GlobalService } from '../../services/global.service';
+import { VisitaService } from '../../services/visita.service';
 import { Options } from '@angular-slider/ngx-slider';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
@@ -41,9 +42,9 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   @Input() textconts: TextContentsModel = new TextContentsModel();
 
   sWindow: any;
-  maxvalueprecio = 300;
+  maxvalueprecio = 100;
   listaresultados: VisitasResultadoModel[] = [];
-  resultado: ResultadoModel = new ResultadoModel();
+  resultado: VisitasResultadoModel[] = [];
   loading: boolean = false;
   monthSelect: any[];
   dateSelect: any;
@@ -74,11 +75,11 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
 
   fechaIni: string = '';
   fechaFin: string = '';
-  duracionSel: string[] = [];
-  languagesSel: string[] = [];
-  franjasSel: string[] = [];
+  duracionSel: number[] = [];
+  languagesSel: number[] = [];
+  franjasSel: number[] = [];
   caracteristicasSel: number[] = [];
-  categoriasSel: string[] = [];
+  categoriasSel: number[] = [];
   ordenarSel: OrdenModel = new OrdenModel();
 
   precioIni: number = 0;
@@ -89,17 +90,16 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   };
 
   mostraridiomasdisponibles: boolean = false;
-
   filters: FiltersModel = new FiltersModel();
 
   ///pasti filtros
   filtPrecios: string = '';
-  filtLanguages: string[] = [];
+  filtLanguages: number[] = [];
   filtFechas: string = '';
-  filtDuracion: string[] = [];
-  filtFranja: string[] = [];
-  filtCaracteristicas: string[] = [];
-  filtCategorias: string[] = [];
+  filtDuracion: number[] = [];
+  filtFranja: number[] = [];
+  filtCaracteristicas: number[] = [];
+  filtCategorias: number[] = [];
 
   fechasfiltro: string[] = [];
   duracionesfiltro: DuracionesModel[] = [];
@@ -114,7 +114,6 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   verordenar: boolean = false;
   ordfixed: boolean = false;
   
-
 
   public config: SwiperConfigInterface = {
     autoplay: false,
@@ -152,7 +151,6 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
       390: {
         slidesPerView: 1
       },
-
     }
 
   };
@@ -161,6 +159,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     private router: Router,
     private buscadorService: BuscadorService,
     private globalService: GlobalService,
+    private visitaService: VisitaService,
     private listasService: ListasService,
     private platformService: PlatformService,
     private cdr: ChangeDetectorRef
@@ -169,12 +168,13 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getPreciosFiltro();
+    
     this.getIdiomasFiltro();
     this.getDuracionesFiltro();
     this.getFranjasFiltro();
     this.getCaracteristicasFiltro();
     this.getCategoriasFiltro();
-    this.getPreciosFiltro();
     this.getListaOrdenar();
 
     this.cambiarvalorfiltroprecio();
@@ -185,13 +185,11 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.isrespon = this.platformService.isrespon;
 
 
-
     this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
-    
-    
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:scroll')
@@ -220,22 +218,25 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
 
   verdisponibilidad() {
     this.page = 1;
-    this.listaresultados = [];
+    //this.listaresultados = [];
     this.filtrarBusqueda.emit();
   }
+
   vermasresultados() {
-    
+    //all = 10000000
     this.page++;
     this.filtrarBusqueda.emit();
     
   }
-  getVisitasBuscador(result: ResultadoModel) {
+
+  getVisitasBuscador(result: VisitasResultadoModel[]) {
     
     let sWindow = this.platformService.sWindow ;
     sWindow.scrollTo({ top: this.scrollPosition + 10 });
-    this.resultado = result as ResultadoModel;
-    this.listaresultados = this.listaresultados.concat(this.resultado.data as VisitasResultadoModel[]);
-    console.log("resultados ++  ", this.listaresultados );
+    this.resultado = result as VisitasResultadoModel[];
+    //this.listaresultados = this.listaresultados.concat(this.resultado as VisitasResultadoModel[]);
+    console.log("resultados ++  ",  this.resultado );
+
   }
 
   ///////////////filtrar end//////////////////////////////
@@ -261,6 +262,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     let esteyear = hoy.format('YYYY');
     this.getDaysFromDate(estemes, esteyear);
   }
+
   getDaysFromDate(month: any, year: any) {
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
@@ -301,6 +303,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   changeMonth(flag: any) {
     if (flag < 0) {
       const prevDate = this.dateSelect.clone().subtract(1, 'month');
@@ -310,6 +313,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
       this.getDaysFromDate(nextDate.format('MM'), nextDate.format('YYYY'));
     }
   }
+
   clickDay(day: CalendarModel) {
     const Month = this.dateSelect.format('MM');
     const Year = this.dateSelect.format('YYYY');
@@ -317,12 +321,13 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     const objectDate = moment(parse);
     this.dateValue = objectDate;
     if (this.dayIniSel == null) {
+      
       this.dayIniSel = day;
       day.selected = true;
       this.mesIni = this.months[Month - 1];
       this.diaIni = this.dateValue.format('DD');
       this.fechaIni = this.dateValue.format('YYYY-MM-DD');
-    } else if (this.dayIniSel != null) {
+    } else if (this.dayIniSel != null ) {
       this.dayFinSel = day;
       day.selected = true;
       this.mesFin = this.months[Month - 1];
@@ -330,11 +335,19 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
       this.fechaFin = this.dateValue.format('YYYY-MM-DD');
 
       if (this.fechaFin != null) {
+
+        if (moment(this.fechaFin).isBefore(moment(this.fechaIni))) {
+          let aux = this.fechaIni;
+          this.fechaIni = this.fechaFin;
+          this.fechaFin = aux;
+        }
+
         this.fechasSel = this.dateRange(this.fechaIni, this.fechaFin);
       }
+
+      
     }
   }
-
 
   dateRange(start: string, end: string) {
     let dates = [];
@@ -344,8 +357,10 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
       dates.push(moment(currentDate).format('YYYY-MM-DD'));
       currentDate = moment(currentDate).add(1, 'days');
     }
+    
     return dates;
   }
+  
   verFechasManana() {
     let hoy = moment();
     let manana = hoy.add(1, 'days');
@@ -358,6 +373,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.clickDay(esedia);
     this.getDaysFromDate(esedia.month, esedia.year);
   }
+
   verFechasHoy() {
     let hoy = moment();
     let esedia: CalendarModel = new CalendarModel();
@@ -369,6 +385,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.clickDay(esedia);
     this.getDaysFromDate(esedia.month, esedia.year);
   }
+
   borrarFechas() {
     this.filters.fechaIni = '';
     this.filters.fechaFin = '';
@@ -384,6 +401,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.filtFechas = '';
     this.getFechasHoy();
   }
+
   aplicarFechas() {
     this.verFechas();
     if (this.mesIni != '' && this.mesFin != '') {
@@ -406,21 +424,21 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   getCategoriasFiltro() {
     this.listasService.getCategorias().subscribe((resp) => {
       this.categoriasfiltro = resp as CategoriasModel[];
+      console.log("Categorias filtro ** ", this.categoriasfiltro)
     });
   }
 
   ///idiomas
-
   getIdiomasFiltro() {
-    this.listasService.getIdiomas().subscribe((resp) => {
-      this.idiomasfiltro = resp as LanguagesModel[];
+    
+      this.idiomasfiltro = this.listasService.getIdiomas();
       this.idiomasfiltro.forEach((idioma) => {
         if(idioma.iso == 'es'){
            idioma.selected = true;
            idioma.disabled = true;
         }
       })
-    });
+    
   }
 
   ///duracion
@@ -475,8 +493,18 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.franjasfiltro.push(f3);
   }
 
+  setPrecioMaxByVisitas(){
+    this.resultado.forEach((element) => { 
+      if(this.maxvalueprecio < element.precio){
+        this.maxvalueprecio = element.precio;
+      }
+    })
+    this.getPreciosFiltro();
+  }
+
   ///precio
   getPreciosFiltro() {
+  
     this.precioFin = 0;
     this.valormaximo = this.maxvalueprecio;
     this.valorfiltroprecio = this.maxvalueprecio;
@@ -491,6 +519,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   getCaracteristicasFiltro() {
     this.listasService.getTags().subscribe((resp) => {
       this.caracteristicasfiltro = resp as TagsModel[];
+      console.log("Caracteristicas tags filtro ** ", this.caracteristicasfiltro)
     });
   }
 
@@ -528,8 +557,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.listaordenarfiltro.push(o4);
     this.listaordenarfiltro.push(o5);
 
-    this.filters.ordenar = this.listaordenarfiltro[0].tipo;
-    this.filters.orderasc = this.listaordenarfiltro[0].asc;
+    this.filters.ordenar = this.listaordenarfiltro[0].id;
+    
   }
 
   ///precio
@@ -537,6 +566,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.filtPrecios = this.precioIni + ' - ' + this.precioFin;
     this.filters.precioIni = this.precioIni;
     this.filters.precioFin = this.precioFin;
+    this.maxvalueprecio = this.precioFin;
+    
     this.verdisponibilidad();
   }
 
@@ -545,8 +576,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     let val = e.target.value;
     let order: OrdenModel =
       this.listaordenarfiltro.find((x) => x.id == val) ?? new OrdenModel();
-    this.filters.ordenar = order.tipo;
-    this.filters.orderasc = order.asc;
+    this.filters.ordenar = order.id;
     this.verdisponibilidad();
   }
 
@@ -596,6 +626,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.franjasfiltro.forEach((x) => (x.selected = false));
     this.caracteristicasfiltro.forEach((x) => (x.selected = false));
     this.categoriasfiltro.forEach((x) => (x.selected = false));
+    this.maxvalueprecio = 100;
     this.precioIni = 0;
     this.precioFin = this.maxvalueprecio;
     
@@ -607,28 +638,27 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.filtLanguages = [];
     this.filtFechas = '';
     this.filters = new FiltersModel();
-    this.filters.ordenar = this.listaordenarfiltro[0].tipo;
-    this.filters.orderasc = this.listaordenarfiltro[0].asc;
+    this.filters.ordenar = this.listaordenarfiltro[0].id;
     this.filters.precioIni = 0;
     this.filters.precioFin = this.valormaximo;
     this.filters.fechaIni = '';
     this.filters.fechaFin = '';
     this.filters.duracion = [];
     this.filters.franja = [];
+
+    this.getPreciosFiltro();
   }
 
   ordenarbusqueda() {
-    this.filters.ordenar = this.listaordenarfiltro[0].tipo;
-    this.filters.orderasc = this.listaordenarfiltro[0].asc;
+    this.filters.ordenar = this.listaordenarfiltro[0].id;
   }
 
   /// sel idiomas
   checkLanguagesSelected(ev: any) {
-
     let va = ev.target.value;
     this.idiomasfiltro.forEach((item) => {
       item.disabled = false;
-      if (item.uuid == va) {
+      if (item.id == va) {
         item.selected = ev.target.checked;
       }
     });
@@ -637,24 +667,24 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     .filter((x) => x.selected);
     if(sels.length==1){
       this.idiomasfiltro.forEach((item) => {
-        if (item.uuid == sels[0].uuid) {
+        if (item.id == sels[0].id) {
           item.disabled = true;
         }
       });
     }
     this.filtLanguages = sels
-      .map((x) => x.name);
+      .map((x) => x.id);
     this.filters.languages = sels
-      .map((x) => x.iso);
+      .map((x) => x.id);
 
     this.verdisponibilidad();
   }
 
 
-  deleteFiltLanguage(ff: string) {
+  deleteFiltLanguage(ff: number) {
     this.filtLanguages = this.filtLanguages.filter((x) => x != ff);
     this.idiomasfiltro.forEach((item) => {
-      if (item.name == ff) {
+      if (item.id == ff) {
         item.selected = false;
       }
     });
@@ -672,14 +702,16 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
 
     let du = this.duracionesfiltro.filter((x) => x.selected);
     this.duracionSel = [];
+    this.filters.duracion = [];
     this.filtDuracion = [];
     du.forEach((item) => {
-      this.duracionSel.push(item.valueMin + ',' + item.valueMax);
-      this.filtDuracion.push(item.valueMin + ' - ' + item.valueMax);
+      this.duracionSel.push(item.id);
+      this.filtDuracion.push(item.id);
+      this.filters.duracion.push(item.valueMax);
     });
-    this.filters.duracion = this.duracionSel;
     this.verdisponibilidad()
   }
+
   deleteFiltDuracion(f: any) {
     this.filtDuracion = this.filtDuracion.filter((x) => x != f);
     this.duracionSel = this.duracionSel.filter((x) => x != f);
@@ -705,17 +737,18 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.franjasSel = [];
     this.filtFranja = [];
     fra.forEach((item) => {
-      this.franjasSel.push(item.valueMin + ',' + item.valueMax);
-      this.filtFranja.push(item.label);
+      this.franjasSel.push(item.id);
+      this.filtFranja.push(item.id);
     });
     this.filters.franja = this.franjasSel;
     this.verdisponibilidad()
   }
-  deleteFiltFranja(ff: string) {
+
+  deleteFiltFranja(ff: number) {
     this.filtFranja = this.filtFranja.filter((x) => x != ff);
     this.franjasSel = this.franjasSel.filter((x) => x != ff);
     this.franjasfiltro.forEach((item) => {
-      if (item.label == ff) {
+      if (item.id == ff) {
         item.selected = false;
       }
     });
@@ -736,20 +769,20 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.filtCaracteristicas = [];
     car.forEach((item) => {
       this.caracteristicasSel.push(item.id);
-      this.filtCaracteristicas.push(item.name);
+      this.filtCaracteristicas.push(item.id);
     });
     this.filters.caracteristicas = this.caracteristicasSel;
     this.verdisponibilidad()
   }
 
   
-  deleteFiltCaracteristica(fc: string) {
+  deleteFiltCaracteristica(fc: number) {
     this.filtCaracteristicas = this.filtCaracteristicas.filter((x) => x != fc);
     this.caracteristicasSel = this.caracteristicasfiltro
-      .filter((x) => x.name != fc)
+      .filter((x) => x.id != fc)
       .map((x) => x.id);
     this.caracteristicasfiltro.forEach((item) => {
-      if (item.name == fc) {
+      if (item.id == fc) {
         item.selected = false;
       }
     });
@@ -769,20 +802,20 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.categoriasSel = [];
     this.filtCategorias = [];
     ca.forEach((item) => {
-      this.categoriasSel.push(item.name);
-      this.filtCategorias.push(item.content);
+      this.categoriasSel.push(item.id);
+      this.filtCategorias.push(item.id);
     });
     this.filters.categorias = this.categoriasSel;
     this.verdisponibilidad()
   }
 
-  deleteFiltCategoria(fc: string) {
+  deleteFiltCategoria(fc: number) {
     this.filtCategorias = this.filtCategorias.filter((x) => x != fc);
     this.categoriasSel = this.categoriasfiltro
-      .filter((x) => x.name != fc)
-      .map((x) => x.content);
+      .filter((x) => x.id != fc)
+      .map((x) => x.id);
     this.categoriasfiltro.forEach((item) => {
-      if (item.name == fc) {
+      if (item.id == fc) {
         item.selected = false;
       }
     });
@@ -791,6 +824,28 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   }
 
 
+
+ 
+  getFormattedDuration(visita: VisitasResultadoModel): string {
+    return this.visitaService.getFormattedDuration(visita);
+  }
+
+  getFormattedPrice(visita: VisitasResultadoModel): string {
+    return this.visitaService.getFormattedPrice(visita);
+  }
+
+
+  getVisitaTitulo( titulo:string, limit: number = 30): string {
+    return this.visitaService.getFormattedTexto(titulo , limit );
+  }
+
+  getVisitaDescripcion( desc:string, limit: number = 90): string {
+    return this.visitaService.getFormattedTexto(desc , limit );
+  }
+
+  getTextCort( desc:string, limit: number = 30): string {
+    return this.visitaService.getFormattedTexto(desc , limit );
+  }
 
 
 }

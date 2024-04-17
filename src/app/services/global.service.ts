@@ -7,13 +7,14 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { TimesModel } from '../models/Times.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { PlatformService } from './platform.service';
 import { TextDataModel } from '../models/TextData.model';
 import { TextContentsModel } from '../models/TextContents.model';
 import { ProviderService } from './provider.service';
+import { ComentariosModel } from '../models/Cometarios.model';
+import { LanguagesModel } from '../models/Languages.model';
 
 
 @Injectable({
@@ -30,7 +31,6 @@ export class GlobalService {
   idUsuario: string = '';
   url: string = '';
   apiurl: string;
-  apiurlold: string;
 
   listatiposidentificacion: any[];
   week: any;
@@ -50,24 +50,26 @@ export class GlobalService {
   ) {
 
     this.apiurl = environment.apiurl;
-    this.apiurlold = environment.apiurlold;
     this.setlanguages();
     this.setHoursId()
     this.getListas();
 
   }
 
+
+
+
   getListas() {
 
     this.listaidlangs = [
-      { id: 1, name: 'es' },
-      { id: 2, name: 'en' },
-      { id: 3, name: 'fr' },
-      { id: 4, name: 'de' },
-      { id: 5, name: 'it' },
-      { id: 6, name: 'pl' },
-      { id: 7, name: 'el' },
-      { id: 8, name: 'pt' },
+      { id: 1, iso: 'es', iso_code: 'es_ES', name : 'español' },
+      { id: 2, iso: 'en', iso_code: 'en_EN', name : 'inglés' },
+      { id: 3, iso: 'fr', iso_code: 'fr_FR', name : 'francés' },
+      { id: 4, iso: 'de', iso_code: 'de_DE', name : 'aleman'},
+      { id: 5, iso: 'it', iso_code: 'it_IT', name : 'italiano' },
+      { id: 6, iso: 'pl', iso_code: 'pl_PL', name : 'polaco' },
+      { id: 7, iso: 'el', iso_code: 'el_EL', name : 'griego' },
+      { id: 8, iso: 'pt', iso_code: 'pt_PT', name : 'portugués' },
     ];
 
     this.listatiposidentificacion = [
@@ -100,33 +102,6 @@ export class GlobalService {
       'Noviembre',
       'Diciembre',
     ];
-
-    // this.listahoras = [
-    //   { key: '0', value: '00:00' },
-    //   { key: '1', value: '01:00' },
-    //   { key: '2', value: '02:00' },
-    //   { key: '3', value: '03:00' },
-    //   { key: '4', value: '04:00' },
-    //   { key: '5', value: '05:00' },
-    //   { key: '6', value: '06:00' },
-    //   { key: '7', value: '07:00' },
-    //   { key: '8', value: '08:00' },
-    //   { key: '9', value: '09:00' },
-    //   { key: '10', value: '10:00' },
-    //   { key: '11', value: '11:00' },
-    //   { key: '12', value: '12:00' },
-    //   { key: '13', value: '13:00' },
-    //   { key: '14', value: '14:00' },
-    //   { key: '15', value: '15:00' },
-    //   { key: '16', value: '16:00' },
-    //   { key: '17', value: '17:00' },
-    //   { key: '18', value: '18:00' },
-    //   { key: '19', value: '19:00' },
-    //   { key: '20', value: '20:00' },
-    //   { key: '21', value: '21:00' },
-    //   { key: '22', value: '22:00' },
-    //   { key: '23', value: '23:00' },
-    // ];
 
     this.idiomasIsos = [
       { key: 'es', value: 'español', value_en: 'Spanish' },
@@ -193,24 +168,6 @@ export class GlobalService {
     }
   }
 
-  // getImagenesFilt(idenlace: number, idtipo: number) {
-  //   let endpoint = '/imagenes/filt';
-  //   this.url = this.apiurl + endpoint;
-  //   const filtData = {
-  //     enlaces_id: idenlace,
-  //     tipos_id: idtipo,
-  //   };
-  //   return this.http.post(`${this.url}`, filtData).pipe(
-  //     map((res) => res as ImagenesModel[]),
-  //     catchError((err) => {
-  //       console.error('Error  ', err.error);
-  //       // if(err.includes("Unauthorized")){
-  //       //   this.router.navigateByUrl("/homecliente");
-  //       // }
-  //       return err.error;
-  //     })
-  //   );
-  // }
 
   getIdiomabyIso(iso: string) {
     let idioma = this.idiomasIsos.find((x) => x.key == iso);
@@ -277,28 +234,87 @@ export class GlobalService {
       if(resp && resp["data"]){
         this.listaTextDataModel = resp["data"] as TextDataModel[] ?? [] ;
         this.textcontents = this.setTextContentsByLanguage(this.listaTextDataModel , this.idlang );
-        console.log("setTextContents()  ", this.textcontents)
       }
     })
   }
 
   setHoursId(){
-    this.getHoursId().subscribe((resp)=>{
-      if(resp){
-        this.listahoras = resp as string[] ?? [] ;
-        console.log("setHoursId()  ", this.textcontents)
-      }
-    })
+    // this.getHoursId().subscribe((resp)=>{
+    //   if(resp){
+    //     this.listahoras = resp as string[] ?? [] ;
+    //     console.log("setHoursId()  ", this.textcontents)
+    //   }
+    // })
   }
 
 
+  getImageDefault(visitas: VisitasResultadoModel[]) {
+    let imagedefault =  'assets/images/sinimagen.png';
+    if(visitas != null){
+      visitas.forEach(element => {
+        element.mediafile = imagedefault;
+        if(element.mediafiles.length > 0) { element.mediafile = element.mediafiles[0].url } ;
+      });
+    }
+    return  visitas;
+  }
+
+  getLanguages(visitas: VisitasResultadoModel[]) {
+    if(visitas != null){
+      visitas.forEach(element => {
+        if(element.visitlanguages != null){
+          element.languages = [];
+          element.visitlanguages.forEach( l => {
+            let idioma = new LanguagesModel();
+            idioma.id = l["language_id"] ?? 0 ;
+            let idiomafilter = this.listaidlangs.filter( i=> i.id == idioma.id)[0];
+            if(idiomafilter){
+              idioma.iso = idiomafilter.iso ?? '' ;
+              idioma.name = idiomafilter.name ?? '' ;
+              idioma.iso_code = idiomafilter.iso_code ?? '' ;
+            }
+            element.languages.push(idioma); 
+          })
+        }
+      });
+    }
+    return  visitas;
+  }
 
 
+  // getLanguagesVisit(visitas: VisitasResultadoModel[], idlang: number) {
+  //   debugger
+  //   if(visitas != null){
+  //     visitas.forEach(element => {
+  //       if(element.visitlanguages != null){
+  //         element.visitlanguages.forEach( l => {
+  //           if(l.language_id === idlang) {
+  //             element.titulo = l.name;
+  //             element.descripcion = l.description;
+  //           }
+  //         })
+  //       }
+  //     });
+  //   }
+    
+  //   return  visitas;
+  // }
 
-
-
-
-
+  
+  getTextcomments() {
+    this.setlanguages();
+    let endpoint = '/textcomments/'+ this.idlang ;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+        map((resp) =>{
+            return resp["data"] as ComentariosModel[];
+        }),
+        catchError((err) => {
+          console.error("Error  " , err.error);
+          return err.error;
+        })
+      );
+  }
 
 
 
@@ -324,10 +340,9 @@ export class GlobalService {
     this.setlanguages();
     let endpoint = '/textcontents/'+this.idlang ;
       this.url = this.apiurl + endpoint;
-      console.log("getTextcontentsglobal()  ",this.url)
       return this.http.get(`${this.url}` ).pipe(
         map((resp) =>{
-            return resp as TextDataModel;
+            return resp["data"] as TextDataModel;
         }),
         catchError((err) => {
           console.error("Error  " , err.error);

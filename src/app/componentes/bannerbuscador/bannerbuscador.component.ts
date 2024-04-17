@@ -4,10 +4,10 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { GlobalService } from '../../services/global.service';
 import { HomeService } from '../../services/home.service';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
   imagenbanner: ImagenesModel = new ImagenesModel();
   cargados: boolean = false;
 
-  visitasprop: VisitasModel[] = [];
+  visitasprop: VisitasResultadoModel[] = [];
   verbusca :boolean = false;
   menuvisto :boolean = true;
   possc :number = 0;
@@ -35,7 +35,8 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private homeService: HomeService,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private globalService: GlobalService,
   ) {
    ///
   }
@@ -73,7 +74,8 @@ export class BannerbuscadorComponent implements OnInit, AfterViewInit {
 
   buscarprop(){
       this.homeService.getCajaBuscaHome(this.busqueda).subscribe(resp => {  
-      this.visitasprop = resp as VisitasModel[]; 
+      this.visitasprop = resp as VisitasResultadoModel[];
+      this.visitasprop = this.globalService.getImageDefault(this.visitasprop);
     }) ;
   }
 

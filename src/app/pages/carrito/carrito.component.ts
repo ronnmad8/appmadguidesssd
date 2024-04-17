@@ -14,14 +14,12 @@ import { CarritoService } from '../../services/carrito.service';
 import { VisitaService } from '../../services/visita.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
 import { CartModel } from 'src/app/models/Cart.model';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextoCashModel } from 'src/app/models/TextoCash.model';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { HomeService } from 'src/app/services/home.service';
 import { HeadfooterService } from 'src/app/services/headfooter.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
@@ -44,7 +42,6 @@ export class CarritoComponent implements OnInit{
   @Input() solopaso1  : boolean = false;
   
   messageCash: TextoCashModel;
-  messageVisita: VisitaAssetsModel;
   pedido : CartModel = new CartModel();
   carritoId: number = 0;
 

@@ -2,7 +2,6 @@
 import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 import { LinksModel } from './Links.model';
 
-import { VisitasModel } from './Visitas.model';
 import { VisitasResultadoModel } from './VisitasResultado.model';
 import { UserModel } from './User.model';
 

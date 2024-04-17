@@ -43,18 +43,18 @@
                 <div class="mvl">{{comentario.name.length > 20 ? comentario.name.substring(0,17)+"..." : comentario.name }}</div>
               </div>
               <div class="nombrevisitatestim " >
-                <div>{{ comentario.lang_title.length > 23 ? comentario.lang_title.substring(0, 20)+"..." : comentario.lang_title }}</div>
+                <div>{{ comentario.titulo.length > 23 ? comentario.titulo.substring(0, 20)+"..." : comentario.titulo }}</div>
               </div>
               <div class="texttestim " >
                 <div>
-                  <span [innerHtml]=" comentario.lang_description.length > 400 ? comentario.lang_description.substring(0, 397)+'...' : comentario.lang_description  " >
+                  <span [innerHtml]=" comentario.content.length > 400 ? comentario.content.substring(0, 397)+'...' : comentario.content  " >
                   </span>
                 </div>
               </div> 
               <div class="titulotestim">
-                <div>{{comentario.visit_lang_description.length > 35 ? comentario.visit_lang_description.substring(0, 32)+"..." : comentario.visit_lang_description}}</div>
+                <div>{{comentario.titulo}}</div>
               </div> 
-              <div class="veracttestim cupo "   (click)="verdetalle(comentario)">
+              <div class="veracttestim cupo "   (click)="verdetalle( comentario )">
                 <div class="bordeme d-flex">  
                     {{textconts.opinions_view}}
                     <i class="fa fa-angle-right fs-10 mx-1 mt-1"></i>

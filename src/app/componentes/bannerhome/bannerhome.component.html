@@ -46,15 +46,15 @@
                         <div class="imgcartamodalprop">
                           <div class="pc pl-1">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.images[0].url}}" data-srcset="{{visita.images[0].url}}">
-                              <img src="{{visita.images[0].url}}" data-src="{{visita.images[0].url}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.mediafile}}" data-srcset="{{visita.mediafile}}">
+                              <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}" alt=""
                                 class="imgcartamodalprop lazyload "  >
                             </picture>  
                           </div>
                           <div class="mvl">
                             <picture>
-                              <source media="(min-width: 0px)" srcset="{{visita.images[0].url}}" data-srcset="{{visita.images[0].url}}">
-                              <img src="{{visita.images[0].url}}" data-src="{{visita.images[0].url}}" alt=""
+                              <source media="(min-width: 0px)" srcset="{{visita.mediafile}}" data-srcset="{{visita.mediafile}}">
+                              <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}" alt=""
                                 class="imgcartamodalprop lazyload ">
                             </picture>
                           </div>
@@ -71,7 +71,7 @@
 
                   <div class="posrel d-flex cupo" (click)="verbuscador()">
                     <div id="vertodosprop"   >
-                      Ver todos los resultados para 
+                       {{textconts.bannertop_verresultados}}
                       <span class="colROJO2 ml-1" >"{{busqueda.length > 50 ? busqueda.substring(0,47)+"..." : busqueda}}"</span>
                     </div>
                     <div>

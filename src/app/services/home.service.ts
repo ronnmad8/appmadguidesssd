@@ -8,7 +8,6 @@ import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { HomerespModel } from '../models/Homeresp.model';
 import { ComentariosModel } from '../models/Cometarios.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
@@ -42,22 +41,17 @@ export class HomeService {
   }
 
   
-    getCommentsHome()  {
-
-      //
-    }
 
     getCajaBuscaHome(busqueda:string){
-
-      let _datos = {
+      let datos = {
         search: busqueda
       };
       let endpoint = '/visitsearch' ; 
       this.url = this.apiurl + endpoint;
-      return this.http.post(`${this.url}`, _datos).pipe(
-        map((res) => {
-          let respuesta = res as VisitasResultadoModel[];
-          return respuesta;
+      
+      return this.http.post(`${this.url}`, datos).pipe(
+        map((resp) => {
+          return resp["data"] as VisitasResultadoModel[];
         }),
         catchError((err) => {
           console.error('Error  ', err.error);

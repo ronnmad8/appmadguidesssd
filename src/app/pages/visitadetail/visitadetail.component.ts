@@ -14,7 +14,6 @@ import { HomeService } from '../../services/home.service';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 
 import { SlidervisitasinteresarComponent } from 'src/app/componentes/slidervisitasinteresar/slidervisitasinteresar.component';
 import { ZonapagoComponent } from 'src/app/componentes/zonapago/zonapago.component';
@@ -23,7 +22,6 @@ import { SlidervisitaComponent } from 'src/app/componentes/slidervisita/slidervi
 import { VisitaService } from 'src/app/services/visita.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { HttpClient } from '@angular/common/http';
 import { TimesModel } from 'src/app/models/Times.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
@@ -46,7 +44,6 @@ export class VisitadetailComponent implements OnInit{
   imagenesproducto :ImagenesModel[] = [];
   visitauuid: string = "";
   visitaSel: VisitasResultadoModel = new VisitasResultadoModel();
-  messages: VisitaAssetsModel = new VisitaAssetsModel();
   bannerbottom: ImagenesModel = new ImagenesModel(); //bannertop
   related: VisitasResultadoModel[] = [];
 
@@ -112,7 +109,7 @@ export class VisitadetailComponent implements OnInit{
     this.meta.updateTag({ property :"og:type", content: "website"  });
     this.meta.updateTag({ property :"og:title", content:  this.visitaSel.titulo  });
     this.meta.updateTag({ property :"og:description", content:  this.visitaSel.titulo  });
-    this.meta.updateTag({ property :"og:image", content:  this.visitaSel.images[0].url  });
+   // this.meta.updateTag({ property :"og:image", content:  this.visitaSel.mediafile  });
   }
   
 

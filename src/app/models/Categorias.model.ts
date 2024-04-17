@@ -21,6 +21,6 @@ export class CategoriasModel{
         this.selected = false;
 
     }
-
+f
 
 }

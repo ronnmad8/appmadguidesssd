@@ -7,13 +7,10 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
-
 import { CartModel } from '../models/Cart.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { GlobalService } from './global.service';
 import { TextoCashModel } from '../models/TextoCash.model';
-import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { VisitaService } from './visita.service';
 import { CompanionsModel } from '../models/Companions.model';
 import { UserModel } from '../models/User.model';
@@ -136,7 +133,6 @@ export class CarritoService {
         address: pedido.address
 
       };
-      debugger
       let endpoint = '/operation/buy';
       this.url = this.apiurl + endpoint;
       return this.http.post(`${this.url}`, _datos).pipe(

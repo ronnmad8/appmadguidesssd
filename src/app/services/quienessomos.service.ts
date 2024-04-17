@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { GlobalService } from './global.service';
 
 

@@ -1,5 +1,4 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, Renderer2, Output, EventEmitter } from '@angular/core';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';

@@ -8,7 +8,7 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import { VisitasModel } from 'src/app/models/Visitas.model';
+
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
 import { ProviderService } from '../../services/provider.service';
@@ -30,7 +30,6 @@ import * as moment from 'moment';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { TimesModel } from 'src/app/models/Times.model';
 import { CapitalizePipeComponent } from 'src/app/pipes/capitalize.component';
@@ -175,7 +174,6 @@ export class SlidervisitaComponent implements OnInit{
   //redes
   verredes: boolean = false;
   redes: any[] = [];
-  messages: VisitaAssetsModel = new VisitaAssetsModel();
   idiomasdisponibles: string = '';
 
 
@@ -274,19 +272,12 @@ export class SlidervisitaComponent implements OnInit{
       
     });
 
-    this.providerService.getThrowMessagesVisita.subscribe((resp) => {
-      var provVisitaMessage = resp as VisitaAssetsModel;
-      if (provVisitaMessage != null) {
-        this.getMesageResultado(provVisitaMessage);
-      }
-    });
+    //this.providerService.getThrowMessagesVisita.subscribe((resp) => {
+       //mensaje
+    //});
   }
 
 
-  getMesageResultado(provVisitaMessage: VisitaAssetsModel) {
-    this.messages = provVisitaMessage;
-    console.log("resultado ",this.messages);
-  }
 
   getVisitaResultado(visita: VisitasResultadoModel) {
     
@@ -313,18 +304,19 @@ export class SlidervisitaComponent implements OnInit{
     this.getCalculoPrecio();
 
     ///get idiomas
-    this.listasService.getIdiomas().subscribe((resp) => {
-      this.listaidiomas = resp as LanguagesModel[];
-      this.listaidiomasvisita = [];
-      this.idiomasdisponibles = "";
-      this.visitaresultado.languages.forEach((idiomaiso, index) => {
-        let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso) ?? new LanguagesModel();
-        idiom.id = index;
-        this.listaidiomasvisita.push(idiom);
-        let idiomasum = idiom.name.toLowerCase();
-        this.idiomasdisponibles += (  idiomasum ) + ', ';
-      })
-    });
+
+    this.listaidiomas = this.listasService.getIdiomas()
+    this.listaidiomasvisita = [];
+    this.idiomasdisponibles = "";
+    
+    this.visitaresultado.languages.forEach((idiomaiso, index) => {
+      let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso.iso) ?? new LanguagesModel();
+      idiom.id = index;
+      this.listaidiomasvisita.push(idiom);
+      let idiomasum = idiom.name.toLowerCase();
+      this.idiomasdisponibles += (  idiomasum ) + ', ';
+    })
+    
     
     this.idiomaSel = null; //this.visitaresultado. ;
     
@@ -351,7 +343,7 @@ export class SlidervisitaComponent implements OnInit{
 
 
   getImageFirst(visita: VisitasResultadoModel) {
-    var imagen1: ImagenesModel = visita.images[0];
+    var imagen1: ImagenesModel = visita.mediafiles[0];
     return imagen1;
   }
 

@@ -14,7 +14,6 @@ import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { ClientesModel } from 'src/app/models/Clientes.model';
 import { CarritoService } from '../../services/carrito.service';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { CartModel } from 'src/app/models/Cart.model';
 import { UserModel } from 'src/app/models/User.model';
 ///services

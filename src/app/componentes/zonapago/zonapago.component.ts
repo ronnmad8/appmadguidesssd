@@ -10,7 +10,6 @@ import {
   EventEmitter,
   Directive,
 } from '@angular/core';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { BuscadorService } from '../../services/buscador.service';
@@ -48,7 +47,6 @@ import { UserModel } from 'src/app/models/User.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { ProviderService } from 'src/app/services/provider.service';
 import { TextoCashModel } from 'src/app/models/TextoCash.model';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { UsuarioModel } from 'src/app/models/Usuario.model';
 import { CompanionsModel } from 'src/app/models/Companions.model';
 import { CompanionsPedidoModel } from 'src/app/models/CompanionsPedido.model';
@@ -67,7 +65,6 @@ export class ZonapagoComponent implements OnInit {
   modalOptions: NgbModalOptions;
   @Input() visitaId: number = 0;
   @Input() messageCashData: TextoCashModel = new TextoCashModel();
-  @Input() messageVisitaData: VisitaAssetsModel = new VisitaAssetsModel();
   @Input() textconts: TextContentsModel = new TextContentsModel();
   @Output() solopaso1: EventEmitter<boolean> = new EventEmitter();
 
@@ -149,7 +146,7 @@ export class ZonapagoComponent implements OnInit {
   //////////
   pasoactivo: number = 1;
   totalcarrito: number = 0;
-  visitaSel: VisitasModel = new VisitasModel();
+  visitaSel: VisitasResultadoModel = new VisitasResultadoModel();
   recordarmealregistrar: boolean = false;
   forma: FormGroup;
   formlogin: FormGroup;
@@ -457,7 +454,7 @@ export class ZonapagoComponent implements OnInit {
       
       horario.token = token;
       horario.country_id = this.usuario.address[0]["address"]?.country.id;
-debugger
+
       this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
         let r = resp;
       })

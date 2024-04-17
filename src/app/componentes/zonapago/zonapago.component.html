@@ -106,10 +106,10 @@
                         <div class="h-100">
                             <div #imageneslatid id="im-{{reserva.id}}" class="chimaglat cupo">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{reserva.visit.images[0]}}"
-                                        data-srcset="{{reserva.visit.images[0]}}">
-                                    <img class="imglat" src="{{reserva.visit.images[0]}}"
-                                        data-src="{{reserva.visit.images[0]}}"
+                                    <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
+                                        data-srcset="{{reserva.visit.mediafile}}">
+                                    <img class="imglat" src="{{reserva.visit.mediafile}}"
+                                        data-src="{{reserva.visit.mediafile}}"
                                         alt="{{reserva.visit.titulo}}" style="height: 194px ;">
                                 </picture>
                             </div>
@@ -222,9 +222,9 @@
                                     class="ml-1">{{reserva.getLanguage(reserva.language_id)}}</span>
                             </div>
                             <div class="fs-14 lh-1-4">
-                                <span>{{messageVisitaData?.price?.adults}}</span> <span
+                                <span>_price?.adults_</span> <span
                                     class="mx-1">{{reserva.adults}} </span>
-                                <span>{{messageVisitaData?.price?.children}}</span> <span class="mx-1">
+                                <span>__price?.children__</span> <span class="mx-1">
                                     {{reserva.children}} </span>
                                 <!-- <span>{{messageVisitaData.price.minor}}</span> <span class="mx-1">
                                     {{visitapedido.menores}} </span> -->

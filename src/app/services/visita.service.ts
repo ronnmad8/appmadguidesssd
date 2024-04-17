@@ -8,9 +8,7 @@ import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { VisitasModel } from '../models/Visitas.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
-import { VisitaAssetsModel } from '../models/VisitaAssets.model';
 import { TimesModel } from '../models/Times.model';
 import { ResultadoModel } from '../models/Resultado.model';
 
@@ -88,36 +86,13 @@ export class VisitaService {
   // }
 
 
-  getCategoryUuid(uuid: string) {
-
-    let endpoint = '/visit?per_page=1&uuid=' + uuid;
-    this.url = this.apiurl + endpoint;
-
-    return this.http.get(`${this.url}`).pipe(
-      map((resp) => {
-        var visita: VisitasResultadoModel[] = resp as VisitasResultadoModel[];
-        return visita[0];
-      }),
-      catchError((err) => {
-        console.error('Error  ', err.error);
-        return err.error;
-      })
-    );
-  }
-
-
-
-
 
   getVisitasRecomendadas(idlang: number) {
     let endpoint =  "/visitrecommended/"+idlang;
     this.url = this.apiurl + endpoint;
     return this.http.get(`${this.url}` ).pipe(
       map((resp) => {
-        var visitas: VisitasResultadoModel[] = resp["data"];
-        if (visitas != undefined){
-          return visitas;
-        }
+        return resp["data"] as VisitasResultadoModel[] ;
       }),
       catchError((err) => {
         console.error('Error  ', err.error);
@@ -128,6 +103,28 @@ export class VisitaService {
 
 
 
+  getFormattedDuration(visita: VisitasResultadoModel): string {
+    let roundedDuracion = (visita.duracionmin / 60).toFixed(2);
+    let decimalPart = roundedDuracion.slice(-2);
+    roundedDuracion=roundedDuracion.replace('.',',');
+    return decimalPart === '00' ? roundedDuracion.slice(0, -3) : roundedDuracion;
+  }
+
+  getFormattedPrice(visita: VisitasResultadoModel): string {
+    let price = visita.preciohoramin *  (visita.duracionmin /60)
+    let roundedPrice = (price).toFixed(2);
+    let decimalPart = roundedPrice.slice(-2);
+    roundedPrice=roundedPrice.replace('.',',');
+    return decimalPart === '00' ? roundedPrice.slice(0, -3) : roundedPrice;
+  }
+
+  getFormattedTexto( texto: string, limit: number = 10): string {
+    let titulocorto = "";
+    if(texto != null && texto.length != null){
+       titulocorto = texto.length > limit ? texto.substring(0, (limit-3) )+"..." : texto ;
+    }
+    return titulocorto;
+  }
 
 
 

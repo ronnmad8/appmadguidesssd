@@ -25,20 +25,24 @@ const routes: Routes = [
   { path: 'ayuda' , component: AyudaComponent},
   { path: 'blog' , component: HomeComponent},
   { path: 'contacto' , component: ContactoComponent},
-  { path: 'visita/:title/:uuid' , component: VisitadetailComponent},
-  { path: 'visitatitulo/:title' , component: VisitadetailComponent},
-  { path: 'carrito' , component: CarritoComponent},
-  { path: 'compra' , component: CompraComponent},
   { path: 'politicasprivacidad' , component: PoliticasprivacidadComponent},
   { path: 'politicascookies' , component: PoliticascookiesComponent},
   { path: 'avisolegal' , component: AvisolegalComponent},
   { path: 'politicascompra' , component: PoliticascompraComponent},
-  { path: 'medidascovid' , component: MedidascovidComponent},
+
+  { path: 'visita/:id' , component: VisitadetailComponent},
+  { path: 'visitatitulo/:title' , component: VisitadetailComponent},
+
+  { path: 'carrito' , component: CarritoComponent},
+  { path: 'compra' , component: CompraComponent},
+  
   { path: 'buscador' , component: BuscadorComponent},
-  { path: 'buscador/category/:category_uuid?' , component: BuscadorComponent},
+  { path: 'buscador/:id?' , component: BuscadorComponent},
+  { path: 'buscador/category/:id?' , component: BuscadorComponent},
   { path: 'buscador/recommended/:recommended' , component: BuscadorComponent},
   { path: 'buscador/title/:title' , component: BuscadorComponent},
-
+  { path: 'buscador/title' , component: BuscadorComponent},
+  
   { path: 'zonacliente' , component: AdminclienteComponent,
   children: [
     { path: 'micuenta' , component: ZonamicuentaComponent},
@@ -46,7 +50,8 @@ const routes: Routes = [
     { path: '**' ,  redirectTo: 'micuenta' }
   ]
   , canActivate: [AuthGuard] },
-
+  
+  //{ path: 'medidascovid' , component: MedidascovidComponent},
 
   //{ path: 'zonacliente/:section' , component: AdminclienteComponent, canActivate: [AuthGuard] },
 

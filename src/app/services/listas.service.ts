@@ -10,6 +10,7 @@ import { CategoriasModel } from '../models/Categorias.model';
 import { TagsModel } from '../models/Tags.model';
 import { SelectModel } from '../models/Select.model';
 import { GlobalService } from './global.service';
+import { IsolanguagesModel } from '../models/Isolanguages.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,44 +27,53 @@ export class ListasService {
     private auth: AuthService,
     private globalService: GlobalService,
   ) {
-    this.apiurl = environment.apiurlold;
+    this.apiurl = environment.apiurl;
     this.clang = this.globalService.getLanguage();
   }
 
 
   getCategorias() {
-     
-    this.userToken = this.auth.leerToken();
-    let endpoint = '/select/category/parent/child' ;
+    let endpoint = '/categoriestext/'+this.globalService.idlang ;
     this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )
     .pipe(map( resp => {
-        return  resp ;
+        return  resp["data"] as CategoriasModel[] ;
     } ));
   }
 
 
   getTags() {
 
-    let endpoint = '/select/tags' ;
+    let endpoint = '/tags' ;
     this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )
     .pipe(map( (resp) => {
-        let tags = resp as TagsModel[];
-        return tags;
+        return resp["data"] as TagsModel[];
     } ));
   }
 
 
   getIdiomas() {
 
-    let endpoint = '/select/language' ;
-    this.url = this.apiurl + endpoint;
+    return this.globalService.listaidlangs as LanguagesModel[];
+    // let endpoint = '/isolanguages'+ ;
+    // this.url = this.apiurl + endpoint;
     
+    // return this.http.get( `${this.url}` )
+    // .pipe(map( (resp) => {
+    //     let idiomas = resp as LanguagesModel[];
+    //     return idiomas;
+    // } ));
+ 
+  }
+
+  getIsolanguages(iso: string = "es") {
+
+    let endpoint = '/isolanguages/'+ iso;
+    this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )
     .pipe(map( (resp) => {
-        let idiomas = resp as LanguagesModel[];
-        return idiomas;
+        return resp["data"] as IsolanguagesModel[];
     } ));
  
   }

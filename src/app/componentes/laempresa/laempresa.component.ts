@@ -1,5 +1,4 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, Renderer2, Output, EventEmitter } from '@angular/core';
-import { VisitasModel } from 'src/app/models/Visitas.model';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { BuscadorService } from '../../services/buscador.service';
 import { VisitaService } from '../../services/visita.service';
@@ -14,7 +13,6 @@ import * as moment from 'moment';
 import { LanguagesModel } from 'src/app/models/Languages.model';
 import { trigger, animate, transition, style } from '@angular/animations';
 import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { VisitaAssetsModel } from 'src/app/models/VisitaAssets.model';
 import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 

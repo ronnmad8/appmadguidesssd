@@ -7,15 +7,17 @@ import { List_priceModel } from './List_price.model';
 import { CompanionsModel } from './Companions.model';
 import { CategoriasModel } from './Categorias.model';
 import { ImagenesModel } from './Imagenes.model';
+import { LanguagesModel } from './Languages.model';
 
 
 export class VisitasResultadoModel{
     
     id: number;
     uuid: string;
-    images: ImagenesModel[];
+    mediafiles: ImagenesModel[];
     tags:  TagsModel[] = []; 
     categorias: CategoriasModel[]= []
+    visitlanguages: any[]= []
     privada: boolean;
     accesibilidad: boolean;
     cancelacion: boolean;
@@ -30,14 +32,15 @@ export class VisitasResultadoModel{
     temporada: boolean;
     titulo: string;
     precio: number;
-    languages: any[];
+    languages: LanguagesModel[];
     hours: any[];
+    mediafile: string;
     
     
     constructor(){
         this.id = 0;
         this.uuid = "";
-        this.images = new Array<ImagenesModel>();
+        this.mediafiles = new Array<ImagenesModel>();
         this.tags = new  Array<TagsModel>();
         this.categorias = new Array<CategoriasModel>() ;
         this.privada = false;
@@ -57,6 +60,11 @@ export class VisitasResultadoModel{
         this.languages = [];
         this.hours = [];
         
+    }
+
+    getUrl(mediafiles: ImagenesModel[] ){
+        let mediafile = mediafiles.length > 0 ? mediafiles[0].url : "assets/images/sin_imagen.png"
+        return  mediafile;
     }
 
 
