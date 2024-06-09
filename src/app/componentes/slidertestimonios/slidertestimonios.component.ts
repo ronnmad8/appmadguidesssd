@@ -13,6 +13,7 @@ import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { TextoopinionsModel } from 'src/app/models/Textoopinions.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 
@@ -74,6 +75,7 @@ export class SlidertestimoniosComponent implements OnInit {
     private router: Router,
     private homeService: HomeService,
     private visitaService: VisitaService,
+    private globalService: GlobalService,
   ) 
   {  
       this.wowService.init(); 
@@ -87,7 +89,7 @@ export class SlidertestimoniosComponent implements OnInit {
 
 
     verdetalle(comentario: ComentariosModel){
-      this.router.navigate(['/visita/', comentario.visit_name ]);
+      this.router.navigateByUrl('/visita/'+ comentario.visit_id );
     }
 
  

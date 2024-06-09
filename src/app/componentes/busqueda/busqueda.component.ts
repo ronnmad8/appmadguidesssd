@@ -45,7 +45,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   maxvalueprecio = 100;
   listaresultados: VisitasResultadoModel[] = [];
   resultado: VisitasResultadoModel[] = [];
-  loading: boolean = false;
+  loading: boolean;
   monthSelect: any[];
   dateSelect: any;
   dateValue: any;
@@ -165,6 +165,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {
     this.sWindow = this.platformService.sWindow ;
+    this.loading = false;
   }
 
   ngOnInit(): void {
@@ -184,7 +185,6 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.verdisponibilidad();
     this.isrespon = this.platformService.isrespon;
 
-
     this.cdr.detectChanges();
   }
 
@@ -194,9 +194,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    
     this.scrollPosition = this.sWindow.pageYOffset;
-    
     if(this.isrespon){
       if (this.scrollPosition > 206) {
         this.ordfixed = true;
@@ -236,7 +234,7 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.resultado = result as VisitasResultadoModel[];
     //this.listaresultados = this.listaresultados.concat(this.resultado as VisitasResultadoModel[]);
     console.log("resultados ++  ",  this.resultado );
-
+    this.cdr.detectChanges();
   }
 
   ///////////////filtrar end//////////////////////////////
@@ -611,8 +609,8 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
     this.selectedVisita = '';
   }
 
-  verdetalle(uuid: string, title: string ) {
-    this.router.navigate(['/visita', title, uuid]);
+  verdetalle(visita: VisitasResultadoModel ) {
+    this.router.navigateByUrl('/visita/'+ visita.id );
   }
 
   verordenarmvl(){

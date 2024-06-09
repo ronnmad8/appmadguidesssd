@@ -36,24 +36,21 @@ export class VisitaService {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  getVisita(uuid: string) {
+  getVisita(visitid: string) {
 
-    // let endpoint = '/visit?uuid=' + uuid;
-    // this.url = this.apiurl + endpoint;
-    // return this.http.get(`${this.url}` ).pipe(
-    //   map((res) => {
-    //     let visitas: VisitasResultadoModel[] = res as VisitasResultadoModel[];
-    //     let visita = visitas[0];
-    //     if (visita.visit_time_uuid != null && visita.visit_time == null) {
-    //       visita = this.globalService.mapperVisitas(visita);
-    //     }
-    //     return visita;
-    //   }),
-    //   catchError((err) => {
-    //     console.error('Error  ', err.error);
-    //     return err.error;
-    //   })
-    // );
+    let endpoint = '/visitdetail/'+ visitid+'/1';
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((res) => {
+        if(res["data"]){
+          return res["data"] as VisitasResultadoModel;
+        }
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
   }
 
 

@@ -71,7 +71,7 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
 
   verdetalle(visita: VisitasResultadoModel){
     let titleleg = visita.titulo.replace(' ', '-')  ;
-    this.router.navigate(['/visita', titleleg , visita.uuid]);
+    this.router.navigateByUrl('/visita/'+ visita.id );
   }
 
 

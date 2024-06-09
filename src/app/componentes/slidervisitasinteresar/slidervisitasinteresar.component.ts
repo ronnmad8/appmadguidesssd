@@ -10,6 +10,7 @@ import { SwiperModule, SwiperComponent, SwiperConfigInterface, SwiperDirective, 
 import { VisitaService } from 'src/app/services/visita.service';
 import { VisitasResultadoModel } from 'src/app/models/VisitasResultado.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
     private wowService: NgwWowService,
     private router: Router,
     private visitaService: VisitaService,
+    private globalService: GlobalService,
   ) 
   {  
       this.wowService.init(); 
@@ -49,7 +51,7 @@ export class SlidervisitasinteresarComponent implements OnInit, AfterViewInit {
   }
 
   verdetalle(visita: VisitasResultadoModel){
-    this.router.navigate(['/visita', visita.titulo , visita.uuid]);
+    this.router.navigateByUrl('/visita/'+ visita.id );
   }
   
   

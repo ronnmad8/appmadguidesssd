@@ -62,23 +62,23 @@
                     </div>
 
                     <div class="detalleslider">
-                        <!-- <swiper #imagenlista id="imagenlista" [config]="config"
+                        <swiper #imagenlista id="imagenlista" [config]="config"
                             (slideChangeTransitionEnd)="getIndexSel()">
                             <div id="im-{{imagenes}}" class="p-0 m-0 imagenescent"
                                 *ngFor="let imagenes of listaImagenesVisita">
                                 <div class="posrel">
                                     <div class="posrel w-100">
                                         <picture>
-                                            <source media="(min-width: 0px)" srcset="{{imagenes.visit_image_url}}"
-                                                data-srcset="{{imagenes.visit_image_url}}">
-                                            <img src="{{imagenes.visit_image_url}}" data-src="{{imagenes.visit_image_url}}"
-                                                alt="{{imagenes.visit_image_uuid}}"
+                                            <source media="(min-width: 0px)" srcset="{{imagenes.url}}"
+                                                data-srcset="{{imagenes.url}}">
+                                            <img src="{{imagenes.url}}" data-src="{{imagenes.url}}"
+                                                alt="{{imagenes.visit_id}}"
                                                 style="object-fit: cover; max-width: 635px; height: 480px ;">
                                         </picture>
                                     </div>
                                 </div>
                             </div>
-                        </swiper> -->
+                        </swiper>
                     </div>
 
                     <div class="posrel shad">

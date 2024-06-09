@@ -42,7 +42,7 @@ export class VisitadetailComponent implements OnInit{
 
 
   imagenesproducto :ImagenesModel[] = [];
-  visitauuid: string = "";
+  visitaid: string = "";
   visitaSel: VisitasResultadoModel = new VisitasResultadoModel();
   bannerbottom: ImagenesModel = new ImagenesModel(); //bannertop
   related: VisitasResultadoModel[] = [];
@@ -82,17 +82,17 @@ export class VisitadetailComponent implements OnInit{
     this.acro.params.subscribe(
       (params: Params) => {
       
-        this.visitauuid = params.uuid;
+        this.visitaid = params.id;
         let tituloparam = params.title;
         
-        if(this.visitauuid != null){
+        if(this.visitaid != null){
   
-          this.getVisita(this.visitauuid );
-          this.getRelatedUuid(this.visitauuid);
+          this.getVisita( this.visitaid );
+         // this.getRelatedUuid(this.visitauuid);
         }
         else if(tituloparam != null){
           
-          this.getRelatedTitle(tituloparam);
+         // this.getRelatedTitle(tituloparam);
         }
       }
     );
@@ -118,31 +118,29 @@ export class VisitadetailComponent implements OnInit{
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp != null){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
         }
       })
     }
   }
 
-  getVisita(uuid: string){
-    if(uuid != "" && uuid != null){
-      // this.visitaService.getVisita(uuid).subscribe((resp)=>{
+  getVisita(visitid: string){
+    if(visitid != null){
+      this.visitaService.getVisita(visitid).subscribe((resp)=>{
+        this.visitaSel = new VisitasResultadoModel();
+        if(resp != null){
+          this.visitaSel = resp as VisitasResultadoModel ;
+        }  
+      console.log("visita ",this.visitaSel)
+      this.providerService.setThrowVisita(this.visitaSel);
+      this.setMetas();
         
-      //   let resul = resp as VisitasResultadoModel;
-                
-      //   ///get first de lista de api
-      //   this.visitaSel = resul ?? new VisitasResultadoModel();
-        
-      //   console.log("xx ",this.visitaSel)
-      //   this.providerService.setThrowVisita(this.visitaSel);
-      //   this.setMetas();
-        
-      // })
+      })
     }
     else{
-      console.error("uuid no valido ", uuid);
+      console.error("uuid no valido ", visitid);
     }
   }
 

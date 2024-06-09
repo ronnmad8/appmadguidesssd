@@ -231,8 +231,8 @@ export class GlobalService {
   /////////////////carga de textos 
   setTextContents(){
     this.getTextcontentsglobal().subscribe((resp)=>{
-      if(resp && resp["data"]){
-        this.listaTextDataModel = resp["data"] as TextDataModel[] ?? [] ;
+      if(resp){
+        this.listaTextDataModel = resp as TextDataModel[] ?? [] ;
         this.textcontents = this.setTextContentsByLanguage(this.listaTextDataModel , this.idlang );
       }
     })
@@ -281,24 +281,6 @@ export class GlobalService {
     return  visitas;
   }
 
-
-  // getLanguagesVisit(visitas: VisitasResultadoModel[], idlang: number) {
-  //   debugger
-  //   if(visitas != null){
-  //     visitas.forEach(element => {
-  //       if(element.visitlanguages != null){
-  //         element.visitlanguages.forEach( l => {
-  //           if(l.language_id === idlang) {
-  //             element.titulo = l.name;
-  //             element.descripcion = l.description;
-  //           }
-  //         })
-  //       }
-  //     });
-  //   }
-    
-  //   return  visitas;
-  // }
 
   
   getTextcomments() {

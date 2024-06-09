@@ -256,6 +256,7 @@ export class SlidervisitaComponent implements OnInit{
 
   listenProvider() {
     this.providerService.getThrowVisita.subscribe((resp) => {
+      debugger
       var provVisita = resp as VisitasResultadoModel;
       
       if (provVisita.duracionmin == null) {
@@ -280,7 +281,7 @@ export class SlidervisitaComponent implements OnInit{
 
 
   getVisitaResultado(visita: VisitasResultadoModel) {
-    
+    debugger
     this.visitaresultado = visita;
     console.log(
       '----VISITA RESULTADO',
@@ -293,12 +294,10 @@ export class SlidervisitaComponent implements OnInit{
     //info
     this.descripcion = visita.descripcion;
     this.descripcioncorta = this.descripcion.substring(0, 200);
-    if (this.timesSel != null) {
-      this.timesSel = visita.duracionmin != null ? visita.duracionmin : 0;
-    }
-  
-    this.maximopersonas = this.timesSel.available;
-    this.vendidas = this.timesSel.buy;
+    this.timesSel = visita.duracionmin != null ? visita.duracionmin : 0;
+    
+    this.maximopersonas = this.timesSel?.available ?? 0;
+    this.vendidas = this.timesSel?.buy ?? 0;
     this.disponibles = this.maximopersonas - this.vendidas;
   
     this.getCalculoPrecio();
@@ -308,8 +307,8 @@ export class SlidervisitaComponent implements OnInit{
     this.listaidiomas = this.listasService.getIdiomas()
     this.listaidiomasvisita = [];
     this.idiomasdisponibles = "";
-    
-    this.visitaresultado.languages.forEach((idiomaiso, index) => {
+    debugger
+    this.visitaresultado.visitlanguages.forEach((idiomaiso, index) => {
       let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso.iso) ?? new LanguagesModel();
       idiom.id = index;
       this.listaidiomasvisita.push(idiom);
@@ -317,8 +316,7 @@ export class SlidervisitaComponent implements OnInit{
       this.idiomasdisponibles += (  idiomasum ) + ', ';
     })
     
-    
-    this.idiomaSel = null; //this.visitaresultado. ;
+    this.idiomaSel = null ;
     
     this.listahorasvisita = [];
     this.listahoras.forEach((hora) => {
@@ -343,8 +341,8 @@ export class SlidervisitaComponent implements OnInit{
 
 
   getImageFirst(visita: VisitasResultadoModel) {
-    var imagen1: ImagenesModel = visita.mediafiles[0];
-    return imagen1;
+
+    return visita.mediafiles[0];
   }
 
 

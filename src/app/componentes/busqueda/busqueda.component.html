@@ -312,7 +312,7 @@
 
             <div class="p-0 m-0 animated fadeIn slow " *ngFor="let visita of resultado; let i = index"   >
                 
-                <div *ngIf=" visita?.uuid != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita?.uuid, visita?.titulo)"  >
+                <div *ngIf=" visita?.id != null " class="panelVisitaBuscador d-flex cupo" (click)="verdetalle(visita)"  >
                     <div class="visitastemporada" *ngIf="visita?.temporada " >
                         <div >
                             {{textconts.buscador_visitatemporada}}
@@ -366,7 +366,7 @@
                 </div>
             </div>
 
-            <div class="mh300" *ngIf="listaresultados.length == 0 && cargado"  >
+            <div class="mh300" *ngIf="listaresultados?.length == 0 && cargado"  >
                 <div class="panelVisitaBuscador d-flex " style="
                 justify-content: center;
                 align-items: center;"  >
@@ -374,7 +374,7 @@
                 </div> 
             </div>
             <div class="spinner-container mt-4 text-center w-100 mh100" style="position: absolute; top: 20px; left: auto; right: auto"  *ngIf="loading "  >
-                <div class="spinner-border" style="position: absolute" >
+                <div class="spinner-border" >
                 </div>
             </div>
             <div class="w-100 p-1 mt-1 text-center mx-auto mh100">
