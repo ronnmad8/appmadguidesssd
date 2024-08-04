@@ -101,9 +101,7 @@ export class ZonareservasComponent implements OnInit {
 
   getReservations() {
     this.micuentaService.getReservation().subscribe((resp) => {
-
       this.reservas = resp as ReservationModel[];
-      
     });
   }
 

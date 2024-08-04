@@ -12,15 +12,15 @@
                             {{textconts.cart_graciascompra}}  
                         </div>
                         <div class="pl-2 fs-18 my-3">
-                            Hemos enviado un email a
+                            {{textconts.hemos_enviado}}
                             <span classs="ff-JB"> {{ usuario.email }} </span>
-                            con el detalle de tu reserva.
+                            {{textconts.detalle_pedido}}
                         </div>
                     </div>
                     <div class="w-100 posrel">
                         <div class="panelReservafirmada" *ngFor="let reserva of listaPedido ">
                             <div class="imgReservafirmada">
-                                <div #imageneslatid id="im-{{reserva.visit.uuid}}" >
+                                <div #imageneslatid id="im-{{reserva.visit.id}}" >
                                     <picture>
                                         <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
                                             data-srcset="{{reserva.visit.mediafile}}">
@@ -32,11 +32,11 @@
                             </div>
                             <div class="panelinfoReservafirmada">
                                 <div id="titulopanelpedido" class="ff-JB fs-20 p-0  my-1">
-                                    {{reserva.visit.titulo}} 
+                                    {{reserva.titulo}}
                                 </div>
                                 <div class="lh-1-4">
                                     <span>{{reserva.fecha | fechaleg }}</span>
-                                    <span class="mx-1"> a las {{reserva.fecha | horaleg }} </span>
+                                    <span class="mx-1"> {{reserva.fecha | horaleg }} </span>
                                 </div>
                                 <div class="lh-1-4">
                                     {{textconts.touren}} <span class="ml-1">{{reserva.getLanguage(reserva.language_id) | idiomaiso |
@@ -50,12 +50,12 @@
                                             style="margin-right: -3px; margin-top: 0px;"></i>
                                         {{reserva.children}}</span>
                                 </div>
-                                <div class="fs-14 lh-1-4" *ngIf="reserva.visit.privada">
+                                <div class="fs-14 lh-1-4" *ngIf="reserva.private">
                                     {{textconts.privada}}
                                 </div>
                                 <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2">
                                     {{textconts.reserva}}
-                                    <span class="colROJO2">{{pedido.codigoreserva}}</span>
+                                    <span class="colROJO2">{{pedido.uuid}}</span>
                                 </div>
                             </div>
                         </div>

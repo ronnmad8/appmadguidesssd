@@ -4,64 +4,50 @@ import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
 export class UserModel {
 
-    uuid: string;
+    id: string;
+    email: string;
+    password: string;
     name: string;
     surname: string;
-    email: string;
     prefijo: string;
-    prefix_phone_id: number;
-    phone: string;
-    password: string;
-    roles: Roles[];
-    rol: string;
-    type: string;
-    document: string;
-    address: any[];
-    street: string;
-    number: string;
-    postal: string;
-    city: string;
-    country: string;
+    telefono: string;
     state: string;
-    particular: boolean;
-    social_login: string;
-    social_name: string;
+    country: string;
+    city: string;
+    number: string;
+    address: string;
+    rol_id: string;
     afiliado: string;
+    
+    
+    document: string;
     namefacturacion: string;
     surnamefacturacion: string;
     old: number;
 
     constructor(){
             
-        this.uuid = '';
+        this.id = '';
+        this.email = '';
+        this.password = '';
         this.name = '';
         this.surname = '';
-        this.email = '';
         this.prefijo = '';
-        this.prefix_phone_id = 0;
-        this.phone = '';
-        this.password = '';
-        this.roles = [];
-        this.rol = '';
-        this.type = "";
-        this.document = '';
-        this.address = [];
-        this.street = '';
-        this.number = '';
-        this.postal = '';
-        this.city = '';
-        this.country = '';
+        this.telefono = '';
         this.state = '';
-        this.particular = false;
-        
-        this.social_login = '';
-        this.social_name = '';
-
-        
+        this.country = '';
+        this.city = '';
+        this.number = '';
+        this.address = '';
         this.afiliado = '0'; 
+        this.rol_id = '';
+        
+        this.document = '';
         this.namefacturacion = '';
         this.surnamefacturacion = '';
         this.old = 0;
+
+        
 
 
     }

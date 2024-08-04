@@ -3,6 +3,7 @@ import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
 export class LanguagesModel {
     id: number;
+    language_id: number;
     iso: string;
     uuid: string;
     iso_code: string;
@@ -13,6 +14,7 @@ export class LanguagesModel {
     constructor(){
         
         this.id = 0;
+        this.language_id = 0;
         this.iso = "";
         this.iso_code = "";
         this.uuid = "";

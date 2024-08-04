@@ -282,6 +282,7 @@ export class TextContentsModel {
   cookies_tab_seguimiento: string;
   cookies_guardar: string;
   modificar: string;
+  carrito: string;
   continuar: string;
   paso1: string;
   paso2: string;
@@ -294,6 +295,18 @@ export class TextContentsModel {
   reserva: string;
   touren: string;
   relacionadas: string;
+  selecciona_hora: string;
+  selecciona_idioma: string;
+  selecciona_personas: string;
+  implica: string;
+  contratarprivada: string;
+  si: string;
+  no: string;
+  detalle: string;
+  reservar_mas: string;
+  logincon: string;
+  hemos_enviado: string;
+  detalle_pedido: string;
 
   constructor() {
     this.dataok  = false;
@@ -573,6 +586,7 @@ export class TextContentsModel {
     this.cookies_tab_seguimiento = '';
     this.cookies_guardar = '';
     this.modificar = '';
+    this.carrito = '';
     this.continuar = '';
     this.paso1 = '';
     this.paso2 = '';
@@ -585,7 +599,19 @@ export class TextContentsModel {
     this.reserva = '';
     this.touren = '';
     this.relacionadas = '';
+    this.implica = '';
+    this.contratarprivada = '';
+    this.si = '';
+    this.no = '';
+    this.detalle = '';
+    this.reservar_mas = '';
 
+    this.selecciona_hora = '';
+    this.selecciona_idioma = '';
+    this.selecciona_personas = '';
+    this.logincon = '';
+    this.hemos_enviado = '';
+    this.detalle_pedido = '';
 
 
   }

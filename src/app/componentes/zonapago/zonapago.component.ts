@@ -75,17 +75,14 @@ export class ZonapagoComponent implements OnInit {
   @ViewChild('fdetallecale') fdetallecale: any;
   
   sWindow: any;
-
   usuarioform: UserModel = new UserModel();
   visita: VisitasResultadoModel = new VisitasResultadoModel();
   tipos: string[] = [];
   pedido: CartModel = new CartModel();
   isrespon: boolean = false;
-
   week: string[] = [];
   months: string[] = [];
   listahoras: any[] = [];
-
   listaidiomas: any[] = [];
   monthSelect: any[];
   dateSelect: any;
@@ -110,18 +107,14 @@ export class ZonapagoComponent implements OnInit {
   horainfo: string = '';
   caleinfo: string = '';
   idiominfo: string = '';
-
   precioadultos: number = 0;
   precioninos: number = 0;
   preciomenores: number = 0;
-
   precioadultototal: number = 0;
   precioninostotal: number = 0;
   preciomenorestotal: number = 0;
-
   sumatotal: number = 0;
   preciototal: string = '0';
-
   calenovalid: boolean = false;
   horanovalid: boolean = false;
   idiomanovalid: boolean = false;
@@ -137,13 +130,10 @@ export class ZonapagoComponent implements OnInit {
   puntodeencuentro: string = '';
   googlemapsvisita: string = 'https://goo.gl/maps/';
   verredes: boolean = false;
-
   politicasnovalid: boolean = false;
   nomnovalid: boolean = false;
   emailnovalid: boolean = false;
   telfnovalid: boolean = false;
-
-  //////////
   pasoactivo: number = 1;
   totalcarrito: number = 0;
   visitaSel: VisitasResultadoModel = new VisitasResultadoModel();
@@ -161,13 +151,11 @@ export class ZonapagoComponent implements OnInit {
   verpass: boolean = false;
   listatiposidentificacion: any[] = [];
   aceptacionpoliticas: boolean = false;
-
   formafa: FormGroup;
   companions: [] = [];
   companionsComplet: boolean = false;
   maxold: number = 1000;
   maxoldchildren: number = 13;
-
   registrado: boolean = false;
 
   mensaje1 = "Debe registrarse para continuar";
@@ -228,6 +216,7 @@ export class ZonapagoComponent implements OnInit {
   ngAfeterViewInit() {
     this.comprobarLogin();
 
+    console.log("traza ",this.textconts)
   }
 
   @HostListener('window:scroll')
@@ -250,20 +239,35 @@ export class ZonapagoComponent implements OnInit {
 
   comprobarLogin() {
     this.loginok = !this.auth.noAuth();
+
     if (this.loginok) {
       this.registrado = true;
       this.usuario = this.auth.getUser();
-
-      this.pedido.cliente.name = this.usuario.name;
-      this.pedido.cliente.surname = this.usuario.surname;
-      this.pedido.cliente.email = this.usuario.email;
-      this.pedido.cliente.phone = this.usuario.phone;
-      this.pedido.cliente.prefijo = this.usuario.prefijo;
+      if(this.usuario == null){
+         this.getMe();
+      }
+      else{
+        this.setClientePedido(this.usuario);
+      }
 
     }
     else{
       this.alertasService.alertaKO("Madguides", this.mensaje1);
     }
+  }
+
+
+  setClientePedido(usuario: UserModel){
+    this.pedido.cliente.name = usuario.name;
+    this.pedido.cliente.surname = usuario.surname;
+    this.pedido.cliente.email = usuario.email;
+    this.pedido.cliente.prefijo = usuario.prefijo;
+    this.pedido.cliente.telefono = usuario.telefono;
+    this.pedido.cliente.state = usuario.state;
+    this.pedido.cliente.country = usuario.country;
+    this.pedido.cliente.city = usuario.city;
+    this.pedido.cliente.number = usuario.number;
+    this.pedido.cliente.address = usuario.address;
   }
 
   crearCompanions(){
@@ -311,12 +315,13 @@ export class ZonapagoComponent implements OnInit {
       surname: [''],
       password: ['', [Validators.required, Validators.minLength(1)]],
       prefijo: [''],
+      address: [''],
       phone: ['', [Validators.required, Validators.minLength(2)]],
-      street: ['', [Validators.required, Validators.minLength(2)]],
-      number: ['', [Validators.required]],
-      country: ['',[Validators.required]],
-      state: ['',[Validators.required]],
-      city: ['',[Validators.required]],
+      street: [''],
+      number: [''],
+      country: [''],
+      state: [''],
+      city: [''],
       
     });
   }
@@ -328,12 +333,17 @@ export class ZonapagoComponent implements OnInit {
       this.usuario.name = this.formregister.get('name')?.value;
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
-      this.usuario.phone = this.formregister.get('phone')?.value;
-      this.usuario.street = this.formregister.get('street')?.value;
-      this.usuario.number = this.formregister.get('number')?.value;
-      this.usuario.country = this.formregister.get('country')?.value;
+      this.usuario.telefono = this.formregister.get('phone')?.value;
       this.usuario.state = this.formregister.get('state')?.value;
+      this.usuario.country = this.formregister.get('country')?.value;
+      this.usuario.city = this.formregister.get('city')?.value;
+      this.usuario.number = this.formregister.get('number')?.value;
+      this.usuario.address = this.formregister.get('address')?.value;
+      
       this.btactivadoreg = false;
+      
+      console.log(this.formregister.controls)
+      console.log(this.formregister.status)
 
       if (this.formregister.status != 'INVALID') {
         this.btactivadoreg = true;
@@ -349,22 +359,29 @@ export class ZonapagoComponent implements OnInit {
   getMe(){
     this.auth.getMe().subscribe((resp:any) => {
       this.usuario = resp;
+      this.setClientePedido(this.usuario);
     })
   }
 
   reservarvisita() {
-    if (this.pedido.visitasPedido.length == 0) {
+    if (this.pedido.reservas.length == 0) {
       this.router.navigate(['/buscador']);
     }
     else {
       ///guardar campos cliente
       if (!this.loginok) {
         if(this.formregister != null){
-          this.pedido.cliente.name = this.formregister.value.nombre;
+          this.pedido.cliente.name = this.formregister.value.name;
           this.pedido.cliente.surname = this.formregister.value.surname;
           this.pedido.cliente.email = this.formregister.value.email;
-          this.pedido.cliente.phone = this.formregister.value.telefono;
           this.pedido.cliente.prefijo = this.formregister.value.prefijo;
+          this.pedido.cliente.telefono = this.formregister.value.telefono;
+          this.pedido.cliente.state = this.formregister.value.state;
+          this.pedido.cliente.country = this.formregister.value.country;
+          this.pedido.cliente.city = this.formregister.value.city;
+          this.pedido.cliente.number = this.formregister.value.number;
+          this.pedido.cliente.address = this.formregister.value.address;
+          
           if (this.formregister.status == 'INVALID') {
             this.formregister.markAllAsTouched();
             this.cambiosFormularioRegistro();
@@ -379,11 +396,7 @@ export class ZonapagoComponent implements OnInit {
         }
       } 
       else if (this.aceptacionpoliticas ) {
-        this.pedido.cliente.name = this.usuario.name;
-        this.pedido.cliente.surname = this.usuario.surname;
-        this.pedido.cliente.email = this.usuario.email;
-        this.pedido.cliente.phone = this.usuario.phone;
-        this.pedido.cliente.prefijo = this.usuario.prefijo;
+        this.setClientePedido(this.usuario);
         
         this.pedido.reservas.forEach(el => {
           el.users = [];
@@ -414,7 +427,7 @@ export class ZonapagoComponent implements OnInit {
   }
 
   registrarpedido(pedido: CartModel) {
-    this.pedido.codigoreserva = new Date().getTime().toString();
+    //this.pedido.codigoreserva = new Date().getTime().toString();
     this.carritoService.saveCart(pedido);
     this.pedidosguardados = this.carritoService.getPedidosguardados();
     this.pedidosguardados.push(pedido);
@@ -447,10 +460,6 @@ export class ZonapagoComponent implements OnInit {
       /////////////////////////////////////////////////////
 
       horario.uuid = el.visit.uuid;
-      
-      if(this.usuario.address.length > 0){
-        horario.address = this.usuario.address[0]["address"]?.uuid;
-      }
       
       horario.token = token;
       horario.country_id = this.usuario.address[0]["address"]?.country.id;
@@ -488,13 +497,13 @@ export class ZonapagoComponent implements OnInit {
             }
           });
           
-          let pedido = this.carritoService.deleteProductCart(reserva.uuid);
-          this.pedido.visitasPedido = pedido.visitasPedido;
+          let pedido = this.carritoService.deleteProductCart(reserva.id);
+          this.pedido.reservas = pedido.reservas;
           this.pedido.total = pedido.total;
           this.providerService.setThrowCarritoupdate(this.pedido);
           this.preciototal = this.globalService.getFormatNumber(pedido.total);
           
-          if (this.pedido.visitasPedido.length == 0) {
+          if (this.pedido.reservas.length == 0) {
             this.router.navigate(['/buscador']);
           }
         }
@@ -605,17 +614,17 @@ export class ZonapagoComponent implements OnInit {
 
 
   iniciarsesion() {
+    this.loginok = false;
     this.auth.loginUser(this.usuario).subscribe((resp) => {
       let login = resp as LoginModel | any;
-      this.usuario = login.user as UserModel;
-      this.alertasService.alertaInfo(
-        'Madguides',
-        'Bienvenido ' + login.user.name + ' Te has identificado correctamente'
-      );
-      this.loginok = false;
-      if (login.status == 'success' && login.token != null) {
+      this.auth.getMe().subscribe((respuser) => {
+        this.usuario = respuser as UserModel;
         this.loginok = true;
-      }
+        this.alertasService.alertaInfo(
+          'Madguides',
+          this.auth.loginUser + ' <i class="fa fa-check" ></i> '
+        );
+      });
     });
   }
 
@@ -655,10 +664,11 @@ export class ZonapagoComponent implements OnInit {
 
   cambiosFormulariofa() {
     ///// statuChanges
+  
     this.formafa.valueChanges.subscribe( value => {
       this.companions = this.formafa.get('companions').value ;
       this.companionsComplet = false;
-    
+  
       if ( this.formafa.status != "INVALID") {
         if (  this.companions.length > 0 ) {
         this.companionsComplet = true ;
@@ -683,30 +693,21 @@ export class ZonapagoComponent implements OnInit {
     this.compsE.removeAt(index);
   }
 
-
-
-
-
-
   registrarusuario(){
     if(this.usuario != null){
-
       this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-            let respuesta = resp as LoginModel ;
-            if(respuesta.status == "success"){
-               let user = this.usuario; 
-               this.formregister.reset();
-               this.alertasService.alertaInfo("Madguides", this.mensaje4 );
-            }
-            else{
-              this.alertasService.alertaInfo("Madguides", respuesta.message);
-            }
-      });
-    }
-    else{
-      this.alertasService.alertaInfo("Madguides", this.mensaje1 );
+        if(resp != null && resp){
+          this.alertasService.alertaInfo("Madguides", this.mensaje4 ); 
+          this.formregister.reset();
+          this.continuar();
+       }
+       else{
+         this.alertasService.alertaInfo("Madguides", this.mensaje1);
+       }
+     })
     }
   }
+
 
 
 }

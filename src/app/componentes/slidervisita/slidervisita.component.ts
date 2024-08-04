@@ -40,12 +40,17 @@ import { ReservationModel } from 'src/app/models/Reservations.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { IMinimatch } from 'minimatch';
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
+import { debug } from 'console';
+import { TimesSelModel } from 'src/app/models/TimesSel.model';
+import { DiaModel } from 'src/app/models/Dia.model';
+import { HourModel } from 'src/app/models/Hour.model';
 
 @Component({
   selector: 'app-slidervisita',
   templateUrl: './slidervisita.component.html',
 })
-export class SlidervisitaComponent implements OnInit{
+export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
   @Input() textconts: TextContentsModel = new TextContentsModel();
 
@@ -57,7 +62,7 @@ export class SlidervisitaComponent implements OnInit{
   sWindow: any;
 
   visitaresultado: VisitasResultadoModel = new VisitasResultadoModel();
-
+  
   public config: SwiperConfigInterface = {
     autoplay: false,
     effect: 'slide',
@@ -102,11 +107,9 @@ export class SlidervisitaComponent implements OnInit{
 
   isrespon: boolean = false;
   //imagenes
-  listaImagenesVisita: ImagenesModel[] = [];
-  listaImagenesVisitaLat: ImagenesModel[] = [];
 
   //times select !!! revisar TODO
-  timesSel: any ;
+  timesSel: TimesSelModel;
   newReserva: ReservationModel;
 
   //calendario
@@ -118,8 +121,8 @@ export class SlidervisitaComponent implements OnInit{
   week: string[] = [];
   months: string[] = [];
   horas: any[] = [];
-  listahoras: any[] = [];
-  listahorasvisita: any[] = [];
+  listahoras: HourModel[] = [];
+  listahorasvisita: HourModel[] = [];
   //acordeon ocultar
   vcale: boolean = false;
   vhora: boolean = false;
@@ -129,10 +132,9 @@ export class SlidervisitaComponent implements OnInit{
   //seleccionados
   daySel: any;
   horaSel: any = 0;
-  idiomaSel: any = 0;
+  idiomaSel: number = 1;
   adultoSel: number = 0;
   ninosSel: number = 0;
-  menoresSel: number = 0;
   //info acordeon
   horainfo: string = '';
   caleinfo: string = '';
@@ -143,18 +145,14 @@ export class SlidervisitaComponent implements OnInit{
   sumapersonas: number = 0;
   precioadultos: number = 0;
   precioninos: number = 0;
-  preciomenores: number = 0;
   precioadultototal: number = 0;
   precioninostotal: number = 0;
-  preciomenorestotal: number = 0;
   preciototal: number = 0;
   privada: boolean = false;
   precioadultosst: string = '0';
   precioninosst: string = '0';
-  preciomenoresst: string = '0';
   precioadultototalst: string = '0';
   precioninostotalst: string = '0';
-  preciomenorestotalst: string = '0';
   preciototalst: string = '0';
   //validar
   calenovalid: boolean = false;
@@ -184,6 +182,7 @@ export class SlidervisitaComponent implements OnInit{
   verPanel: boolean = false;
   secuencial: number = 1;
   defaultvisitime: number = 0;
+  preciovisita: number = 0;
 
   constructor(
     private wowService: NgwWowService,
@@ -203,28 +202,27 @@ export class SlidervisitaComponent implements OnInit{
     this.sWindow = this.platformService.sWindow
   }
 
+
   ngOnInit(): void {
-
+    
     this.newReserva = new ReservationModel();
+    this.timesSel = new TimesSelModel();
 
-    ///default visittime
-    // const rutaArchivoJson = 'assets/docs/visita.json';
-    // this.http.get(rutaArchivoJson).subscribe(
-    //   (data: TimesModel) => {
-    //     this.defaultvisitime.push(data);
-    // });
-
-   
-    this.listenProvider();
     this.week = this.globalService.week;
     this.months = this.globalService.months;
     this.redes = this.globalService.redes;
-    this.listahoras = this.globalService.listahoras;
-
     this.vcale = true;
     this.isrespon = this.platformService.isrespon;
+    this.listahorasvisita = [];
+    
+  
   }
 
+
+  ngAfterViewInit(): void {
+    this.listenProvider();
+    
+  }
 
   @HostListener('window:scroll')
   onWindowScroll() {
@@ -254,17 +252,17 @@ export class SlidervisitaComponent implements OnInit{
 
 
 
+
   listenProvider() {
     this.providerService.getThrowVisita.subscribe((resp) => {
-      debugger
+
       var provVisita = resp as VisitasResultadoModel;
       
       if (provVisita.duracionmin == null) {
         provVisita.duracionmin = this.defaultvisitime;
       }
 
-      this.getVisitaResultado(provVisita);
-
+      this.getNewReserva(provVisita);
       let hoy = moment();
       let estemes = hoy.format('MM');
       let esteyear = hoy.format('YYYY');
@@ -280,93 +278,76 @@ export class SlidervisitaComponent implements OnInit{
 
 
 
-  getVisitaResultado(visita: VisitasResultadoModel) {
-    debugger
-    this.visitaresultado = visita;
-    console.log(
-      '----VISITA RESULTADO',
-      this.visitaresultado
-    );
+  getNewReserva(visita: VisitasResultadoModel) {
+    ///creacion de reserva model
+    this.newReserva.visit = visita;
+    
 
-    this.listaImagenesVisita = []
-    this.listaImagenesVisitaLat = [];
+    let imgfirst = this.getImageFirst(this.newReserva.visit);
+    if(imgfirst != null){
+      imgfirst.sel = true;
+    }
+
 
     //info
-    this.descripcion = visita.descripcion;
+    this.descripcion = this.newReserva.visit.descripcion;
     this.descripcioncorta = this.descripcion.substring(0, 200);
-    this.timesSel = visita.duracionmin != null ? visita.duracionmin : 0;
-    
-    this.maximopersonas = this.timesSel?.available ?? 0;
-    this.vendidas = this.timesSel?.buy ?? 0;
+    this.maximopersonas = this.newReserva.visit.nummax ?? 0;
+    this.vendidas = 0; /// calcular vendidas para esa fecha/hora y visita
     this.disponibles = this.maximopersonas - this.vendidas;
-  
-    this.getCalculoPrecio();
-
-    ///get idiomas
-
-    this.listaidiomas = this.listasService.getIdiomas()
+    this.listaidiomas = this.listasService.getIdiomas();
     this.listaidiomasvisita = [];
     this.idiomasdisponibles = "";
-    debugger
-    this.visitaresultado.visitlanguages.forEach((idiomaiso, index) => {
-      let idiom: LanguagesModel = this.listaidiomas.find((x) => x.iso == idiomaiso.iso) ?? new LanguagesModel();
-      idiom.id = index;
-      this.listaidiomasvisita.push(idiom);
-      let idiomasum = idiom.name.toLowerCase();
-      this.idiomasdisponibles += (  idiomasum ) + ', ';
-    })
-    
     this.idiomaSel = null ;
     
-    this.listahorasvisita = [];
-    this.listahoras.forEach((hora) => {
-      let initsp = this.timesSel.init.split(':');
-      let res = initsp[0] + ':' + initsp[1];
-      if (hora.value == res) {
-        this.listahorasvisita.push(hora);
-      }
-      
-    });
-  
-    //buscar si hay mas horas mismo dia
-    this.visitaresultado.hours.forEach((v) => {
-      if (v.date == this.timesSel.date && v.init != this.timesSel.init) {
-        let initsp = v.init.split(':');
-        let res = initsp[0] + ':' + initsp[1];
-        this.listahorasvisita.push({ value: res, viewValue: res });
-      }
-    });
     
+    this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
+      let idiom: LanguagesModel = this.listaidiomas.find((x) => x.id == idiomaiso.language_id ) ?? new LanguagesModel();
+      this.listaidiomasvisita.push(idiom);
+      let idiomasum = idiom.name.toLowerCase();
+      this.idiomasdisponibles += ( idiomasum ) + ', ';
+      this.newReserva.nombreidioma = this.visitaService.getNombreidioma(idiom.id);
+    })
+    
+    this.getCalculoPrecio();
+    this.setListaHoras();
+    this.preciovisita = this.globalService.getPrecioByVisit(this.newReserva.visit);
+    
+    console.log('listahorasvisita', this.listahorasvisita);
+
   }
 
 
   getImageFirst(visita: VisitasResultadoModel) {
-
     return visita.mediafiles[0];
   }
 
 
+  getPrecio(duracionmin: number, preciohora: number){
+    return this.globalService.getPrecio(duracionmin, preciohora);
+  }
+
   getCalculoPrecio() {
-    
-    this.precioadultos = this.timesSel.list_price.price;
-    this.precioninos = this.timesSel.list_price.second;
-    this.preciomenores = 0;
+
+    let precio = this.globalService.getPrecioByVisit(this.newReserva.visit) ;
+    this.precioadultos = precio;
+    this.precioninos = precio;
     this.precioadultosst = this.globalService.getFormatNumber(
       (Number(this.precioadultos) * 100) / 100
     ); //correccion cuando esten los precios por edades
     this.precioninosst = this.globalService.getFormatNumber(
       (Number(this.precioninos) * 100) / 100
     ); //correccion cuando esten los precios por edades
-    this.preciomenoresst = this.preciomenores.toString();
+
   }
 
 
   getIndexSel() {
-    let imm = this.imagenlista.swiperSlides?.nativeElement.childNodes;
+    let imm = this.imagenlista?.swiperSlides?.nativeElement.childNodes;
     if(imm != null){
       imm.forEach((el: any) => {
         if (el.classList?.contains('swiper-slide-active')) {
-          this.listaImagenesVisitaLat.forEach((lt: any) => {
+          this.visitaresultado?.mediafiles?.forEach((lt: any) => {
             lt.sel = false;
             let idd = el.id.replace('im-', '');
             if (lt.id == idd) {
@@ -406,22 +387,23 @@ export class SlidervisitaComponent implements OnInit{
 
   horainfosel(v: string) {
     this.horainfo = v;
-    this.horaSel = this.listahoras.filter((x) => x.value == v)[0].key;
+    this.horaSel = this.listahoras.filter((x) => x.hora == v)[0];
     if (this.horaSel != null) {
       this.horanovalid = false;
     }
-    if (this.timesSel.init != this.horaSel) {
+    if (this.timesSel.hour != this.horaSel) {
       // this.timesSel =
-      //   this.visitaresultado.visit_time.find((x) => x.init == this.horaSel) ??
+      //   this.newReserva.visit.visithours.find((x) => x.hour == this.horaSel) ??
       //   this.timesSel;
+
       this.getCalculoPrecio();
     }
     this.setSecuencial();
   }
 
-  idiomainfosel(v: string) {
-    this.idiomaSel = this.listaidiomas.filter((x) => x.iso == v)[0].name;
-    this.idiominfo = this.idiomaSel;
+  idiomainfosel(v: number) {
+    this.idiomaSel = this.listaidiomas.filter((x) => x.id == v)[0].id;
+    this.idiominfo = this.listaidiomas.filter((x) => x.id == v)[0].name;
     if (this.idiomaSel != null) {
       this.idiomanovalid = false;
     }
@@ -463,19 +445,7 @@ export class SlidervisitaComponent implements OnInit{
     }
   }
 
-  restarmenores() {
-    this.menoresSel--;
-    this.sumapersonas--;
-    this.setPreciototal();
-  }
-  sumarmenores() {
-    if (this.sumapersonas < this.maximopersonas) {
-      this.menoresSel++;
-      this.sumapersonas++;
-      this.setPreciototal();
-      this.persnovalid = false;
-    }
-  }
+  
 
   setPreciototal() {
     this.precioadultototal =
@@ -487,15 +457,10 @@ export class SlidervisitaComponent implements OnInit{
     this.precioninostotalst = this.globalService.getFormatNumber(
       this.precioninostotal
     );
-    this.preciomenorestotal =
-      (this.menoresSel * (this.preciomenores * 100)) / 100;
-    this.preciomenorestotalst = this.globalService.getFormatNumber(
-      this.preciomenorestotal
-    );
+    
     this.preciototal =
       (this.precioadultototal * 100 +
-        this.precioninostotal * 100 +
-        this.preciomenorestotal * 100) /
+        this.precioninostotal * 100 ) /
       100;
     this.preciototalst = this.globalService.getFormatNumber(this.preciototal);
     this.setSecuencial();
@@ -507,11 +472,9 @@ export class SlidervisitaComponent implements OnInit{
       this.adultoSel = this.maximopersonas;
       this.sumapersonas = this.maximopersonas;
       this.ninosSel = 0;
-      this.menoresSel = 0;
       this.precioadultototal =
         (this.maximopersonas * (this.precioadultos * 100)) / 100;
       this.precioninostotal = 0;
-      this.preciomenorestotal = 0;
       this.setPreciototal();
       this.persnovalid = false;
     } else {
@@ -590,15 +553,21 @@ export class SlidervisitaComponent implements OnInit{
     const diffDays = endDate.diff(startDate, 'days', true);
     const numberDays = Math.round(diffDays);
     const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
-      a = parseInt(a) + 1;
-      const dayObject = moment(`${year}-${month}-${a}`);
+      const dayNumber = parseInt(a, 10) + 1;
+      const dayObject = moment(`${year}-${month}-${dayNumber}`);
       return {
         name: dayObject.format('dddd'),
-        value: a,
+        value: dayObject.format('DD'),
         indexWeek: dayObject.isoWeekday(),
         month: dayObject.format('MM'),
         year: dayObject.format('YYYY'),
       };
+    });
+
+    ///dias de la visita
+    let diasvisita: string[] = [];
+    this.newReserva.visit.visitdias.forEach((dia: any) => {
+      diasvisita.push(dia.fecha);
     });
 
     this.monthSelect = arrayDays;
@@ -617,30 +586,29 @@ export class SlidervisitaComponent implements OnInit{
         }
       });
     }
-    ///dias de la visita
-    let diasvisita: TimesModel[] = [];
-    // this.visitaresultado.visit_time.forEach((dia: TimesModel) => {
-    //   diasvisita.push(dia);
-    // });
+    else{
+      this.timesSel.date = diasvisita[0];
+      this.getCherryDay();
+    }
 
+    
+    
     ///marcar dias de la visita y seleccionado de ese mes
     arrayDays.forEach((day: any) => {
       let esafecha = day.year + '-' + day.month + '-' + day.value;
+      let diadelasemana = day.indexWeek ;
       day.visitday = false;
-
-      if (diasvisita.find((x) => x.date == esafecha)) {
-        day.visitday = true;
-        if (esafecha == this.timesSel.date) {
-          day.selected = true;
+      diasvisita.forEach( (dvt)=>{
+        if(dvt == esafecha){
+          day.visitday = true;
         }
-      }
+      })
     });
-    
   }
 
 
   getCherryDay(){
-    if (this.timesSel != null) {
+    if (this.timesSel.date != "") {
       let yea = this.timesSel.date.split('-')[0];
       let mon = this.timesSel.date.split('-')[1];
       let da = this.timesSel.date.split('-')[2];
@@ -673,7 +641,7 @@ export class SlidervisitaComponent implements OnInit{
 
 
   clickDay(day: any) {
-  
+
     if (day.visitday) {
       this.daySel = day;
       
@@ -702,19 +670,15 @@ export class SlidervisitaComponent implements OnInit{
   }
 
 
-
-
-
   setSecuencial() {
-    
     this.secuencial = 0;
     if (this.daySel == null) {
       this.secuencial = 1;
     } else if (this.horaSel == 0) {
       this.secuencial = 2;
-    } else if (this.idiomaSel == "") {
+    } else if (this.idiomaSel == 0) {
       this.secuencial = 3;
-    } else if (this.adultoSel == 0 && this.ninosSel == 0 && this.menoresSel == 0) {
+    } else if (this.adultoSel == 0 && this.ninosSel == 0 ) {
       this.secuencial = 4;
     }
   }
@@ -735,7 +699,7 @@ export class SlidervisitaComponent implements OnInit{
       valido = false;
       this.idiomanovalid = true;
     }
-    if (this.adultoSel == 0 && this.ninosSel == 0 && this.menoresSel == 0) {
+    if (this.adultoSel == 0 && this.ninosSel == 0 ) {
       valido = false;
       this.persnovalid = true;
     }
@@ -743,25 +707,49 @@ export class SlidervisitaComponent implements OnInit{
     if (valido) {
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
-      // this.visitaresultado.adults = this.adultoSel;
-      // this.visitaresultado.ninos = this.ninosSel;
-      // this.visitaresultado.menores = this.menoresSel;
-      // this.visitaresultado.precio = this.preciototal;
-      // this.visitaresultado.fecha = this.dateValue;
-      // this.visitaresultado.hora = this.horainfo;
-      // this.visitaresultado.horario_uuid = this.timesSel.uuid ;
-      // this.visitaresultado.idioma = this.idiominfo;
-      if (carrito.visitasPedido == null) {
-        carrito.visitasPedido = [];
+
+      
+      this.newReserva.adults = this.adultoSel;
+      this.newReserva.children = this.ninosSel;
+      this.newReserva.total = this.preciototal;
+      this.newReserva.fecha = this.timesSel.date ;
+      this.newReserva.language_id = this.idiomaSel;
+      this.newReserva.visit_hours_id = this.horaSel.id ;
+
+
+
+      if (carrito.reservas == null) {
+        carrito.reservas = [];
       }
-      carrito.visitasPedido.push(this.visitaresultado);
+      carrito.reservas.push(this.newReserva );
       carrito.total = Number(this.globalService.getFormatNumber(carrito.total + this.preciototal));
-      carrito.totalfinal = Number(this.globalService.getFormatNumber(carrito.total * (1 + carrito.impuesto)));
+      carrito.totalfinal = Number(this.globalService.getFormatNumber(carrito.total * (1 + 0.21)));
       this.carritoService.saveCart(carrito);
       ///actualizar carrito menu
       this.providerService.setThrowCarritoupdate(carrito);
       this.alertasService.alertaPeq("Producto agregado al carrito");
+      this.newReserva = new ReservationModel();
       this.router.navigate(['/buscador']);
     }
   }
+
+
+  setListaHoras(){
+    this.listasService.getHoras().subscribe((resp) =>{
+      if(resp != null){
+        this.listahoras = resp as HourModel[];
+        this.listahorasvisita = [];
+        this.listahoras?.forEach((hora) => {
+          this.newReserva.visit.visithours.forEach((v) => {
+            if (hora.hora == v.hour) {
+              this.listahorasvisita.push(hora);
+            }
+          });
+        });
+      }
+    });
+  }
+
+
+
 }

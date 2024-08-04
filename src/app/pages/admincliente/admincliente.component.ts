@@ -75,6 +75,7 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
   
   
   ngOnInit() {
+
     this.isrespon = this.platformService.isrespon;
     this.zonanopago.emit();
     this.loginadmin();
@@ -85,6 +86,10 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
+
+    if( this.auth.noAuth() ){
+      this.router.navigate(['/home']);
+    }
     // this.acro.params.subscribe(
     //   (params: Params) => {
 
@@ -109,8 +114,8 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
         }
       })
@@ -118,21 +123,17 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
   }
 
   loginadmin() {
-    
     let user = localStorage.getItem('user');
     
     if(user != null){
       this.usuario = JSON.parse(user) as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
+      //this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = " ";
     }
   }
 
 
-
-
   onActivate(reference: any) {
     if(reference != undefined ){
-        
         if(reference.zonareservas != undefined  ){
           this.verreservas = true;
           this.vercuenta = false;
@@ -142,7 +143,6 @@ export class AdminclienteComponent implements OnInit, AfterViewInit {
           this.vercuenta = true;
         } 
     }
-    
   }
 
 

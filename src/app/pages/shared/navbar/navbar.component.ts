@@ -33,6 +33,7 @@ import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { TextDataModel } from 'src/app/models/TextData.model';
 import { ReservationModel } from 'src/app/models/Reservations.model';
+import { NumberLiteralType } from 'typescript';
 
 @Component({
   selector: 'app-navbar',
@@ -227,7 +228,7 @@ export class NavbarComponent implements OnInit {
 
     if(user != "undefined" && user != null ){
       this.usuario = JSON.parse(user) as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name : this.usuario.rol = "";
+      //this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name : this.usuario.rol = "";
       this.loginok = true;
     }
     
@@ -277,7 +278,7 @@ export class NavbarComponent implements OnInit {
     else{
       this.pedido = new CartModel();
       this.carritoService.saveCart(this.pedido);
-      this.actividades = this.pedido.visitasPedido.length;
+      this.actividades = this.pedido.reservas.length;
     }
   }
 
@@ -293,6 +294,11 @@ export class NavbarComponent implements OnInit {
         this.idioma = this.idiomas.find(el => el.iso == iso)?.name ?? "";
       }
    // } );
+  }
+
+  getPrecio(duracionmin: number, preciohora: number){
+    let precio = preciohora * ( duracionmin /60 );
+    return precio;
   }
   
 
@@ -366,8 +372,8 @@ export class NavbarComponent implements OnInit {
       this.usuario.name = this.formregister.get('name')?.value;
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
-      this.usuario.phone = this.formregister.get('phone')?.value;
-      this.usuario.street = this.formregister.get('street')?.value;
+      this.usuario.telefono = this.formregister.get('telefono')?.value;
+      this.usuario.address = this.formregister.get('address')?.value;
       this.usuario.number = this.formregister.get('number')?.value;
       this.usuario.country = this.formregister.get('country')?.value;
       this.usuario.state = this.formregister.get('state')?.value;
@@ -402,10 +408,10 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  eliminarvisitacarrito(uuid: string) {
-    this.pedido = this.carritoService.deleteProductCart(uuid);
+  eliminarvisitacarrito(id: number) {
+    this.pedido = this.carritoService.deleteProductCart(id);
     this.totalcarrito = this.globalService.getFormatNumber(this.pedido.total);
-    this.actividades = this.pedido.visitasPedido.length;
+    this.actividades = this.pedido.reservas.length;
   }
 
   
@@ -415,7 +421,7 @@ export class NavbarComponent implements OnInit {
       this.carritovacio = false;
     }
     this.totalcarrito = this.globalService.getFormatNumber(this.pedido.total);
-    this.actividades = this.pedido.visitasPedido.length;
+    this.actividades = this.pedido.reservas.length;
   }
 
 
@@ -601,9 +607,8 @@ export class NavbarComponent implements OnInit {
   iniciarsesion(){
     this.loading = true;
     this.auth.loginUser(this.usuario ).subscribe( (resp) => {
-
     this.loginok = false;
-    if(resp == "success"){
+    if(resp){
       this.auth.getMe().subscribe( res=> {
         console.log("me ",res);
         this.alertasService.alertaInfo("Madguides", "Bienvenido,Te has logueado correctamente");   
@@ -642,16 +647,14 @@ export class NavbarComponent implements OnInit {
   registrar(){
     this.loading = true;
     this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-          let respuesta = resp as LoginModel ;
-          if(respuesta.status == "success"){
-             this.alertasService.alertaInfo("Madguides", respuesta.message);
-             let user = this.usuario; 
+          
+          if(resp != null && resp){
+             this.alertasService.alertaInfo("Madguides", "Registrado"); 
              this.formregister.reset();
              this.mostrarusuario();
-            
           }
           else{
-            this.alertasService.alertaInfo("Madguides", respuesta.message);
+            this.alertasService.alertaInfo("Madguides", "no registrado");
           }
           this.loading = false;
     });

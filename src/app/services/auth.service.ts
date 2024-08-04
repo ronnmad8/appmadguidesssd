@@ -39,11 +39,11 @@ export class AuthService {
     this.headers =this.getHeaders(this.clang, this.userToken);
   }
 
-  getHeaders(clang: string, token: string) {
+  getHeaders(clang: string, access_token: string) {
     const headers = new HttpHeaders({
       'Content-type': 'application/json; charset=UTF-8',
       Language: clang,
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + access_token,
     });
     return headers;
   }
@@ -59,10 +59,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('user');
-    localStorage.removeItem('saludo');
+    this.cleanLocalstorageUser()
     this.userToken = '';
     this.clang = localStorage.getItem('currentLanguage') ?? 'es';
     this.headers =this.getHeaders(this.clang, this.userToken);
@@ -71,19 +68,19 @@ export class AuthService {
   }
 
   private guardarToken(lo: LoginModel) {
-    localStorage.setItem('token', lo.token);
-    localStorage.setItem('rol', lo.rol[0]);
+    localStorage.setItem('access_token', lo.access_token);
+    localStorage.setItem('refresh_token', lo.refresh_token);
     localStorage.setItem('saludo', 'hola');
-    this.userToken = lo.token;
+    this.userToken = lo.access_token;
   }
 
 
   leerToken() {
-    if (localStorage.getItem('token')) {
-      let token = localStorage.getItem('token');
+    if (localStorage.getItem('access_token')) {
+      let access_token = localStorage.getItem('access_token');
       this.userToken = '';
-      if (token != null) {
-        this.userToken = token;
+      if (access_token != null) {
+        this.userToken = access_token;
         
         //if (this.noAuth()) this.router.navigateByUrl('/home');
       }
@@ -125,6 +122,7 @@ export class AuthService {
 
   isAuth(): void{
     if (this.leerToken() != null){
+      debugger
       this.islogin$.next(true);
     }
     else{
@@ -151,25 +149,19 @@ export class AuthService {
       surname: user.surname,
       password: user.password,
       prefijo: user.prefijo,
-      phone: user.phone,
-      privacity: true,
-      particular: true,
-      type: user.type,
-      telefono: user.phone,
-      street: user.street,
+      telefono: user.telefono,
       country: user.country  ,
       state: user.state,
       city: user.city,
       number: user.number,
-      direction: true,
+      address: user.address,
     };
 
-    let endpoint = '/register';
+    let endpoint = '/users';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
-      map((res) => {
-        let login = res as UserModel;
-        return login;
+      map((res: any) => {
+        return res;
       }),
       catchError((err) => {
         console.error('Error  ', err.error);
@@ -198,29 +190,37 @@ export class AuthService {
   }
 
 
+  cleanLocalstorageUser(){
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('user');
+    localStorage.removeItem('saludo');
+  }
+
   loginUser(user: UserModel) {
     let _datos = {
-      email: user.email,
+      username: user.email,
       password: user.password,
+      client_id: environment.client_id_grant,
+      client_secret: environment.client_secret_grant,
+      grant_type: environment.grant_type,
     };
 
     let endpoint = '/login';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('rol');
-        localStorage.removeItem('user');
-        localStorage.removeItem('saludo');
-        this.userToken = '';
-        this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-        this.headers =this.getHeaders(this.clang, this.userToken);
-
+        this.cleanLocalstorageUser();
         let login = res as LoginModel;
-        if(login.status == "success"){
+        let processok = false;
+        if(login != null){
+          this.userToken = "";
+          this.clang = localStorage.getItem('currentLanguage') ?? 'es';
           this.guardarToken(login);
+          this.headers =this.getHeaders(this.clang, this.userToken);
+          processok = true;
         }
-        return login.status;
+        return processok;
       }),
       catchError((err) => {
         console.error('Error  ', err.error);
@@ -230,30 +230,24 @@ export class AuthService {
   }
 
   resetlogin() {
-    
     let user = this.getUser();
-
     if(user != null){
       this.loginUser(user);
     }
     else{
       this.logout();
     }
-    
   }
 
   getMe() {
-
     let endpoint = '/me';
     this.url = this.apiurl + endpoint;
     let user: UserModel = new UserModel();
     return this.http.get(`${this.url}`).pipe(
-      map((res: ResultadoModel) => {
-        if(res != null && res.status == "success"){
-      
-          user = res.user as UserModel;
+      map((resp: any) => {
+        if(resp != null &&  resp["data"] != null ){
+          user = resp["data"] as UserModel;
           localStorage.setItem('user', JSON.stringify(user));
-
         }
         return user;
       }),
@@ -273,10 +267,14 @@ export class AuthService {
       name: user.name,
       surname: user.surname,
       prefijo: user.prefijo,
-      telefono: user.phone,
-      type_doc: user.type,
-      document: user.document,
-      particular: true
+      telefono: user.telefono,
+      state: user.state,
+      country: user.country,
+      city: user.city,
+      number: user.number,
+      address: user.address
+      
+      
     };
     
     let endpoint = '/changeData';
@@ -304,9 +302,8 @@ export class AuthService {
     }
     if(addressid == ""){
       let _datos = {
-        street: user.street,
+        address: user.address,
         number: user.number,
-        postal: user.postal,
         city: user.city,
         state: user.state,
         country: user.country
@@ -328,10 +325,8 @@ export class AuthService {
 
     else{
       let _datos = {
-        uuid:  addressid,
-        street: user.street,
+        address: user.address,
         number: user.number,
-        postal: user.postal,
         city: user.city,
         state: user.state,
         country: user.country

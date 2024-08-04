@@ -18,6 +18,8 @@ export class ReservationModel {
     user_id: number;
     uuid: string; //uuid
     language_id;
+    language;
+    nombreidioma;
     fecha: string;
     visit_hours_id: number;
     persons: number;
@@ -26,6 +28,8 @@ export class ReservationModel {
     total: number;
     status: number;
     private: boolean;
+    titulo: string;
+    descripcion: string;
     visit: VisitasResultadoModel;
     
 
@@ -39,6 +43,8 @@ export class ReservationModel {
         this.user_id = 0;
         this.uuid = '';
         this.language_id = 1;
+        this.language = "es";
+        this.language = "español";
         this.fecha = new Date().toISOString();
         this.visit_hours_id = 0;
         this.persons = 0;
@@ -46,6 +52,8 @@ export class ReservationModel {
         this.adults = 0;
         this.status= 1;
         this.private = false;
+        this.titulo = "";
+        this.descripcion = "";
         this.visit = new VisitasResultadoModel();
 
     }

@@ -121,6 +121,7 @@ export class VisitadetailComponent implements OnInit{
         if(resp != null){
           this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+          console.log("TEXTS ", this.textconts)
         }
       })
     }

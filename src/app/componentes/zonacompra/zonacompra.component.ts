@@ -86,14 +86,14 @@ export class ZonacompraComponent implements OnInit {
 
 
   getPedido() {
-    this.carritoService.getPedidosCompra().subscribe(resp =>{
-
+    this.carritoService.getPedidoCompra().subscribe(resp =>{
+      this.pedido.reservas = resp as ReservationModel[];
+      if(this.pedidos.length > 0){
+        this.pedidos = this.pedidos.filter(x => x.cliente.email == this.usuario.email);
+        this.pedido = this.pedidos[this.pedidos.length - 1]
+        this.listaPedido = this.pedido.reservas;
+      }
     })
-    if(this.pedidos.length > 0){
-      this.pedidos = this.pedidos.filter(x => x.cliente.email == this.usuario.email);
-      this.pedido = this.pedidos[this.pedidos.length - 1]
-      this.listaPedido = this.pedido.reservas;
-    }
   }
 
 

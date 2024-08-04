@@ -11,6 +11,8 @@ import { TagsModel } from '../models/Tags.model';
 import { SelectModel } from '../models/Select.model';
 import { GlobalService } from './global.service';
 import { IsolanguagesModel } from '../models/Isolanguages.model';
+import { HorasModel } from '../models/Horas.model';
+import { HourModel } from '../models/Hour.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,7 @@ export class ListasService {
     this.apiurl = environment.apiurl;
     this.clang = this.globalService.getLanguage();
   }
+
 
 
   getCategorias() {
@@ -56,14 +59,6 @@ export class ListasService {
   getIdiomas() {
 
     return this.globalService.listaidlangs as LanguagesModel[];
-    // let endpoint = '/isolanguages'+ ;
-    // this.url = this.apiurl + endpoint;
-    
-    // return this.http.get( `${this.url}` )
-    // .pipe(map( (resp) => {
-    //     let idiomas = resp as LanguagesModel[];
-    //     return idiomas;
-    // } ));
  
   }
 
@@ -78,6 +73,16 @@ export class ListasService {
  
   }
 
+
+  getHoras() {
+    let endpoint = '/hours';
+    this.url = this.apiurl + endpoint;
+    return this.http.get( `${this.url}` )
+    .pipe(map( (resp) => {
+        return resp["data"] as HourModel[];
+    } ));
+ 
+  }
 
 
 

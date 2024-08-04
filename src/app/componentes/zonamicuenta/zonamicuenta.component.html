@@ -11,8 +11,12 @@
                                 <span>{{textconts.micuenta_title}} </span>
                             </div>
                             <div class="posabsolR fs-14 p-xl-4 p-2">
-                                <div>{{usuario.roles[0]?.name}}</div>
-                                <div *ngIf="usuario.afiliado != ''">
+                                <div *ngIf="usuario.rol_id == '1' ">
+                                    <span >
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                                <div *ngIf="usuario.afiliado != null ">
                                     <span>ID:</span> <span class="mx-1 colROJO1">{{usuario.afiliado}}
                                     </span>
                                 </div>
@@ -24,13 +28,13 @@
                                 </div>
                                 <div class="posrel" style="left: 30px">
                                     <div>
-                                      
+                                        {{ usuario?.name}}
                                     </div>
                                     <div>
                                         {{ usuario?.surname}}
                                     </div>
                                     <div>
-                                        {{ usuario?.prefijo }} <span class="mx-1">{{usuario?.phone}}</span>
+                                        {{ usuario?.prefijo }} <span class="mx-1">{{usuario?.telefono}}</span>
                                     </div>
                                     <div>
                                         {{ usuario?.email }}
@@ -53,7 +57,7 @@
                                             <input #name type="text" class="w-100 scolGRIS1" placeholder=""
                                                 name="name" id="name" formControlName="name" />
                                         </div>
-                                        <div class="lblform">{{textconts.micuenta_form_name}}:</div>
+                                        <div class="lblform">{{textconts.micuenta_form_name}}</div>
                                     </div>
                                     <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
@@ -86,7 +90,7 @@
                                         </div>
                                         <div class="lblform">{{textconts.micuenta_form_telefono}} </div>
                                     </div>
-                                    <div class="col-xl-6 px-2 posrel">
+                                    <!-- <div class="col-xl-6 px-2 posrel">
                                         <select #typedoc class="cjselect w-100" id="tipoidentificacion"
                                             name="tipoidentificacion" formControlName="type">
                                             <option value="{{li.name}}" *ngFor="let li of listatiposidentificacions">
@@ -94,14 +98,14 @@
                                             </option>
                                         </select>
                                         <div class="lblform">{{textconts.micuenta_form_numerotipodoc}}</div>
-                                    </div>
-                                    <div class="col-xl-6 px-2 posrel">
+                                    </div> -->
+                                    <!-- <div class="col-xl-6 px-2 posrel">
                                         <div class="cj">
                                             <input #document type="text" class="colGRIS1 " placeholder="Numero identificacion "
                                                 id="numeroidentificacion" name="document" formControlName="document" />
                                         </div>
                                         <div class="lblform">{{textconts.micuenta_form_number}} </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-xl-6 px-2 ">
                                         <div class="p-0 m-0">
                                             <input name="rb" id="rb-1" type="radio" (change)="selecparticular()" formControlName="particular"  >
@@ -167,7 +171,7 @@
                                         <div class="cj">
                                             <input #cities type="text" class="colGRIS1 " placeholder="{{textconts.micuenta_form_city}} "
                                                 id="city" name="city" formControlName="city" />
-                                        </div>>
+                                        </div>
                                         <div class="lblform">{{textconts.micuenta_form_city}}</div>
                                     </div>
                                 </div>

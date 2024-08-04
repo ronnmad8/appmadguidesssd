@@ -12,7 +12,7 @@ export class CompanionsModel {
     sendmail: string;
 
     //pedido
-    visit_uuid: string;
+    visit_id: string;
     visit_title: string;
     visit_time_uuid: string;
     orden: number;
@@ -26,7 +26,7 @@ export class CompanionsModel {
         this.old = 0;
         this.email = '';
         this.sendmail = '';
-        this.visit_uuid = '';
+        this.visit_id = '';
         this.visit_time_uuid = ''; 
         this.orden = 0;
         this.maxold = 1000;

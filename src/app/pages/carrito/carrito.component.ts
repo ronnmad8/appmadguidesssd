@@ -88,12 +88,13 @@ export class CarritoComponent implements OnInit{
 
 
   getTexts(){
+    
     this.listatextcontsdata = this.globalService.listaTextDataModel
     this.textconts = this.globalService.textcontents;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
         }
       })

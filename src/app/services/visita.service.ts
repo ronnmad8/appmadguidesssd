@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { GlobalService } from './global.service';
+import { ListasService } from './listas.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -27,6 +28,7 @@ export class VisitaService {
     private http: HttpClient,
     private auth: AuthService,
     private globalService: GlobalService,
+    private listasService: ListasService,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
@@ -123,6 +125,16 @@ export class VisitaService {
     return titulocorto;
   }
 
+
+  getNombreidioma(id: number = 1){
+    let nombreidioma = '';
+    this.listasService.getIdiomas().forEach( idioma => { 
+      if ( idioma.id == id ) {
+        nombreidioma = idioma.name;
+      }
+    })
+    return nombreidioma;
+  }
 
 
 

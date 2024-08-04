@@ -16,6 +16,7 @@ import { CompanionsModel } from '../models/Companions.model';
 import { UserModel } from '../models/User.model';
 import { CompanionsPedidoModel } from '../models/CompanionsPedido.model';
 import { ContractModel } from '../models/Contract.model';
+import { ReservationModel } from '../models/Reservations.model';
 
 
 
@@ -51,12 +52,12 @@ export class CarritoService {
   }
 
   getCartVisitas(){
-    let visitas: VisitasResultadoModel[] = [];
+    let reservas: ReservationModel[] = [];
     let cart : CartModel = new CartModel();
     cart = this.getCart();
-    visitas = cart.visitasPedido;
+    reservas = cart.reservas;
 
-    return visitas;
+    return reservas;
   }
 
 
@@ -75,13 +76,14 @@ export class CarritoService {
   }
 
 
-  deleteProductCart(uuid: string){
+  deleteProductCart(id: number){
+
     let cart: CartModel = this.getCart();
     cart.reservas.forEach( (el, index) => {
-      if(el.uuid == uuid){
-         cart.visitasPedido.splice(index, 1);
+      if(el.id == id){
+         cart.reservas.splice(index, 1);
          cart.total = cart.total - el.total ;
-         cart.totalfinal = cart.total * (1 + cart.impuesto);
+         cart.totalfinal = cart.total * (1 + 0.21);
       }
     });
     this.saveCart(cart);
@@ -103,13 +105,14 @@ export class CarritoService {
     return carts;
   }
 
-  getPedidosCompra(){
-    let endpoint = '/reservation' ;
+  getPedidoCompra(){
+    let idlang = this.globalService.getIdLang();
+    let endpoint = '/reservascliente/'+ idlang ;
     this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
-        let respuesta = resp as any;
+        let respuesta = resp as ReservationModel[];
         return respuesta;
 
       } ) ,
@@ -151,24 +154,6 @@ export class CarritoService {
 
   }
 
-
-  getMessagesCash()  {
-    let endpoint = '/assets/cash?' ;
-    this.url = this.apiurl + endpoint;
-    return this.http.get( `${this.url}` )
-    .pipe(
-      map( resp =>{
-  
-        let textocash : TextoCashModel = resp as TextoCashModel;
-        return textocash;
-
-      } ) ,
-      catchError((err) => {
-        console.error("Error  " , err.error);
-                return err.error;
-      })
-    );
-  }
 
 
 

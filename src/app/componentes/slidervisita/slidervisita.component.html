@@ -6,23 +6,24 @@
         <div class="w-100 d-flex p-0 m-0 posrel">
             <div class="posrel p-0 text-left ">
                 <div id="titulovisita">
-                    <span class="colGRIS1">{{visitaresultado?.titulo}} </span>
+                    <span class="colGRIS1">{{newReserva?.visit?.titulo}} </span>
                 </div>
             </div>
             <div class=" d-flex posabsolRight">
                 <div class="horasvisit d-flex">
                     <img class="imghorasvisita  mt-1 mx-1 posrel" style="top: 2px" src='assets/images/i-reloj.svg'
                         alt="">
-                    <span class="cantidadhorasvisita ">{{timesSel?.duration}}h</span>
+                    <span class="cantidadhorasvisita mw60">{{ newReserva?.visit?.duracionmin / 60 }} h</span>
+
                 </div>
-                <div class="linvertical mx-3"></div>
+                <div class="linvertical ml-1 mr-3"></div>
                 <div class="d-flex w-100">
-                    <div class="colGRIS1 mx-3 fs-16 mt-1">_messages?.messages?.from_ </div>
-                    <div class="preciovisitaeuro ml-2 mr-0">{{timesSel?.price}} €</div>
+                    <div class="colGRIS1 mx-3 fs-16 mt-1"> {{textconts.buscador_desde}}  </div>
+                    <div class="preciovisitaeuro ml-2 mr-0">{{  preciovisita  }} €</div>
                 </div>
                 <div class="posabsol d-flex cupo" style="top: 30px; right: 0px" (click)="abrirverredes()">
                     <img src="assets/images/i-compartir.svg" class="imicono4" draggable="false">
-                    <span class="colGRIS1 mx-2 fs-16">_messages?.messages?.share_ </span>
+                    <span class="colGRIS1 mx-2 fs-16"> {{textconts.buscador_compartir | capitalize }} </span>
                     <span class="colGRIS1 ">
                         <i class=" fa fa-angle-down fs-16" *ngIf="!verredes"></i>
                         <i class=" fa fa-angle-up fs-16" *ngIf="verredes"></i>
@@ -48,14 +49,14 @@
                 <div class="conteni posrel d-flex">
 
                     <div class="p-0 m-0 fimaglat max5ima">
-                        <div class="p-0 m-0 imageneslat" *ngFor="let imageneslat of listaImagenesVisitaLat ">
-                            <div #imageneslatid id="imlt-{{imageneslat}}" class="chimaglat cupo">
+                        <div class="p-0 m-0 imageneslat" *ngFor="let mediafile of (newReserva?.visit?.mediafiles) ?? [] ">
+                            <div #imageneslatid id="imlt-{{mediafile.id}}" class="chimaglat cupo">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{imageneslat}}"
-                                        data-srcset="{{imageneslat}}">
-                                    <img class="imglat" [ngClass]="{'imgsel': imageneslat}"
-                                        src="{{imageneslat}}" data-src="{{imageneslat}}"
-                                        alt="{{imageneslat}}">
+                                    <source media="(min-width: 0px)" srcset="{{mediafile.url}}"
+                                        data-srcset="{{mediafile.url}}">
+                                    <img class="imglat" [ngClass]="{'imgsel': mediafile.sel  }"
+                                        src="{{mediafile.url}}" data-src="{{mediafile.url}}"
+                                        alt="{{mediafile.filename}}">
                                 </picture>
                             </div>
                         </div>
@@ -64,15 +65,15 @@
                     <div class="detalleslider">
                         <swiper #imagenlista id="imagenlista" [config]="config"
                             (slideChangeTransitionEnd)="getIndexSel()">
-                            <div id="im-{{imagenes}}" class="p-0 m-0 imagenescent"
-                                *ngFor="let imagenes of listaImagenesVisita">
+                            <div id="im-{{mediafile.id}}" class="p-0 m-0 imagenescent"
+                                *ngFor="let mediafile of (newReserva?.visit?.mediafiles) ?? []">
                                 <div class="posrel">
                                     <div class="posrel w-100">
                                         <picture>
-                                            <source media="(min-width: 0px)" srcset="{{imagenes.url}}"
-                                                data-srcset="{{imagenes.url}}">
-                                            <img src="{{imagenes.url}}" data-src="{{imagenes.url}}"
-                                                alt="{{imagenes.visit_id}}"
+                                            <source media="(min-width: 0px)" srcset="{{mediafile.url}}"
+                                                data-srcset="{{mediafile.url}}">
+                                            <img src="{{mediafile.url}}" data-src="{{mediafile.url}}"
+                                                alt="{{mediafile.visit_id}}"
                                                 style="object-fit: cover; max-width: 635px; height: 480px ;">
                                         </picture>
                                     </div>
@@ -122,8 +123,8 @@
 
                                             <li class="liCalendar"
                                                 [ngClass]="{'daySelected': ( day.selected ), 'dayVisit': (day.visitday) }"
-                                                (click)="clickDay(day)"
                                                 [style.gridColumnStart]="first ? day?.indexWeek : 'auto'"
+                                                (click)="clickDay(day)"
                                                 *ngFor="let day of monthSelect; let first = first">
                                                 <span>{{day?.value}}</span>
                                             </li>
@@ -135,7 +136,7 @@
                                             <div class="w-100 cupo posrel" (click)="verHora()">
                                                 <div class="fs-20 ml-0 mr-auto">
                                                     <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
-                                                        _data.hour_
+                                                        {{textconts.buscador_hora}}
                                                     </span>
                                                     <span class="ml-1 colGRIS1">
                                                         {{horainfo}}
@@ -150,9 +151,9 @@
                                         <div class="p-0 m-0">
                                             <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vhora">
                                                 <div *ngFor="let li of listahorasvisita" class="col-3 p-0 m-0">
-                                                    <input name="rbhora" id="rbhora-{{li.key}}" type="radio"
-                                                        value="{{li.key}}" (click)="horainfosel(li.value)" >
-                                                    <label class="px-1" for="rbhora-{{li.key}}">{{li.value}}</label>
+                                                    <input  class="posrel" name="rbhora" id="rbhora-{{li.id}}" type="radio"
+                                                        value="{{li.id}}" (click)="horainfosel(li.hora)" >
+                                                    <label class="px-1" for="rbhora-{{li.id}}">{{li.hora}}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,7 +164,7 @@
                                             <div class="w-100 cupo posrel" (click)="verIdioma()">
                                                 <div class="fs-20 ml-0 mr-auto">
                                                     <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
-                                                        _data.language_
+                                                        {{textconts.buscador_idioma}}
                                                     </span>
                                                     <span class="ml-1 colGRIS1">
                                                         {{idiominfo | capitalize}}
@@ -178,9 +179,9 @@
                                         <div class="p-0 m-0">
                                             <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vidiom">
                                                 <div *ngFor="let li of listaidiomasvisita" class="col-6 p-0 m-0">
-                                                    <input name="rbidiom" id="rbidiom-{{li.uuid}}" type="radio"
-                                                        value="{{li.iso}}" (click)="idiomainfosel(li.iso)" >
-                                                    <label class="mx-1 mb-1" for="rbidiom-{{li.uuid}}">
+                                                    <input class="posrel" name="rbidiom" id="rbidiom-{{li.id}}" type="radio"
+                                                        value="{{li.id}}" (click)="idiomainfosel(li.id)" >
+                                                    <label class="mx-1 mb-1" for="rbidiom-{{li.id}}">
                                                         {{li.name | capitalize}}</label>
                                                 </div>
                                             </div>
@@ -192,20 +193,17 @@
                                             <div class="w-100 cupo posrel" (click)="verPersona()">
                                                 <div class="fs-20 ml-0 mr-auto d-flex">
                                                     <span class="colGRIS1 ff-JB"
-                                                        *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
-                                                        _data.people_
+                                                        *ngIf="adultoSel == 0 && ninosSel == 0 ">
+                                                        {{textconts.buscador_personas}}
                                                     </span>
                                                     <div class="posrel fs-18 colGRIS2" style="top: 0px"
-                                                        *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
+                                                        *ngIf="adultoSel != 0 || ninosSel != 0 ">
                                                         <span [ngClass]="{'colGRIS1': adultoSel > 0 }">
-                                                            _price.adults_ {{adultoSel}}
+                                                            {{textconts.buscador_detail_adultos }} {{adultoSel}}
                                                         </span>
                                                         <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
-                                                            _price.children_ (3-11)  {{ninosSel}} 
+                                                            {{textconts.buscador_detail_infantil }} (3-11)  {{ninosSel}} 
                                                         </span>
-                                                        <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
-                                                            Menores {{menoresSel}}
-                                                        </span> -->
                                                     </div>
                                                 </div>
                                                 <div class="posabsolRight">
@@ -253,7 +251,7 @@
                                                 <div #ninos class="row my-2">
                                                     <div class="col-4 text-left posrel">
                                                         <div class="fs-8 posabsol" style="top: -6px">
-                                                            _price.children_ (3-11)
+                                                            {{textconts.buscador_precio }} (3-11)
                                                         </div>
                                                         <div class="fs-16">{{precioninosst}} €</div>
                                                     </div>
@@ -288,7 +286,7 @@
 
                                                 <div #total class="d-flex w-100 posrel my-3">
                                                     <div class="ml-0 mr-auto ">
-                                                        <div class="fs-16">Total</div>
+                                                        <div class="fs-16">{{textconts.buscador_total}}</div>
                                                     </div>
                                                     <div class="posabsolR">
                                                         <div class="fs-16 ff-JB">{{preciototalst}} €</div>
@@ -296,7 +294,7 @@
                                                 </div>
                                                 <div #maximo class="d-flex w-100 posrel my-3">
                                                     <div class="d-flex posrel w-100">
-                                                        <div class="fs-12">_vendidas_  / _*Máximas personas visita_
+                                                        <div class="fs-12">{{textconts.buscador_vendidas}}  / {{textconts.buscador_maximaspersonas}}
                                                         </div>
                                                         <div class="posabsolR ff-JB"> {{vendidas}} / {{maximopersonas}}</div>
                                                     </div>
@@ -311,12 +309,10 @@
                                                     </div>
                                                     <div class="mr-0 ml-auto">
                                                         <div class="fs-16 mx-1">
-                                                            _Contratar visita privada._
+                                                            {{textconts.contratarprivada}}
                                                         </div>
                                                         <div class="fs-12 ffita colGRIS2">
-                                                            _*Implica asumir el precio al coste máximo de la visita
-                                                            independientemente del número
-                                                            total de asistentes._
+                                                            {{textconts.implica}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,36 +325,36 @@
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">_errors.date_  </div>
+                                                <div class="fs-16 colROJO1">{{textconts.buscador_fecha}}  </div>
                                             </div> 
                                         </div>
                                         <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
                                             <div class=" posrel " style="top:-4px">
-                                                <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                                <img src="assets/images/i-validacion.svg" class="imicono8"
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">_errors.hour_
+                                                <div class="fs-16 colROJO1"> {{textconts.selecciona_hora}} 
                                                 </div>
                                             </div>
                                         </div>
                                         <div #validacionidioma class="d-flex w-100 posrel my-1" *ngIf="idiomanovalid">
                                             <div class=" posrel " style="top:-4px">
-                                                <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                                <img src="assets/images/i-validacion.svg" class="imicono8"
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">_errors.language_
+                                                <div class="fs-16 colROJO1"> {{textconts.selecciona_idioma}}
                                                 </div>
                                             </div>
                                         </div>
                                         <div #validacionpers class="d-flex w-100 posrel my-1" *ngIf="persnovalid">
                                             <div class=" posrel " style="top:-4px">
-                                                <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                                <img src="assets/images/i-validacion.svg" class="imicono8"
                                                     draggable="false">
                                             </div>
                                             <div>
-                                                <div class="fs-16 colROJO1">_errors.people_
+                                                <div class="fs-16 colROJO1">{{textconts.selecciona_personas}}
                                                 </div>
                                             </div>
                                         </div>
@@ -370,7 +366,7 @@
                                                 <div class="my-0 mx-auto text-center">
                                                     <button class="btredondoRojoCalendar " type="button"
                                                         (click)="reservarvisita()">
-                                                        <span class="ff-JB">Reservar</span>
+                                                        <span class="ff-JB">{{textconts.buscador_reservar }}</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -388,28 +384,28 @@
                         <div class="pestas d-flex ">
                             <div id="pestaDescripcion" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 1}"
                                 (click)="ScrollToElement(zoneDescripcion,1)">
-                                _tabs.description | capitalize_
+                                {{textconts.buscador_detail_description}}
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaPrecios" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 2}"
                                 (click)="ScrollToElement(zonePrecios,2)">
-                                _tabs.price | capitalize_
+                                {{textconts.buscador_detail_price}}
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaDetalles" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 3}"
                                 (click)="ScrollToElement(zoneDetalles,3)">
-                                _tabs.details | capitalize_
+                                {{textconts.detalle}}
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaCancelaciones" class="cupo text-center"
                                 [ngClass]="{'pulsada': pestaactiv == 4}" (click)="ScrollToElement(zoneCancelaciones,4)">
-                                _tabs.cancel | capitalize_
+                                {{textconts.buscador_detail_cancelation}}
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaPuntoencuentro" class="cupo text-center"
                                 [ngClass]="{'pulsada': pestaactiv == 5}"
                                 (click)="ScrollToElement(zonePuntodeencuentro,5)">
-                                _tabs.meeting | capitalize_
+                                {{textconts.buscador_detail_puntoencuetro}}
                             </div>
                         </div>
                     </div>
@@ -422,7 +418,7 @@
                             <div class="fs-18" [innerHtml]="descripcioncorta" *ngIf="!vermas">
                             </div>
                             <div class="colROJO1 cupo" (click)="abrirvermas()" *ngIf="!vermas">
-                                _messages.description_
+                                {{textconts.buscador_detail_description}}
                             </div>
                             <div class="fs-18" [innerHtml]="descripcion" *ngIf="vermas">
                             </div>
@@ -435,17 +431,17 @@
                     <div #zonePrecios class="scroll-with-offset mb-4">
 
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            _tabs.price | capitalize_
+                            {{textconts.buscador_detail_price}}
                         </div>
                         <table class="table fs-18" style="width: 304px">
                             <tbody>
                                 <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">_price.adults_ </td>
+                                    <td class="tdprecios">{{textconts.buscador_precio}} </td>
                                     <td class="tdprecios text-right">{{precioadultosst}} €</td>
                                 </tr>
                                 <tr class="bgBLANCO trprecios">
-                                    <td class="tdprecios">_price.children_ (3-11)<span
-                                            class="fs-12 ml-1">_price.range</span></td>
+                                    <td class="tdprecios"> {{textconts.buscador_precio }} (3-11) <span
+                                            class="fs-12 ml-1"></span></td>
                                     <td class="tdprecios text-right">{{precioninosst}} €</td>
                                 </tr>
                                 <!-- <tr class="bgBLANCO2 trprecios">
@@ -465,16 +461,12 @@
                 <div class="conteni ">
                     <div #zoneDetalles class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1"  >
-                            _tabs.description | capitalize_
+                            {{textconts.buscador_detail_description}}
                         </div>
                         <div class="row fs-18 my-2">
-                            <div class="col-xl-4">
-                                <img src="../../assets/images/i-seguridad.svg" class="imicono8 posrel mb-2"
-                                    draggable="false">
-                                <span class="ml-2">_details.covid.title_</span>
-                            </div>
+                          
                             <div class="col-xl-8">
-                                _details.covid.description | capitalize _
+                                {{textconts.buscador_detail_description }}
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -485,7 +477,7 @@
                                 <span class="ml-2">{{textconts.buscador_duracion}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{visitaresultado.duracionmin}} 
+                                {{newReserva?.visit?.duracionmin}} 
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -493,7 +485,7 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.language.title | capitalize_</span>
+                                <span class="ml-2">{{textconts.buscador_detail_idiomas}} </span>
                             </div>
                             <div class="col-xl-8">
                                 {{textconts.touren}} {{idiomasdisponibles}}
@@ -504,10 +496,10 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.when.title | capitalize_</span>
+                                <span class="ml-2">{{textconts.buscador_detail_cuandoreservar}} </span>
                             </div>
                             <div class="col-xl-8">
-                             _descripcion_
+                             {{textconts.buscador_detail_description}}
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -515,12 +507,12 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.accesibility.title | capitalize_</span>
+                                <span class="ml-2"> {{textconts.buscador_detail_accesibilidad }}  </span>
                             </div>
-                            <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad">
-                                Accesible en silla de ruedas.
+                            <div class="col-xl-8" *ngIf="newReserva?.visit?.accesibilidad">
+                                {{textconts.si}}
                             </div>
-                            <div class="col-xl-8" *ngIf="!visitaresultado.accesibilidad">
+                            <div class="col-xl-8" *ngIf="!newReserva?.visit?.accesibilidad">
                                 <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                             <div class="linedots"></div>
@@ -532,7 +524,7 @@
                                 <span class="ml-2">{{textconts.buscador_detail_pets | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
-                                _details.pet.description | capitalize_
+                                {{textconts.si }}
                             </div>
                         </div>
                     </div>
@@ -541,13 +533,13 @@
                 <div class="conteni ">
                     <div #zoneCancelaciones class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            _tabs.cancel | capitalize_
+                            {{textconts.buscador_detail_cancelation}}
                         </div>
                         <div class="posrel my-1">
-                            <div class="f-18" *ngIf="visitaresultado.cancelacion">
+                            <div class="f-18" *ngIf="newReserva?.visit?.cancelacion">
                                 {{textconts.buscador_detail_cancelation}}
                             </div>
-                            <div class="f-18 posabsolNo" *ngIf="!visitaresultado.cancelacion">
+                            <div class="f-18 posabsolNo" *ngIf="!newReserva?.visit?.cancelacion">
                                 <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                         </div>
@@ -557,14 +549,14 @@
                 <div class="conteni ">
                     <div #zonePuntodeencuentro class="scroll-with-offset mb-4">
                         <div class="fs-20 my-3 ff-JB colGRIS1">
-                            _tabs.meeting | capitalize_
+                            {{textconts.buscador_detail_puntoencuetro}}
                         </div>
                         <div class="posrel my-1 ">
                             <div class="f-18">
-                                _details.meeting.description_
+                                {{textconts.buscador_detail_nosencontramos}}
                             </div>
                         </div>
-                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
+                        <a class="fs-14 my-3 colROJO1" [href]="newReserva?.visit?.puntoencuentro" target="_blank"
                             follow="nofollow">
                             {{textconts.buscador_detail_verengooglemaps}}
                         </a>
@@ -583,13 +575,13 @@
         <div class="contenimvl">
             <div class="detalleslider">
                 <swiper #imagenlista id="imagenlista" [config]="config">
-                    <div id="im-{{imagen.id}}" class="p-0 m-0 " *ngFor="let imagen of listaImagenesVisita">
+                    <div id="im-{{mediafile.id}}" class="p-0 m-0 " *ngFor="let mediafile of (newReserva?.visit?.mediafiles) ?? []">
                         <div class="posrel">
                             <div class="bannerproductomvl">
                                 <picture>
-                                    <source media="(min-width: 0px)" srcset="{{imagen.url}}"
-                                        data-srcset="{{imagen.url}}">
-                                    <img class="imgproductomvl" src="{{imagen.url}}" data-src="{{imagen.url}}" alt="{{imagen.uuid}}">
+                                    <source media="(min-width: 0px)" srcset="{{mediafile.url}}"
+                                        data-srcset="{{mediafile.url}}">
+                                    <img class="imgproductomvl" src="{{mediafile.url}}" data-src="{{mediafile.url}}" alt="{{mediafile.url}}">
                                 </picture>
                             </div>
                         </div>
@@ -602,24 +594,24 @@
 
             <div class="p-2 text-left ">
                 <div id="titulovisita">
-                    <span class="colGRIS1">{{visitaresultado.titulo}} </span>
+                    <span class="colGRIS1">{{newReserva?.visit?.titulo}} </span>
                 </div>
             </div>
 
             <div class="p-2 d-flex ml-auto mr-0 posrel">
 
                 <div>
-                    <span class="preciovisitaeuro fs-14">{{timesSel.price}}€ </span>
-                    <span class="colGRIS1 mr-2 fs-12">por persona</span>
+                    <span class="preciovisitaeuro fs-14">{{ newReserva.getPrecio(newReserva?.visit?.preciohoramin, newReserva?.visit?.duracionmin) }}€ </span>
+                    <span class="colGRIS1 mr-2 fs-12">{{textconts.buscador_porpersona}}</span>
                 </div>
                 <div class="linvertical mx-2"></div>
                 <div class="horasvisit">
                     <img class="imghorasvisita mb-1 mr-1" src='assets/images/i-reloj.svg' alt="">
-                    <span class="fs-16 colROJO1">{{timesSel.duration}}h</span>
+                    <span class="fs-16 colROJO1">{{ newReserva?.visit?.duracionmin / 60 }}h</span>
                 </div>
                 <div class="cupo posabsolRight mr-1" (click)="abrirverredes()">
                     <img src="../../assets/images/i-compartir.svg" class="imicono4 mb-2" draggable="false">
-                    <span class="colGRIS1 mr-1 fs-16">Compartir</span>
+                    <span class="colGRIS1 mr-1 fs-16">{{textconts.buscador_compartir}}</span>
 
                     <div class="modalredes animated fadeInDown" *ngIf="verredes">
                         <div *ngFor="let r of redes">
@@ -639,7 +631,7 @@
                         <div class="fs-18" [innerHtml]="descripcioncorta" *ngIf="!vermas">
                         </div>
                         <div class="colROJO1 cupo" (click)="abrirvermas()" *ngIf="!vermas">
-                            Ver descripción completa
+                            {{textconts.buscador_detail_verdescripcion }}
                         </div>
                         <div class="fs-18" [innerHtml]="descripcion" *ngIf="vermas">
                         </div>
@@ -647,14 +639,14 @@
                 </div>
             </div>
             <div id="btverdisponibilidad" (click)="abrirVerPanel()">
-                Ver disponibilidad
+                {{textconts.buscador_verdisponibilidad }}
             </div>
             <div class="contenimvl ">
                 <div #zonePrecios class="scroll-with-offset mb-1 ">
                     <div class="accormovil d-flex cupo my-2 p-2 posrel" (click)="abrirVerZonePrecios()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                _tabs.price | capitalize_
+                                {{textconts.buscador_precio }}
                             </span>
                         </div>
                         <div class="posabsolRight mx-1">
@@ -666,17 +658,17 @@
                         <table class="table fs-18 w-100">
                             <tbody>
                                 <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">Adultos</td>
+                                    <td class="tdprecios">{{textconts.buscador_detail_adultos}} </td>
                                     <td class="tdprecios text-right">{{precioadultos}}</td>
                                 </tr>
                                 <tr class="bgBLANCO trprecios">
-                                    <td class="tdprecios">Niños <span class="fs-12 ml-1">de 3 a 11 años</span></td>
+                                    <td class="tdprecios">{{textconts.buscador_detail_infantil}} <span class="fs-12 ml-1">3-11</span></td>
                                     <td class="tdprecios text-right">{{precioninos}}</td>
                                 </tr>
-                                <tr class="bgBLANCO2 trprecios">
+                                <!-- <tr class="bgBLANCO2 trprecios">
                                     <td class="tdprecios">Niños <span class="fs-12 ml-1">menores de 3 años</span></td>
                                     <td class="tdprecios text-right">{{preciomenores}}</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -687,7 +679,7 @@
                     <div class="accormovil bgBLANCO2 d-flex cupo my-2 p-2 posrel" (click)="abrirVerZoneDetalle()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                _tabs.description | capitalize_
+                                {{textconts.buscador_detail_description}}
                             </span>
                         </div>
                         <div class="posabsolRight mx-1">
@@ -703,40 +695,29 @@
 
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-seguridad.svg" class="imicono8 posrel mb-2"
-                                    draggable="false">
-                                <span class="ml-2">_details.covid.title_</span>
-                            </div>
-                            <div class="col-xl-8 px-4 py-2">
-                                _details.covid.description | capitalize _
-                            </div>
-                            <div class="linedots"></div>
-                        </div>
-                        <div class="row fs-18 my-2">
-                            <div class="col-xl-4">
                                 <img src="assets/images/i-relojG.svg" class="imicono8 posrel mb-2" draggable="false">
                                 <span class="ml-2">{{textconts.ayudas_answer2}}</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                {{visitaresultado.duracionmin}} 
+                                {{newReserva?.visit?.duracionmin}} 
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
                                 <img src="assets/images/i-idiomas.svg" class="imicono8 posrel mb-2" draggable="false">
-                                <span class="ml-2">_details.language.title | capitalize_</span>
+                                <span class="ml-2"> {{textconts.buscador_detail_idiomas}} </span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                _details.language.description _ {{idiomasdisponibles}}
+                                {{textconts.buscador_detail_idiomas}} {{idiomasdisponibles}}
                             </div>
                             <div class="linedots"></div>
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-calendarioG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.when.title | capitalize_</span>
+                                <span class="ml-2">{{textconts.buscador_detail_cuandoreservar  }} </span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
                                 _details.when.description1 _
@@ -747,14 +728,14 @@
                         </div>
                         <div class="row fs-18 my-2">
                             <div class="col-xl-4">
-                                <img src="../../assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
+                                <img src="assets/images/i-accesibilidad.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.accesibility.title | capitalize_</span>
+                                <span class="ml-2">{{textconts.buscador_detail_accesibilidad }}</span>
                             </div>
-                            <div class="col-xl-8" *ngIf="visitaresultado.accesibilidad" >
+                            <div class="col-xl-8" *ngIf="newReserva?.visit?.accesibilidad" >
                                 {{textconts.buscador_detail_accesibilidad}}
                             </div>
-                            <div class="col-xl-8 px-4 py-2" *ngIf="!visitaresultado.accesibilidad">
+                            <div class="col-xl-8 px-4 py-2" *ngIf="!newReserva?.visit?.accesibilidad">
                                 <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                             </div>
                             <div class="linedots"></div>
@@ -763,10 +744,10 @@
                             <div class="col-xl-4">
                                 <img src="assets/images/i-mascotas.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
-                                <span class="ml-2">_details.pet.title | capitalize_</span>
+                                <span class="ml-2">{{textconts.buscador_detail_pets}}</span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                _details.pet.description | capitalize
+                                {{textconts.buscador_detail_description}}
                             </div>
                         </div>
                     </div>
@@ -775,7 +756,7 @@
                 <div #zoneCancelaciones class="scroll-with-offset mb-1">
                     <div class="accormovil bgBLANCO2 d-flex cupo my-2 p-2 posrel" (click)="abrirVerZoneCancelaciones()">
                         <div class="fs-20 ff-JB colGRIS1">
-                            _tabs.cancel | capitalize_
+                            {{textconts.buscador_detail_cancelation}}
                         </div>
                         <div class="posabsolRight mx-1">
                             <i class="fa fa-angle-down" *ngIf="!verZoneCancelaciones"></i>
@@ -783,10 +764,10 @@
                         </div>
                     </div>
                     <div class="posrel my-1 p-2 animated fadeIn" [hidden]="!verZoneCancelaciones">
-                        <div class="f-18" *ngIf="visitaresultado.cancelacion">
-                            _details.cancel_
+                        <div class="f-18" *ngIf="newReserva?.visit?.cancelacion">
+                            {{textconts.buscador_detail_cancelation }}
                         </div>
-                        <div class="f-18" *ngIf="!visitaresultado.cancelacion">
+                        <div class="f-18" *ngIf="!newReserva?.visit?.cancelacion">
                             <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
                         </div>
                     </div>
@@ -797,7 +778,7 @@
                         (click)="abrirVerZonePuntodeencuentro()">
                         <div class="fs-20 ml-0 mr-auto">
                             <span class="colGRIS1 ff-JB">
-                                _messages.tabs.meeting_
+                                {{textconts.buscador_detail_puntoencuetro}}
                             </span>
                         </div>
                         <div class="posabsolRight">
@@ -807,11 +788,11 @@
                     </div>
                     <div class="posrel my-1 p-2 animated fadeIn" [hidden]="!verZonePuntodeencuentro">
                         <div class="f-18">
-                            _details.meeting.description_
+                            {{textconts.buscador_detail_puntoencuetro}}
                         </div>
-                        <a class="fs-14 my-3 colROJO1" [href]="visitaresultado.puntoencuentro" target="_blank"
+                        <a class="fs-14 my-3 colROJO1" [href]="newReserva?.visit?.puntoencuentro" target="_blank"
                             follow="nofollow">
-                            _details.meeting.link
+                            {{textconts.buscador_detail_verengooglemaps}}
                         </a>
                     </div>
                 </div>
@@ -822,16 +803,16 @@
             <div id="paneldetalle" *ngIf="verPanel">
                 <div id="btverdisponibilidad" class="posrel">
                     <div *ngIf="secuencial == 1" [ngModel]="secuencial">
-                        Seleccione una fecha
+                        {{textconts.buscador_fecha}}
                     </div>
                     <div *ngIf="secuencial == 2" [ngModel]="secuencial">
-                        Seleccione una hora
+                        {{textconts.buscador_hora}}
                     </div>
                     <div *ngIf="secuencial == 3" [ngModel]="secuencial">
-                        Seleccione un idioma
+                        {{textconts.buscador_idioma}}
                     </div>
                     <div *ngIf="secuencial == 4" [ngModel]="secuencial">
-                        Seleccione el número de personas
+                        {{textconts.buscador_personas}}
                     </div>
                     <div class="posabsolX" (click)="cerrarVerPanel()" >
                         <i class="fa fa-xmark fs-20"></i>
@@ -888,7 +869,7 @@
                                     <div class="w-100 cupo posrel" (click)="verHora()">
                                         <div class="fs-20 ml-0 mr-auto">
                                             <span class="colGRIS1 ff-JB" *ngIf="horainfo == ''">
-                                                _hour_
+                                                {{textconts.buscador_hora  }}
                                             </span>
                                             <span class="ml-1 colGRIS1">
                                                 {{horainfo}}
@@ -903,9 +884,9 @@
                                 <div class="p-0 m-0">
                                     <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vhora">
                                         <div *ngFor="let li of listahorasvisita" class="col-3 p-0 m-0">
-                                            <input name="rbhora" id="rbhora-{{li.key}}" type="radio" value="{{li.key}}"
-                                                (click)="horainfosel(li.value)" >
-                                            <label class="px-1" for="rbhora-{{li.key}}">{{li.value}}</label>
+                                            <input class="posrel" name="rbhora" id="rbhora-{{li.id}}" type="radio" value="{{li.id}}"
+                                                (click)="horainfosel(li.hora)" >
+                                            <label class="px-1" for="rbhora-{{li.id}}">{{li.hora}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -916,7 +897,7 @@
                                     <div class="w-100 cupo posrel" (click)="verIdioma()">
                                         <div class="fs-20 ml-0 mr-auto">
                                             <span class="colGRIS1 ff-JB" *ngIf="idiominfo == ''">
-                                                _language_
+                                                {{textconts.buscador_idiomas}}
                                             </span>
                                             <span class="ml-1 colGRIS1">
                                                 {{idiominfo | capitalize}}
@@ -932,8 +913,8 @@
                                     <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vidiom">
                                         <div *ngFor="let li of listaidiomasvisita" class="col-6 p-0 m-0">
                                             <input name="rbidiom" id="rbidiom-{{li.uuid}}" type="radio"
-                                                value="{{li.uuid}}" (click)="idiomainfosel(li.name)">
-                                            <label class="mx-1 mb-1" for="rbidiom-{{li.uuid}}">{{li.name |
+                                                value="{{li.id}}" (click)="idiomainfosel(li.id)">
+                                            <label class="mx-1 mb-1" for="rbidiom-{{li.id}}">{{li.name |
                                                 capitalize}}</label>
                                         </div>
                                     </div>
@@ -945,16 +926,16 @@
                                     <div class="w-100 cupo posrel" (click)="verPersona()">
                                         <div class="fs-20 ml-0 mr-auto d-flex">
                                             <span class="colGRIS1 ff-JB"
-                                                *ngIf="adultoSel == 0 && ninosSel == 0 && menoresSel == 0">
-                                                _people_
+                                                *ngIf="adultoSel == 0 && ninosSel == 0 ">
+                                                {{textconts.buscador_personas}}
                                             </span>
                                             <div class="posrel fs-18 colGRIS2" style="top: 0px"
-                                                *ngIf="adultoSel != 0 || ninosSel != 0 || menoresSel != 0 ">
+                                                *ngIf="adultoSel != 0 || ninosSel != 0 ">
                                                 <span [ngClass]="{'colGRIS1': adultoSel > 0 }">
-                                                    _adults_ {{adultoSel}}
+                                                    {{textconts.buscador_detail_adultos}}  {{adultoSel}}
                                                 </span>
                                                 <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
-                                                    _children_ {{ninosSel}}
+                                                    {{textconts.buscador_detail_infantil}} {{ninosSel}}
                                                 </span>
                                                 <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
                                                     Menores {{menoresSel}}
@@ -978,7 +959,7 @@
                                                 <div class="w-100 d-flex mw100">
                                                     <div class="posrelbtm5">
                                                         <div *ngIf="adultoSel == 0">
-                                                            <img src="../../assets/images/i-restarapagado.svg"
+                                                            <img src="assets/images/i-restarapagado.svg"
                                                                 class="imicono4" draggable="false">
                                                         </div>
                                                         <div class="cupo" *ngIf="adultoSel > 0"
@@ -1006,7 +987,7 @@
                                         <div #ninos class="row my-2">
                                             <div class="col-4 text-left posrel">
                                                 <div class="fs-8 posabsol" style="top: -6px">
-                                                    _children_ (3-11)
+                                                    {{textconts.buscador_detail_infantil}} (3-11)
                                                 </div>
                                                 <div class="fs-16">{{precioninosst}} €</div>
                                             </div>
@@ -1038,10 +1019,10 @@
                                             </div>
                                         </div>
 
-                                        <div #menores class="row my-2">
+                                        <!-- <div #menores class="row my-2">
                                             <div class="col-4 text-left posrel">
                                                 <div class="fs-8 posabsol" style="top: -6px">
-                                                    menores
+                                                    {{textconts.buscador_detail_infantil}}
                                                 </div>
                                                 <div class="fs-16">{{preciomenoresst}} €</div>
                                             </div>
@@ -1072,11 +1053,11 @@
                                             <div class="col-4 text-right">
                                                 <div class="fs-16">{{preciomenorestotalst}} €</div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div #total class="d-flex w-100 posrel my-3">
                                             <div class="ml-0 mr-auto ">
-                                                <div class="fs-16">Total</div>
+                                                <div class="fs-16">{{textconts.buscador_total}}</div>
                                             </div>
                                             <div class="posabsolR">
                                                 <div class="fs-16 ff-JB">{{preciototalst}} €</div>
@@ -1084,9 +1065,9 @@
                                         </div>
                                         <div #maximo class="d-flex w-100 posrel my-3">
                                             <div class="d-flex posrel w-100">
-                                                <div class="fs-12">*Máximas personas visita
+                                                <div class="fs-12">{{textconts.buscador_maximaspersonas}}
                                                 </div>
-                                                <div class="posabsolR ff-JB">{{maximopersonas}}</div>
+                                                <div class="posabsolR ff-JB">{{newReserva?.visit?.nummax}}</div>
                                             </div>
                                         </div>
                                         <div #checkprivada class="d-flex w-100 posrel my-3"
@@ -1099,12 +1080,10 @@
                                             </div>
                                             <div class="mr-0 ml-auto">
                                                 <div class="fs-16 mx-1">
-                                                    Contratar visita privada.
+                                                    {{textconts.contratarprivada}}
                                                 </div>
                                                 <div class="fs-12 ffita colGRIS2">
-                                                    *Implica asumir el precio al coste máximo de la visita
-                                                    independientemente del número
-                                                    total de asistentes.
+                                                    {{textconts.implica}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1117,36 +1096,36 @@
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">_error date_</div>
+                                        <div class="fs-16 colROJO1">_ date</div>
                                     </div>
                                 </div>
                                 <div #validacionhora class="d-flex w-100 posrel my-1" *ngIf="horanovalid">
                                     <div class=" posrel " style="top:-4px">
-                                        <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                        <img src="assets/images/i-validacion.svg" class="imicono8"
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">_error hour_
+                                        <div class="fs-16 colROJO1"> _ hour
                                         </div>
                                     </div>
                                 </div>
                                 <div #validacionidioma class="d-flex w-100 posrel my-1" *ngIf="idiomanovalid">
                                     <div class=" posrel " style="top:-4px">
-                                        <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                        <img src="assets/images/i-validacion.svg" class="imicono8"
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">_error language_
+                                        <div class="fs-16 colROJO1"> _ language
                                         </div>
                                     </div>
                                 </div>
                                 <div #validacionpers class="d-flex w-100 posrel my-1" *ngIf="persnovalid">
                                     <div class=" posrel " style="top:-4px">
-                                        <img src="../../assets/images/i-validacion.svg" class="imicono8"
+                                        <img src="assets/images/i-validacion.svg" class="imicono8"
                                             draggable="false">
                                     </div>
                                     <div>
-                                        <div class="fs-16 colROJO1">_error people_
+                                        <div class="fs-16 colROJO1">{{textconts.buscador_personas}}
                                         </div>
                                     </div>
                                 </div>
@@ -1158,7 +1137,7 @@
                                         <div class="my-0 mx-auto text-center">
                                             <button class="btredondoRojoCalendar " type="button"
                                                 (click)="reservarvisita()">
-                                                <span class="ff-JB">Reservar</span>
+                                                <span class="ff-JB">{{textconts.buscador_reservar}}</span>
                                             </button>
                                         </div>
                                     </div>

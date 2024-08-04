@@ -8,6 +8,9 @@ import { CompanionsModel } from './Companions.model';
 import { CategoriasModel } from './Categorias.model';
 import { ImagenesModel } from './Imagenes.model';
 import { LanguagesModel } from './Languages.model';
+import { HorasModel } from './Horas.model';
+import { TimesSelModel } from './TimesSel.model';
+import { DiaModel } from './Dia.model';
 
 
 export class VisitasResultadoModel{
@@ -33,10 +36,13 @@ export class VisitasResultadoModel{
     titulo: string;
     precio: number;
     languages: LanguagesModel[];
-    hours: any[];
     mediafile: string;
     
+    visithours: TimesSelModel[];
+    visitdias: DiaModel[];
     
+
+
     constructor(){
         this.id = 0;
         this.uuid = "";
@@ -58,7 +64,8 @@ export class VisitasResultadoModel{
         this.titulo = ""
         this.precio = 0;
         this.languages = [];
-        this.hours = [];
+        this.visithours = [];
+        this.visitdias = [];
         
     }
 

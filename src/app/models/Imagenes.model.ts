@@ -14,7 +14,7 @@ export class ImagenesModel{
     type: string;
     order: number;
     url: string;
-    
+    sel: boolean;
 
     
     constructor(){
@@ -26,7 +26,7 @@ export class ImagenesModel{
         this.type="";
         this.order=0;
         this.url="assets/images/sinimagen.png";
-
+        this.sel = false;
     }
 
 

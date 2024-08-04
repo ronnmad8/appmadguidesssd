@@ -15,6 +15,7 @@ import { TextContentsModel } from '../models/TextContents.model';
 import { ProviderService } from './provider.service';
 import { ComentariosModel } from '../models/Cometarios.model';
 import { LanguagesModel } from '../models/Languages.model';
+import { HourModel } from '../models/Hour.model';
 
 
 @Injectable({
@@ -41,6 +42,7 @@ export class GlobalService {
   redes: any;
 
 
+
   constructor(
     private http: HttpClient,
     private auth: AuthService,
@@ -60,6 +62,7 @@ export class GlobalService {
 
 
   getListas() {
+
 
     this.listaidlangs = [
       { id: 1, iso: 'es', iso_code: 'es_ES', name : 'español' },
@@ -102,6 +105,35 @@ export class GlobalService {
       'Noviembre',
       'Diciembre',
     ];
+
+    this.listahoras = [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    
+    ];
+
 
     this.idiomasIsos = [
       { key: 'es', value: 'español', value_en: 'Spanish' },
@@ -185,6 +217,7 @@ export class GlobalService {
   }
 
   getFechaleg(fecha: string) {
+    
     let fechasp = fecha.split('/');
     let fechadate = new Date(fechasp[2] + '-' + fechasp[1] + '-' + fechasp[0]);
     let fechaleg =
@@ -350,8 +383,14 @@ export class GlobalService {
   }
 
 
+  getPrecio(duracionmin: number, preciohora: number){
+    return Math.round(preciohora * ( duracionmin /60 ));
+  }
 
 
+  getPrecioByVisit(visit: VisitasResultadoModel){
+    return Math.round(visit.preciohoramin * ( visit.duracionmin /60 ));
+  }
 
 
 }

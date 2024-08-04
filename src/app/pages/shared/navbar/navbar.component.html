@@ -76,13 +76,17 @@
             <div class="modallogueado animated fadeInDown" *ngIf="loginok && verusuario">
               <div class="p-0 m-0">
                 <div class="ff-JB">{{usuario?.name}}</div>
-                <div class="colVERDE posrel" style="top: -6px">{{usuario?.rol}} </div>
+                <div class="colVERDE posrel" style="top: -6px">
+                <span  *ngIf="(usuario.rol_id == '1') "  >  
+                  <i class="fa fa-user fs-8 colVERDE"></i>
+                </span>  
+                </div>
                 <div class="linefull mt-0 my-1"></div>
-                <div class="cupo" (click)="irazonaclientemicuenta()">Mi cuenta</div>
-                <div class="cupo" (click)="irazonaclientereservas()">Reservas</div>
+                <div class="cupo" (click)="irazonaclientemicuenta()">{{textconts.login_micuenta}}</div>
+                <div class="cupo" (click)="irazonaclientereservas()">{{textconts.login_reservas}} </div>
                 <div class="cupo" routerLink="/ayuda">Ayuda</div>
                 <div class="cupo" (click)="cerrarsesion()">
-                  Cerrar sesión
+                  {{textconts.login_cerrarsesion}}
                 </div>
               </div>
             </div>
@@ -103,7 +107,7 @@
           <div class="posabsol d-flex" style="top: 24px; right: 15px">
             <img src="assets/images/i-pago-seguro.svg" class="imicono24 posrel" style="top: 1px"
               draggable="false">
-            <div class="fs-24 ml-2">_Pago seguro_</div>
+            <div class="fs-24 ml-2">{{textconts.cart_pagoseguro}}  </div>
           </div>
         </div>
 
@@ -113,13 +117,13 @@
     <div class="container posrel ">
 
       <div id="modalcarrito" class="posabsolmodalcarrito" *ngIf="vercarrito && !isZonapago">
-        <div id="panelcarritovacio" *ngIf="pedido.visitasPedido.length == 0">
+        <div id="panelcarritovacio" *ngIf="pedido.reservas.length == 0">
           <div class="text-center py-3">
             {{textconts.cart_vacio}}
           </div>
         </div>
 
-        <div id="panelcarrito" *ngIf="pedido.visitasPedido.length > 0"
+        <div id="panelcarrito" *ngIf="pedido.reservas.length > 0"
           [ngClass]="{ 'menutrp': !menusticky,'menunotrp': menusticky  }">
 
           <div id="divcarrito">
@@ -128,9 +132,9 @@
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
-                        data-srcset="{{reserva.visit.mediafile}}">
-                      <img src="{{reserva.visit.mediafile}}" data-src="{{reserva.visit.mediafile}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafiles[0].url}}"
+                        data-srcset="{{reserva.visit.mediafiles[0].url}}">
+                      <img src="{{reserva.visit.mediafiles[0].url}}" data-src="{{reserva.visit.mediafiles[0].url}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>
@@ -138,12 +142,12 @@
 
                 <div class="posrel infocartamodalcarrito">
                   <div class="posabsol" style="right: 5px; top: 0">
-                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.visit.uuid)">
+                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.id)">
                       <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin)}} €
+                    {{getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin)}} €
                   </div>
                   <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(reserva.visit)" 
                   innerHTML="{{ reserva.visit.titulo.length > 20 ? reserva.visit.titulo.substring(0,17)+'...' : reserva.visit.titulo}} "  >
@@ -628,7 +632,7 @@
     <div class="container posrel mx-auto conta ">
 
       <div id="modalcarritomovil" class="posabsolmodalmovil" *ngIf="vercarrito && !isZonapago">
-        <div id="panelcarritovaciomovil" *ngIf="pedido.visitasPedido.length == 0">
+        <div id="panelcarritovaciomovil" *ngIf="pedido.reservas.length == 0">
           <div class="text-center py-3">
             {{textconts.cart_vacio }} 
           </div>
@@ -655,7 +659,7 @@
                 </div>
                 <div class="posrel infocartamodalcarrito">
                   <div class="posabsol" style="right: 5px; top: 0">
-                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.visit.uuid)">
+                    <span class="cupo" (click)="eliminarvisitacarrito(reserva.id)">
                       <i class="fa-regular fa-circle-xmark cerrarmodalcarrito"></i>
                     </span>
                   </div>

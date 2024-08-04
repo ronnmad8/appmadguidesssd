@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { RespuestaModel } from 'src/app/models/Respuesta.model';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
 
 @Component({
   selector: 'app-zonamicuenta',
@@ -36,14 +37,14 @@ export class ZonamicuentaComponent implements OnInit {
   @Output() updateDatosAddress = new EventEmitter();
   @Input() usuario: UserModel = new UserModel();
   @Input() pedidos: CartModel[] = [];
-  @Input() textconts: TextContentsModel = new TextContentsModel();
+
   
   @Output() zonamicuenta: EventEmitter<any> = new EventEmitter();
 
   sWindow: any;
-
+  textconts: TextContentsModel = new TextContentsModel();
   listatest = [];
-
+  listatextcontsdata: TextDataModel[] = [];
   listatiposidentificacions: any[] = [];
   listaresultados: [] = [];
   loading: boolean = false;
@@ -76,7 +77,7 @@ export class ZonamicuentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.getMessagesPerfil();
+    this.getTexts();
     this.getUser();
     this.isrespon = this.platformService.isrespon;
     this.listatiposidentificacions = this.globalService.getlistatiposidentificacion();
@@ -96,6 +97,20 @@ export class ZonamicuentaComponent implements OnInit {
       this.isrespon = resp
     });
   }
+
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
+
 
 
   crearFormulario() {
@@ -126,16 +141,12 @@ export class ZonamicuentaComponent implements OnInit {
       this.usuario.surname = this.forma.get('apellidos')?.value;
       this.usuario.email = this.forma.get('email')?.value;
       this.usuario.prefijo = this.forma.get('prefijo')?.value;
-      this.usuario.phone = this.forma.get('phone')?.value;
-      this.usuario.type = this.forma.get('type')?.value;
-      this.usuario.document = this.forma.get('document')?.value;
-      this.usuario.street = this.forma.get('street')?.value;
+      this.usuario.telefono = this.forma.get('telefono')?.value
+      this.usuario.address = this.forma.get('address')?.value;
       this.usuario.number = this.forma.get('number')?.value;
-      this.usuario.postal = this.forma.get('postal')?.value;
       this.usuario.city = this.forma.get('city')?.value;
       this.usuario.country = this.forma.get('country')?.value;
       this.usuario.state = this.forma.get('state')?.value;
-      this.usuario.particular = this.forma.get('particular')?.value == 1 ? true : false;
 
       if (this.forma.status != 'INVALID' ) {
         this.btactivo = true;
@@ -150,19 +161,16 @@ export class ZonamicuentaComponent implements OnInit {
       name: this.usuario.name,
       surname: this.usuario.surname,
       email: this.usuario.email,
-      phone: this.usuario.phone,
+      telefono: this.usuario.telefono,
       prefijo: this.usuario.prefijo,
-      type: this.usuario.type,
-      document: this.usuario.document,
-      postal: this.usuario.postal,
       country: this.usuario.country,
-      particular: this.usuario.particular,
-      street : this.usuario.street,
+      address : this.usuario.address,
       number: this.usuario.number,
-      namefacturacion: this.usuario.namefacturacion,
-      surnamefacturacion: this.usuario.surnamefacturacion,
       state: this.usuario.state,
       city: this.usuario.city,
+
+      namefacturacion: this.usuario.name,
+      surnamefacturacion: this.usuario.surname
 
     });
 
@@ -179,25 +187,13 @@ export class ZonamicuentaComponent implements OnInit {
         this.usuario = resp as UserModel;
       
       //this.usuario = JSON.parse(user) as UserModel;
-      this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = "";
-      if(this.usuario.address.length > 1){
+      //this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = "";
 
-        let address = this.usuario.address[0]['address'] ;
-        this.usuario.street = address.street;
-        this.usuario.number = address.number;
-        this.usuario.postal = address.cp?.toString();
-        this.usuario.country = address.country_id?.toString();
-        this.usuario.city = address.city_id?.toString();
-        this.usuario.state = address.state_id?.toString();
-      }
 
-      this.usuario.type = this.usuario.type;
-      this.usuario.document = this.usuario.document;
-      this.usuario.prefijo = this.usuario.prefix_phone_id?.toString();
-      this.usuario.phone = this.usuario.phone;
-      this.usuario.particular = this.usuario.particular;
+      //this.usuario.document = this.usuario.document;
+
       
-      this.patchUser();
+        this.patchUser();
       }
     })
     
