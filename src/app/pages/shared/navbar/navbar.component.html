@@ -147,7 +147,7 @@
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin)}} €
+                    {{reserva.visit.precio | decimalComa}} €
                   </div>
                   <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(reserva.visit)" 
                   innerHTML="{{ reserva.visit.titulo.length > 20 ? reserva.visit.titulo.substring(0,17)+'...' : reserva.visit.titulo}} "  >
@@ -176,7 +176,7 @@
                 {{actividades}} {{textconts.cart_actividades}}
               </div>
               <div class="posabsol colGRIS1" style="right: 7px; bottom: 0">
-                {{ totalcarrito }} €
+                {{ totalcarrito | decimalComa }} €
               </div>
             </div>
           </div>
@@ -664,7 +664,7 @@
                     </span>
                   </div>
                   <div id="preciomodalcarrito" class="posabsol" style="right: 5px; bottom: 0">
-                    {{reserva.visit.preciohoramin * (reserva.visit.duracionmin / 60) }} €
+                    {{reserva.visit.precio | decimalComa }} €
                   </div>
                   <div id="titulomodalcarrito" class="cupo" (click)="verdetalle(reserva.visit)">
                     {{reserva.visit.titulo.length > 20 ? reserva.visit.titulo.substring(0,17)+"..." :

@@ -109,12 +109,18 @@ export class VisitaService {
     return decimalPart === '00' ? roundedDuracion.slice(0, -3) : roundedDuracion;
   }
 
-  getFormattedPrice(visita: VisitasResultadoModel): string {
+  getFormattedPricewduration(visita: VisitasResultadoModel): string {
     let price = visita.preciohoramin *  (visita.duracionmin /60)
     let roundedPrice = (price).toFixed(2);
     let decimalPart = roundedPrice.slice(-2);
     roundedPrice=roundedPrice.replace('.',',');
     return decimalPart === '00' ? roundedPrice.slice(0, -3) : roundedPrice;
+  }
+
+  getFormattedPrice(visita: VisitasResultadoModel): string {
+    let price = visita.precio.toString();
+    price=price.replace('.',',');
+    return price;
   }
 
   getFormattedTexto( texto: string, limit: number = 10): string {

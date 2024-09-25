@@ -105,17 +105,17 @@ export class CarritoService {
     return carts;
   }
 
-  getPedidoCompra(){
+  getPedidoCompra(idpedido: number){
     let idlang = this.globalService.getIdLang();
-    let endpoint = '/reservascliente/'+ idlang ;
+    let endpoint = '/reservascliente/'+ idlang+"/"+idpedido ;
     this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
+        debugger
         let respuesta = resp as ReservationModel[];
         return respuesta;
-
-      } ) ,
+      }),
       catchError((err) => {
         console.error("Error  " , err.error);
         return err.error;
@@ -124,36 +124,29 @@ export class CarritoService {
   }
 
   
-  savePedidosguardados(pedido: ContractModel){
+
+  savePedido(pedido: CartModel){
   
-      let _datos = {
-      
-        users: pedido.users,
-        private: pedido.private,
-        paymentMethod: 'redsys',
-        uuid: pedido.uuid,
-        token: pedido.token,
-        address: pedido.address
+    let _datos = {
+      total: pedido.total,
+      totalfinal: pedido.total * 1.21,
+      paymentMethod: 'redsys',
+      reservas: pedido.reservas
+    };
+    let endpoint = '/pedidocliente';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        let result = Object.values(res);
+        return result;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err;
+      })
+    );
 
-      };
-      let endpoint = '/operation/buy';
-      this.url = this.apiurl + endpoint;
-      return this.http.post(`${this.url}`, _datos).pipe(
-        map((res) => {
-          let result = Object.values(res);
-          return res;
-        }),
-        catchError((err) => {
-          console.error('Error  ', err.error);
-          if(err.status == 200){
-            this.router.navigate(['/compra']);
-          }
-          return err;
-        })
-      );
-
-  }
-
+}
 
 
 

@@ -14,12 +14,13 @@ export class UserModel {
     state: string;
     country: string;
     city: string;
+    particular: number;
+    postalcode: string;
     number: string;
     address: string;
     rol_id: string;
     afiliado: string;
-    
-    
+
     document: string;
     namefacturacion: string;
     surnamefacturacion: string;
@@ -37,6 +38,8 @@ export class UserModel {
         this.state = '';
         this.country = '';
         this.city = '';
+        this.postalcode = '';
+        this.particular = 0;
         this.number = '';
         this.address = '';
         this.afiliado = '0'; 
@@ -46,9 +49,6 @@ export class UserModel {
         this.namefacturacion = '';
         this.surnamefacturacion = '';
         this.old = 0;
-
-        
-
 
     }
 

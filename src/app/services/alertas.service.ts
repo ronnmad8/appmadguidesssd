@@ -3,9 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
+import { GlobalService } from './global.service';
 import { JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ListasService } from './listas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,11 @@ export class AlertasService {
   url: string;
   apiurl: string;
 
-  constructor(private http: HttpClient, private auth: AuthService) {
+  constructor(
+    private http: HttpClient, 
+    private auth: AuthService,
+    private globalService: GlobalService
+  ) {
     this.apiurl = environment.apiurl;
   }
 
@@ -132,4 +138,19 @@ export class AlertasService {
       background: '#a88f45',
     });
   }
+
+
+  //////////////////////////////////////////////con traduccion
+
+
+ isoalert( tipo: string ){
+    return this.globalService.getAlerta(tipo);
+ }
+
+
+
+
+
+
+
 }

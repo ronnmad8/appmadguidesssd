@@ -49,7 +49,7 @@ export class SlidertestimoniosComponent implements OnInit {
     centeredSlides: false,
     loop: true,
     loopedSlides: 0,
-    initialSlide: 1,
+    initialSlide: 0,
     loopFillGroupWithBlank: false,
     roundLengths: false,
     slidesOffsetBefore: 0,

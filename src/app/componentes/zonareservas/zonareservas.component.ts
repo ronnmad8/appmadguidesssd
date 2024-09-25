@@ -92,6 +92,7 @@ export class ZonareservasComponent implements OnInit {
   }
 
   getReservas() {
+    debugger
     this.pedidos.forEach((pedido) => {
       if (pedido.reservas.length > 0) {
         this.reservas.push(...pedido.reservas);
@@ -132,9 +133,7 @@ export class ZonareservasComponent implements OnInit {
       .alertaWarning('Madguides', '¿Seguro que desea reservar la visita?')
       .then((result) => {
         if (result.value) {
-           //guardar en carrito la reserva
-           
-           this.router.navigate(['/carrito']);
+          this.router.navigate(['/carrito']);
         }
       });
   }

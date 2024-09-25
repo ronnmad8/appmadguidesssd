@@ -4,6 +4,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import { ImagenesModel } from 'src/app/models/Imagenes.model';
 import { HomeService } from '../../services/home.service';
 import { MailService } from '../../services/mail.service';
+import { AlertasService } from '../../services/alertas.service';
 import {
   FormBuilder,
   FormGroup,
@@ -37,6 +38,7 @@ export class ZonacontactoComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private mailService: MailService,
+    private alertasService: AlertasService,
     private fb: FormBuilder,
 
   ) {
@@ -75,6 +77,7 @@ export class ZonacontactoComponent implements OnInit {
 
   enviarMail(){
     this.mailService.sendMail(this.nombresel, this.emailsel, this.mensajesel).subscribe((resp)=>{
+      this.alertasService.alertaInfo('Madguides','<i class="fa fa-check colROJO2 fs-24"><i>');
       console.log(resp);
     });
     this.forma.reset();

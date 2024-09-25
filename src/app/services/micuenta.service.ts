@@ -33,7 +33,7 @@ export class MicuentaService {
     private globalService: GlobalService,
     private router: Router
   ) {
-    this.apiurl = environment.apiurlold;
+    this.apiurl = environment.apiurl;
     
   }
 
@@ -98,14 +98,14 @@ export class MicuentaService {
 
 
   getReservation() {
-
-    let endpoint = '/reservation';
+    let idlang = this.globalService.getIdLang();
+    let endpoint = '/reservasclienteall/'+idlang;
     this.url = this.apiurl + endpoint;
     let visitas: any[] = [];
     return this.http.get(`${this.url}`).pipe(
       map((res) => {
         if(res != null){
-          visitas = res as ReservationModel[];
+          visitas = res['data'] as ReservationModel[];
         }
         return visitas;
       }),

@@ -601,7 +601,7 @@
             <div class="p-2 d-flex ml-auto mr-0 posrel">
 
                 <div>
-                    <span class="preciovisitaeuro fs-14">{{ newReserva.getPrecio(newReserva?.visit?.preciohoramin, newReserva?.visit?.duracionmin) }}€ </span>
+                    <span class="preciovisitaeuro fs-14">{{ newReserva?.visit?.precio | decimalComa }}€ </span>
                     <span class="colGRIS1 mr-2 fs-12">{{textconts.buscador_porpersona}}</span>
                 </div>
                 <div class="linvertical mx-2"></div>

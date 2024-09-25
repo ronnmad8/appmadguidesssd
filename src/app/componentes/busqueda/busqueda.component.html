@@ -343,7 +343,7 @@
 
                         <div class="infovisitabuscador w-100 d-flex ">
                             <div class="preciovisitabuscador ">
-                                <span class="preciovisitaeurobuscador posrel">{{getFormattedPrice(visita) ?? 0  }} € </span>
+                                <span class="preciovisitaeurobuscador posrel">{{ visita.precio | decimalComa }} € </span>
                                 <span class="porpersonabuscador">{{textconts.buscador_porpersona}}</span>
                             </div>
                             <div class="horasvisitabuscador d-flex">

@@ -220,7 +220,7 @@
                             <div class="fs-14 lh-1-4">
                                 {{textconts.buscador_idioma}} : 
                                 <span class="ml-1">
-                                    {{reserva.nombreidioma }}
+                                    {{reserva?.nombreidioma | idiomaiso }}
                                 </span>
                             </div>
                             <div class="fs-14 lh-1-4">
@@ -253,7 +253,7 @@
                             <div>
                                 <span>  {{textconts.login_notienescuenta}}</span>
                                 <span class="colROJO2 cupo" (click)="abrirLogin(loginmodal)">
-                                  {{ textconts.login_Registro }}  
+                                  {{ textconts.cart_ohazlogin }}  
                                 </span>
                             </div>
                             <div class="posabsolRedes cupo  dnone redes" (click)="abrirLogin(loginmodal)">

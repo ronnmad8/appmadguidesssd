@@ -46,7 +46,7 @@ export class HomeService {
       let datos = {
         search: busqueda
       };
-      let endpoint = '/visitsearch' ; 
+      let endpoint = '/visitsearchbasic' ; 
       this.url = this.apiurl + endpoint;
       
       return this.http.post(`${this.url}`, datos).pipe(

@@ -35,7 +35,7 @@ export class HeadfooterService {
     private globalService: GlobalService,
     private router: Router
   ) {
-    this.apiurl = environment.apiurlold;
+    this.apiurl = environment.apiurl;
     this.clang = this.globalService.getLanguage();
   }
 

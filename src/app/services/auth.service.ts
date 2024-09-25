@@ -30,13 +30,13 @@ export class AuthService {
   islogin$ = new Subject<boolean>();
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private router: Router
   ) {
     this.apiurl = environment.apiurl;
     this.userToken = this.leerToken();
     this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-    this.headers =this.getHeaders(this.clang, this.userToken);
+    this.headers = this.getHeaders(this.clang, this.userToken);
   }
 
   getHeaders(clang: string, access_token: string) {
@@ -62,7 +62,7 @@ export class AuthService {
     this.cleanLocalstorageUser()
     this.userToken = '';
     this.clang = localStorage.getItem('currentLanguage') ?? 'es';
-    this.headers =this.getHeaders(this.clang, this.userToken);
+    this.headers = this.getHeaders(this.clang, this.userToken);
 
     this.router.navigateByUrl('/home');
   }
@@ -81,7 +81,7 @@ export class AuthService {
       this.userToken = '';
       if (access_token != null) {
         this.userToken = access_token;
-        
+
         //if (this.noAuth()) this.router.navigateByUrl('/home');
       }
     }
@@ -108,10 +108,10 @@ export class AuthService {
 
   leerRecordarme() {
     let recordarme: RecordarmeModel = new RecordarmeModel();
-    let rec = localStorage.getItem('recordarme') ;
-    if(rec != null){
-      recordarme =  JSON.parse(rec) as RecordarmeModel;
-    } 
+    let rec = localStorage.getItem('recordarme');
+    if (rec != null) {
+      recordarme = JSON.parse(rec) as RecordarmeModel;
+    }
     return recordarme;
   }
 
@@ -120,12 +120,11 @@ export class AuthService {
   }
 
 
-  isAuth(): void{
-    if (this.leerToken() != null){
-      debugger
+  isAuth(): void {
+    if (this.leerToken() != null) {
       this.islogin$.next(true);
     }
-    else{
+    else {
       this.islogin$.next(false);
     }
   }
@@ -133,7 +132,7 @@ export class AuthService {
   noAuth(): boolean {
     let noesta = true;
     let token = this.leerToken();
-    if (token != null){
+    if (token != null) {
       noesta = false;
     }
     return noesta;
@@ -150,7 +149,7 @@ export class AuthService {
       password: user.password,
       prefijo: user.prefijo,
       telefono: user.telefono,
-      country: user.country  ,
+      country: user.country,
       state: user.state,
       city: user.city,
       number: user.number,
@@ -190,7 +189,7 @@ export class AuthService {
   }
 
 
-  cleanLocalstorageUser(){
+  cleanLocalstorageUser() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('rol');
     localStorage.removeItem('user');
@@ -213,11 +212,11 @@ export class AuthService {
         this.cleanLocalstorageUser();
         let login = res as LoginModel;
         let processok = false;
-        if(login != null){
+        if (login != null) {
           this.userToken = "";
           this.clang = localStorage.getItem('currentLanguage') ?? 'es';
           this.guardarToken(login);
-          this.headers =this.getHeaders(this.clang, this.userToken);
+          this.headers = this.getHeaders(this.clang, this.userToken);
           processok = true;
         }
         return processok;
@@ -231,10 +230,10 @@ export class AuthService {
 
   resetlogin() {
     let user = this.getUser();
-    if(user != null){
+    if (user != null) {
       this.loginUser(user);
     }
-    else{
+    else {
       this.logout();
     }
   }
@@ -245,7 +244,7 @@ export class AuthService {
     let user: UserModel = new UserModel();
     return this.http.get(`${this.url}`).pipe(
       map((resp: any) => {
-        if(resp != null &&  resp["data"] != null ){
+        if (resp != null && resp["data"] != null) {
           user = resp["data"] as UserModel;
           localStorage.setItem('user', JSON.stringify(user));
         }
@@ -258,26 +257,28 @@ export class AuthService {
     );
   }
 
-  
+
 
   updateUserData(user: UserModel) {
 
     let _datos = {
-      
+
       name: user.name,
+      email: user.email,
       surname: user.surname,
       prefijo: user.prefijo,
       telefono: user.telefono,
       state: user.state,
       country: user.country,
       city: user.city,
+      particular: user.particular,
       number: user.number,
+      postalcode: user.postalcode,
       address: user.address
-      
-      
+
     };
-    
-    let endpoint = '/changeData';
+
+    let endpoint = '/users/changedata';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res) => {
@@ -294,59 +295,27 @@ export class AuthService {
 
 
   updateUserAddress(user: UserModel) {
-   
     
-    let addressid = "";
-    if(user.address.length > 0){
-      addressid = user.address[0]["address"].uuid;
-    }
-    if(addressid == ""){
-      let _datos = {
-        address: user.address,
-        number: user.number,
-        city: user.city,
-        state: user.state,
-        country: user.country
-      };
-      
-      let endpoint = '/direction';
-      this.url = this.apiurl + endpoint;
-      return this.http.post(`${this.url}`, _datos).pipe(
-        map((res) => {
-          let user = res as UserModel;
-          return user;
-        }),
-        catchError((err) => {
-          console.error('Error  ', err.error);
-          return err.error;
-        })
-      );
-    }
+    let _datos = {
+      address: user.address,
+      number: user.number,
+      city: user.city,
+      state: user.state,
+      country: user.country
+    };
 
-    else{
-      let _datos = {
-        address: user.address,
-        number: user.number,
-        city: user.city,
-        state: user.state,
-        country: user.country
-        
-      };
-      
-      let endpoint = '/changeAddress';
-      this.url = this.apiurl + endpoint;
-      return this.http.post(`${this.url}`, _datos).pipe(
-        map((res) => {
-          let user = res as UserModel;
-          return user;
-        }),
-        catchError((err) => {
-          console.error('Error  ', err.error);
-          return err.error;
-        })
-      );
-    }
-    
+    let endpoint = '/changedata';
+    this.url = this.apiurl + endpoint;
+    return this.http.post(`${this.url}`, _datos).pipe(
+      map((res) => {
+        let user = res as UserModel;
+        return user;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
   }
 
 

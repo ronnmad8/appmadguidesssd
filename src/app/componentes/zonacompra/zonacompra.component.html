@@ -18,15 +18,15 @@
                         </div>
                     </div>
                     <div class="w-100 posrel">
-                        <div class="panelReservafirmada" *ngFor="let reserva of listaPedido ">
+                        <div class="panelReservafirmada" *ngFor="let reserva of reservaspedido ">
                             <div class="imgReservafirmada">
-                                <div #imageneslatid id="im-{{reserva.visit.id}}" >
+                                <div #imageneslatid id="im-{{reserva?.visit_id}}" >
                                     <picture>
-                                        <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
-                                            data-srcset="{{reserva.visit.mediafile}}">
-                                        <img class="imgReservafirmada" src="{{reserva.visit.mediafile}}"
-                                            data-src="{{reserva.visit.mediafile}}"
-                                            alt="{{reserva.visit.titulo}}">
+                                        <source media="(min-width: 0px)" srcset="{{reserva.mediafile}}"
+                                            data-srcset="{{reserva.mediafile}}">
+                                        <img class="imgReservafirmada" src="{{reserva.mediafile}}"
+                                            data-src="{{reserva.mediafile}}"
+                                            alt="{{reserva.titulo}}">
                                     </picture>
                                 </div>
                             </div>
@@ -36,11 +36,10 @@
                                 </div>
                                 <div class="lh-1-4">
                                     <span>{{reserva.fecha | fechaleg }}</span>
-                                    <span class="mx-1"> {{reserva.fecha | horaleg }} </span>
+                                    <span class="mx-1"> {{ reserva.visit_hours_id }} </span>
                                 </div>
                                 <div class="lh-1-4">
-                                    {{textconts.touren}} <span class="ml-1">{{reserva.getLanguage(reserva.language_id) | idiomaiso |
-                                        capitalize}}</span>
+                                    {{textconts.touren}} <span class="ml-1">{{reserva.nombreidioma}}</span>
                                 </div>
                                 <div class="fs-14 lh-1-4 ff-JB mt-1">
                                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
@@ -54,15 +53,15 @@
                                     {{textconts.privada}}
                                 </div>
                                 <div class="fs-16 ff-JB lh-1-4 colGRIS1 my-2">
-                                    {{textconts.reserva}}
-                                    <span class="colROJO2">{{pedido.uuid}}</span>
+                                    ID 
+                                    <span class="colROJO2">{{reserva.uuid}}</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="posabsolverreservas">
                             <button class="btredondoRojoVerReservas " type="button" (click)="verMisReservas()">
-                                <span class="ff-JB">{{textconts.reserva}}  </span>
+                                <span class="ff-JB">{{textconts.micuenta_menu_reservas}}</span>
                             </button>
                         </div>
 

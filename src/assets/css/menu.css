@@ -76,7 +76,7 @@
   width: auto;
 }
 
-.cookiepeq{
+.cookiepeq {
   max-width: 40px !important;
   height: 40px !;
   width: auto;
@@ -341,10 +341,10 @@
 }
 
 /******modal idiomas**********/
-.modalidiomas{
+.modalidiomas {
   z-index: 10;
   position: absolute;
-  top: 60px !important; 
+  top: 60px !important;
   left: 1px !important;
   text-align: left;
   background-color: var(--c_BLANCO2);
@@ -352,24 +352,24 @@
   width: 120px;
   height: 230px;
   border-radius: 2px;
-  padding:15px;
+  padding: 15px;
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
   border: 0.5px solid #efefef;
   overflow: auto;
 }
 
-.modallogueado{
+.modallogueado {
   text-align: left;
   z-index: 10;
   position: absolute;
-  top: 60px !important; 
+  top: 60px !important;
   right: -20px !important;
   background-color: var(--c_BLANCO2);
   color: var(--c_GRIS1);
   width: 140px;
   height: 200px;
   border-radius: 2px;
-  padding:15px;
+  padding: 15px;
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
   border: 0.5px solid #efefef;
   overflow: auto;
@@ -389,10 +389,10 @@
   right: 0px !important;
   left: auto !important;
   z-index: 12;
-  
+
 }
 
-#preciocarrito{
+#preciocarrito {
   font-size: 15px;
 }
 
@@ -405,12 +405,12 @@
   border: 1px solid var(--c_ROJO2);
   background-color: var(--c_ROJO2);
   color: var(--c_BLANCO);
-  font-size: 20px ;
+  font-size: 20px;
 }
 
 
 
-#panelcarritovacio{
+#panelcarritovacio {
   height: 54px;
   width: 209px;
   font-size: 18px;
@@ -426,7 +426,7 @@
 
 #panelcarrito {
   min-height: 360px;
-  
+
   width: 347px;
   min-height: 360px;
   box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
@@ -452,21 +452,21 @@
   overflow: auto;
 }
 
-.cartamodalcarrito{
+.cartamodalcarrito {
   width: 100%;
   min-height: 100px;
   padding: 10px 0px !important;
   margin: 0 !important;
 }
 
-.imgcartamoadalcarrito{
+.imgcartamoadalcarrito {
   width: 103px;
   height: 83px;
   padding: 0 !important;
   border-radius: 4px;
 }
 
-.infocartamodalcarrito{
+.infocartamodalcarrito {
   min-width: 210px;
   width: 100%;
   height: 83px;
@@ -474,27 +474,28 @@
   padding-right: 5px;
 }
 
-.carritoactivo{
+.carritoactivo {
   background-color: var(--c_AMARILLO) !important;
 }
 
-.cerrarmodalcarrito{
+.cerrarmodalcarrito {
   color: var(--c_GRIS9) !important;
-  font-size: 22px;  
+  font-size: 22px;
 }
 
-#preciomodalcarrito{
-  color: var(--c_ROJO2) !important;
-  font-size: 15px;  
-  font-family: Jost-Bold;
-}
-
-#titulomodalcarrito{
+#preciomodalcarrito {
   color: var(--c_ROJO2) !important;
   font-size: 15px;
   font-family: Jost-Bold;
 }
-#texto1modalcarrito{
+
+#titulomodalcarrito {
+  color: var(--c_ROJO2) !important;
+  font-size: 15px;
+  font-family: Jost-Bold;
+}
+
+#texto1modalcarrito {
   color: var(--c_GRIS1) !important;
   font-size: 14px;
   max-width: 170px;
@@ -502,7 +503,8 @@
   min-height: 40px;
   line-height: 1.1;
 }
-#texto2modalcarrito{
+
+#texto2modalcarrito {
   color: var(--c_GRIS1) !important;
   font-size: 14px;
   max-width: 170px;
@@ -547,7 +549,7 @@
   background-color: var(--c_BLANCO) !important;
 }
 
-.scrld{
+.scrld {
   height: auto;
   overflow-x: hidden;
 }
@@ -760,7 +762,7 @@
     min-width: 100% !important;
   }
 
-  .posfixedmenumvl{
+  .posfixedmenumvl {
     position: fixed;
     height: 80px;
     width: 100%;
@@ -817,22 +819,24 @@
     display: none;
   }
 
-  #abrirmicuentatitulo{
+  #abrirmicuentatitulo {
     margin-left: auto !important;
     margin-right: auto !important;
   }
-  
-  #abrirmicuenta, #hola{
+
+  #abrirmicuenta,
+  #hola {
     color: #ffffff;
     background-color: var(--c_ROJO2);
     height: 42px;
   }
-  .imperfil{
+
+  .imperfil {
     height: 18px;
     width: auto;
   }
 
-  #abriridioma{
+  #abriridioma {
     position: absolute !important;
     bottom: 120px;
     width: 100%;
@@ -843,343 +847,326 @@
 
 
   /******modal idiomas**********/
-.modalidiomas{
-  position: absolute !important;
-  top: auto !important; 
-  bottom: 50px !important;
-  left: 150px !important;
-  text-align: left;
-  background-color: var(--c_BLANCO2);
-  color: var(--c_GRIS1);
-  width: 120px;
-  height: 230px;
-  border-radius: 2px;
-  padding:15px;
-  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
-  border: 0.5px solid #efefef;
-  overflow: auto;
-}
-
-.modallogueado{
-  text-align: left;
-  z-index: 10;
-  position: absolute;
-  top: 60px !important; 
-  right: -20px !important;
-  background-color: var(--c_BLANCO2);
-  color: var(--c_GRIS1);
-  width: 140px;
-  height: 200px;
-  border-radius: 2px;
-  padding:15px;
-  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
-  border: 0.5px solid #efefef;
-  overflow: auto;
-}
-
-
-
-/*******modal idiomas end*******************/
-
-/*******modal carrito*****/
-
-
-.posabsolmodalmovil {
-  position: fixed;
-  top: 80px !important;
-  right: 0px !important;
-  left: 0px !important;
-  z-index: 901;
-  max-width: 365px;
-}
-
-#panelcarritovaciomovil{
-  height: 54px;
-  width: 100%;
-  font-size: 14px;  
-  background-color: var(--c_AMARILLO);
-  color: var(--c_GRIS1);
-  border: 0.5px solid #efefef;
-}
-
-#panelcarritocondatomovil{
-  height: 30px;
-  width: 100%;
-  font-size: 14px;  
-  background-color: var(--c_AMARILLO2);
-  color: var(--c_GRIS1);
-  border: 0.5px solid #efefef;
-  text-align: left;
-}
-
-#panelcarritomovil {
-  height: 100%;
-  width: 100%;
-  min-height: 0px;
-  box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: var(--c_BLANCO);
-  color: var(--c_GRIS1);
-  
-}
-
-#divcarritomovil {
-  
-  padding-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  overflow: auto;
-}
-
-#preciocarrito{
-  font-size: 14px;
-}
-
-.cartamodalcarrito{
-  width: 100%;
-  min-height: 100px;
-  padding: 10px 0px !important;
-  margin: 0 !important;
-}
-
-.imgcartamoadalcarrito{
-  width: 103px;
-  height: 83px;
-  padding: 0 !important;
-  border-radius: 4px;
-}
-
-.infocartamodalcarrito{
-  min-width: 210px;
-  width: 100%;
-  height: 83px;
-  padding-left: 20px !important;
-  padding-right: 5px;
-}
-
-.carritoactivo{
-  background-color: var(--c_AMARILLO) !important;
-}
-
-.cerrarmodalcarrito{
-  color: var(--c_GRIS9) !important;
-  font-size: 22px;  
-}
-
-#preciomodalcarrito{
-  color: var(--c_ROJO2) !important;
-  font-size: 15px;  
-  font-family: Jost-Bold;
-}
-
-#titulomodalcarrito{
-  color: var(--c_ROJO2) !important;
-  font-size: 15px;
-  font-family: Jost-Bold;
-}
-#texto1modalcarrito{
-  color: var(--c_GRIS1) !important;
-  font-size: 10px;
-  max-width: 170px;
-  padding-right: 5px;
-  min-height: 40px;
-  line-height: 1.1;
-}
-#texto2modalcarrito{
-  color: var(--c_GRIS1) !important;
-  font-size: 10px;
-  max-width: 170px;
-  padding-right: 5px;
-}
-
-
-
-/*******modal carrito end******************/
-
-/*******modal micuenta*****/
-
-
-.panelcuenta {
-
-  width: 100% !important;
-  min-width: 280px;
-  height: 100%;
-  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
-  padding: 0;
-  border-radius: 0 !important;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: var(--c_BLANCO);
-}
-
-
-#divmicuenta {
-  width: 100%;
-  height: 493px;
-  padding-top: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin-left: 0;
-  margin-right: 0;
-  
-}
-
-#titulomodalmicuenta {
-  font-size: 16px;
-  color: var(--c_GRIS1);
-  margin-left: 0;
-  margin-right: 0;
-  padding-top: 8px;
-  padding-bottom: 5px;
-  color: #ffffff;
-  background-color: var(--c_ROJO2);
-  height: 42px;
-}
-
-#accedemicuenta {
-  font-size: 14px;
-  color: var(--c_GRIS1);
-  margin-left: 0;
-  margin-right: auto;
-  padding-top: 5px;
-  padding-bottom: 10px;
-}
-
-#cjusuariomicuenta {
-  font-size: 14px;
-  color: var(--c_GRIS7);
-  margin-left: 0;
-  margin-right: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 5px;
-  margin-bottom: 14px;
-  border: 1px solid var(--c_GRIS8);
-}
-
-#emailmicuanta {
-  padding-left: 5px;
-  padding-right: 5px;
-
-}
-
-#cjpasswordmicuenta {
-  font-size: 14px;
-  color: var(--c_GRIS7);
-  margin-left: 0;
-  margin-right: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 14px;
-  margin-bottom: 5px;
-  border: 1px solid var(--c_GRIS8);
-}
-
-#passwordmiceanta {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#recuerdamimicuenta i {
-  font-size: 20px;
-}
-
-.posabsolbtmicuenta {
-  position: absolute !important;
-  top: 20px !important;
-  bottom: 0 !important;
-  right: 0 !important;
-  left: auto !important;
-}
-
-
-#heolvidadomicuenta {
-  font-size: 14px;
-  color: var(--c_GRIS1);
-  margin-left: auto;
-  margin-right: 26px;
-  padding-top: 8px;
-  padding-bottom: 2px;
-  text-decoration: underline;
-}
-
-#oaccedemicuenta {
-  font-size: 18px;
-  color: var(--c_GRIS1);
-  margin-left: 0;
-  margin-right: auto;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.btcuadmicuenta {
-  padding-left: 4px;
-  width: 124px;
-  height: 42px;
-  border: 1px solid var(--c_GRIS8);
-  border-radius: 5px;
-  background-color: var(--c_BLANCO2) !important;
-}
-
-#btfacebookmicuenta span {
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-#btfacebookmicuenta i {
-  font-size: 18px;
-  margin-left: 2px;
-}
-
-#btgooglemicuenta span {
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-#btgooglemicuenta i {
-  font-size: 18px;
-  margin-left: 2px;
-}
-
-.imredes {
-  height: 24px !important;
-  width: auto;
-}
-
-#notienesmicuenta {
-  font-size: 18px;
-  color: var(--c_GRIS1);
-  margin-left: 0;
-  margin-right: auto;
-  padding-top: 40px;
-  padding-bottom: 5px;
-  text-align: center !important;  
-}
-
-
-/*******modal micuenta end*****/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .modalidiomas {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 50px !important;
+    left: 150px !important;
+    text-align: left;
+    background-color: var(--c_BLANCO2);
+    color: var(--c_GRIS1);
+    width: 120px;
+    height: 230px;
+    border-radius: 2px;
+    padding: 15px;
+    box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+    border: 0.5px solid #efefef;
+    overflow: auto;
+  }
+
+  .modallogueado {
+    text-align: left;
+    z-index: 10;
+    position: absolute;
+    top: 60px !important;
+    right: -20px !important;
+    background-color: var(--c_BLANCO2);
+    color: var(--c_GRIS1);
+    width: 140px;
+    height: 200px;
+    border-radius: 2px;
+    padding: 15px;
+    box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+    border: 0.5px solid #efefef;
+    overflow: auto;
+  }
+
+
+
+  /*******modal idiomas end*******************/
+
+  /*******modal carrito*****/
+
+
+  .posabsolmodalmovil {
+    position: fixed;
+    top: 80px !important;
+    right: 0px !important;
+    left: 0px !important;
+    z-index: 901;
+    max-width: 365px;
+  }
+
+  #panelcarritovaciomovil {
+    height: 54px;
+    width: 100%;
+    font-size: 14px;
+    background-color: var(--c_AMARILLO);
+    color: var(--c_GRIS1);
+    border: 0.5px solid #efefef;
+  }
+
+  #panelcarritocondatomovil {
+    height: 30px;
+    width: 100%;
+    font-size: 14px;
+    background-color: var(--c_AMARILLO2);
+    color: var(--c_GRIS1);
+    border: 0.5px solid #efefef;
+    text-align: left;
+  }
+
+  #panelcarritomovil {
+    height: 100%;
+    width: 100%;
+    min-height: 0px;
+    box-shadow: 0 0 0.5rem 0 rgba(200, 200, 200, 0.2) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--c_BLANCO);
+    color: var(--c_GRIS1);
+
+  }
+
+  #divcarritomovil {
+
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
+  }
+
+  #preciocarrito {
+    font-size: 14px;
+  }
+
+  .cartamodalcarrito {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px 0px !important;
+    margin: 0 !important;
+  }
+
+  .imgcartamoadalcarrito {
+    width: 103px;
+    height: 83px;
+    padding: 0 !important;
+    border-radius: 4px;
+  }
+
+  .infocartamodalcarrito {
+    min-width: 210px;
+    width: 100%;
+    height: 83px;
+    padding-left: 20px !important;
+    padding-right: 5px;
+  }
+
+  .carritoactivo {
+    background-color: var(--c_AMARILLO) !important;
+  }
+
+  .cerrarmodalcarrito {
+    color: var(--c_GRIS9) !important;
+    font-size: 22px;
+  }
+
+  #preciomodalcarrito {
+    color: var(--c_ROJO2) !important;
+    font-size: 15px;
+    font-family: Jost-Bold;
+  }
+
+  #titulomodalcarrito {
+    color: var(--c_ROJO2) !important;
+    font-size: 15px;
+    font-family: Jost-Bold;
+  }
+
+  #texto1modalcarrito {
+    color: var(--c_GRIS1) !important;
+    font-size: 10px;
+    max-width: 170px;
+    padding-right: 5px;
+    min-height: 40px;
+    line-height: 1.1;
+  }
+
+  #texto2modalcarrito {
+    color: var(--c_GRIS1) !important;
+    font-size: 10px;
+    max-width: 170px;
+    padding-right: 5px;
+  }
+
+
+
+  /*******modal carrito end******************/
+
+  /*******modal micuenta*****/
+
+
+
+  .panelcuenta {
+
+    width: 100% !important;
+    min-width: 280px;
+    height: 100%;
+    box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2) !important;
+    padding: 0;
+    border-radius: 0 !important;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--c_BLANCO);
+  }
+
+
+  #divmicuenta {
+    width: 100%;
+    height: 493px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
+
+  }
+
+  #titulomodalmicuenta {
+    font-size: 16px;
+    color: var(--c_GRIS1);
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 8px;
+    padding-bottom: 5px;
+    color: #ffffff;
+    background-color: var(--c_ROJO2);
+    height: 42px;
+  }
+
+  #accedemicuenta {
+    font-size: 14px;
+    color: var(--c_GRIS1);
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  #cjusuariomicuenta {
+    font-size: 14px;
+    color: var(--c_GRIS7);
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 14px;
+    border: 1px solid var(--c_GRIS8);
+  }
+
+  #emailmicuanta {
+    padding-left: 5px;
+    padding-right: 5px;
+
+  }
+
+  #cjpasswordmicuenta {
+    font-size: 14px;
+    color: var(--c_GRIS7);
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 14px;
+    margin-bottom: 5px;
+    border: 1px solid var(--c_GRIS8);
+  }
+
+  #passwordmiceanta {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  #recuerdamimicuenta i {
+    font-size: 20px;
+  }
+
+  .posabsolbtmicuenta {
+    position: absolute !important;
+    top: 20px !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+  }
+
+
+  #heolvidadomicuenta {
+    font-size: 14px;
+    color: var(--c_GRIS1);
+    margin-left: auto;
+    margin-right: 26px;
+    padding-top: 8px;
+    padding-bottom: 2px;
+    text-decoration: underline;
+  }
+
+  #oaccedemicuenta {
+    font-size: 18px;
+    color: var(--c_GRIS1);
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .btcuadmicuenta {
+    padding-left: 4px;
+    width: 124px;
+    height: 42px;
+    border: 1px solid var(--c_GRIS8);
+    border-radius: 5px;
+    background-color: var(--c_BLANCO2) !important;
+  }
+
+  #btfacebookmicuenta span {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  #btfacebookmicuenta i {
+    font-size: 18px;
+    margin-left: 2px;
+  }
+
+  #btgooglemicuenta span {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  #btgooglemicuenta i {
+    font-size: 18px;
+    margin-left: 2px;
+  }
+
+  .imredes {
+    height: 24px !important;
+    width: auto;
+  }
+
+  #notienesmicuenta {
+    font-size: 18px;
+    color: var(--c_GRIS1);
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 40px;
+    padding-bottom: 5px;
+    text-align: center !important;
+  }
+
+
+  /*******modal micuenta end*****/
 
 }

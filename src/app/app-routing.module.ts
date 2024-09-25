@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'visitatitulo/:title' , component: VisitadetailComponent},
 
   { path: 'carrito' , component: CarritoComponent},
-  { path: 'compra' , component: CompraComponent},
+  { path: 'compra/:id' , component: CompraComponent},
   
   { path: 'buscador' , component: BuscadorComponent},
   { path: 'buscador/:id?' , component: BuscadorComponent},

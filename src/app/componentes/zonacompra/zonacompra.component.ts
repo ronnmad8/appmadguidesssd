@@ -20,6 +20,7 @@ import { PlatformService } from 'src/app/services/platform.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { GlobalService } from 'src/app/services/global.service';
 import { ReservationModel } from 'src/app/models/Reservations.model';
+import { TextDataModel } from 'src/app/models/TextData.model';
 
 
 @Component({
@@ -33,16 +34,15 @@ export class ZonacompraComponent implements OnInit {
 
   modal: NgbModalRef;
   modalOptions: NgbModalOptions;
-  @Input() visitaId: number = 0;
-  @Input() textconts: TextContentsModel = new TextContentsModel();
+  @Input() reservaspedido: ReservationModel[] = [];
   @ViewChild('imagenlista') imagenlista: any;
   sWindow: any;
 
+  textconts: TextContentsModel = new TextContentsModel();
+  listatextcontsdata: TextDataModel[] = [];
+
   carritoId: number = 0;
-  listaPedido: ReservationModel[] = [];
   isrespon: boolean = false;
-  pedidos: CartModel[] = [];
-  pedido: CartModel = new CartModel();
   usuario: UserModel = new UserModel();
 
   sumatotal: number = 0;
@@ -66,34 +66,17 @@ export class ZonacompraComponent implements OnInit {
   ngOnInit(): void {
     this.isrespon = this.platformService.isrespon;
     this.usuario = this.auth.getUser();
-    this.getPedido();
-
+    this.getTexts();
   }
 
   @HostListener("window:scroll")
   onWindowScroll() {
     let posactual = this.sWindow.pageYOffset ;
 
-
-  
   }
-
-
 
   verMisReservas(){
     this.router.navigate(['/zonacliente']);
-  }
-
-
-  getPedido() {
-    this.carritoService.getPedidoCompra().subscribe(resp =>{
-      this.pedido.reservas = resp as ReservationModel[];
-      if(this.pedidos.length > 0){
-        this.pedidos = this.pedidos.filter(x => x.cliente.email == this.usuario.email);
-        this.pedido = this.pedidos[this.pedidos.length - 1]
-        this.listaPedido = this.pedido.reservas;
-      }
-    })
   }
 
 
@@ -102,9 +85,18 @@ export class ZonacompraComponent implements OnInit {
   }
 
 
-
-
-
+  getTexts(){
+    this.listatextcontsdata = this.globalService.listaTextDataModel
+    this.textconts = this.globalService.textcontents;
+    if(!this.textconts.dataok){
+      this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
+          this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
+        }
+      })
+    }
+  }
 
 
 }

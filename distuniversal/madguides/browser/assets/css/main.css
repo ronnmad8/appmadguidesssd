@@ -240,7 +240,7 @@ input[type='radio']:checked:after {
   top: -2px;
   left: -1px;
   position: relative;
-  background-color: var(--c_ROJO2);
+  background-color: #ffffffff;
   content: '';
   display: inline-block;
   visibility: visible;

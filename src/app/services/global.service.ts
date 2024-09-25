@@ -39,6 +39,7 @@ export class GlobalService {
   listahoras: any[];
   idiomasIsos: any[];
   listaidlangs: any[] = [];
+  textalerts: any[] = [];
   redes: any;
 
 
@@ -151,6 +152,35 @@ export class GlobalService {
       { name: 'twitter', logo: 'assets/images/i-twitterN.svg' },
       { name: 'instagram', logo: 'assets/images/i-instagramN.svg' },
     ];
+
+
+
+    this.textalerts = [
+      { tipo: "inicio_sesion", value_es: 'Inicio de sesión correctamente', value_en: 'Login correctly' },
+      { tipo: "no_registrado", value_es: 'Inicio de sesión correctamente', value_en: 'Login correctly' },
+
+    ];
+
+
+  }
+
+  getAlerta(tipo: string){
+    let lang = this.getLanguage();
+    this.textalerts.forEach(i => {
+      if(i.tipo == tipo){
+        switch(lang){
+          case "es":
+            return i.value_es;
+            break;
+          case "en":
+            return i.value_en;
+            break;
+          default:
+            return "";
+            break;
+        }
+      }
+    });
   }
 
   getLanguage() {
@@ -203,6 +233,9 @@ export class GlobalService {
 
   getIdiomabyIso(iso: string) {
     let idioma = this.idiomasIsos.find((x) => x.key == iso);
+    if(idioma == null){
+       idioma = this.idiomasIsos.find((x) => x.key == "es");
+    }
     return idioma.value;
   }
 

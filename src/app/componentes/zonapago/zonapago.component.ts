@@ -243,7 +243,7 @@ export class ZonapagoComponent implements OnInit {
     if (this.loginok) {
       this.registrado = true;
       this.usuario = this.auth.getUser();
-      if(this.usuario == null){
+      if(this.usuario == null ){
          this.getMe();
       }
       else{
@@ -263,11 +263,13 @@ export class ZonapagoComponent implements OnInit {
     this.pedido.cliente.email = usuario.email;
     this.pedido.cliente.prefijo = usuario.prefijo;
     this.pedido.cliente.telefono = usuario.telefono;
+    this.pedido.cliente.particular = usuario.particular;
+    this.pedido.cliente.address = usuario.address;
+    this.pedido.cliente.number = usuario.number;
+    this.pedido.cliente.postalcode = usuario.postalcode;
     this.pedido.cliente.state = usuario.state;
     this.pedido.cliente.country = usuario.country;
     this.pedido.cliente.city = usuario.city;
-    this.pedido.cliente.number = usuario.number;
-    this.pedido.cliente.address = usuario.address;
   }
 
   crearCompanions(){
@@ -322,6 +324,7 @@ export class ZonapagoComponent implements OnInit {
       country: [''],
       state: [''],
       city: [''],
+      postalcode: [''],
       
     });
   }
@@ -334,11 +337,12 @@ export class ZonapagoComponent implements OnInit {
       this.usuario.surname = this.formregister.get('surname')?.value;
       this.usuario.prefijo = this.formregister.get('prefijo')?.value;
       this.usuario.telefono = this.formregister.get('phone')?.value;
-      this.usuario.state = this.formregister.get('state')?.value;
-      this.usuario.country = this.formregister.get('country')?.value;
-      this.usuario.city = this.formregister.get('city')?.value;
-      this.usuario.number = this.formregister.get('number')?.value;
       this.usuario.address = this.formregister.get('address')?.value;
+      this.usuario.number = this.formregister.get('number')?.value;
+      this.usuario.postalcode = this.formregister.get('postalcode')?.value;
+      this.usuario.country = this.formregister.get('country')?.value;
+      this.usuario.state = this.formregister.get('state')?.value;
+      this.usuario.city = this.formregister.get('city')?.value;
       
       this.btactivadoreg = false;
       
@@ -426,16 +430,16 @@ export class ZonapagoComponent implements OnInit {
     }
   }
 
-  registrarpedido(pedido: CartModel) {
+  registrarpedido(cart: CartModel) {
     //this.pedido.codigoreserva = new Date().getTime().toString();
-    this.carritoService.saveCart(pedido);
+    this.carritoService.saveCart(cart);
     this.pedidosguardados = this.carritoService.getPedidosguardados();
-    this.pedidosguardados.push(pedido);
+    this.pedidosguardados.push(cart);
 
     let token = localStorage.getItem('token');
-    let horario: ContractModel = new ContractModel();
+    let contract: ContractModel = new ContractModel();
 
-    pedido.reservas.forEach( el => {
+    cart.reservas.forEach( el => {
       let usercomp: CompanionsPedidoModel = new CompanionsPedidoModel();
       el.users.forEach( it => {
         usercomp.name = it.name ;
@@ -444,35 +448,47 @@ export class ZonapagoComponent implements OnInit {
         usercomp.email = "" ;
         usercomp.sendmail = "false" ;
 
-        horario.users.push(usercomp);
+        contract.users.push(usercomp);
       })
 
       ///rectificacion sin acompañantes api //////////////////////
-      if(horario.users.length <= 1){
-        usercomp.name = "_" ;
-        usercomp.surname = "_" ;
-        usercomp.old = 0 ;
-        usercomp.email = "" ;
-        usercomp.sendmail = "false" ;
-        horario.users.push(usercomp);
-        this.companionsComplet = true;
-      }
+      // if(horario.users.length <= 1){
+      //   usercomp.name = "_" ;
+      //   usercomp.surname = "_" ;
+      //   usercomp.old = 0 ;
+      //   usercomp.email = "" ;
+      //   usercomp.sendmail = "false" ;
+      //   horario.users.push(usercomp);
+      //   this.companionsComplet = true;
+      // }
       /////////////////////////////////////////////////////
 
-      horario.uuid = el.visit.uuid;
-      
-      horario.token = token;
-      horario.country_id = this.usuario.address[0]["address"]?.country.id;
+      //horario.country_id = this.usuario.address[0]["address"]?.country.id;
+      // this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
+      //   let r = resp;
+      // })
+      this.carritoService.savePedido(cart).subscribe(resp=>{
+         ///vaciar carrito en menu y vista
+        if(resp != null){
+          
+          console.log("carrito registrado ==> ", resp )
+          let pedidoregistrado = resp[0] as CartModel;
+          if(pedidoregistrado.id != null){
+            this.carritoService.clearCart();
+            this.providerService.setThrowCarritoupdate(new CartModel());
+            
+            this.router.navigate(['/compra/'+pedidoregistrado.id]);
+          }
+          else{
+            this.alertasService.alertaKO("No registrado","intente registrar pedido de nuevo");
+          }
 
-      this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
-        let r = resp;
+        }
+
       })
     })
     
-    ///vaciar carrito en menu y vista
-    this.carritoService.clearCart();
-    this.providerService.setThrowCarritoupdate(new CartModel());
-    this.router.navigate(['/compra']);
+    
   }
 
   aceptarpoliticas(acept: any) {
@@ -480,7 +496,6 @@ export class ZonapagoComponent implements OnInit {
   }
 
   eliminarvisitapedido(reserva: ReservationModel) {
-    
     let mensajeconfirmacion = 'Va a eliminar una visita';
     if (this.pedido.reservas.length <= 1) {
       mensajeconfirmacion = 'Va a eliminar la última reserva del pedido';
@@ -491,7 +506,7 @@ export class ZonapagoComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           this.compsE.controls.forEach((el, i) => {
-            if(el.value.visit_time_uuid == reserva.uuid ){
+            if(el.value.visit_id == reserva.visit_id){
               this.compsE.controls = this.compsE.controls.filter(x => x.value.visit_time_uuid != el.value.visit_time_uuid);
               //this.deleteCompsE(i) ;
             }
@@ -617,12 +632,13 @@ export class ZonapagoComponent implements OnInit {
     this.loginok = false;
     this.auth.loginUser(this.usuario).subscribe((resp) => {
       let login = resp as LoginModel | any;
-      this.auth.getMe().subscribe((respuser) => {
-        this.usuario = respuser as UserModel;
+      this.auth.getMe().subscribe(res=> {
+        this.usuario = res as UserModel;
         this.loginok = true;
+        this.modalService.dismissAll();
         this.alertasService.alertaInfo(
           'Madguides',
-          this.auth.loginUser + ' <i class="fa fa-check" ></i> '
+          ' <i class="fa colROJO2 fs-24" ></i> '
         );
       });
     });
@@ -664,7 +680,6 @@ export class ZonapagoComponent implements OnInit {
 
   cambiosFormulariofa() {
     ///// statuChanges
-  
     this.formafa.valueChanges.subscribe( value => {
       this.companions = this.formafa.get('companions').value ;
       this.companionsComplet = false;

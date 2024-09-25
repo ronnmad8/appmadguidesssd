@@ -55,6 +55,7 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
 import { ErrorsInterceptor } from './interceptors/errors.interceptor';
 import { ZonareservasComponent } from './componentes/zonareservas/zonareservas.component';
+import { DecimalComaPipe } from './decimal-coma.pipe';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -124,6 +125,7 @@ const routes: Routes = [
     MedidascovidComponent,
     SpinnerComponent,
     ZonareservasComponent,
+    DecimalComaPipe,
 
   ],
   imports: [

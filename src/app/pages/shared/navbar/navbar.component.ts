@@ -611,7 +611,9 @@ export class NavbarComponent implements OnInit {
     if(resp){
       this.auth.getMe().subscribe( res=> {
         console.log("me ",res);
-        this.alertasService.alertaInfo("Madguides", "Bienvenido,Te has logueado correctamente");   
+        this.alertasService.alertaInfo("Madguides",
+           "1"
+          );   
         this.loginok = true;
         this.verusuario = false;
         })

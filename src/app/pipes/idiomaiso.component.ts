@@ -11,7 +11,6 @@ export class IdiomaisoPipeComponent implements PipeTransform {
   }
 
   transform(value: string, ...args: string[]): string {
-    
     let idioma = this.globalService.getIdiomabyIso(value);
     return idioma;
     

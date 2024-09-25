@@ -16,6 +16,7 @@ export class VisitaModel{
     accesibilidad: boolean;
     duracionmin: number;
     preciohoramin: number;
+    precio: number;
     puntoencuentro: string;
     nummax: number;
     recomendado: boolean;
@@ -42,6 +43,7 @@ export class VisitaModel{
         this.accesibilidad = false;
         this.duracionmin = 0;
         this.preciohoramin = 0;
+        this.precio = 0;
         this.puntoencuentro = "";
         this.nummax = 0;
         this.recomendado = false;

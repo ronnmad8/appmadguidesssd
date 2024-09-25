@@ -14,48 +14,48 @@ export class ReservationModel {
 
     //////reservation
     id: number;
+    uuid: string;
     users: UserModel[]; //users
-    user_id: number;
-    uuid: string; //uuid
     language_id;
-    language;
-    nombreidioma;
     fecha: string;
     visit_hours_id: number;
-    persons: number;
-    children: number;
     adults: number;
+    children: number;
     total: number;
+    private: number;
+    persons: number;
+    visit_id: number;
+    user_id: number;
     status: number;
-    private: boolean;
+    nombreidioma: string;
+    mediafile: string;
     titulo: string;
     descripcion: string;
+    hora: string;
     visit: VisitasResultadoModel;
-    
-
     
     constructor(
         
 
     ){
         
-        this.users =  [];
+        this.uuid = "";
         this.user_id = 0;
-        this.uuid = '';
         this.language_id = 1;
-        this.language = "es";
-        this.language = "español";
         this.fecha = new Date().toISOString();
         this.visit_hours_id = 0;
         this.persons = 0;
         this.children = 0;
         this.adults = 0;
+        this.private = 0;
         this.status= 1;
-        this.private = false;
+        this.visit = new VisitasResultadoModel();
+        this.users =  [];
+        this.nombreidioma = "";
+        this.mediafile = "";
         this.titulo = "";
         this.descripcion = "";
-        this.visit = new VisitasResultadoModel();
-
+        this.hora = "";
     }
 
     getPrecio(duracionmin: number, preciohora: number){

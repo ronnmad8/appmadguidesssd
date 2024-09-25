@@ -30,7 +30,7 @@ export class PoliticasService {
     private router: Router,
     private globalService: GlobalService,
   ) {
-    this.apiurl = environment.apiurlold;
+    this.apiurl = environment.apiurl;
     this.clang = this.globalService.getLanguage();
   }
 

@@ -56,6 +56,9 @@ export class ZonamicuentaComponent implements OnInit {
   vercuenta: boolean = true;
   reservas: VisitasResultadoModel[] = [];
   loginok: boolean = false;
+  rdparticular: boolean = false;
+  rdempresa: boolean = false;
+
 
   constructor(
     private router: Router,
@@ -83,7 +86,10 @@ export class ZonamicuentaComponent implements OnInit {
     this.listatiposidentificacions = this.globalService.getlistatiposidentificacion();
     this.providerService.setThrowPageadmin(true);
     this.listenProvider();
-    
+     
+
+
+
   }
 
 
@@ -111,20 +117,18 @@ export class ZonamicuentaComponent implements OnInit {
     }
   }
 
-
-
   crearFormulario() {
     this.forma = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       surname: [''],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.minLength(2)]],
+      telefono: ['', [Validators.required, Validators.minLength(2)]],
       prefijo: [''],
       type: [''],
       document: [''],
-      street : [''],
+      address : [''],
       number : [''],
-      postal: [''],
+      postalcode: [''],
       city: [''],
       country: [''],
       state: [''],
@@ -137,8 +141,8 @@ export class ZonamicuentaComponent implements OnInit {
   cambiosFormulario() {
 
     this.forma.valueChanges.subscribe((value) => {
-      this.usuario.name = this.forma.get('nombre')?.value;
-      this.usuario.surname = this.forma.get('apellidos')?.value;
+      this.usuario.name = this.forma.get('name')?.value;
+      this.usuario.surname = this.forma.get('surname')?.value;
       this.usuario.email = this.forma.get('email')?.value;
       this.usuario.prefijo = this.forma.get('prefijo')?.value;
       this.usuario.telefono = this.forma.get('telefono')?.value
@@ -147,13 +151,15 @@ export class ZonamicuentaComponent implements OnInit {
       this.usuario.city = this.forma.get('city')?.value;
       this.usuario.country = this.forma.get('country')?.value;
       this.usuario.state = this.forma.get('state')?.value;
+      this.usuario.postalcode = this.forma.get('postalcode')?.value;
+
+      let particular = this.forma.get('particular')?.value;
 
       if (this.forma.status != 'INVALID' ) {
         this.btactivo = true;
       }
     });
   }
-
 
   patchUser() {
 
@@ -168,14 +174,12 @@ export class ZonamicuentaComponent implements OnInit {
       number: this.usuario.number,
       state: this.usuario.state,
       city: this.usuario.city,
+      postalcode: this.usuario.postalcode,
 
       namefacturacion: this.usuario.name,
       surnamefacturacion: this.usuario.surname
 
     });
-
-
- 
   }
 
 
@@ -188,15 +192,11 @@ export class ZonamicuentaComponent implements OnInit {
       
       //this.usuario = JSON.parse(user) as UserModel;
       //this.usuario.roles.length > 0 ? this.usuario.rol = this.usuario.roles[0].name  : this.usuario.rol = "";
-
-
       //this.usuario.document = this.usuario.document;
 
-      
         this.patchUser();
       }
     })
-    
   }
 
   
@@ -204,34 +204,22 @@ export class ZonamicuentaComponent implements OnInit {
     let user: UserModel = this.usuario;
     this.auth.updateUserData(user).subscribe((resp) => {
       let respuesta: RespuestaModel = resp as RespuestaModel;
-      if(respuesta != null && respuesta.status == "success" ){
-          this.alertasService.alertaInfo('Madguides','Datos cambiados correctamente <br>'+respuesta.message);
+      if(respuesta != null ){
+          this.alertasService.alertaInfo('Madguides','<i class="fa fa-check colROJO2 fs-24"><i>');
       }
     });
   }
 
-  modificarDatosAddress()  {
-
-    let user: UserModel = this.usuario;
-    this.auth.updateUserAddress(user).subscribe((resp) => {
-      let respuesta: RespuestaModel = resp as RespuestaModel;
-      if(respuesta != null && respuesta.status == "success" ){
-          this.alertasService.alertaInfo('Madguides','Datos cambiados correctamente <br> '+respuesta.message);
-      }
-    });
-  }
 
 
   
 
   selecparticular(){
-    this.forma.get('particular')?.setValue(true);
-    this.forma.get('empresa')?.setValue(false);
+    this.usuario.particular = 1;
   }
   
   selecempresa(){
-     this.forma.get('empresa')?.setValue(true);
-     this.forma.get('particular')?.setValue(false);
+     this.usuario.particular = 0;
   }
 
   

@@ -7,19 +7,19 @@
             <div class="panelReservafirmada" *ngFor="let reserva of reservas ">
 
                 <div class="h-100">
-                    <div #imageneslatid id="im-{{reserva.visit.uuid}}" class="chimaglat cupo">
+                    <div #imageneslatid id="im-{{reserva?.id}}" class="chimaglat cupo">
                         <picture>
-                            <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
-                                data-srcset="{{reserva.visit.mediafile}}">
-                            <img class="imglat" src="{{reserva.visit.mediafile}}" data-src="{{reserva.visit.mediafile}}"
-                                alt="{{reserva.visit.mediafile}}" style="height: 194px;min-width: 232px ;">
+                            <source media="(min-width: 0px)" srcset="{{reserva?.mediafile}}"
+                                data-srcset="{{reserva?.mediafile}}">
+                            <img class="imglat" src="{{reserva?.mediafile}}" data-src="{{reserva?.mediafile}}"
+                                alt="{{reserva?.mediafile}}" style="height: 194px;min-width: 232px ;">
                         </picture>
                     </div>
                 </div>
                 <div class="w-100 h-100 posrel">
 
                     <div class="posabsolEstado">
-                        <div class="colVERDE ff-JB"  *ngIf="reserva.status != 1">
+                        <div class="colVERDE ff-JB"  *ngIf="reserva?.status != 1">
                             <i class="fa-regular fa-circle-check"></i>
                             <span class="ml-1"> {{textconts.confirmada}} </span>
                         </div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="posabsolPrecio">
                         <div class="colNEGRO ff-JB " >
-                            <span> {{ reserva.getPrecio(reserva.visit.duracionmin, reserva.visit.preciohoramin) }} € </span>
+                            <span> {{ reserva.total }} € </span>
                         </div>
                     </div>
                     <div class="posabsolReservar"  *ngIf="reserva.status == 1 "  >
@@ -41,40 +41,37 @@
 
                     <div class="posrel w-100  px-xl-4 px-2 ">
 
-                        <div id="titulopanelpedido">
-                            {{reserva.visit.titulo.length > 30 ? reserva.visit.titulo.substring(0,
-                            47)+"..." : reserva.visit.titulo }}
+                        <div id="titulopanelpedido"  *ngIf="reserva?.titulo != null">
+                            {{reserva?.titulo }}
                         </div>
-                        <div class="fs-12 ff-JB lh-1-4 colGRIS1 my-2 " style="max-width: 80%;"  *ngIf="reserva.status != 0">
-                            {{textconts.reserva}}
-                            <span class="colROJO2">{{reserva.uuid }}</span>
-                        </div>
+                        <!-- <div class="fs-12 ff-JB lh-1-4 colGRIS1 my-2 " style="max-width: 80%;"  *ngIf="reserva?.status != 0">
+                            textconts.reserva
+                            <span class="colROJO2">reserva?.id </span>
+                        </div> -->
 
                     </div>
                     <div class="posrel h-100 w-100  p-xl-4 p-2 infopanelreserva ">
 
-                        <div class="fs-18 p-0  mb-2 pc">
-                            {{ reserva.visit.descripcion.length > 50 ?
-                            reserva.visit.descripcion.substring(0, 47)+"..." :
-                            reserva.visit.descripcion }}
+                        <div class="fs-18 p-0  mb-2 pc"  *ngIf="reserva?.descripcion != null" >
+                            {{ reserva?.descripcion?.length > 50 ? reserva?.descripcion?.substring(0, 50) + '...' : reserva?.descripcion }}
                         </div>
     
                         <div class="lh-1-4">
-                            <span>{{reserva.fecha | fechaleg }}</span>
-                            <span class="mx-1"> a las {{reserva.getHora(reserva.visit_hours_id)  | horaleg }} </span>
+                            <span>{{reserva.fecha | fechaleg}} </span>
+                            <span class="mx-1"> {{reserva?.hora}} </span>
                         </div>
     
                         <div class="fs-14 lh-1-4 ff-JB">
     
                             <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
                                     style="margin-right: -3px; margin-top: -2px;"></i>
-                                {{reserva.adults}}</span>
+                                {{reserva?.adults}}</span>
                             <span class="mx-2"> <i class="fa fa-person fs-16" title="Niños"
                                     style="margin-right: -3px; margin-top: 0px;"></i>
-                                {{reserva.children}}</span>
+                                {{reserva?.children}}</span>
     
                         </div>
-                        <div class="fs-14 lh-1-4" *ngIf="reserva.visit.privada">
+                        <div class="fs-14 lh-1-4" *ngIf="reserva?.private == 1">
                             * 
                         </div>
                         
@@ -85,10 +82,7 @@
                         </div> -->
     
                     </div>
-
-
                 </div>
-                
             </div>
         </div>
     </div>

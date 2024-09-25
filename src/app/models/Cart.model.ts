@@ -8,22 +8,21 @@ import { ReservationModel } from './Reservations.model';
 export class CartModel{
     
     id: number;
-    uuid: string;
     user_id: number;    
     total: number;
     totalfinal: number;
-    created: Date;
-    cliente: UserModel
+    fecha: Date;
+    cliente: UserModel;
+    paymentmethod: string;
     reservas: ReservationModel[];
    
     constructor(){
 
-        
-        this.uuid = "";
+        //this.uuid = "";
         this.user_id = 0
         this.total = 0;
         this.totalfinal = 0;
-        this.created = new Date();
+        this.fecha = new Date();
         this.cliente = new UserModel();
         this.reservas = [];
         

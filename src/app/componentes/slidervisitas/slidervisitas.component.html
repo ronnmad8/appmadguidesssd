@@ -32,7 +32,7 @@
               </div>
               <div class="w-100 p-0 m-0">
                   <div class="titvisita" >
-                      <span>{{ visita.titulo.length > 50 ? visita.titulo.substring(0,47)+'...' : visita.titulo }}</span>
+                      <span>{{ visita.titulo.length > 50 ? visita.titulo.substring(0,47)+'...' : visita.titulo }} </span>
                   </div>
                   <div class="textvisita">
                     <span [innerHTML]=" visita.descripcion.length > 70 ? visita.descripcion.substring(0,67)+'...' : visita.descripcion " >
@@ -40,12 +40,12 @@
                   </div>
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
-                        <span class="preciovisitaeuro">{{   getFormattedPrice(visita) ?? 0    }} € </span>
+                        <span class="preciovisitaeuro">0 € </span>
                         <span class="porpersona"> {{textconts.buscador_porpersona }}  </span> 
                       </div>
                       <div class="horasvisita"> 
                         <img  class="imghorasvisita  mb-1 mx-1" src='assets/images/i-reloj.svg' alt="">
-                        <span class="cantidadhorasvisita ">{{ getFormattedDuration(visita) ?? 0  }}h</span>
+                        <span class="cantidadhorasvisita ">{{ visita?.precio | decimalComa }}h</span>
                       </div>
                   </div>
               </div>

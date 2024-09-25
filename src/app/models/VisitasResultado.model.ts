@@ -37,6 +37,7 @@ export class VisitasResultadoModel{
     precio: number;
     languages: LanguagesModel[];
     mediafile: string;
+
     
     visithours: TimesSelModel[];
     visitdias: DiaModel[];
