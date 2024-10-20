@@ -92,7 +92,6 @@ export class ZonareservasComponent implements OnInit {
   }
 
   getReservas() {
-    debugger
     this.pedidos.forEach((pedido) => {
       if (pedido.reservas.length > 0) {
         this.reservas.push(...pedido.reservas);

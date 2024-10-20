@@ -668,6 +668,19 @@
   cursor: no-drop !important;
 }
 
+.btredondoRojoApagadoPagar {
+  font-family: Jost-Bold;
+  padding: 10px 10px;
+  border-radius: 40px;
+  width: 223px;
+  height: 51px;
+  border: 1px solid var(--c_GRIS2);
+  background-color: var(--c_GRIS2);
+  color: var(--c_BLANCO);
+  font-size: 20px !important;
+  cursor: no-drop !important;
+}
+
 .btredondoApagadomicuentamvl {
   font-family: Jost-Bold;
   padding: 10px 10px;

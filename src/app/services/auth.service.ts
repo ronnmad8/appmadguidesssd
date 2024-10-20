@@ -142,11 +142,11 @@ export class AuthService {
   registrarUser(user: UserModel) {
 
     let _datos = {
-      second: user.password,
       name: user.name,
       email: user.email,
-      surname: user.surname,
       password: user.password,
+      second: user.password,
+      surname: user.surname,
       prefijo: user.prefijo,
       telefono: user.telefono,
       country: user.country,
@@ -156,7 +156,7 @@ export class AuthService {
       address: user.address,
     };
 
-    let endpoint = '/users';
+    let endpoint = '/register';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(
       map((res: any) => {
@@ -204,7 +204,6 @@ export class AuthService {
       client_secret: environment.client_secret_grant,
       grant_type: environment.grant_type,
     };
-
     let endpoint = '/login';
     this.url = this.apiurl + endpoint;
     return this.http.post(`${this.url}`, _datos).pipe(

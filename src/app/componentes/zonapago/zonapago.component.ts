@@ -40,7 +40,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { CartModel } from 'src/app/models/Cart.model';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ResultadoModel } from 'src/app/models/Resultado.model';
 import { LoginModel } from 'src/app/models/Login.model';
 import { UserModel } from 'src/app/models/User.model';
@@ -157,6 +157,11 @@ export class ZonapagoComponent implements OnInit {
   maxold: number = 1000;
   maxoldchildren: number = 13;
   registrado: boolean = false;
+  formtarjeta: FormGroup;
+  btactivadotarjeta: boolean = false;
+  tarjeta_numeracion: string = "";
+  tarjeta_caducidad: string = "";
+  tarjeta_cvv: string = "";
 
   mensaje1 = "Debe registrarse para continuar";
   mensaje2 = "Debe aceptar las condiciones de uso";
@@ -192,6 +197,9 @@ export class ZonapagoComponent implements OnInit {
 
     this.crearFormulariofa();
     this.cambiosFormulariofa();
+
+    this.crearFormularioTarjeta();
+    this.cambiosFormularioTarjeta();
   }
 
   ngOnInit(): void {
@@ -252,7 +260,7 @@ export class ZonapagoComponent implements OnInit {
 
     }
     else{
-      this.alertasService.alertaKO("Madguides", this.mensaje1);
+      //this.alertasService.alertaKO("Madguides", this.mensaje1);
     }
   }
 
@@ -314,17 +322,17 @@ export class ZonapagoComponent implements OnInit {
     this.formregister = this.fbr.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required, Validators.minLength(2)]],
-      surname: [''],
       password: ['', [Validators.required, Validators.minLength(1)]],
-      prefijo: [''],
-      address: [''],
-      phone: ['', [Validators.required, Validators.minLength(2)]],
-      street: [''],
-      number: [''],
-      country: [''],
-      state: [''],
-      city: [''],
-      postalcode: [''],
+      //surname: [''],
+      //prefijo: [''],
+      //address: [''],
+      //phone: ['', [Validators.required, Validators.minLength(2)]],
+      //street: [''],
+      //number: [''],
+      //country: [''],
+      //state: [''],
+      //city: [''],
+      //postalcode: [''],
       
     });
   }
@@ -334,15 +342,15 @@ export class ZonapagoComponent implements OnInit {
       this.usuario.email = this.formregister.get('email')?.value;
       this.usuario.password = this.formregister.get('password')?.value;
       this.usuario.name = this.formregister.get('name')?.value;
-      this.usuario.surname = this.formregister.get('surname')?.value;
-      this.usuario.prefijo = this.formregister.get('prefijo')?.value;
-      this.usuario.telefono = this.formregister.get('phone')?.value;
-      this.usuario.address = this.formregister.get('address')?.value;
-      this.usuario.number = this.formregister.get('number')?.value;
-      this.usuario.postalcode = this.formregister.get('postalcode')?.value;
-      this.usuario.country = this.formregister.get('country')?.value;
-      this.usuario.state = this.formregister.get('state')?.value;
-      this.usuario.city = this.formregister.get('city')?.value;
+      //this.usuario.surname = this.formregister.get('surname')?.value;
+      //this.usuario.prefijo = this.formregister.get('prefijo')?.value;
+      //this.usuario.telefono = this.formregister.get('phone')?.value;
+      //this.usuario.address = this.formregister.get('address')?.value;
+      //this.usuario.number = this.formregister.get('number')?.value;
+      //this.usuario.postalcode = this.formregister.get('postalcode')?.value;
+      //this.usuario.country = this.formregister.get('country')?.value;
+      //this.usuario.state = this.formregister.get('state')?.value;
+      //this.usuario.city = this.formregister.get('city')?.value;
       
       this.btactivadoreg = false;
       
@@ -354,6 +362,46 @@ export class ZonapagoComponent implements OnInit {
       }
     });
   }
+
+
+  crearFormularioTarjeta() {
+    this.formtarjeta = this.fb.group({
+      numeracion: ['', [Validators.required,  Validators.pattern(/^\d{16}$/) ]],
+      caducidad: ['', [Validators.required, this.validarCaducidad ]],
+      cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/) ]],
+    });
+  }
+
+  cambiosFormularioTarjeta() {
+    this.formtarjeta.valueChanges.subscribe((value) => {
+      this.tarjeta_numeracion = this.formtarjeta.get('numeracion')?.value;
+      this.tarjeta_caducidad = this.formtarjeta.get('caducidad')?.value;
+      this.tarjeta_cvv = this.formtarjeta.get('cvv')?.value;
+      this.btactivadotarjeta = false;
+      if (this.formtarjeta.status != 'INVALID') {
+        this.btactivadotarjeta = true;
+      }
+    });
+  }
+
+  validarCaducidad(control: AbstractControl): { [key: string]: any } | null {
+    const value = control.value;
+    if (!/^\d{2}\/\d{2}$/.test(value)) {
+      return { invalidCaducidad: true };
+    }
+    const [month, year] = value.split('/').map((val: string) => parseInt(val, 10));
+    const currentYear = new Date().getFullYear() % 100; // Tomamos los últimos dos dígitos del año actual
+    const currentMonth = new Date().getMonth() + 1; // Meses en JS empiezan desde 0
+
+    if (month < 1 || month > 12) {
+      return { invalidMonth: true };
+    }
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+      return { expiredCard: true };
+    }
+    return null;
+  }
+
 
   getPedido() {
     this.pedido = this.carritoService.getCart();
@@ -376,15 +424,15 @@ export class ZonapagoComponent implements OnInit {
       if (!this.loginok) {
         if(this.formregister != null){
           this.pedido.cliente.name = this.formregister.value.name;
-          this.pedido.cliente.surname = this.formregister.value.surname;
           this.pedido.cliente.email = this.formregister.value.email;
-          this.pedido.cliente.prefijo = this.formregister.value.prefijo;
-          this.pedido.cliente.telefono = this.formregister.value.telefono;
-          this.pedido.cliente.state = this.formregister.value.state;
-          this.pedido.cliente.country = this.formregister.value.country;
-          this.pedido.cliente.city = this.formregister.value.city;
-          this.pedido.cliente.number = this.formregister.value.number;
-          this.pedido.cliente.address = this.formregister.value.address;
+          //this.pedido.cliente.surname = this.formregister.value.surname;
+          //this.pedido.cliente.prefijo = this.formregister.value.prefijo;
+          //this.pedido.cliente.telefono = this.formregister.value.telefono;
+          //this.pedido.cliente.state = this.formregister.value.state;
+          //this.pedido.cliente.country = this.formregister.value.country;
+          //this.pedido.cliente.city = this.formregister.value.city;
+          //this.pedido.cliente.number = this.formregister.value.number;
+          //this.pedido.cliente.address = this.formregister.value.address;
           
           if (this.formregister.status == 'INVALID') {
             this.formregister.markAllAsTouched();
@@ -549,7 +597,6 @@ export class ZonapagoComponent implements OnInit {
   }
 
   continuar() {
-    
     if (this.pasoactivo == 1) {
       this.comprobarLogin();
       this.pasoactivo = 2;
@@ -562,16 +609,16 @@ export class ZonapagoComponent implements OnInit {
         this.solopaso1.emit(false);
       }
       else if(!this.loginok){
-        this.alertasService.alertaKO(
-          'Madguides',
-          this.mensaje1
-        );
+        // this.alertasService.alertaKO(
+        //   'Madguides',
+        //   this.mensaje1
+        // );
       }
       else if(!this.aceptacionpoliticas){
-        this.alertasService.alertaKO(
-          'Madguides',
-          this.mensaje3
-        );
+        // this.alertasService.alertaKO(
+        //   'Madguides',
+        //   this.mensaje3
+        // );
       }
     } 
     else {
@@ -609,16 +656,16 @@ export class ZonapagoComponent implements OnInit {
         this.pasoactivo = n;
       }
       else if(!this.loginok) {
-        this.alertasService.alertaKO(
-          'Madguides',
-          this.mensaje1
-        );
+        // this.alertasService.alertaKO(
+        //   'Madguides',
+        //   this.mensaje1
+        // );
       }
       else if(!this.aceptacionpoliticas){
-        this.alertasService.alertaKO(
-          'Madguides',
-          this.mensaje3
-        );
+        // this.alertasService.alertaKO(
+        //   'Madguides',
+        //   this.mensaje3
+        // );
       }
     }
     else {
@@ -636,13 +683,23 @@ export class ZonapagoComponent implements OnInit {
         this.usuario = res as UserModel;
         this.loginok = true;
         this.modalService.dismissAll();
-        this.alertasService.alertaInfo(
-          'Madguides',
-          ' <i class="fa colROJO2 fs-24" ></i> '
-        );
       });
     });
   }
+
+
+  iniciarsesiondirecto(usuario) {
+    this.loginok = false;
+    this.auth.loginUser(usuario).subscribe((resp) => {
+      let login = resp as LoginModel | any;
+      this.auth.getMe().subscribe(res=> {
+        this.usuario = res as UserModel;
+        this.loginok = true;
+        this.continuar();
+      });
+    });
+  }
+
 
   recordarmemicuenta() {
     this.recordarme = !this.recordarme;
@@ -712,17 +769,21 @@ export class ZonapagoComponent implements OnInit {
     if(this.usuario != null){
       this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
         if(resp != null && resp){
-          this.alertasService.alertaInfo("Madguides", this.mensaje4 ); 
+          //this.alertasService.alertaInfo("Madguides", this.mensaje4 ); 
+          this.iniciarsesiondirecto(this.usuario);
           this.formregister.reset();
-          this.continuar();
        }
        else{
-         this.alertasService.alertaInfo("Madguides", this.mensaje1);
+         //this.alertasService.alertaInfo("Madguides", this.mensaje1);
        }
      })
     }
   }
 
+
+  irapoliticasprivacidad(){
+    this.router.navigate(['/politicasprivacidad']);
+  }
 
 
 }

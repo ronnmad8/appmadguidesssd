@@ -1742,6 +1742,23 @@
   padding-bottom: 20px;
 }
 
+.panelDatosReservaCorto {
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 98%;
+  height: auto;
+  min-width: none !important;
+  max-width: 400px !important;
+  padding: 10px;
+  border-radius: 19px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  overflow: hidden;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 #titulopanelpedido{
   font-size: 14px;
   font-family: Jost-Bold;

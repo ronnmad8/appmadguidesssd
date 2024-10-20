@@ -3554,6 +3554,22 @@ input:checked+.sliderT:before {
 
 }
 
+.panelDatosReservaCorto {
+  box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
+  width: 780px;
+  height: auto;
+  min-height: 240px;
+  
+  padding: 20px;
+  border-radius: 19px;
+  margin-top: 0 !important;
+  margin-bottom: 30px !important;
+  margin-right: 0 !important;
+  margin-left: 0px !important;
+  overflow: hidden;
+
+}
+
 .zonaRegistro {
   width: 800px;
 

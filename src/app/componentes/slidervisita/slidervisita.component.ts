@@ -565,9 +565,35 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     });
 
     ///dias de la visita
+    // let diasvisita: string[] = [];
+    // this.newReserva.visit.visitdias.forEach((dia: any) => {
+    //   diasvisita.push(dia.fecha);
+    // });
+
+    ///dias de la visita por dias semana
     let diasvisita: string[] = [];
-    this.newReserva.visit.visitdias.forEach((dia: any) => {
-      diasvisita.push(dia.fecha);
+    let hoy = new Date();
+    let diasSemana: number[] = [1,2,3,4,5,6,7];
+    const convertirDiaSemana = (day: number) => {
+      return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
+    };
+    this.newReserva.visit.visithours.forEach((visithour: any) => {
+
+      let diascomoesediasemana: Date[] = [];
+      for (let i = 0; i < 365; i++) {
+        let dia = new Date(hoy); 
+        dia.setDate(hoy.getDate() + i);
+        let diaSemanaActual = convertirDiaSemana(dia.getDay());
+        // Si el día de la semana coincide con el día de la visita
+        if (diaSemanaActual === visithour.diasemana) {
+          diascomoesediasemana.push(dia); // Guardar el día
+        }
+      }
+
+      diascomoesediasemana.forEach((diacomoesediasemana: any) => {
+        diasvisita.push(diacomoesediasemana.toISOString().split('T')[0]); // Añadir la fecha en formato YYYY-MM-DD
+      });
+
     });
 
     this.monthSelect = arrayDays;
@@ -739,11 +765,21 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       if(resp != null){
         this.listahoras = resp as HourModel[];
         this.listahorasvisita = [];
+        let year = parseInt(this.daySel.year);
+        let month = parseInt(this.daySel.month) - 1; // Restamos 1 porque los meses en JS empiezan desde 0 (0 = Enero)
+        let day = parseInt(this.daySel.value);
+
+        let tdate = new Date(year, month, day);
+        let esediasemana = tdate.getDay();
         this.listahoras?.forEach((hora) => {
           this.newReserva.visit.visithours.forEach((v) => {
-            if (hora.hora == v.hour) {
-              this.listahorasvisita.push(hora);
+            //revisar dia seleccionado
+            if(esediasemana == v.diasemana){
+              if (hora.hora == v.hour) {
+                this.listahorasvisita.push(hora);
+              }
             }
+            
           });
         });
       }

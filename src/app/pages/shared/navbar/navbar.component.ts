@@ -483,6 +483,7 @@ export class NavbarComponent implements OnInit {
       if(rec){
         this.formlogin.get('email')?.setValue(rec.email);
         this.formlogin.get('password')?.setValue(rec.password);
+        this.cambiosFormulario();
       }
     }
   }
@@ -502,6 +503,7 @@ export class NavbarComponent implements OnInit {
       if(rec){
         this.formlogin.get('email')?.setValue(rec.email);
         this.formlogin.get('password')?.setValue(rec.password);
+        this.cambiosFormulario();
       }
     }
   }
@@ -610,10 +612,7 @@ export class NavbarComponent implements OnInit {
     this.loginok = false;
     if(resp){
       this.auth.getMe().subscribe( res=> {
-        console.log("me ",res);
-        this.alertasService.alertaInfo("Madguides",
-           "1"
-          );   
+        console.log("me ",res);  
         this.loginok = true;
         this.verusuario = false;
         })
@@ -640,7 +639,7 @@ export class NavbarComponent implements OnInit {
 
   cerrarsesion(){
     this.auth.logout();
-    this.alertasService.alertaInfo("Madguides", "Has cerrado sesión correctamente");
+    //this.alertasService.alertaInfo("Madguides", "Has cerrado sesión correctamente");
     this.verusuario = false;
     this.loginok = false;
   }
@@ -648,17 +647,22 @@ export class NavbarComponent implements OnInit {
 
   registrar(){
     this.loading = true;
+    let emailreg = this.usuario.email;
+    let passwordreg = this.usuario.password;
     this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
-          
-          if(resp != null && resp){
-             this.alertasService.alertaInfo("Madguides", "Registrado"); 
-             this.formregister.reset();
-             this.mostrarusuario();
-          }
-          else{
+        if(resp != null && resp){
+            //this.alertasService.alertaInfo("Madguides", "Registrado"); 
+            let reco = new RecordarmeModel();
+            reco.email = this.usuario.email;
+            reco.password = this.usuario.password;
+            this.auth.saveRecordarme(reco);
+            this.mostrarusuario();
+            //this.formregister.reset();
+        }
+        else{
             this.alertasService.alertaInfo("Madguides", "no registrado");
-          }
-          this.loading = false;
+        }
+        this.loading = false;
     });
     setTimeout(() => {
       this.loading = false;
@@ -725,7 +729,7 @@ export class NavbarComponent implements OnInit {
   gotocarrito(){
     let nologin = this.auth.noAuth();
     if(nologin){
-      this.alertasService.alertaInfo("Madguides", "Debes estar resgistrado para realizar el pago");
+      //this.alertasService.alertaInfo("Madguides", "Debes estar resgistrado para realizar el pago");
     }
     this.router.navigate(['/carrito']);
   }

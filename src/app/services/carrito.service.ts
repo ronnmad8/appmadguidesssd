@@ -112,7 +112,6 @@ export class CarritoService {
     return this.http.get( `${this.url}` )
     .pipe(
       map( resp =>{
-        debugger
         let respuesta = resp as ReservationModel[];
         return respuesta;
       }),

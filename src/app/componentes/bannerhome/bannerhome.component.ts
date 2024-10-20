@@ -88,6 +88,10 @@ export class BannerhomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+  vertodaslasvisitas(){
+    this.router.navigate(['/buscador/title', ""]);
+  }
+
 
   
 
