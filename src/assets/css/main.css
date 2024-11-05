@@ -2048,7 +2048,7 @@ input:checked+.sliderT:before {
 
 .preciovisita {
   height: 27px;
-  width: 177px;
+  width: 150px !important;
   color: var(--c_GRIS1);
 }
 

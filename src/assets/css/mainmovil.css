@@ -1,5 +1,11 @@
     @media (max-width: 1198px) {
 
+      #btvertodaslasvisitas h4{
+        font-size: 11px !important;
+        position: relative;
+        bottom: 2px !important;
+      }
+
       .pc {
         display: none !important;
       }
@@ -463,6 +469,7 @@
       }
       .horasvisita{
         height: 21px !important;
+        display: flex;
       }
       .imghorasvisita {
         height: 12px !important;
@@ -1625,13 +1632,13 @@
 }
 
 .divPanelVisitaCarrito{
-  min-width: none !important;
+  min-width: inherit !important;
 }
 
 .panelVisitaCarrito {
   box-shadow: 0rem 0.3rem 0.6rem rgba(0, 0, 0, 0.2) !important;
   width: 95% !important;
-  min-width: none !important;
+  min-width: inherit !important;
   max-width: 400px !important;
   height: 117px;
   padding: 0px;
@@ -1760,7 +1767,7 @@
 }
 
 #titulopanelpedido{
-  font-size: 14px;
+  font-size: 14px !important;
   font-family: Jost-Bold;
   color: var(--c_ROJO1);
   margin-top: 4px;

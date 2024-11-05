@@ -1,45 +1,23 @@
-#IfModule mod_rewrite.c>
- #   RewriteEngine On
 
-  #  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-   # RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+<!-- <Files 403.shtml>
+order allow,deny
+allow from all
+</Files> -->
 
-    #RewriteRule ^.*$ - [NC,L]
-    #RewriteRule ^(.*) /browser/index.html [NC,L]
-    #RewriteRule ^(.*) /index.html [NC,L]
-
-#</IfModule>
 <IfModule mod_rewrite.c>
-	RewriteEngine on
+    RewriteEngine On
 
-	# Redirect Public ports to NodeJS port
-	RewriteRule ^$ http://localhost:4000 [P,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ http://localhost:4000/$1 [P,L]
+    # Permitir acceso a 403.shtml
+    <Files 403.shtml>
+        order allow,deny
+        allow from all
+    </Files>
+
+    # Si el archivo o directorio solicitado existe, servirlo directamente
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Si el archivo o directorio no existe, redirigir todo a /index.html
+    RewriteRule ^ /index.html [L]
 </IfModule>
-
-
-#<!-- <VirtualHost *:80> -->
-# ServerName madguides.es 
-# <Proxy *>
-#  Order allow,deny
-#  Allow from all
-# </Proxy>
-# ProxyPreserveHost On
-# ProxyRequests Off
-# ProxyPass / http://127.0.0.1:4000/
-# ProxyPassReverse / http://127.0.0.1:4000/
-#<!-- </VirtualHost> -->
-
-#<!-- <VirtualHost *:443> -->
-# ServerName madguides.es 
-# <Proxy *>
-#  Order allow,deny
-#  Allow from all
-# </Proxy>
-# ProxyPreserveHost On
-# ProxyRequests Off
-# ProxyPass / https://localhost:4000/
-# ProxyPassReverse / https://localhost:4000/
-#<!-- </VirtualHost> -->

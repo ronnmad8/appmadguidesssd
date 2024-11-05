@@ -40,12 +40,12 @@
                   </div>
                   <div class="infovisita  d-flex w-100 ">
                       <div class="preciovisita"> 
-                        <span class="preciovisitaeuro">0 € </span>
+                        <span class="preciovisitaeuro">{{visita?.precio | decimalComa}} €</span>
                         <span class="porpersona"> {{textconts.buscador_porpersona }}  </span> 
                       </div>
                       <div class="horasvisita"> 
-                        <img  class="imghorasvisita  mb-1 mx-1" src='assets/images/i-reloj.svg' alt="">
-                        <span class="cantidadhorasvisita ">{{ visita?.precio | decimalComa }}h</span>
+                        <img  class="imghorasvisita  mt-1 mx-1" src='assets/images/i-reloj.svg' alt="">
+                        <span class="cantidadhorasvisita ">{{ visita?.duracionmin / 60 }}h</span>
                       </div>
                   </div>
               </div>

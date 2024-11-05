@@ -106,7 +106,7 @@ export class CarritoService {
   }
 
   getPedidoCompra(idpedido: number){
-    let idlang = this.globalService.getIdLang();
+    let idlang = this.globalService.getLanguageId();
     let endpoint = '/reservascliente/'+ idlang+"/"+idpedido ;
     this.url = this.apiurl + endpoint;
     return this.http.get( `${this.url}` )

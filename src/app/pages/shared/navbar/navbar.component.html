@@ -526,7 +526,7 @@
   <div *ngIf="isrespon" id="mvlcabecera" class="mvl posfixedmenumvl ">
     <div class="d-flex posrel mt-3">
       <div class="cupo w-100 text-center mx-auto " routerLink="home" (click)="mostrar()">
-        <img src="{{logoMenu.url}}" alt="" style="width:110px; height: auto;" draggable="false">
+        <img src="assets/images/logo-madguides.svg" alt="" style="width:110px; height: auto;" draggable="false">
       </div>
 
       <div *ngIf="!isZonapago">
@@ -650,9 +650,9 @@
                 <div class="imgcartamoadalcarrito">
                   <div class="pl-1">
                     <picture>
-                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafile}}"
-                        data-srcset="{{reserva.visit.mediafile}}">
-                      <img src="{{reserva.visit.mediafile}}" data-src="{{reserva.visit.mediafile}}" alt=""
+                      <source media="(min-width: 0px)" srcset="{{reserva.visit.mediafiles[0].url}}"
+                        data-srcset="{{reserva.visit.mediafiles[0].url}}">
+                      <img src="{{reserva.visit.mediafiles[0].url}}" data-src="{{reserva.visit.mediafiles[0].url}}" alt=""
                         class="imgcartamoadalcarrito lazyload ">
                     </picture>
                   </div>

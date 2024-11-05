@@ -363,7 +363,6 @@ export class ZonapagoComponent implements OnInit {
     });
   }
 
-
   crearFormularioTarjeta() {
     this.formtarjeta = this.fb.group({
       numeracion: ['', [Validators.required,  Validators.pattern(/^\d{16}$/) ]],

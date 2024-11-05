@@ -98,7 +98,7 @@ export class MicuentaService {
 
 
   getReservation() {
-    let idlang = this.globalService.getIdLang();
+    let idlang = this.globalService.getLanguageId();
     let endpoint = '/reservasclienteall/'+idlang;
     this.url = this.apiurl + endpoint;
     let visitas: any[] = [];

@@ -53,13 +53,13 @@
                         <div class="circulopasos ">
                             1
                         </div>
-                        <span class="descripcionpaso"> {{textconts.cart_cabecera_revisapedido }}  </span>
+                        <span class="descripcionpaso"> {{textconts.paso1 }}   </span>
                     </div>
                     <div class="p-0 mx-auto d-flex" *ngIf="pasoactivo != 1">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(1)">
                             1
                         </div>
-                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_revisapedido }}  </span>
+                        <span class="descripcionpasoapagado"> {{textconts.paso1 }}   </span>
                     </div>
                 </div>
                 <div id="paso2m" class="col-4 text-center h20">
@@ -67,13 +67,13 @@
                         <div class="circulopasos ">
                             2
                         </div>
-                        <span class="descripcionpaso"> {{textconts.cart_cabecera_datospersonales }} </span>
+                        <span class="descripcionpaso"> {{textconts.paso2 }} </span>
                     </div>
                     <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 2">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(2)">
                             2
                         </div>
-                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_datospersonales }}  </span>
+                        <span class="descripcionpasoapagado"> {{textconts.paso2 }}   </span>
                     </div>
                 </div>
                 <div id="paso3m" class=" col-4 text-center h20">
@@ -81,13 +81,13 @@
                         <div class="circulopasos ">
                             3
                         </div>
-                        <span class="descripcionpaso">{{textconts.cart_cabecera_metodospago }}   </span>
+                        <span class="descripcionpaso">{{textconts.paso3 }}    </span>
                     </div>
                     <div class="p-0 m-0 d-flex" *ngIf="pasoactivo != 3">
                         <div class="circulopasosapagado cupo" (click)="cambiarpaso(3)">
                             3
                         </div>
-                        <span class="descripcionpasoapagado"> {{textconts.cart_cabecera_metodospago }}  </span>
+                        <span class="descripcionpasoapagado"> {{textconts.paso3 }}   </span>
                     </div>
                 </div>
             </div>
@@ -135,10 +135,10 @@
                                 reserva.visit.descripcion }}" >
                                
                             </div>
-                            <div class="lh-1-2">
+                            <div class="lh-1-2 fs-14">
                                 {{reserva.fecha | date: 'dd/MM/yyyy'  }}
                             </div>
-                            <div class="lh-1-2" innerHTML=" {{textconts.buscador_detail_description }}     "  >
+                            <div class="lh-1-2 pc" innerHTML=" {{textconts.buscador_detail_description }}     "  >
                                 <span
                                     class="ml-1"> </span>
                             </div>

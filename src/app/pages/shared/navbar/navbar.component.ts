@@ -156,9 +156,7 @@ export class NavbarComponent implements OnInit {
     this.getCart();
     this.getIdiomas();
     this.getReservasCarrito();
-
     this.getTexts();
-
 
     this.modalOptions = {
       backdrop: "static",
@@ -203,9 +201,7 @@ export class NavbarComponent implements OnInit {
     this.tresize = wresize;
   }
 
-
   onActivate(componentReference: any) {
-    
     if(componentReference.zonapago != undefined ){
       this.isZonapago = true;
       this.nomostrarenfooter.emit();
@@ -221,7 +217,6 @@ export class NavbarComponent implements OnInit {
 
   }
 
-
   loginadmin() {
     let user = localStorage.getItem('user');
     this.loginok = false;
@@ -233,7 +228,6 @@ export class NavbarComponent implements OnInit {
     }
     
   }
-
 
   listenProvider(){
     this.providerService.getThrowCarritoupdate.subscribe((resp)=>{
@@ -256,7 +250,6 @@ export class NavbarComponent implements OnInit {
 
   }
 
-
   getTexts(){
     this.listatextcontsdata = this.globalService.listaTextDataModel
     this.textconts = this.globalService.textcontents;
@@ -270,7 +263,6 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-
   getCart() {
     if(this.carritoService.haveCart()){
       this.pedido = this.carritoService.getCart();
@@ -281,8 +273,6 @@ export class NavbarComponent implements OnInit {
       this.actividades = this.pedido.reservas.length;
     }
   }
-
-
   
   getIdiomas(){
     //this.listasService.getIdiomas().subscribe( (resp) => {
@@ -453,8 +443,20 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('currentLanguage', iso);
     this.veridiomas = false;
     this.auth.setHeaders();
-    this.platformService.sWindow.location.reload();
 
+    //pedir textos en ese idioma
+    this.globalService.getTextcontentsglobal().subscribe((resp)=>{
+      if(resp){
+        this.textconts = resp as TextContentsModel;
+        if (this.router.url !== '/home') {
+          this.router.navigateByUrl('/home').then(() => {
+              this.platformService.sWindow.location.reload();
+          });
+      } else {
+          this.platformService.sWindow.location.reload();
+      }
+      }
+    });
   }
 
 

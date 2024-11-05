@@ -35,7 +35,9 @@ export class GlobalService {
 
   listatiposidentificacion: any[];
   week: any;
+  weekDays: any;
   months: any;
+  monthsIso: any;
   listahoras: any[];
   idiomasIsos: any[];
   listaidlangs: any[] = [];
@@ -64,22 +66,21 @@ export class GlobalService {
 
   getListas() {
 
-
     this.listaidlangs = [
       { id: 1, iso: 'es', iso_code: 'es_ES', name : 'español' },
       { id: 2, iso: 'en', iso_code: 'en_EN', name : 'inglés' },
       { id: 3, iso: 'fr', iso_code: 'fr_FR', name : 'francés' },
       { id: 4, iso: 'de', iso_code: 'de_DE', name : 'aleman'},
       { id: 5, iso: 'it', iso_code: 'it_IT', name : 'italiano' },
-      { id: 6, iso: 'pl', iso_code: 'pl_PL', name : 'polaco' },
+      { id: 6, iso: 'pt', iso_code: 'pt_PT', name : 'portugués' },
       { id: 7, iso: 'el', iso_code: 'el_EL', name : 'griego' },
-      { id: 8, iso: 'pt', iso_code: 'pt_PT', name : 'portugués' },
+      { id: 8, iso: 'pl', iso_code: 'pl_PL', name :  'polaco'}
     ];
 
     this.listatiposidentificacion = [
       { id: 1, name: 'DNI' },
       { id: 2, name: 'CIF' },
-      { id: 3, name: 'Pasaporte' },
+      { id: 3, name: 'Pasaporte' }
     ];
 
     this.week = [
@@ -89,8 +90,19 @@ export class GlobalService {
       'Jueves',
       'Viernes',
       'Sabado',
-      'Domingo',
+      'Domingo'
     ];
+
+    this.weekDays = {
+      es: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+      en: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      fr: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+      de: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
+      it: ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'],
+      pt: ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'],
+      el: ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'],
+      pl: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela']
+    };
 
     this.months = [
       'Enero',
@@ -106,6 +118,41 @@ export class GlobalService {
       'Noviembre',
       'Diciembre',
     ];
+
+    this.monthsIso = {
+      es: [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+      ],
+      en: [
+        'January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      fr: [
+        'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
+        'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+      ],
+      de: [
+        'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+      ],
+      it: [
+        'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 
+        'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+      ],
+      pt: [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+      ],
+      el: [
+        'Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 
+        'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος'
+      ],
+      pl: [
+        'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 
+        'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
+      ]
+    };
 
     this.listahoras = [
       0,
@@ -135,7 +182,6 @@ export class GlobalService {
     
     ];
 
-
     this.idiomasIsos = [
       { key: 'es', value: 'español', value_en: 'Spanish' },
       { key: 'en', value: 'ingles', value_en: 'English' },
@@ -153,14 +199,11 @@ export class GlobalService {
       { name: 'instagram', logo: 'assets/images/i-instagramN.svg' },
     ];
 
-
-
     this.textalerts = [
       { tipo: "inicio_sesion", value_es: 'Inicio de sesión correctamente', value_en: 'Login correctly' },
       { tipo: "no_registrado", value_es: 'Inicio de sesión correctamente', value_en: 'Login correctly' },
 
     ];
-
 
   }
 
@@ -199,20 +242,30 @@ export class GlobalService {
   }
 
 
-  getIdLang(lang: string = "es") {
+  getIdLang(iso: string = "es") {
     let idlg = 1;
-    if (lang != undefined) {
+    if (iso != undefined) {
       if(this.listaidlangs.length == 0){
         this.getListas();
       }
       this.listaidlangs.forEach(resp=>{
-        if (resp.name == lang) {
+        if (resp.iso == iso) {
           idlg= resp.id;
         }
       }) 
     }
     return idlg;
   }
+
+
+  getLanguageId(){
+    let langiso = this.getLanguage();
+    if(langiso != null){
+        return  this.getIdLang(langiso);
+    }
+    else return 1;
+  }
+
 
   getFormatNumber(n: number) {
     if (n != 0 && !Number.isNaN(n)) {
@@ -240,13 +293,21 @@ export class GlobalService {
   }
 
   getbyMes(nummes: number) {
-    let mes = this.months[nummes];
+    let iso = this.getLanguage();
+    let mes = this.monthsIso[iso][nummes];
     return mes;
   }
 
   getbyDia(dia: number) {
-    let diasemana = this.week[dia];
+    let iso = this.getLanguage();
+    let diasemana = this.weekDays[iso][dia];
     return diasemana;
+  }
+
+  getWeekIso() {
+    let iso = this.getLanguage();
+    let semana = this.weekDays[iso];
+    return semana;
   }
 
   getFechaleg(fecha: string) {

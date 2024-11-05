@@ -39,8 +39,8 @@ export class VisitaService {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   getVisita(visitid: string) {
-
-    let endpoint = '/visitdetail/'+ visitid+'/1';
+    let idlang = this.globalService.getLanguageId();
+    let endpoint = '/visitdetail/'+ visitid+'/'+ idlang;
     this.url = this.apiurl + endpoint;
     return this.http.get(`${this.url}` ).pipe(
       map((res) => {

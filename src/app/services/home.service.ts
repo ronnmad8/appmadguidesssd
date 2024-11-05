@@ -43,8 +43,12 @@ export class HomeService {
   
 
     getCajaBuscaHome(busqueda:string){
+
+      let idlang = this.globalService.getLanguageId();
+
       let datos = {
-        search: busqueda
+        search: busqueda,
+        idlang: idlang
       };
       let endpoint = '/visitsearchbasic' ; 
       this.url = this.apiurl + endpoint;

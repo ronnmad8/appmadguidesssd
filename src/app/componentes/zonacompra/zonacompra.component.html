@@ -36,10 +36,10 @@
                                 </div>
                                 <div class="lh-1-4">
                                     <span>{{reserva.fecha | fechaleg }}</span>
-                                    <span class="mx-1"> {{ reserva.visit_hours_id }} </span>
+                                    <span class="mx-1"> {{ reserva.hora }} </span>
                                 </div>
                                 <div class="lh-1-4">
-                                    {{textconts.touren}} <span class="ml-1">{{reserva.nombreidioma}}</span>
+                                    {{textconts.touren}} <span class="ml-1">{{ reserva.nombreidioma | lowercase }}</span>
                                 </div>
                                 <div class="fs-14 lh-1-4 ff-JB mt-1">
                                     <span><i class="fa fa-person fs-18 mb-2" title="Adultos"
