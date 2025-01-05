@@ -88,7 +88,7 @@ export class VisitadetailComponent implements OnInit{
         if(this.visitaid != null){
   
           this.getVisita( this.visitaid );
-         // this.getRelatedUuid(this.visitauuid);
+          this.getRelatedid(this.visitaid);
         }
         else if(tituloparam != null){
           
@@ -148,40 +148,13 @@ export class VisitadetailComponent implements OnInit{
 
 
 
-  getRelatedUuid(uuid: string){
-    
-    //this.visitaService.getCategoryUuid(uuid).subscribe((d)=>{
-      //let visita = d as VisitasResultadoModel;
-      //let catuuid = visita.category_uuid;
-      
-      // this.visitaService.getRelacionadas(catuuid).subscribe( (resp) => {
-      //   this.related = resp as VisitasResultadoModel[];
-        
-      // });
+  getRelatedid(id: string){
+    let idlang = this.globalService.getLanguageId();
+    this.visitaService.getVisitasRelacionadas(id, idlang).subscribe( (resp) => {
+      this.related = resp as VisitasResultadoModel[];
+    });
 
-    //})
-
-
-    const rutaArchivoJson = 'assets/docs/recommended.json';
-    this.http.get(rutaArchivoJson).subscribe(
-      (data: any) => {
-      this.related = data as VisitasResultadoModel[];
-
-      ///correct duration and price
-      this.related.forEach(visita => {
-        if( visita.duracionmin == null){
-          visita.duracionmin = 0;
-          visita.preciohoramin = 0;
-
-        }
-
-     });
-
-      },
-      (error) => {
-        console.error('Error al cargar el archivo JSON:', error);
-      }
-    );
+  
 
 
   }

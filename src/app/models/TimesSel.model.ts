@@ -11,6 +11,7 @@ export class TimesSelModel {
     diasemana: number;
     date: string;
     hour: string;
+    hours_id: string;
     
     constructor(){
 
@@ -19,6 +20,7 @@ export class TimesSelModel {
         this.diasemana = 0;
         this.date = "";
         this.hour = "";
+        this.hours_id = "";
         
      
     }

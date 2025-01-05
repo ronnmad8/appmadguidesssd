@@ -45,6 +45,10 @@ import { debug } from 'console';
 import { TimesSelModel } from 'src/app/models/TimesSel.model';
 import { DiaModel } from 'src/app/models/Dia.model';
 import { HourModel } from 'src/app/models/Hour.model';
+import { FranjasModel } from 'src/app/models/Franjas.model';
+import { DisponibilityModel } from 'src/app/models/Disponibility.model';
+import { ar } from 'date-fns/locale';
+import * as e from 'express';
 
 @Component({
   selector: 'app-slidervisita',
@@ -62,7 +66,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   sWindow: any;
 
   visitaresultado: VisitasResultadoModel = new VisitasResultadoModel();
-  
+
   public config: SwiperConfigInterface = {
     autoplay: false,
     effect: 'slide',
@@ -196,7 +200,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     private platformService: PlatformService,
     private alertasService: AlertasService,
     private http: HttpClient
-    
+
   ) {
     this.wowService.init();
     this.sWindow = this.platformService.sWindow
@@ -204,7 +208,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
 
   ngOnInit(): void {
-    
+
     this.newReserva = new ReservationModel();
     this.timesSel = new TimesSelModel();
 
@@ -214,14 +218,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.vcale = true;
     this.isrespon = this.platformService.isrespon;
     this.listahorasvisita = [];
-    
-  
+
+
   }
 
 
   ngAfterViewInit(): void {
     this.listenProvider();
-    
+
   }
 
   @HostListener('window:scroll')
@@ -231,16 +235,16 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
       let posdetallevisita = this.detallevisita.nativeElement.offsetTop - 120;
       let posfinaldetalle = this.finaldetalle.nativeElement.offsetTop;
-  
+
       if (posactual <= posdetallevisita) {
         this.pegaj = 1;
         this.fdetallecale.nativeElement.style.top = 'auto';
       } else if (posactual > posdetallevisita) {
         this.pegaj = 2;
-        
+
         let hdetallecale = this.detallecale.nativeElement.offsetHeight;
         let dif = posfinaldetalle - hdetallecale;
-   
+
         this.fdetallecale.nativeElement.style.top = 90+'px';
         if (posactual >= dif) {
           this.pegaj = 3;
@@ -256,7 +260,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   listenProvider() {
     this.providerService.getThrowVisita.subscribe((resp) => {
       var provVisita = resp as VisitasResultadoModel;
-      
+
       if (provVisita.duracionmin == null) {
         provVisita.duracionmin = this.defaultvisitime;
       }
@@ -266,7 +270,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       let esteyear = hoy.format('YYYY');
       this.getDaysFromDate(estemes, esteyear);
       this.getCherryDay();
-      
+
     });
 
     //this.providerService.getThrowMessagesVisita.subscribe((resp) => {
@@ -289,20 +293,17 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.descripcioncorta = this.descripcion.substring(0, 200);
     this.maximopersonas = this.newReserva.visit.nummax ?? 0;
     this.vendidas = 0; /// calcular vendidas para esa fecha/hora y visita
-    this.disponibles = this.maximopersonas - this.vendidas;
     this.listaidiomas = this.listasService.getIdiomas();
     this.listaidiomasvisita = [];
     this.idiomasdisponibles = "";
     this.idiomaSel = null ;
-    
+    this.disponibles = this.maximopersonas - this.vendidas;
+
     this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
       let idiom: LanguagesModel = this.listaidiomas.find((x) => x.id == idiomaiso.language_id ) ?? new LanguagesModel();
-      this.listaidiomasvisita.push(idiom);
-      let idiomasum = idiom.name.toLowerCase();
-      this.idiomasdisponibles += ( idiomasum ) + ', ';
       this.newReserva.nombreidioma = this.visitaService.getNombreidioma(idiom.id);
     })
-    
+
     this.getCalculoPrecio();
     this.preciovisita = this.globalService.getPrecioByVisit(this.newReserva.visit);
 
@@ -390,6 +391,13 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.getCalculoPrecio();
     }
     this.setSecuencial();
+
+    ///set vendidas
+    let fecha = this.daySel.year+"-"+ this.daySel.month+"-"+this.daySel.value;
+    if(this.horaSel != 0){
+      this.setVendidas( fecha , this.horaSel.id);
+    }
+
   }
 
   idiomainfosel(v: number) {
@@ -446,7 +454,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.precioninostotalst = this.globalService.getFormatNumber(
       this.precioninostotal
     );
-    
+
     this.preciototal =
       (this.precioadultototal * 100 +
         this.precioninostotal * 100 ) /
@@ -513,7 +521,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   }
 
   compartir(visita: VisitasResultadoModel, red: string) {
-    
+
     let url = "";
     if(red == 'facebook'){
       url = "https://www.facebook.com/sharer/sharer.php?u=https://madguides.es/"+this.router.url;
@@ -534,13 +542,16 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.vermas = !this.vermas;
   }
 
-  getDaysFromDate(month: any, year: any) {
+  async getDaysFromDate(month: any, year: any) {
+
+    const diasmesdisponibilities = await this.visitaService.getDisponibilitiesVisita(this.newReserva.visit.id, month, year).toPromise() as number[];
+
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
     const diffDays = endDate.diff(startDate, 'days', true);
     const numberDays = Math.round(diffDays);
-    const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
+    let arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
       const dayNumber = parseInt(a, 10) + 1;
       const dayObject = moment(`${year}-${month}-${dayNumber}`);
       return {
@@ -559,20 +570,23 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };
+
+
     this.newReserva.visit.visithours.forEach((visithour: any) => {
       let diascomoesediasemana: Date[] = [];
       for (let i = 0; i < 365; i++) {
-        let dia = new Date(hoy); 
+        let dia = new Date(hoy);
         dia.setDate(hoy.getDate() + i);
         let diaSemanaActual = convertirDiaSemana(dia.getDay());
         if (diaSemanaActual == parseInt(visithour.diasemana)) {
           diascomoesediasemana.push(dia);
-        } 
+        }
       }
       diascomoesediasemana.forEach((diacomoesediasemana: any) => {
         diasvisita.push(diacomoesediasemana.toISOString().split('T')[0]);
       });
     });
+
     this.monthSelect = arrayDays;
     this.mSelect = this.globalService.getbyMes(this.dateSelect.format('M') - 1);  //  this.months[this.dateSelect.format('M') - 1];
     this.ySelect = this.dateSelect.format('YYYY');
@@ -599,11 +613,18 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     ///marcar dias de la visita y seleccionado de ese mes
     arrayDays.forEach((day: any) => {
       let esafecha = day.year + '-' + day.month + '-' + day.value;
-      let diadelasemana = day.indexWeek ;
+      //let diadelasemana = day.indexWeek ;
       day.visitday = false;
       diasvisita.forEach( (dvt)=>{
         if(dvt == esafecha){
-          day.visitday = true;
+          if(diasmesdisponibilities != null){
+              if(diasmesdisponibilities.includes(parseInt(day.value))){
+                day.visitday = true;
+              }
+          }
+          else{
+            day.visitday = true;
+          }
         }
       })
     });
@@ -657,11 +678,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.vcale = false;
       this.caleinfo =  this.globalService.getFechaleg(objectDate.format('DD/MM/YYYY'));
       this.calenovalid = false;
-
-      let coi = null 
-      ///this.visitaresultado..find(
-      /// () (x) => x.date == day.year + '-' + day.month + '-' + day.value
-      ///);
+      let coi = null
       if (coi != null) {
         this.timesSel = coi;
         this.getCalculoPrecio();
@@ -673,6 +690,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
     this.setSecuencial();
     this.setListaHoras();
+
   }
 
 
@@ -714,7 +732,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
 
-      
+
       this.newReserva.adults = this.adultoSel;
       this.newReserva.children = this.ninosSel;
       this.newReserva.total = this.preciototal;
@@ -741,6 +759,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
 
   async setListaHoras(){
+    
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };
@@ -752,21 +771,58 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
         }
       }
       this.listahorasvisita = [];
+      let listahorasvisitafiltrada: TimesSelModel[] = [];
       let year = parseInt(this.daySel.year);
       let month = parseInt(this.daySel.month) - 1; // Restamos 1 porque los meses en JS empiezan desde 0 (0 = Enero)
       let day = parseInt(this.daySel.value);
       let tdate = new Date(year, month, day);
       let esediasemana =  convertirDiaSemana(tdate.getDay());
+      this.listaidiomasvisita = [];
+      this.idiomaSel = 0;
+      this.idiominfo = "";
+      this.horaSel = 0;
+      this.horainfo = "";
+      const disponibilitiesdia = await this.visitaService.getDisponibilitiesdiasemana(esediasemana).toPromise() as DisponibilityModel[];
+
+      disponibilitiesdia.forEach((disponib) => {
+          this.newReserva.visit.visithours.forEach((visithour) => {
+              if (parseInt(visithour.hours_id) >= disponib.init_hours_id && parseInt(visithour.hours_id) <= disponib.end_hours_id) {
+                  if(listahorasvisitafiltrada.findIndex(x => x.hours_id == visithour.hours_id) == -1){
+                      listahorasvisitafiltrada.push(visithour) ;
+                  }
+              }
+          });
+          this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
+              let idiom: LanguagesModel = this.listaidiomas.find((x) => x.id == idiomaiso.language_id ) ?? new LanguagesModel();
+              if ( disponib.guialanguages.findIndex(x => x == idiom.id) != -1 ) {
+                  if(this.listaidiomasvisita.findIndex(x => x.id == idiom.id) == -1){
+                      this.listaidiomasvisita.push(idiom);
+                      let idiomasum = idiom.name.toLowerCase();
+                      this.idiomasdisponibles += ( idiomasum ) + ', ';
+                  }
+              } 
+          });
+      });
+
+      this.listahorasvisita = [];
       this.listahoras?.forEach((hora) => {
-        this.newReserva.visit.visithours.forEach((v) => {
+        listahorasvisitafiltrada.forEach((v) => {
           if(esediasemana == v.diasemana){
-            if (hora.hora == v.hour) {
+            if (hora.hora == v.hour && this.listahorasvisita.findIndex(x => x.id == parseInt(v.hours_id)) == -1 ) {
               this.listahorasvisita.push(hora);
             }
           }
         });
       });
+
     }
+  }
+
+  async setVendidas(fecha: string, horaid: number){
+    let visitid = this.newReserva.visit.id;
+    let vendidas = await this.visitaService.getVendidas( visitid, fecha, horaid).toPromise() as number;
+     this.vendidas = vendidas;
+     this.disponibles = this.maximopersonas - this.vendidas;
   }
 
 }

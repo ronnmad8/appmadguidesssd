@@ -59,32 +59,64 @@ export class VisitaService {
 
   
 
-  // getRelacionadas(category_uuid: string) {
+  getVisitasRelacionadas(id: string, idlang: number) {
 
-  //   let endpoint =
-  //     '/visit?order=order-random&per_page=4&category_uuid=' + category_uuid;
-  //   this.url = this.apiurl + endpoint;
-  //   return this.http.get(`${this.url}` ).pipe(
-  //     map((resp) => {
-  //       var resultado: ResultadoModel =
-  //         resp as ResultadoModel;
-  //       var visitas: VisitasResultadoModel[] = resultado.data;
-  //         visitas.forEach((visita) => {
-  //           if (visita.visit_time_uuid != null && visita.visit_time == null) {
-  //             visita = this.globalService.mapperVisitas(visita)
-  //           }
-  //         });
-
-  //       return visitas;
-  //     }),
-  //     catchError((err) => {
-  //       console.error('Error  ', err.error);
-  //       return err.error;
-  //     })
-  //   );
-  // }
+    let endpoint =  "/visitrelated/"+id+"/"+idlang;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((resp) => {
+        return resp["data"] as VisitasResultadoModel[] ;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
 
 
+  getDisponibilitiesdiasemana(esediasemana: number ){
+
+    let endpoint =  "/franjasdiasemana/"+ esediasemana;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((resp) => {
+        return resp["data"] as VisitasResultadoModel[] ;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  getDisponibilitiesVisita(visitaid: number, month: number, year: number) {
+    let endpoint =  "/disponibilities/"+ visitaid+"/"+month+"/"+year;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((resp) => {
+        return resp as number[] ;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  getVendidas(visitaid: number, fecha: string, horaid: number) {
+    let endpoint =  "/vendidas/"+ visitaid+"/"+ fecha + "/"+ horaid;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((resp) => {
+        return resp as number ;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
 
   getVisitasRecomendadas(idlang: number) {
     let endpoint =  "/visitrecommended/"+idlang;

@@ -13,7 +13,7 @@
                 <div class="horasvisit d-flex">
                     <img class="imghorasvisita  mt-1 mx-1 posrel" style="top: 2px" src='assets/images/i-reloj.svg'
                         alt="">
-                    <span class="cantidadhorasvisita mw60">{{ newReserva?.visit?.duracionmin   }} h</span>
+                    <span class="cantidadhorasvisita mw60">{{ newReserva?.visit?.duracionmin /60 }}h</span>
 
                 </div>
                 <div class="linvertical ml-1 mr-3"></div>
@@ -152,7 +152,7 @@
                                             <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vhora">
                                                 <div *ngFor="let li of listahorasvisita" class="col-3 p-0 m-0">
                                                     <input  class="posrel" name="rbhora" id="rbhora-{{li.id}}" type="radio"
-                                                        value="{{li.id}}" (click)="horainfosel(li.hora)" >
+                                                        value="{{li.id}}" (click)="horainfosel(li.hora)"  >
                                                     <label class="px-1" for="rbhora-{{li.id}}">{{li.hora}}</label>
                                                 </div>
                                             </div>
@@ -180,7 +180,7 @@
                                             <div class="row px-3 pt-2 m-0 animated fadeIn" [hidden]="!vidiom">
                                                 <div *ngFor="let li of listaidiomasvisita" class="col-6 p-0 m-0">
                                                     <input class="posrel" name="rbidiom" id="rbidiom-{{li.id}}" type="radio"
-                                                        value="{{li.id}}" (click)="idiomainfosel(li.id)" >
+                                                        value="{{li.id}}" (click)="idiomainfosel(li.id)"   >
                                                     <label class="mx-1 mb-1" for="rbidiom-{{li.id}}">
                                                         {{li.name | capitalize}}</label>
                                                 </div>
@@ -477,7 +477,7 @@
                                 <span class="ml-2">{{textconts.buscador_duracion}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{newReserva?.visit?.duracionmin}} 
+                                {{newReserva?.visit?.duracionmin /60}} h 
                             </div>
                             <div class="linedots"></div>
                         </div>

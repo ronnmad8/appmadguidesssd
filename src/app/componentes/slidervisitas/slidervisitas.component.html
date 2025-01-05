@@ -21,21 +21,21 @@
               <div class="imgvisita" >
                   <picture>
                       <source media="(min-width: 0px)" srcset="{{visita.mediafile}}"
-                          data-srcset="{{visita.mediafile}}" class="pc" >
-                      <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}"
+                          data-srcset="{{visita?.mediafile}}" class="pc" >
+                      <img src="{{visita?.mediafile}}" data-src="{{visita?.mediafile}}"
                           alt="" class="pc imgvisita lazyload bordeimagencard">
-                      <source media="(min-width: 0px)" srcset="{{visita.mediafile}}"
-                          data-srcset="{{visita.mediafile}}" class="mvl" >
-                      <img src="{{visita.mediafile}}" data-src="{{visita.mediafile}}"
+                      <source media="(min-width: 0px)" srcset="{{visita?.mediafile}}"
+                          data-srcset="{{visita?.mediafile}}" class="mvl" >
+                      <img src="{{visita?.mediafile}}" data-src="{{visita?.mediafile}}"
                           alt="" class="mvl imgvisita lazyload bordeimagencard">
                   </picture>
               </div>
               <div class="w-100 p-0 m-0">
                   <div class="titvisita" >
-                      <span>{{ visita.titulo.length > 50 ? visita.titulo.substring(0,47)+'...' : visita.titulo }} </span>
+                      <span>{{ visita?.titulo.length > 50 ? visita?.titulo.substring(0,47)+'...' : visita?.titulo }} </span>
                   </div>
                   <div class="textvisita">
-                    <span [innerHTML]=" visita.descripcion.length > 70 ? visita.descripcion.substring(0,67)+'...' : visita.descripcion " >
+                    <span [innerHTML]=" visita?.descripcion.length > 70 ? visita?.descripcion.substring(0,67)+'...' : visita?.descripcion " >
                     </span>
                   </div>
                   <div class="infovisita  d-flex w-100 ">
