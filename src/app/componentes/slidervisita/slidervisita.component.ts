@@ -7,6 +7,7 @@ import {
   ViewChild,
   Renderer2,
   AfterViewInit,
+  DebugElement,
 } from '@angular/core';
 
 import { BuscadorService } from '../../services/buscador.service';
@@ -391,12 +392,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.getCalculoPrecio();
     }
     this.setSecuencial();
-
-    ///set vendidas
-    let fecha = this.daySel.year+"-"+ this.daySel.month+"-"+this.daySel.value;
-    if(this.horaSel != 0){
-      this.setVendidas( fecha , this.horaSel.id);
-    }
+    this.setInfoVendidas();
 
   }
 
@@ -407,6 +403,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.idiomanovalid = false;
     }
     this.setSecuencial();
+    this.setInfoVendidas();
+  }
+
+  setInfoVendidas(){
+    let fecha = this.daySel.year+"-"+ this.daySel.month+"-"+this.daySel.value;
+    if(this.horaSel != 0 && this.idiomaSel != 0){
+      this.setVendidas( fecha , this.horaSel.id, this.idiomaSel);
+    }
   }
 
   restaradulto() {
@@ -543,9 +547,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   }
 
   async getDaysFromDate(month: any, year: any) {
-
     const diasmesdisponibilities = await this.visitaService.getDisponibilitiesVisita(this.newReserva.visit.id, month, year).toPromise() as number[];
-
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
@@ -570,7 +572,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };
-
 
     this.newReserva.visit.visithours.forEach((visithour: any) => {
       let diascomoesediasemana: Date[] = [];
@@ -668,7 +669,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
 
   clickDay(day: any) {
-
     if (day.visitday) {
       this.daySel = day;
       const monthYear = this.dateSelect.format('YYYY-MM');
@@ -678,11 +678,11 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.vcale = false;
       this.caleinfo =  this.globalService.getFechaleg(objectDate.format('DD/MM/YYYY'));
       this.calenovalid = false;
-      let coi = null
-      if (coi != null) {
-        this.timesSel = coi;
-        this.getCalculoPrecio();
-      }
+      // let coi = null
+      // if (coi != null) {
+      //   this.timesSel = coi;
+      //   this.getCalculoPrecio();
+      // }
       this.getDaysFromDate(
         this.dateSelect.format('MM'),
         this.dateSelect.format('YYYY')
@@ -690,6 +690,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
     this.setSecuencial();
     this.setListaHoras();
+
+    debugger
+    this.timesSel.date = this.daySel.year+"-"+ this.daySel.month+"-"+this.daySel.value;
 
   }
 
@@ -731,16 +734,13 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     if (valido) {
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
-
-
+debugger
       this.newReserva.adults = this.adultoSel;
       this.newReserva.children = this.ninosSel;
       this.newReserva.total = this.preciototal;
       this.newReserva.fecha = this.timesSel.date ;
       this.newReserva.language_id = this.idiomaSel;
       this.newReserva.visit_hours_id = this.horaSel.id ;
-
-
 
       if (carrito.reservas == null) {
         carrito.reservas = [];
@@ -759,7 +759,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
 
   async setListaHoras(){
-    
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };
@@ -818,11 +817,11 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
   }
 
-  async setVendidas(fecha: string, horaid: number){
-    let visitid = this.newReserva.visit.id;
-    let vendidas = await this.visitaService.getVendidas( visitid, fecha, horaid).toPromise() as number;
-     this.vendidas = vendidas;
-     this.disponibles = this.maximopersonas - this.vendidas;
+  async setVendidas(fecha: string, horaid: number, languageid: number){
+      let visitid = this.newReserva.visit.id;
+      let vendidas = await this.visitaService.getVendidas( visitid, fecha, horaid, languageid).toPromise() as number;
+      this.vendidas = vendidas;
+      this.disponibles = this.maximopersonas - this.vendidas;
   }
 
 }

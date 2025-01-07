@@ -104,8 +104,8 @@ export class VisitaService {
     );
   }
 
-  getVendidas(visitaid: number, fecha: string, horaid: number) {
-    let endpoint =  "/vendidas/"+ visitaid+"/"+ fecha + "/"+ horaid;
+  getVendidas(visitaid: number, fecha: string, horaid: number, languageid: number) {
+    let endpoint =  "/vendidas/"+ visitaid+"/"+ fecha + "/"+ horaid + "/"+ languageid;
     this.url = this.apiurl + endpoint;
     return this.http.get(`${this.url}` ).pipe(
       map((resp) => {
