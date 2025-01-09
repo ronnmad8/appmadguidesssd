@@ -422,7 +422,6 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   getCategoriasFiltro() {
     this.listasService.getCategorias().subscribe((resp) => {
       this.categoriasfiltro = resp as CategoriasModel[];
-      console.log("Categorias filtro ** ", this.categoriasfiltro)
     });
   }
 
@@ -517,7 +516,6 @@ export class BusquedaComponent implements OnInit, AfterViewInit {
   getCaracteristicasFiltro() {
     this.listasService.getTags().subscribe((resp) => {
       this.caracteristicasfiltro = resp as TagsModel[];
-      console.log("Caracteristicas tags filtro ** ", this.caracteristicasfiltro)
     });
   }
 

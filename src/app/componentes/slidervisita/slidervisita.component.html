@@ -212,7 +212,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="p-0 m-0">
+                                        <div class="p-0 m-0"  *ngIf="horaSel != 0 && idiomaSel != 0">
                                             <div class="px-3 pt-2 m-0 animated fadeIn" [hidden]="!vpers">
                                                 <div #adulto class="row my-2">
                                                     <div class="col-4 text-left posrel">
@@ -937,9 +937,6 @@
                                                 <span class="mx-3" [ngClass]="{'colGRIS1': ninosSel > 0 }">
                                                     {{textconts.buscador_detail_infantil}} {{ninosSel}}
                                                 </span>
-                                                <!-- <span class="" [ngClass]="{'colGRIS1': menoresSel > 0 }">
-                                                    Menores {{menoresSel}}
-                                                </span> -->
                                             </div>
                                         </div>
                                         <div class="posabsolRight">
@@ -948,9 +945,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="p-0 m-0">
-                                    <div class="px-3 pt-2 m-0 animated fadeIn" [hidden]="!vpers">
-                                        <div #adulto class="row my-2">
+                                <div class="p-0 m-0" *ngIf="horaSel != 0 && idiomaSel != 0" >
+                                    <div class="px-3 pt-2 m-0 animated fadeIn" [hidden]="!vpers"  >
+                                        <div #adulto class="row my-2" >
                                             <div class="col-4 text-left posrel">
                                                 <div class="fs-8 posabsol" style="top: -6px">Adulto</div>
                                                 <div class="fs-16">{{precioadultosst}} €</div>

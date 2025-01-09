@@ -137,7 +137,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   //seleccionados
   daySel: any;
   horaSel: any = 0;
-  idiomaSel: number = 1;
+  idiomaSel: number = 0;
   adultoSel: number = 0;
   ninosSel: number = 0;
   //info acordeon
@@ -270,7 +270,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       let estemes = hoy.format('MM');
       let esteyear = hoy.format('YYYY');
       this.getDaysFromDate(estemes, esteyear);
-      this.getCherryDay();
+      //this.getCherryDay();
 
     });
 
@@ -297,7 +297,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.listaidiomas = this.listasService.getIdiomas();
     this.listaidiomasvisita = [];
     this.idiomasdisponibles = "";
-    this.idiomaSel = null ;
+    this.idiomaSel = 0 ;
     this.disponibles = this.maximopersonas - this.vendidas;
 
     this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
@@ -385,10 +385,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.horanovalid = false;
     }
     if (this.timesSel.hour != this.horaSel) {
-      // this.timesSel =
-      //   this.newReserva.visit.visithours.find((x) => x.hour == this.horaSel) ??
-      //   this.timesSel;
-
       this.getCalculoPrecio();
     }
     this.setSecuencial();
@@ -605,7 +601,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
     else if(diasvisita != null) {
       this.timesSel.date = diasvisita[0];
-      this.getCherryDay();
+      //this.getCherryDay();
     }
     else{
       console.log("no timesel", this.timesSel);
@@ -678,11 +674,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.vcale = false;
       this.caleinfo =  this.globalService.getFechaleg(objectDate.format('DD/MM/YYYY'));
       this.calenovalid = false;
-      // let coi = null
-      // if (coi != null) {
-      //   this.timesSel = coi;
-      //   this.getCalculoPrecio();
-      // }
+
       this.getDaysFromDate(
         this.dateSelect.format('MM'),
         this.dateSelect.format('YYYY')
@@ -690,10 +682,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
     this.setSecuencial();
     this.setListaHoras();
-
-    debugger
+    this.adultoSel = 0;
+    this.ninosSel = 0;
     this.timesSel.date = this.daySel.year+"-"+ this.daySel.month+"-"+this.daySel.value;
-
   }
 
 
@@ -734,7 +725,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     if (valido) {
       let carrito: CartModel = new CartModel();
       carrito = this.carritoService.getCart();
-debugger
+
       this.newReserva.adults = this.adultoSel;
       this.newReserva.children = this.ninosSel;
       this.newReserva.total = this.preciototal;
@@ -759,6 +750,7 @@ debugger
 
 
   async setListaHoras(){
+  
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };
@@ -786,7 +778,7 @@ debugger
       disponibilitiesdia.forEach((disponib) => {
           this.newReserva.visit.visithours.forEach((visithour) => {
               if (parseInt(visithour.hours_id) >= disponib.init_hours_id && parseInt(visithour.hours_id) <= disponib.end_hours_id) {
-                  if(listahorasvisitafiltrada.findIndex(x => x.hours_id == visithour.hours_id) == -1){
+                  if(listahorasvisitafiltrada.findIndex(x => x.hours_id == visithour.hours_id && x.diasemana == visithour.diasemana) == -1){
                       listahorasvisitafiltrada.push(visithour) ;
                   }
               }
@@ -802,7 +794,6 @@ debugger
               } 
           });
       });
-
       this.listahorasvisita = [];
       this.listahoras?.forEach((hora) => {
         listahorasvisitafiltrada.forEach((v) => {
@@ -820,8 +811,10 @@ debugger
   async setVendidas(fecha: string, horaid: number, languageid: number){
       let visitid = this.newReserva.visit.id;
       let vendidas = await this.visitaService.getVendidas( visitid, fecha, horaid, languageid).toPromise() as number;
-      this.vendidas = vendidas;
-      this.disponibles = this.maximopersonas - this.vendidas;
+      if(vendidas != null){
+        this.vendidas = vendidas;
+        this.disponibles = this.maximopersonas - this.vendidas;
+      }
   }
 
 }
