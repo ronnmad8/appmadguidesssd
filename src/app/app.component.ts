@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { GlobalService } from './services/global.service';
 import { PlatformService } from './services/platform.service';
 
@@ -7,14 +7,14 @@ import { PlatformService } from './services/platform.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'madguides';
   footersinlinks: boolean = false;
+  private resizeTimeout: any;
 
   constructor(
     private platformService: PlatformService,
-    private globalService: GlobalService,
-
+    private globalService: GlobalService
   )
 {
   this.getCurrentLanguage() ;
@@ -22,6 +22,16 @@ export class AppComponent {
   this.globalService.setTextContents();
   this.globalService.setlanguages();
 }
+
+@HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    // Cancela el temporizador anterior para evitar múltiples recargas
+    clearTimeout(this.resizeTimeout);
+
+    this.resizeTimeout = setTimeout(() => {
+        window.location.reload();
+    }, 1000);
+  }
 
 
   getCurrentLanguage() {

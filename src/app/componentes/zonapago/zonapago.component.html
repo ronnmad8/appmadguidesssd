@@ -526,9 +526,19 @@
                         <div class="row px-2">
                             <div class="col-xl-6 ">
                                 <div class="cj posrel">
+                                    <input type="text" class="w-100 scolGRIS1" placeholder="  " name="nombre" id="nombre" formControlName="nombre" />
+                                    <div class="fieldpeq3">
+                                        <i class="fa fa-user" ></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row px-2">
+                            <div class="col-xl-6 ">
+                                <div class="cj posrel">
                                     <input type="text" class="w-100 scolGRIS1" placeholder=" Tarjeta " name="numeracion" id="numeracion" formControlName="numeracion" />
-                                    <div *ngIf="formtarjeta.value.numeracion != '' " class="fieldpeq3">
-                                        Tarjeta 
+                                    <div class="fieldpeq3">
+                                        <i class="fa fa-credit-card" ></i>
                                     </div>
                                 </div>
                             </div>
@@ -537,15 +547,15 @@
                             <div class="col-xl-3">
                                 <div class="cj posrel">
                                     <input type="text" class="w-100 scolGRIS1" placeholder=" Caducidad " name="caducidad" id="caducidad" formControlName="caducidad" />
-                                    <div *ngIf="formtarjeta.value.caducidad != '' " class="fieldpeq3">
-                                        Caducidad
+                                    <div  class="fieldpeq3">
+                                        <i class="fa fa-calendar-check-o" ></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3">
                                 <div class="cj posrel">
                                     <input type="text" class="w-100 scolGRIS1" placeholder=" CVV " name="cvv" id="cvv" formControlName="cvv" />
-                                    <div *ngIf="formtarjeta.value.cvv != '' " class="fieldpeq3">
+                                    <div class="fieldpeq3">
                                         CVV
                                     </div>
                                 </div>

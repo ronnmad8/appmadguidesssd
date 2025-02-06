@@ -159,6 +159,7 @@ export class ZonapagoComponent implements OnInit {
   registrado: boolean = false;
   formtarjeta: FormGroup;
   btactivadotarjeta: boolean = false;
+  tarjeta_nombre: string = "";
   tarjeta_numeracion: string = "";
   tarjeta_caducidad: string = "";
   tarjeta_cvv: string = "";
@@ -365,6 +366,7 @@ export class ZonapagoComponent implements OnInit {
 
   crearFormularioTarjeta() {
     this.formtarjeta = this.fb.group({
+      nombre: ['', [Validators.required]],
       numeracion: ['', [Validators.required,  Validators.pattern(/^\d{16}$/) ]],
       caducidad: ['', [Validators.required, this.validarCaducidad ]],
       cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/) ]],
@@ -374,6 +376,7 @@ export class ZonapagoComponent implements OnInit {
   cambiosFormularioTarjeta() {
     this.formtarjeta.valueChanges.subscribe((value) => {
       this.tarjeta_numeracion = this.formtarjeta.get('numeracion')?.value;
+      this.tarjeta_nombre = this.formtarjeta.get('nombre')?.value;
       this.tarjeta_caducidad = this.formtarjeta.get('caducidad')?.value;
       this.tarjeta_cvv = this.formtarjeta.get('cvv')?.value;
       this.btactivadotarjeta = false;
