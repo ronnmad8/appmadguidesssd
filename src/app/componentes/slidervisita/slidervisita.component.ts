@@ -189,6 +189,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   defaultvisitime: number = 0;
   preciovisita: number = 0;
 
+  private resizeTimeout: any;
+  private previousWidth: number = window.innerWidth;
+
   constructor(
     private wowService: NgwWowService,
     private router: Router,
@@ -227,6 +230,25 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   ngAfterViewInit(): void {
     this.listenProvider();
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+        const currentWidth = window.innerWidth;
+        if (currentWidth > this.previousWidth) {
+            if (currentWidth - this.previousWidth > 100) {
+                window.location.reload();
+            }
+        }
+        else if (currentWidth < this.previousWidth) {
+            if (this.previousWidth - currentWidth > 100) {
+                window.location.reload();
+            }
+        }
+        this.previousWidth = currentWidth;
+    }, 10);
   }
 
   @HostListener('window:scroll')

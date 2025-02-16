@@ -1,17 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ImagenesModel } from '../models/Imagenes.model';
 import { catchError, map} from 'rxjs/operators' ;
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { GlobalService } from './global.service';
-import { JsonPipe } from '@angular/common';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { ResultadoModel } from '../models/Resultado.model';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { FiltersModel } from '../models/Filters.model';
-import { TimesModel } from '../models/Times.model';
 
 
 

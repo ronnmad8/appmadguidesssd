@@ -10,8 +10,7 @@ import { PlatformService } from './services/platform.service';
 export class AppComponent  {
   title = 'madguides';
   footersinlinks: boolean = false;
-  private resizeTimeout: any;
-
+  
   constructor(
     private platformService: PlatformService,
     private globalService: GlobalService
@@ -23,15 +22,7 @@ export class AppComponent  {
   this.globalService.setlanguages();
 }
 
-@HostListener('window:resize', ['$event'])
-  onWindowResize() {
-    // Cancela el temporizador anterior para evitar múltiples recargas
-    clearTimeout(this.resizeTimeout);
 
-    this.resizeTimeout = setTimeout(() => {
-        window.location.reload();
-    }, 1000);
-  }
 
 
   getCurrentLanguage() {

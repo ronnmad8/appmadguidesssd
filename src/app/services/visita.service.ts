@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ImagenesModel } from '../models/Imagenes.model';
 import { catchError, map } from 'rxjs/operators';
