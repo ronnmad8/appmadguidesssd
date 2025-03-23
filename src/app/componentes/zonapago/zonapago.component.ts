@@ -55,6 +55,8 @@ import { ContractModel } from 'src/app/models/Contract.model';
 import { MicuentaService } from 'src/app/services/micuenta.service';
 import { TextContentsModel } from 'src/app/models/TextContents.model';
 import { ReservationModel } from 'src/app/models/Reservations.model';
+import { PaymentService } from 'src/app/services/payment.service';
+import { de, tr } from 'date-fns/locale';
 
 @Component({
   selector: 'app-zonapago',
@@ -73,6 +75,7 @@ export class ZonapagoComponent implements OnInit {
   @ViewChild('finaldetalle') finaldetalle: any;
   @ViewChild('detallecale') detallecale: any;
   @ViewChild('fdetallecale') fdetallecale: any;
+  loading: boolean = false;
   
   sWindow: any;
   usuarioform: UserModel = new UserModel();
@@ -169,6 +172,7 @@ export class ZonapagoComponent implements OnInit {
   mensaje3 = "Debe aceptar políticas de privacidad";
   mensaje4 = "Debe validar mail de registro para poder continuar";
 
+
   constructor(
     private wowService: NgwWowService,
     private router: Router,
@@ -186,7 +190,8 @@ export class ZonapagoComponent implements OnInit {
     private fbr: FormBuilder,
     private fbfa: FormBuilder,
     private providerService: ProviderService,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private paymentService: PaymentService
   ) {
     this.wowService.init();
 
@@ -201,6 +206,7 @@ export class ZonapagoComponent implements OnInit {
 
     this.crearFormularioTarjeta();
     this.cambiosFormularioTarjeta();
+
   }
 
   ngOnInit(): void {
@@ -371,6 +377,7 @@ export class ZonapagoComponent implements OnInit {
       caducidad: ['', [Validators.required, this.validarCaducidad ]],
       cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/) ]],
     });
+
   }
 
   cambiosFormularioTarjeta() {
@@ -448,7 +455,8 @@ export class ZonapagoComponent implements OnInit {
         else{
           this.pasoactivo = 2;
         }
-      } 
+
+      }
       else if (this.aceptacionpoliticas ) {
         this.setClientePedido(this.usuario);
         
@@ -458,10 +466,10 @@ export class ZonapagoComponent implements OnInit {
             if(el.visit.uuid == comp["visit.uuid"] ){
               el.users.push(comp);
             }
-          }); 
+          });
         })
 
-        this.registrarpedido(this.pedido);
+       this.registrarpedido(this.pedido); 
       }
       // else if(!this.companionsComplet) {
       //   this.alertasService.alertaKO(
@@ -513,32 +521,27 @@ export class ZonapagoComponent implements OnInit {
       // }
       /////////////////////////////////////////////////////
 
-      //horario.country_id = this.usuario.address[0]["address"]?.country.id;
-      // this.carritoService.savePedidosguardados(horario).subscribe(resp=>{
-      //   let r = resp;
-      // })
+
+      this.loading = true;
       this.carritoService.savePedido(cart).subscribe(resp=>{
-         ///vaciar carrito en menu y vista
         if(resp != null){
-          
+          this.btactivadotarjeta = false;
           console.log("carrito registrado ==> ", resp )
           let pedidoregistrado = resp[0] as CartModel;
           if(pedidoregistrado.id != null){
             this.carritoService.clearCart();
             this.providerService.setThrowCarritoupdate(new CartModel());
-            
+            this.loading = false;
             this.router.navigate(['/compra/'+pedidoregistrado.id]);
           }
           else{
             this.alertasService.alertaKO("No registrado","intente registrar pedido de nuevo");
           }
-
         }
-
       })
+
     })
-    
-    
+  
   }
 
   aceptarpoliticas(acept: any) {
@@ -622,6 +625,17 @@ export class ZonapagoComponent implements OnInit {
         //   this.mensaje3
         // );
       }
+
+      //ontest rellenar campos de prueba ///////////////////////////////////
+      this.formtarjeta.patchValue({
+          nombre: 'Nombre de Prueba',
+          numeracion: '2342342342343456',
+          caducidad: '12/25',
+          cvv: '123'
+          });
+          this.formtarjeta.markAllAsTouched();
+          this.cambiosFormularioTarjeta();
+      //ontest rellenar campos de prueba ///////////////////////////////////
     } 
     else {
       this.pasoactivo = 1;
@@ -771,23 +785,29 @@ export class ZonapagoComponent implements OnInit {
     if(this.usuario != null){
       this.auth.registrarUser( this.usuario ).subscribe( (resp) => {
         if(resp != null && resp){
-          //this.alertasService.alertaInfo("Madguides", this.mensaje4 ); 
           this.iniciarsesiondirecto(this.usuario);
-          this.formregister.reset();
-       }
-       else{
-         //this.alertasService.alertaInfo("Madguides", this.mensaje1);
-       }
-     })
+          this.formregister.reset(); 
+        }
+      })
     }
   }
 
 
   irapoliticasprivacidad(){
-    this.router.navigate(['/politicasprivacidad']);
+      window.open('/politicasprivacidad', '_blank');
   }
 
-
+  
+  pagarvisita(){
+    let amount = parseFloat(this.preciototal) ;
+    console.log("amount ", amount);
+    this.paymentService.initPayment(amount).subscribe(resp => {
+      if(resp != null){
+        console.log("resp_init_payment ", resp);
+        this.paymentService.sendRedsysPayment(resp.parameters, resp.signature)
+      }
+    });
+  }
 
   
 

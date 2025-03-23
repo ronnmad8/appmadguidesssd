@@ -74,12 +74,10 @@ export class PoliticasprivacidadComponent implements OnInit {
   getTexts(){
     this.listatextcontsdata = this.globalService.listaTextDataModel
     this.textconts = this.globalService.textcontents;
-    this.messagePoliticas.title = this.textconts.politicasprivacidad_title;
-    this.messagePoliticas.textohtml = this.textconts.politicasprivacidad_text;
     if(!this.textconts.dataok){
       this.globalService.getTextcontentsglobal().subscribe((resp)=>{
-        if(resp && resp["data"]){
-          this.listatextcontsdata = resp["data"] as TextDataModel[] ?? [] ;
+        if(resp){
+          this.listatextcontsdata = resp as TextDataModel[] ?? [] ;
           this.textconts = this.globalService.setTextContentsByLanguage(this.listatextcontsdata , this.globalService.idlang  );
           this.messagePoliticas.title = this.textconts.politicasprivacidad_title;
           this.messagePoliticas.textohtml = this.textconts.politicasprivacidad_text;
@@ -87,8 +85,6 @@ export class PoliticasprivacidadComponent implements OnInit {
       })
     }
   }
-
-
 
   
 }

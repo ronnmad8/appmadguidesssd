@@ -580,11 +580,27 @@
                             <div class="col-xl-4 text-right">
                                 <button *ngIf="btactivadotarjeta"  class="btredondoRojoPagar " type="button" (click)="reservarvisita()">
                                     <span class="ff-JB"> {{textconts.buscador_reservar }} </span>
+                                    <div class="spinner-container posrel" style="top: -30px" *ngIf="loading">
+                                        <div class="spinner-border colGRIS8 text-center" role="status">
+                                        </div>
+                                    </div>
                                 </button>
+
                                 <button *ngIf="!btactivadotarjeta" class="btredondoRojoApagadoPagar " type="button" >
                                     <span> {{textconts.buscador_reservar }} </span>
+                                    <div class="spinner-container posrel" style="top: -30px" *ngIf="loading">
+                                        <div class="spinner-border colGRIS8 text-center" role="status">
+                                        </div>
+                                    </div>
                                 </button>
                             </div>
+
+                            <div class="col-xl-12 text-left">
+                                <button style="margin: 10px; padding: 5px; background-color: gray; color: black ; height: auto;"  class="" type="button" (click)="pagarvisita()">
+                                    <span class="ff-JB"> BOTON PARA TPV TEST NO USAR!!</span>
+                                </button>
+                            </div>
+
                         </div>
                         </form> 
                     </div>
