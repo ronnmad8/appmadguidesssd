@@ -9,9 +9,8 @@ export class DisponibilityModel {
     franjahoraria_id: number;
     init_hours_id: number;
     end_hours_id: number;
-    guialanguages: number[];
 
     constructor(){
-        this.guialanguages = [];
+        
     }
 }

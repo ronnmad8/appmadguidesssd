@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { VisitasResultadoModel } from '../models/VisitasResultado.model';
 import { TimesModel } from '../models/Times.model';
 import { ResultadoModel } from '../models/Resultado.model';
+import { GuialanguagesModel } from '../models/Guialanguages.model';
 
 
 @Injectable({
@@ -82,6 +83,21 @@ export class VisitaService {
     return this.http.get(`${this.url}` ).pipe(
       map((resp) => {
         return resp["data"] as VisitasResultadoModel[] ;
+      }),
+      catchError((err) => {
+        console.error('Error  ', err.error);
+        return err.error;
+      })
+    );
+  }
+
+  getLanguagesdiasemana(esediasemana: number ){
+
+    let endpoint =  "/languagesdiasemana/"+ esediasemana;
+    this.url = this.apiurl + endpoint;
+    return this.http.get(`${this.url}` ).pipe(
+      map((resp) => {
+        return resp["data"] as GuialanguagesModel[] ;
       }),
       catchError((err) => {
         console.error('Error  ', err.error);

@@ -48,8 +48,9 @@ import { DiaModel } from 'src/app/models/Dia.model';
 import { HourModel } from 'src/app/models/Hour.model';
 import { FranjasModel } from 'src/app/models/Franjas.model';
 import { DisponibilityModel } from 'src/app/models/Disponibility.model';
-import { ar } from 'date-fns/locale';
+import { ar, de } from 'date-fns/locale';
 import * as e from 'express';
+import { GuialanguagesModel } from 'src/app/models/Guialanguages.model';
 
 @Component({
   selector: 'app-slidervisita',
@@ -222,7 +223,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.vcale = true;
     this.isrespon = this.platformService.isrespon;
     this.listahorasvisita = [];
-
+    
 
   }
 
@@ -292,13 +293,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       let estemes = hoy.format('MM');
       let esteyear = hoy.format('YYYY');
       this.getDaysFromDate(estemes, esteyear);
-      //this.getCherryDay();
 
     });
 
-    //this.providerService.getThrowMessagesVisita.subscribe((resp) => {
-       //mensaje
-    //});
   }
 
 
@@ -318,17 +315,24 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.vendidas = 0; /// calcular vendidas para esa fecha/hora y visita
     this.listaidiomas = this.listasService.getIdiomas();
     this.listaidiomasvisita = [];
-    this.idiomasdisponibles = "";
     this.idiomaSel = 0 ;
     this.disponibles = this.maximopersonas - this.vendidas;
-
+    
     this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
       let idiom: LanguagesModel = this.listaidiomas.find((x) => x.id == idiomaiso.language_id ) ?? new LanguagesModel();
       this.newReserva.nombreidioma = this.visitaService.getNombreidioma(idiom.id);
     })
-
+    
     this.getCalculoPrecio();
     this.preciovisita = this.globalService.getPrecioByVisit(this.newReserva.visit);
+    
+    this.idiomasdisponibles = "";
+
+    let listaidiomasdefault = this.listasService.getIdiomas();
+    listaidiomasdefault.forEach(idiomdef => {
+      let idiomasumdef = idiomdef.name.toLowerCase();
+      this.idiomasdisponibles += ( idiomasumdef ) + ', ';
+    });
 
   }
 
@@ -566,6 +570,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
   async getDaysFromDate(month: any, year: any) {
     const diasmesdisponibilities = await this.visitaService.getDisponibilitiesVisita(this.newReserva.visit.id, month, year).toPromise() as number[];
+    
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
@@ -586,6 +591,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     ///dias de la visita por dias semana
     let diasvisita: string[] = [];
     let hoy = new Date();
+
+    hoy.setDate(hoy.getDate() + 3);
+
     let diasSemana: number[] = [1,2,3,4,5,6,7];
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
@@ -623,16 +631,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     }
     else if(diasvisita != null) {
       this.timesSel.date = diasvisita[0];
-      //this.getCherryDay();
     }
     else{
       console.log("no timesel", this.timesSel);
     }
-
+    debugger
     ///marcar dias de la visita y seleccionado de ese mes
     arrayDays.forEach((day: any) => {
       let esafecha = day.year + '-' + day.month + '-' + day.value;
-      //let diadelasemana = day.indexWeek ;
       day.visitday = false;
       diasvisita.forEach( (dvt)=>{
         if(dvt == esafecha){
@@ -796,6 +802,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       this.horaSel = 0;
       this.horainfo = "";
       const disponibilitiesdia = await this.visitaService.getDisponibilitiesdiasemana(esediasemana).toPromise() as DisponibilityModel[];
+      const languagesdia = await this.visitaService.getLanguagesdiasemana(esediasemana).toPromise() as GuialanguagesModel[];
 
       disponibilitiesdia.forEach((disponib) => {
           this.newReserva.visit.visithours.forEach((visithour) => {
@@ -805,17 +812,19 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
                   }
               }
           });
+      });
+     
+      languagesdia.forEach((gl) => {
           this.newReserva.visit.visitlanguages.forEach((idiomaiso, index) => {
               let idiom: LanguagesModel = this.listaidiomas.find((x) => x.id == idiomaiso.language_id ) ?? new LanguagesModel();
-              if ( disponib.guialanguages.findIndex(x => x == idiom.id) != -1 ) {
-                  if(this.listaidiomasvisita.findIndex(x => x.id == idiom.id) == -1){
-                      this.listaidiomasvisita.push(idiom);
-                      let idiomasum = idiom.name.toLowerCase();
-                      this.idiomasdisponibles += ( idiomasum ) + ', ';
-                  }
-              } 
+
+              if(this.listaidiomasvisita.findIndex(x => x.id == idiom.id) == -1){
+                  this.listaidiomasvisita.push(idiom);
+              }
+              
           });
       });
+
       this.listahorasvisita = [];
       this.listahoras?.forEach((hora) => {
         listahorasvisitafiltrada.forEach((v) => {

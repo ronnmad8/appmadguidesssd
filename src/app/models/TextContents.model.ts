@@ -307,6 +307,7 @@ export class TextContentsModel {
   logincon: string;
   hemos_enviado: string;
   detalle_pedido: string;
+  cuando_reservar: string;
 
   constructor() {
     this.dataok  = false;
@@ -612,6 +613,7 @@ export class TextContentsModel {
     this.logincon = '';
     this.hemos_enviado = '';
     this.detalle_pedido = '';
+    this.cuando_reservar = '';
 
 
   }

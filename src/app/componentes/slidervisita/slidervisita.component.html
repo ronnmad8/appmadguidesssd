@@ -189,7 +189,7 @@
                                     </div>
 
                                     <div class="p-0 my-3">
-                                        <div #persona class="cajaselecvisita">
+                                        <div #persona class="cajaselecvisita" *ngIf="horaSel != 0 && idiomaSel != 0"  >
                                             <div class="w-100 cupo posrel" (click)="verPersona()">
                                                 <div class="fs-20 ml-0 mr-auto d-flex">
                                                     <span class="colGRIS1 ff-JB"
@@ -294,7 +294,7 @@
                                                 </div>
                                                 <div #maximo class="d-flex w-100 posrel my-3">
                                                     <div class="d-flex posrel w-100">
-                                                        <div class="fs-12">{{textconts.buscador_vendidas}}  / {{textconts.buscador_maximaspersonas}}
+                                                        <div class="fs-12 posrel " style="max-width: 90%;" >{{textconts.buscador_vendidas}}  / {{textconts.buscador_maximaspersonas}}
                                                         </div>
                                                         <div class="posabsolR ff-JB"> {{vendidas}} / {{maximopersonas}}</div>
                                                     </div>
@@ -418,7 +418,7 @@
                             <div class="fs-18" [innerHtml]="descripcioncorta" *ngIf="!vermas">
                             </div>
                             <div class="colROJO1 cupo" (click)="abrirvermas()" *ngIf="!vermas">
-                                {{textconts.buscador_detail_description}}
+                                {{textconts.buscador_detail_verdescripcion }}
                             </div>
                             <div class="fs-18" [innerHtml]="descripcion" *ngIf="vermas">
                             </div>
@@ -464,13 +464,6 @@
                             {{textconts.buscador_detail_description}}
                         </div>
                         <div class="row fs-18 my-2">
-                          
-                            <div class="col-xl-8">
-                                {{textconts.buscador_detail_description }}
-                            </div>
-                            <div class="linedots"></div>
-                        </div>
-                        <div class="row fs-18 my-2">
                             <div class="col-xl-4">
                                 <img src="../../assets/images/i-relojG.svg" class="imicono8 posrel mb-2"
                                     draggable="false">
@@ -499,7 +492,7 @@
                                 <span class="ml-2">{{textconts.buscador_detail_cuandoreservar}} </span>
                             </div>
                             <div class="col-xl-8">
-                             {{textconts.buscador_detail_description}}
+                             {{textconts.cuando_reservar}}
                             </div>
                             <div class="linedots"></div>
                         </div>
@@ -922,7 +915,7 @@
                             </div>
 
                             <div class="p-0 my-3">
-                                <div #persona class="cajaselecvisita">
+                                <div #persona class="cajaselecvisita" *ngIf="horaSel != 0 && idiomaSel != 0">
                                     <div class="w-100 cupo posrel" (click)="verPersona()">
                                         <div class="fs-20 ml-0 mr-auto d-flex">
                                             <span class="colGRIS1 ff-JB"
@@ -1062,7 +1055,7 @@
                                         </div>
                                         <div #maximo class="d-flex w-100 posrel my-3">
                                             <div class="d-flex posrel w-100">
-                                                <div class="fs-12">{{textconts.buscador_maximaspersonas}}
+                                                <div class="fs-12" style="max-width: 90%;">{{textconts.buscador_maximaspersonas}}
                                                 </div>
                                                 <div class="posabsolR ff-JB">{{newReserva?.visit?.nummax}}</div>
                                             </div>
