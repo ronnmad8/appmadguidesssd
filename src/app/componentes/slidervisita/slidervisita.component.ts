@@ -635,7 +635,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     else{
       console.log("no timesel", this.timesSel);
     }
-    debugger
+    
     ///marcar dias de la visita y seleccionado de ese mes
     arrayDays.forEach((day: any) => {
       let esafecha = day.year + '-' + day.month + '-' + day.value;
