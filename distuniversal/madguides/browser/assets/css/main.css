@@ -2009,6 +2009,7 @@ input:checked+.sliderT:before {
 
 .textvisita {
   min-height: 57px !important;
+  height: 60px !important;
   font-size: 14px !important;
   color: var(--c_GRIS3) !important;
   padding-left: 18px;

@@ -496,52 +496,25 @@ export class ZonapagoComponent implements OnInit {
 
     let token = localStorage.getItem('token');
     let contract: ContractModel = new ContractModel();
-
-    cart.reservas.forEach( el => {
-      let usercomp: CompanionsPedidoModel = new CompanionsPedidoModel();
-      el.users.forEach( it => {
-        usercomp.name = it.name ;
-        usercomp.surname = it.surname ;
-        usercomp.old = it.old ;
-        usercomp.email = "" ;
-        usercomp.sendmail = "false" ;
-
-        contract.users.push(usercomp);
-      })
-
-      ///rectificacion sin acompañantes api //////////////////////
-      // if(horario.users.length <= 1){
-      //   usercomp.name = "_" ;
-      //   usercomp.surname = "_" ;
-      //   usercomp.old = 0 ;
-      //   usercomp.email = "" ;
-      //   usercomp.sendmail = "false" ;
-      //   horario.users.push(usercomp);
-      //   this.companionsComplet = true;
-      // }
-      /////////////////////////////////////////////////////
-
-
-      this.loading = true;
-      this.carritoService.savePedido(cart).subscribe(resp=>{
-        if(resp != null){
-          this.btactivadotarjeta = false;
-          console.log("carrito registrado ==> ", resp )
-          let pedidoregistrado = resp[0] as CartModel;
-          if(pedidoregistrado.id != null){
-            this.carritoService.clearCart();
-            this.providerService.setThrowCarritoupdate(new CartModel());
-            this.loading = false;
-            this.router.navigate(['/compra/'+pedidoregistrado.id]);
-          }
-          else{
-            this.alertasService.alertaKO("No registrado","intente registrar pedido de nuevo");
-          }
+    this.loading = true;
+      
+    this.carritoService.savePedido(cart).subscribe(resp=>{
+      if(resp != null){
+        this.btactivadotarjeta = false;
+        console.log("carrito registrado ==> ", resp )
+        let pedidoregistrado = resp[0] as CartModel;
+        if(pedidoregistrado.id != null){
+          this.carritoService.clearCart();
+          this.providerService.setThrowCarritoupdate(new CartModel());
+          this.loading = false;
+          this.router.navigate(['/compra/'+pedidoregistrado.id]);
         }
-      })
-
+        else{
+          this.alertasService.alertaKO("No registrado","intente registrar pedido de nuevo");
+        }
+      }
     })
-  
+
   }
 
   aceptarpoliticas(acept: any) {
