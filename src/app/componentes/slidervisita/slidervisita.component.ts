@@ -594,7 +594,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
     hoy.setDate(hoy.getDate() + 3);
 
-    let diasSemana: number[] = [1,2,3,4,5,6,7];
+    //let diasSemana: number[] = [1,2,3,4,5,6,7];
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
     };

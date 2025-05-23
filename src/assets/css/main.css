@@ -918,6 +918,13 @@ img {
 
 }
 
+.posabsolBot {
+  position: absolute !important;
+  left: 0px !important;
+  bottom: 1px !important;
+
+}
+
 .posabsolfr {
   position: absolute !important;
   left: 8px !important;
@@ -937,6 +944,7 @@ img {
   z-index: 10;
   font-size: 11px;
   background-color: var(--c_BLANCO2);
+  min-width: 100px;
 }
 
 .cupo {
@@ -2020,7 +2028,8 @@ input:checked+.sliderT:before {
 }
 
 .textvisita {
-  min-height: 57px !important;
+  min-height: 40px !important;
+  max-height: 48px !important;
   font-size: 14px !important;
   color: var(--c_GRIS3) !important;
   padding-left: 18px;

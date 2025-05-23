@@ -570,14 +570,15 @@
           </div>
         </div>
 
-        <div id="mvlidiomas" class="posabsolBot">
-          <div id="abriridioma" class="d-flex p-3">
+        <div id="mvlidiomas" class="posabsolBot ">
+          <div id="abriridioma" class="d-flex p-3 mb-5 fs-20">
             <div class="px-3 ">{{textconts.buscador_idioma }} </div>
             <div class="cupo imperfil " (click)="mostraridiomas()">
-              <span>{{idioma}}</span>
+              <b>{{idioma}}</b>
             </div>
             <div>
-              <i class=" fa fa-angle-down fs-16 "></i>
+              <i class=" fa fa-angle-down " *ngIf="!veridiomas" ></i>
+              <i class=" fa fa-angle-up " *ngIf="veridiomas" ></i>
             </div>
             <div class="">
               <div class="modalidiomas animated fadeInDown" *ngIf="veridiomas">

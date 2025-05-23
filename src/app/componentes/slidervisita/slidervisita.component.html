@@ -503,7 +503,7 @@
                                 <span class="ml-2"> {{textconts.buscador_detail_accesibilidad }}  </span>
                             </div>
                             <div class="col-xl-8" *ngIf="newReserva?.visit?.accesibilidad">
-                                {{textconts.si}}
+                                {{textconts.buscador_detail_accesibilidad}}
                             </div>
                             <div class="col-xl-8" *ngIf="!newReserva?.visit?.accesibilidad">
                                 <img src="assets/images/i-restar.svg" class="imicono2" draggable="false">
@@ -517,7 +517,7 @@
                                 <span class="ml-2">{{textconts.buscador_detail_pets | capitalize}}</span>
                             </div>
                             <div class="col-xl-8">
-                                {{textconts.si }}
+                                {{textconts.buscador_detail_description}}
                             </div>
                         </div>
                     </div>
@@ -713,9 +713,7 @@
                                 <span class="ml-2">{{textconts.buscador_detail_cuandoreservar  }} </span>
                             </div>
                             <div class="col-xl-8 px-4 py-2">
-                                _details.when.description1 _
-                                _details.when.description2 _
-                                _details.when.description3 _
+                                {{textconts.cuando_reservar}}
                             </div>
                             <div class="linedots"></div>
                         </div>
