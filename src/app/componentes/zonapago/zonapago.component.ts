@@ -522,33 +522,17 @@ export class ZonapagoComponent implements OnInit {
   }
 
   eliminarvisitapedido(reserva: ReservationModel) {
-    let mensajeconfirmacion = 'Va a eliminar una visita';
-    if (this.pedido.reservas.length <= 1) {
-      mensajeconfirmacion = 'Va a eliminar la última reserva del pedido';
+          
+    let pedido = this.carritoService.deleteProductCart(reserva.id);
+    this.pedido.reservas = pedido.reservas;
+    this.pedido.total = pedido.total;
+    this.providerService.setThrowCarritoupdate(this.pedido);
+    this.preciototal = this.globalService.getFormatNumber(pedido.total);
+          
+    if (this.pedido.reservas.length == 0) {
+        this.router.navigate(['/buscador']);
     }
 
-    this.alertasService
-      .alertaWarning(mensajeconfirmacion, '¿Seguro que desea eliminar?')
-      .then((result) => {
-        if (result.value) {
-          this.compsE.controls.forEach((el, i) => {
-            if(el.value.visit_id == reserva.visit_id){
-              this.compsE.controls = this.compsE.controls.filter(x => x.value.visit_time_uuid != el.value.visit_time_uuid);
-              //this.deleteCompsE(i) ;
-            }
-          });
-          
-          let pedido = this.carritoService.deleteProductCart(reserva.id);
-          this.pedido.reservas = pedido.reservas;
-          this.pedido.total = pedido.total;
-          this.providerService.setThrowCarritoupdate(this.pedido);
-          this.preciototal = this.globalService.getFormatNumber(pedido.total);
-          
-          if (this.pedido.reservas.length == 0) {
-            this.router.navigate(['/buscador']);
-          }
-        }
-      });
   }
 
   abrirLogin(vmodal: any) {

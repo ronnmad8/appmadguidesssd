@@ -52,8 +52,8 @@
                     </div>
                     <div class="posrel h-100 w-100  p-xl-4 p-2 infopanelreserva ">
 
-                        <div class="fs-18 p-0  mb-2 pc"  *ngIf="reserva?.descripcion != null" >
-                            {{ reserva?.descripcion?.length > 50 ? reserva?.descripcion?.substring(0, 50) + '...' : reserva?.descripcion }}
+                        <div class="fs-18 p-0  mb-2 pc"  *ngIf="reserva?.descripcion != null" innerHTML=" {{ reserva?.descripcion?.length > 50 ? reserva?.descripcion?.substring(0, 50) + '...' : reserva?.descripcion }} "  >
+                           
                         </div>
     
                         <div class="lh-1-4">

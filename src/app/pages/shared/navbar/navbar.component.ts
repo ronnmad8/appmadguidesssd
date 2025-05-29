@@ -232,7 +232,7 @@ export class NavbarComponent implements OnInit {
   listenProvider(){
     this.providerService.getThrowCarritoupdate.subscribe((resp)=>{
       this.pedido = resp as CartModel;
-      this.vercarrito = true;
+      this.vercarrito = false;
       this.getReservasCarrito();
     });
 

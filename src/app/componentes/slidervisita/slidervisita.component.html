@@ -294,7 +294,7 @@
                                                 </div>
                                                 <div #maximo class="d-flex w-100 posrel my-3">
                                                     <div class="d-flex posrel w-100">
-                                                        <div class="fs-12 posrel " style="max-width: 90%;" >{{textconts.buscador_vendidas}}  / {{textconts.buscador_maximaspersonas}}
+                                                        <div class="fs-12 posrel " style="max-width: 85%;" >{{textconts.buscador_vendidas}}  / {{textconts.buscador_maximaspersonas}}
                                                         </div>
                                                         <div class="posabsolR ff-JB"> {{vendidas}} / {{maximopersonas}}</div>
                                                     </div>
@@ -384,7 +384,7 @@
                         <div class="pestas d-flex ">
                             <div id="pestaDescripcion" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 1}"
                                 (click)="ScrollToElement(zoneDescripcion,1)">
-                                {{textconts.buscador_detail_description}}
+                                {{textconts.buscador_description}}
                             </div>
                             <div class="linvertical"></div>
                             <div id="pestaPrecios" class="cupo text-center" [ngClass]="{'pulsada': pestaactiv == 2}"
@@ -444,14 +444,6 @@
                                             class="fs-12 ml-1"></span></td>
                                     <td class="tdprecios text-right">{{precioninosst}} €</td>
                                 </tr>
-                                <!-- <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">_price.children}} <span
-                                            class="fs-12 ml-1">_price.minor}}</span></td>
-                                    <td class="tdprecios text-right">
-                                        <span *ngIf="preciomenores > 0">{{preciomenoresst}} €</span>
-                                        <span *ngIf="preciomenores == 0">_price.free}}</span>
-                                    </td>
-                                </tr> -->
                             </tbody>
                         </table>
 
@@ -594,7 +586,7 @@
             <div class="p-2 d-flex ml-auto mr-0 posrel">
 
                 <div>
-                    <span class="preciovisitaeuro fs-14">{{ newReserva?.visit?.precio | decimalComa }}€ </span>
+                    <span class="preciovisitaeuro fs-14">{{ newReserva?.visit?.precio | decimalComa }} € </span>
                     <span class="colGRIS1 mr-2 fs-12">{{textconts.buscador_porpersona}}</span>
                 </div>
                 <div class="linvertical mx-2"></div>
@@ -652,16 +644,12 @@
                             <tbody>
                                 <tr class="bgBLANCO2 trprecios">
                                     <td class="tdprecios">{{textconts.buscador_detail_adultos}} </td>
-                                    <td class="tdprecios text-right">{{precioadultos}}</td>
+                                    <td class="tdprecios text-right">{{precioadultos}} €</td>
                                 </tr>
                                 <tr class="bgBLANCO trprecios">
-                                    <td class="tdprecios">{{textconts.buscador_detail_infantil}} <span class="fs-12 ml-1">3-11</span></td>
+                                    <td class="tdprecios">{{textconts.buscador_detail_infantil}} €<span class="fs-12 ml-1">3-11</span></td>
                                     <td class="tdprecios text-right">{{precioninos}}</td>
                                 </tr>
-                                <!-- <tr class="bgBLANCO2 trprecios">
-                                    <td class="tdprecios">Niños <span class="fs-12 ml-1">menores de 3 años</span></td>
-                                    <td class="tdprecios text-right">{{preciomenores}}</td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -1053,7 +1041,7 @@
                                         </div>
                                         <div #maximo class="d-flex w-100 posrel my-3">
                                             <div class="d-flex posrel w-100">
-                                                <div class="fs-12" style="max-width: 90%;">{{textconts.buscador_maximaspersonas}}
+                                                <div class="fs-12" style="max-width: 85%;">{{textconts.buscador_maximaspersonas}}
                                                 </div>
                                                 <div class="posabsolR ff-JB">{{newReserva?.visit?.nummax}}</div>
                                             </div>

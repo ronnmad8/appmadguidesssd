@@ -117,7 +117,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   //times select !!! revisar TODO
   timesSel: TimesSelModel;
   newReserva: ReservationModel;
-
   //calendario
   monthSelect: any[];
   dateSelect: any;
@@ -279,8 +278,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   }
 
 
-
-
   listenProvider() {
     this.providerService.getThrowVisita.subscribe((resp) => {
       var provVisita = resp as VisitasResultadoModel;
@@ -290,15 +287,22 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       }
       this.getNewReserva(provVisita);
       let hoy = moment();
+
       let estemes = hoy.format('MM');
       let esteyear = hoy.format('YYYY');
-      this.getDaysFromDate(estemes, esteyear);
+      this.getDaysFromDate(estemes, esteyear).then((res) => {
+          if(!res){
+            this.dateSelect.add(1, 'months');
+            estemes = this.dateSelect.format('MM');
+            esteyear = this.dateSelect.format('YYYY');
+            this.getDaysFromDate(estemes, esteyear);
+          }
+      });
+
 
     });
 
   }
-
-
 
   getNewReserva(visita: VisitasResultadoModel) {
     ///creacion de reserva model
@@ -336,28 +340,24 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
 
   }
 
-
   getImageFirst(visita: VisitasResultadoModel) {
     return visita.mediafiles[0];
   }
-
 
   getPrecio(duracionmin: number, preciohora: number){
     return this.globalService.getPrecio(duracionmin, preciohora);
   }
 
   getCalculoPrecio() {
-
     let precio = this.globalService.getPrecioByVisit(this.newReserva.visit) ;
     this.precioadultos = precio;
     this.precioninos = precio;
     this.precioadultosst = this.globalService.getFormatNumber(
       (Number(this.precioadultos) * 100) / 100
-    ); //correccion cuando esten los precios por edades
+    );
     this.precioninosst = this.globalService.getFormatNumber(
       (Number(this.precioninos) * 100) / 100
-    ); //correccion cuando esten los precios por edades
-
+    );
   }
 
 
@@ -377,7 +377,6 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       });
     }
   }
-
 
   verHora() {
     this.vhora = !this.vhora;
@@ -440,6 +439,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     this.sumapersonas--;
     this.setPreciototal();
   }
+
   sumaradulto() {
     if (this.sumapersonas < this.disponibles) {
       this.adultoSel++;
@@ -569,8 +569,8 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
   }
 
   async getDaysFromDate(month: any, year: any) {
+ 
     const diasmesdisponibilities = await this.visitaService.getDisponibilitiesVisita(this.newReserva.visit.id, month, year).toPromise() as number[];
-    
     const startDate = moment.utc(`${year}/${month}/01`);
     const endDate = startDate.clone().endOf('month');
     this.dateSelect = startDate;
@@ -588,12 +588,9 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
       };
     });
 
-    ///dias de la visita por dias semana
     let diasvisita: string[] = [];
     let hoy = new Date();
-
     hoy.setDate(hoy.getDate() + 3);
-
     //let diasSemana: number[] = [1,2,3,4,5,6,7];
     const convertirDiaSemana = (day: number) => {
       return day === 0 ? 7 : day;  // Si es domingo (0), cambiarlo a 7; el resto queda igual
@@ -613,7 +610,7 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
         diasvisita.push(diacomoesediasemana.toISOString().split('T')[0]);
       });
     });
-
+    
     this.monthSelect = arrayDays;
     this.mSelect = this.globalService.getbyMes(this.dateSelect.format('M') - 1);  //  this.months[this.dateSelect.format('M') - 1];
     this.ySelect = this.dateSelect.format('YYYY');
@@ -632,16 +629,16 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
     else if(diasvisita != null) {
       this.timesSel.date = diasvisita[0];
     }
-    else{
-      console.log("no timesel", this.timesSel);
-    }
     
     ///marcar dias de la visita y seleccionado de ese mes
+    /// tener en cuenta si el primer dia posible ya esta en mes siguiente de pasar a mes siguiente
+    let result: boolean = false
     arrayDays.forEach((day: any) => {
       let esafecha = day.year + '-' + day.month + '-' + day.value;
       day.visitday = false;
+
       diasvisita.forEach( (dvt)=>{
-        if(dvt == esafecha){
+        if(dvt == esafecha && this.mSelect != "Mayo" ){
           if(diasmesdisponibilities != null){
               if(diasmesdisponibilities.includes(parseInt(day.value))){
                 day.visitday = true;
@@ -650,9 +647,14 @@ export class SlidervisitaComponent implements OnInit, AfterViewInit  {
           else{
             day.visitday = true;
           }
+          if(day.visitday){
+            result = true;
+          }
         }
       })
     });
+    
+    return result;
   }
 
 

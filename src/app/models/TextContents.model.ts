@@ -215,6 +215,7 @@ export class TextContentsModel {
   micuenta_form_city: string;
   micuenta_reservas_title: string;
   buscador_detail_description: string;
+  buscador_description: string;
   buscador_detail_price: string;
   buscador_detail_adultos: string;
   buscador_detail_infantil: string;

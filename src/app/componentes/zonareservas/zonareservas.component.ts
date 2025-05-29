@@ -106,40 +106,23 @@ export class ZonareservasComponent implements OnInit {
   }
 
   cancelarVisita(reserva) {
-    this.alertasService
-      .alertaWarning('Madguides', '¿Seguro que desea eliminar?')
-      .then((result) => {
-        if (result.value) {
-          this.micuentaService
-            .deleteReservation(reserva.codigoreserva)
-            .subscribe((resp) => {
-              let respuesta = resp as RespuestaModel;
-              if ((respuesta.status = 'success')) {
-                this.alertasService.alertaInfo(
-                  'Madguides',
-                  'Reserva cancelada correctamente'
-                );
-              }
-              this.getReservations();
-            });
-        }
-      });
+
+      this.micuentaService
+        .deleteReservation(reserva.codigoreserva)
+        .subscribe((resp) => {
+          let respuesta = resp as RespuestaModel;
+          if ((respuesta.status = 'success')) {
+              //cancelada
+          }
+          this.getReservations();
+        });
+        
   }
 
 
   reservarahora(reserva) {
-    this.alertasService
-      .alertaWarning('Madguides', '¿Seguro que desea reservar la visita?')
-      .then((result) => {
-        if (result.value) {
-          this.router.navigate(['/carrito']);
-        }
-      });
+      this.router.navigate(['/carrito']);
   }
-
-
-
-
 
 
 
