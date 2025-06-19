@@ -216,7 +216,7 @@
         <img src="assets/images/cookies.png" alt="Galleta" data-src="assets/images/cookies.png"
             class="galleta lazyload " onerror="this.src='assets/images/sinimagen.png' ">
         <h3>{{textconts.cookies_title}} </h3>
-        <p>{{textconts.cookies_utilizamos}}</p>
+        <p [innerHtml]="textconts.cookies_utilizamos" ></p>
         <div>
             <button class="btn bgROJO1 colBLANCO w-100 my-2" id="btn-aceptar-cookies" (click)="aceptarcookiestodas()">{{textconts.cookies_aceptar}}</button>
         </div>

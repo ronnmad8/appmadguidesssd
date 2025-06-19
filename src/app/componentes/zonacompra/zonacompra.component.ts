@@ -67,6 +67,7 @@ export class ZonacompraComponent implements OnInit {
     this.isrespon = this.platformService.isrespon;
     this.usuario = this.auth.getUser();
     this.getTexts();
+    
   }
 
   @HostListener("window:scroll")

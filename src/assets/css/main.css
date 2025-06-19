@@ -4011,9 +4011,9 @@ input:checked+.sliderT:before {
   display: block;
   background: #fff;
   padding: 20px;
-  width: calc(100% - 40px);
-  max-width: 340px;
-  min-width: 300px;
+  width: calc(100% - 10px);
+  max-width: 440px;
+  min-width: 400px;
   line-height: 150%;
   border-radius: 10px;
   position: fixed;

@@ -43,9 +43,9 @@
   display: block;
   background: #fff;
   padding: 20px;
-  width: calc(100% - 40px);
-  max-width: 340px;
-  min-width: 300px;
+  width: calc(100% - 10px);
+  max-width: 440px;
+  min-width: 400px;
   line-height: 150%;
   border-radius: 10px;
   position: fixed;
@@ -55,7 +55,7 @@
   padding-top: 60px;
   box-shadow: 0px 2px 20px 10px rgba(0, 0, 0, 0.55);
   text-align: center;
-  height: 450px;
+  height: 550px;
 }
 
 .aviso-cookies .galleta {
@@ -787,11 +787,14 @@
 
   .aviso-cookies {
     max-width: 280px;
-    min-width: 200px;
+    min-width: 220px;
     bottom: 20px;
     right: 0px;
     left: 0px;
-    height: 350;
+    height: 520;
+  }
+    .aviso-cookies p {
+    font-size: 11px;
   }
 
 
